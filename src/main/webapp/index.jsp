@@ -106,31 +106,31 @@
 
 		try {
 			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/nawqaDS");
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
 			connection = ds.getConnection();
 
 %>
 		<!--  PARAM LISTS -->
-		<div id="state-div" class="x-hidden">
+		<div id="orgId-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
-			<select id="state" multiple="multiple" size="5" style="width: 100%" onmousedown="resetOtherGeoPicklists(this)">
-				<option value="" selected="selected">All States</option>
+			<select id="state" multiple="multiple" size="5" style="width: 100%">
+				<option value="" selected="selected">All Organization IDs</option>
 				<% HTMLUtil.getOrganizationIdList(out, connection); %>
 			</select>
 		</div>
 
-		<div id="eparegion-div" class="x-hidden">
+		<div id="wellMonitoring-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
-			<select id="eparegion" multiple="multiple" size="5" style="width: 100%" onmousedown="resetOtherGeoPicklists(this)">
-				<option value="" selected="selected">All EPA Regions</option>
+			<select id="eparegion" multiple="multiple" size="5" style="width: 100%">
+				<option value="" selected="selected">All Well Monitoring Purpose Types</option>
 				<% HTMLUtil.getWellMonitoringPurposeTypeList(out, connection); %>
 			</select>
 		</div>
 		
-		<div id="studyunit-div" class="x-hidden">
+		<div id="ntlAquifer-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
-			<select id="studyunit" multiple="multiple" size="5" style="width: 100%" onmousedown="resetOtherGeoPicklists(this)">
-				<option value="" selected="selected">All Study Units</option>
+			<select id="studyunit" multiple="multiple" size="5" style="width: 100%">
+				<option value="" selected="selected">All National Aquifer Names</option>
 				<% HTMLUtil.getNationalAquiferNameList(out, connection); %>
 			</select>
 		</div>
