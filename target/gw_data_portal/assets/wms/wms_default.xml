@@ -1,0 +1,142 @@
+<ServiceGroup>
+  <Service>
+    <Version>1.1.1</Version>
+    <Title>National Atlas Data</Title>
+    <Abstract/>
+    <Status>PUBLIC</Status>
+    <PartnerName>USGS</PartnerName>
+    <PartnerWebURL>http://www.usgs.gov/</PartnerWebURL>
+    <GetCapabilitiesURL></GetCapabilitiesURL>
+    <GetMapURL>http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer/tile/</GetMapURL>
+    <GetFeatureInfoURL></GetFeatureInfoURL>
+    <BackingURL/>
+    <BackingService/>
+    <BackingVersion/>
+    <serviceType>arctms</serviceType>
+    <format>jpg</format>
+    <Layer id="-2538" requested="true" recommended="false" transparency="false" queryable="false" downloadable="false">
+      <Name>Esri Street Map</Name>
+      <Title>ESRI World Street Map</Title>
+      <PartnerName>USGS</PartnerName>
+      <PartnerWebURL>http://www.usgs.gov/</PartnerWebURL>
+      <Resolution>0</Resolution>
+      <MinScale>0</MinScale>
+      <MaxScale>100</MaxScale>
+      <TimePeriod>01-jan-1999</TimePeriod>
+      <Classification id="-1" zdepth="250050.08475846">
+        <Name>BACKGROUND</Name>
+        <Theme id="-1">CUSTOM LAYERS</Theme>
+      </Classification>
+      <SRS>4326</SRS>
+      <LatLon></LatLon>
+      <BoundingBox />
+      <Status>PUBLIC</Status>
+      <Type>RASTER IMAGE</Type>
+      <MetadataURL>http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_ShadedRelief_World_2D/MapServer</MetadataURL>
+      <LogoURL></LogoURL>
+      <SLDURL />
+      <LegendURL>assets/images/legends/esri2dstreet.png</LegendURL>
+      <BackingName />
+      <Description>This worldwide street map presents highway-level data for the world and street-level data for the United States, Canada, Japan, Southern Africa, and a number of countries in Europe and elsewhere. This comprehensive street map includes highways, major roads, minor roads, railways, water features, administrative boundaries, cities, parks, and landmarks, overlaid on shaded relief imagery for added context. The street map was developed by ESRI using AND road data and UNEP-WCMC parks and protected areas for the world and Tele Atlas Dynamap® and Multinet® street data for North America and Europe. Coverage for street-level data in Europe includes Andorra, Austria, Belgium, Czech Republic, Denmark, France, Germany, Great Britain, Greece, Hungary, Ireland, Italy, Luxembourg, Netherlands, Northern Ireland (Belfast only), Norway, Poland, Portugal, San Marino, Slovakia, Spain, Sweden, and Switzerland. Coverage for street-level data elsewhere in the world includes China (Hong Kong only), Indonesia (Jakarta only), Egypt (Cairo only), Japan, and Mexico (Mexico City only).</Description>
+      <Restricted>0</Restricted>
+    </Layer>
+  </Service> 
+  <Service>
+    <Version>1.1.1</Version> 
+    <Title>Cached</Title> 
+    <Abstract /> 
+    <Status>PUBLIC</Status> 
+    <PartnerName>USGS</PartnerName> 
+    <PartnerWebURL>http://www.usgs.gov/</PartnerWebURL> 
+    <GetCapabilitiesURL>http://public5.er.usgs.gov/mapviewer?</GetCapabilitiesURL> 
+    <GetMapURL>http://maptrek.er.usgs.gov/mapviewer_dev/mcserver</GetMapURL> 
+    <GetFeatureInfoURL>http://public5.er.usgs.gov/mapviewer?</GetFeatureInfoURL> 
+    <BackingURL /> 
+    <BackingService /> 
+    <BackingVersion />  
+    <serviceType>mapcache</serviceType>
+    <format>PNG</format>
+    <request>gettile</request>       
+    <Layer id="-13" requested="true" recommended="false" transparency="false" queryable="false" downloadable="false">
+      <Name>WORLD_REGIONS_CACHE_256</Name> 
+      <datasource>gis_cov</datasource>
+      <Title>World Regions</Title> 
+      <PartnerName>USGS</PartnerName> 
+      <PartnerWebURL>http://www.usgs.gov/</PartnerWebURL> 
+      <Resolution>0</Resolution> 
+      <MinScale>0.02</MinScale> 
+      <MaxScale>10</MaxScale> 
+      <TimePeriod>01-jan-1999</TimePeriod> 
+      <Classification id="-1" zdepth="50050.08475846">
+        <Name>World Regions</Name> 
+        <Theme id="-1">Boundaries</Theme> 
+      </Classification>
+      <SRS>4326</SRS> 
+      <LatLon></LatLon> 
+      <BoundingBox /> 
+      <Status>PUBLIC</Status> 
+      <Type>RASTER IMAGE</Type> 
+      <MetadataURL></MetadataURL> 
+      <LogoURL></LogoURL> 
+      <SLDURL /> 
+      <LegendURL>assets/images/legends/world_region_boundary.png</LegendURL> 
+      <BackingName /> 
+      <Description>World Regions</Description> 
+      <Restricted>0</Restricted> 
+    </Layer>       
+    <Layer id="-14" requested="true" recommended="false" transparency="false" queryable="false" downloadable="false">
+      <Name>STATE_PROVINCE_CACHE_256</Name> 
+      <datasource>gis_cov</datasource>
+      <Title>State and Province Boundaries</Title> 
+      <PartnerName>USGS</PartnerName> 
+      <PartnerWebURL>http://www.usgs.gov/</PartnerWebURL> 
+      <Resolution>0</Resolution> 
+      <MinScale>.0005</MinScale> 
+      <MaxScale>10</MaxScale> 
+      <TimePeriod>01-jan-1999</TimePeriod> 
+      <Classification id="-1" zdepth="50050.08475846">
+        <Name>State and Province Boundaries</Name> 
+        <Theme id="-1">Boundaries</Theme> 
+      </Classification>
+      <SRS>4326</SRS> 
+      <LatLon></LatLon> 
+      <BoundingBox /> 
+      <Status>PUBLIC</Status> 
+      <Type>RASTER IMAGE</Type> 
+      <MetadataURL></MetadataURL> 
+      <LogoURL></LogoURL> 
+      <SLDURL /> 
+      <LegendURL>assets/images/legends/state_boundary.png</LegendURL> 
+      <BackingName /> 
+      <Description>State and Province Boundaries</Description> 
+      <Restricted>0</Restricted> 
+    </Layer>         
+    <Layer id="4952" requested="true" recommended="true" transparency="true" queryable="true" downloadable="false">
+      <Name>COUNTY_BOUNDS_CACHE_256</Name>
+      <datasource>gis_cov</datasource>
+      <Title>US County Boundaries (Alternate) (National Atlas)</Title>
+      <PartnerName>USGS</PartnerName>
+      <PartnerWebURL>http://www.usgs.gov/</PartnerWebURL>
+      <Resolution>0</Resolution>
+      <MinScale>0</MinScale>
+      <MaxScale>.0005</MaxScale>
+      <TimePeriod>01-jan-1900</TimePeriod>
+      <Classification id="40" zdepth="156060.08475846">
+        <Name>COUNTY</Name>
+        <Theme id="4">BOUNDARIES</Theme>
+      </Classification>
+      <SRS>4326</SRS>
+      <LatLon></LatLon>
+      <BoundingBox/>
+      <Status>PUBLIC</Status>
+      <Type>RASTER POLYGON</Type>
+      <MetadataURL>http://nationalatlas.gov/metadata/countyp020.html</MetadataURL>
+      <LogoURL>http://mciweb.er.usgs.gov/images/idbksm.gif</LogoURL>
+      <SLDURL/>
+      <LegendURL>http://mcmcweb.er.usgs.gov/catalog/legends/SOLDGR/national_atlas/national_atlas_countybdy.png</LegendURL>
+      <BackingName/>
+      <Description>This data set portrays the State and county boundaries of the United States, Puerto Rico, and the U.S. Virgin Islands. The data set was created by extracting county polygon features from the individual 1:2,000,000-scale State boundary Digital Line Graph (DLG) files produced by the U.S. Geological Survey. These files were then merged into a single file.</Description>
+      <Restricted>0</Restricted>
+    </Layer>      
+  </Service>            
+</ServiceGroup>

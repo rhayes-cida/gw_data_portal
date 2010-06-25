@@ -17,7 +17,7 @@ public class HTMLUtil {
 	 */
 	
 	public static void getOrganizationIdList(JspWriter out, Connection connection) {		
-		String sql = "SELECT UNIQUE ORGANIZATION_ID value, ORGANIZATION_ID display FROM GW_DATA_PORTAL.WELL_REGISTRY WHERE STATE_NAME NOT IN ('Unknown','YUKON TERRITORIES','MANITOBA') ORDER BY 1";
+		String sql = "SELECT UNIQUE ORGANIZATION_ID value, ORGANIZATION_ID display FROM GW_DATA_PORTAL.WELL_REGISTRY ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
