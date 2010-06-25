@@ -1,0 +1,37 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gov.usgs.cida</groupId>
+	<artifactId>gw_data_portal</artifactId>
+	<packaging>war</packaging>
+	<name>gw_data_portal</name>
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<version>1.0.0</version>
+	<build>
+		<finalName>gw_data_portal</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>	
+</project>
