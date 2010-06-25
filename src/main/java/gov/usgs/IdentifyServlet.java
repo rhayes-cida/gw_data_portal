@@ -39,7 +39,7 @@ public class IdentifyServlet extends HttpServlet {
 			String query = URLUtil.getStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=identify");
 
 			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUser");
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
 			connection = ds.getConnection();
 			statement = connection.createStatement();
 

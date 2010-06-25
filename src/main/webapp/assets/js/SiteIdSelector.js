@@ -54,7 +54,7 @@ function identifyPoint(event, map) {
 var SiteIdSelector = Ext.extend(Ext.Window, {
 	id: 'select-site-window',
 	height: 200,
-	width: 500,
+	width: 650,
 	layout: 'fit',
 	modal: true,
 	//resizable: false,
@@ -70,7 +70,7 @@ var SiteIdSelector = Ext.extend(Ext.Window, {
 				viewConfig: {forceFit: true},
 			    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 			    colModel: new Ext.grid.ColumnModel([
-	                { header: "GW ID", width: 100, dataIndex: 'gwuId'},
+	                { header: "GW ID", width: 250, dataIndex: 'gwuId'},
 	                { header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'nationalAquiferName'},
 	                { header: "Organization ID", width: 100, sortable: true, dataIndex: 'organizationId'}	                
 	            ])
