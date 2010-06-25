@@ -1,4 +1,28 @@
+var map;
+
 Ext.onReady(function() {
+	
+	
+	map1 = new JMap.web.Map({
+		containerEl: 'map-area',
+		numTilesX: 7,
+		numTilesY: 5,
+		centerLat: 37,
+		centerLon: -96,
+		zoomLevel: 3,
+		mapWidthPx: 600,
+		mapHeightPx: 600,
+		cacheTiles: true,
+		border: false,
+		projection: new JMap.projection.PlateCarree(),
+		HUD: {
+			zoomSlider: true, 
+			scaleRake: true
+		},
+		layersFile: {
+			url: 'assets/wms/wms_default.xml'
+		}
+	});
 	
 	//create the EXTJS layout
 	new Ext.Panel({
