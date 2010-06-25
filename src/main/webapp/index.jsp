@@ -115,7 +115,7 @@
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="state" multiple="multiple" size="5" style="width: 100%" onmousedown="resetOtherGeoPicklists(this)">
 				<option value="" selected="selected">All States</option>
-				<% HTMLUtil.getStateList(out, connection); %>
+				<% HTMLUtil.getOrganizationIdList(out, connection); %>
 			</select>
 		</div>
 
@@ -123,7 +123,7 @@
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="eparegion" multiple="multiple" size="5" style="width: 100%" onmousedown="resetOtherGeoPicklists(this)">
 				<option value="" selected="selected">All EPA Regions</option>
-				<% HTMLUtil.getEpaRegionList(out, connection); %>
+				<% HTMLUtil.getWellMonitoringPurposeTypeList(out, connection); %>
 			</select>
 		</div>
 		
@@ -131,7 +131,7 @@
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="studyunit" multiple="multiple" size="5" style="width: 100%" onmousedown="resetOtherGeoPicklists(this)">
 				<option value="" selected="selected">All Study Units</option>
-				<% HTMLUtil.getStudyUnitList(out, connection); %>
+				<% HTMLUtil.getNationalAquiferNameList(out, connection); %>
 			</select>
 		</div>
 
