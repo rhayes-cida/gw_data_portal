@@ -1,0 +1,28 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
+
+<display-name>GW Data Portal Map {Owner: JRH, Coder: JRH}</display-name>
+<description></description>
+
+	<servlet>
+		<servlet-name>MVServlet</servlet-name>
+		<servlet-class>gov.usgs.MVServlet</servlet-class>
+	</servlet>
+
+	
+   <servlet-mapping>
+   		<servlet-name>MVServlet</servlet-name>
+  		<url-pattern>/mvwms</url-pattern>
+   </servlet-mapping>
+   
+   
+   <servlet-mapping>
+   		<servlet-name>MVServlet</servlet-name>
+  		<url-pattern>/mvlegend</url-pattern>
+   </servlet-mapping>   
+   
+
+  <session-config>
+  	<session-timeout>1</session-timeout>
+  </session-config>
+</web-app>

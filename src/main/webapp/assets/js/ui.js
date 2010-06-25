@@ -39,8 +39,9 @@ Ext.onReady(function() {
 			id: 'application-area',
 			layout: 'border',
 			border: false
-		}, {
+		},{
 			region: 'west',
+			width: 300,
 			items: [{
 				xtype: 'fieldset',
 				title: 'Organization ID',
