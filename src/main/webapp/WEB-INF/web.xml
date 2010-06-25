@@ -9,10 +9,19 @@
 		<servlet-class>gov.usgs.MVServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>IdentifyServlet</servlet-name>
+		<servlet-class>gov.usgs.IdentifyServlet</servlet-class>
+	</servlet>
 	
    <servlet-mapping>
    		<servlet-name>MVServlet</servlet-name>
   		<url-pattern>/mvwms</url-pattern>
+   </servlet-mapping>
+   
+      <servlet-mapping>
+   		<servlet-name>IdentifyServlet</servlet-name>
+  		<url-pattern>/identify</url-pattern>
    </servlet-mapping>
 
   <session-config>

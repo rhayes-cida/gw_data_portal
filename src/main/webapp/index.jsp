@@ -23,10 +23,8 @@
 		
 		<!-- application assets -->
 		<script type="text/javascript" src="assets/js/ui.js"></script>
-		<script type="text/javascript" src="assets/js/ncp.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdSelector.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
-		<script type="text/javascript" src="assets/js/MapLayersWindow.js"></script>
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 	

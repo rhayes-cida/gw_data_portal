@@ -31,7 +31,7 @@ Ext.onReady(function() {
 		renderTo: 'content',
 		layout: 'border',
 		height: 500,
-		width: 800,
+		width: 1050,
 		plain: true,
 		style: 'text-align: left',
 		items: [{
@@ -93,6 +93,17 @@ Ext.onReady(function() {
 				if (!b.pressed) b.toggle();
 				map1.setMouseAction(null);
 				Ext.getCmp('cmp-map-area').setTitle('Click and drag map');
+			}
+		},{
+			id: 'id-button',
+			tooltip: 'Identify Point',
+			iconCls: 'id-reach-icon',
+			enableToggle: true,
+			toggleGroup: 'map-tool-buttons',
+			handler: function(b) {
+				if (!b.pressed) b.toggle();
+				map1.setMouseAction(identifyPoint);
+				Ext.getCmp('cmp-map-area').setTitle('Click on map to identify a point of interest');
 			}
 		},{
 			tooltip: 'Zoom In',
