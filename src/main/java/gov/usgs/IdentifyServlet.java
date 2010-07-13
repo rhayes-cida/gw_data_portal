@@ -48,13 +48,14 @@ public class IdentifyServlet extends HttpServlet {
 				
 
 				String jsonObj = "{" + 
-				"gwuId: '" + rset.getString("GWUID") + "'" + 
-				", locId: '" + rset.getString("LOC_ID") + "'" + 
-				", LATWGS84: '" + rset.getString("LATWGS84") + "'" + 
-				", LONGWGS84: '" + rset.getString("LONGWGS84") + "'" + 
-				", wellMonitoringPurposeType: '" + rset.getString("WELL_MONITORING_PURPOSE_TYPE") + "'" + 
-				", nationalAquiferName: '" + rset.getString("NATIONAL_AQUIFER_NAME") + "'" + 
-				", organizationId: '" + rset.getString("ORGANIZATION_ID") + "'" +
+				"siteNo: '" + rset.getString("SITE_NO") + "'" + 
+				", siteName: '" + rset.getString("SITE_NAME") + "'" + 
+				", decLatVa: '" + rset.getString("DEC_LAT_VA") + "'" + 
+				", decLongVa: '" + rset.getString("DEC_LONG_VA") + "'" + 
+				", qwWellType: '" + rset.getString("QW_WELL_TYPE") + "'" + 
+				", wlWellType: '" + rset.getString("WL_WELL_TYPE") + "'" + 
+				", nationalAquiferName: '" + rset.getString("NAT_AQFR_DESC") + "'" + 
+				", agency: '" + rset.getString("AGENCY_CD") + "'" +
 				"},";
 				
 				siteJsonOut.append(jsonObj);

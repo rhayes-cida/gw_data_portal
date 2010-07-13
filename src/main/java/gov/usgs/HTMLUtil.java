@@ -16,18 +16,23 @@ public class HTMLUtil {
 		NATIONAL_AQUIFER_NAME
 	 */
 	
-	public static void getOrganizationIdList(JspWriter out, Connection connection) {		
-		String sql = "SELECT UNIQUE ORGANIZATION_ID value, ORGANIZATION_ID display FROM GW_DATA_PORTAL.WELL_REGISTRY ORDER BY 1";
+	public static void getAgencyList(JspWriter out, Connection connection) {		
+		String sql = "SELECT UNIQUE AGENCY_CD value, AGENCY_CD display FROM NWIS_DWH_STAR.WELL_REGISTRY ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
-	public static void getWellMonitoringPurposeTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE WELL_MONITORING_PURPOSE_TYPE Value, WELL_MONITORING_PURPOSE_TYPE Display FROM GW_DATA_PORTAL.WELL_REGISTRY ORDER BY 1";
+	public static void getQWWellTypeList(JspWriter out, Connection connection) {
+		String sql = "SELECT UNIQUE QW_WELL_TYPE Value, QW_WELL_TYPE Display FROM NWIS_DWH_STAR.WELL_REGISTRY ORDER BY 1";
+		runQuery(sql, out, connection);
+	}
+	
+	public static void getWLWellTypeList(JspWriter out, Connection connection) {
+		String sql = "SELECT UNIQUE WL_WELL_TYPE Value, WL_WELL_TYPE Display FROM NWIS_DWH_STAR.WELL_REGISTRY ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 
 	public static void getNationalAquiferNameList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE NATIONAL_AQUIFER_NAME Value, NATIONAL_AQUIFER_NAME Display FROM GW_DATA_PORTAL.WELL_REGISTRY ORDER BY 1";
+		String sql = "SELECT UNIQUE nat_aqfr_desc Value, nat_aqfr_desc Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE nat_aqfr_desc is not null ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
