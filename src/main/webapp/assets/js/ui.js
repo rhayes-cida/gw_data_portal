@@ -30,7 +30,7 @@ Ext.onReady(function() {
 		id: 'ext-content-panel',
 		renderTo: 'content',
 		layout: 'border',
-		height: 500,
+		height: 630,
 		width: 1050,
 		plain: true,
 		style: 'text-align: left',
@@ -57,12 +57,16 @@ Ext.onReady(function() {
 			}],
 			items: [{
 				xtype: 'fieldset',
-				title: 'Organization ID',
-				contentEl: 'orgId-div'
+				title: 'Agency',
+				contentEl: 'agency-div'
 			},{
 				xtype: 'fieldset',
-				title: 'Well Monitoring Purpose Type',
-				contentEl: 'wellMonitoring-div'
+				title: 'QW Well Type',
+				contentEl: 'qw-well-type-div'
+			},{
+				xtype: 'fieldset',
+				title: 'Water Level Well Type',
+				contentEl: 'wl-well-type-div'
 			},{
 				xtype: 'fieldset',
 				title: 'National Aquifer Name',
@@ -154,8 +158,9 @@ function getUrlParamStringFromPicklist(id, isString) {
 function addDataLayer() {
 	
 	mapState = {
-		orgId: getUrlParamStringFromPicklist('orgId', true),
-		wellMonitoringType: getUrlParamStringFromPicklist('wellMonitoring', true),
+		agency: getUrlParamStringFromPicklist('agency', true),
+		qwWellType: getUrlParamStringFromPicklist('qw-well-type', true),
+		wlWellType: getUrlParamStringFromPicklist('wl-well-type', true),
 		ntlAquiferName: getUrlParamStringFromPicklist('ntlAquifer', true)
 	};
 

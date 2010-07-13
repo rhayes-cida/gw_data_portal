@@ -1,21 +1,23 @@
 <%
 	String queryId = request.getParameter("queryId");
-	String orgId = request.getParameter("orgId");
-	String wellMonitoringType = request.getParameter("wellMonitoringType");
+	String agency = request.getParameter("agency");
+	String qwWellType = request.getParameter("qwWellType");
+	String wlWellType = request.getParameter("wlWellType");
 	String ntlAquiferName = request.getParameter("ntlAquiferName");
 %>
 <% if ("map".equals(queryId)) {
 	String bbox = request.getParameter("BBOX");
 %>
 SELECT 
-	gp.GEOM GEOM 
+	gp.geom GEOM 
 FROM 
-	GW_DATA_PORTAL.WELL_REGISTRY gp 
+	nwis_dwh_star.well_registry gp 
 WHERE 
-<% if (!"".equals(orgId)) { %> ORGANIZATION_ID IN (<%= orgId %>) AND <%}%>
-<% if (!"".equals(wellMonitoringType)) { %> WELL_MONITORING_PURPOSE_TYPE IN (<%= wellMonitoringType %>) AND <%}%>
-<% if (!"".equals(ntlAquiferName)) { %> NATIONAL_AQUIFER_NAME IN (<%= ntlAquiferName %>) AND <%}%>
-    (sdo_filter(
+<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
+<% if (!"".equals(qwWellType)) { %> qw_well_type IN (<%= qwWellType %>) AND <%}%>
+<% if (!"".equals(wlWellType)) { %> wl_well_type IN (<%= wlWellType %>) AND <%}%>
+<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
+   	(sdo_filter(
       gp.geom,
       mdsys.sdo_geometry(
         2003,
@@ -29,19 +31,21 @@ WHERE
 	String idBBox = request.getParameter("idBBox");
 %>
 SELECT 
-	GWUID, 
-	LOC_ID, 
-	LATWGS84, 
-	LONGWGS84,
-	WELL_MONITORING_PURPOSE_TYPE,
-	NATIONAL_AQUIFER_NAME,
-	ORGANIZATION_ID 
+	SITE_NO, 
+	SITE_NAME, 
+	DEC_LAT_VA, 
+	DEC_LONG_VA,
+	QW_WELL_TYPE,
+	WL_WELL_TYPE,
+	NAT_AQFR_DESC,
+	AGENCY_CD  
 FROM 
-	GW_DATA_PORTAL.WELL_REGISTRY gp 
+	nwis_dwh_star.WELL_REGISTRY gp 
 WHERE 
-<% if (!"".equals(orgId)) { %> ORGANIZATION_ID IN (<%= orgId %>) AND <%}%>
-<% if (!"".equals(wellMonitoringType)) { %> WELL_MONITORING_PURPOSE_TYPE IN (<%= wellMonitoringType %>) AND <%}%>
-<% if (!"".equals(ntlAquiferName)) { %> NATIONAL_AQUIFER_NAME IN (<%= ntlAquiferName %>) AND <%}%>
+<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
+<% if (!"".equals(qwWellType)) { %> qw_well_type IN (<%= qwWellType %>) AND <%}%>
+<% if (!"".equals(wlWellType)) { %> wl_well_type IN (<%= wlWellType %>) AND <%}%>
+<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
 	(sdo_filter(
       gp.geom,
       mdsys.sdo_geometry(

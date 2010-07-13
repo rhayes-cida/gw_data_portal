@@ -109,19 +109,28 @@
 
 %>
 		<!--  PARAM LISTS -->
-		<div id="orgId-div" class="x-hidden">
+		<div id="agency-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
-			<select id="orgId" multiple="multiple" size="5" style="width: 100%">
+			<select id="agency" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All Organization IDs</option>
-				<% HTMLUtil.getOrganizationIdList(out, connection); %>
+				<% HTMLUtil.getAgencyList(out, connection); %>
 			</select>
 		</div>
 
-		<div id="wellMonitoring-div" class="x-hidden">
+		<div id="qw-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
-			<select id="wellMonitoring" multiple="multiple" size="5" style="width: 100%">
+			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All Well Monitoring Purpose Types</option>
-				<% HTMLUtil.getWellMonitoringPurposeTypeList(out, connection); %>
+				<% HTMLUtil.getQWWellTypeList(out, connection); %>
+			</select>
+		</div>
+		
+		
+		<div id="wl-well-type-div" class="x-hidden">
+			<p class="caption">ctrl + click to select more than one</p>
+			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
+				<option value="" selected="selected">All Well Monitoring Purpose Types</option>
+				<% HTMLUtil.getWLWellTypeList(out, connection); %>
 			</select>
 		</div>
 		

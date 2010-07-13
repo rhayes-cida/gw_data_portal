@@ -6,7 +6,7 @@ var identifyStore = new Ext.data.JsonStore({
     autoDestroy: false,
     storeId: 'myStore',
     root: 'sites',
-    fields: ['gwuId','LATWGS84','LONGWGS84','wellMonitoringPurposeType','nationalAquiferName','organizationId']
+    fields: ['siteNo','siteName','decLatVa','decLongVa','qwWellType','wlWellType','nationalAquiferName','agency']
 });
 
 
@@ -70,9 +70,9 @@ var SiteIdSelector = Ext.extend(Ext.Window, {
 				viewConfig: {forceFit: true},
 			    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 			    colModel: new Ext.grid.ColumnModel([
-	                { header: "GW ID", width: 250, dataIndex: 'gwuId'},
+	                { header: "Site Name", width: 250, dataIndex: 'siteName'},
 	                { header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'nationalAquiferName'},
-	                { header: "Organization ID", width: 100, sortable: true, dataIndex: 'organizationId'}	                
+	                { header: "Agency", width: 100, sortable: true, dataIndex: 'agency'}	                
 	            ])
 			},
 			buttons: [{
