@@ -9,7 +9,7 @@
 	String bbox = request.getParameter("BBOX");
 %>
 SELECT 
-	gp.geom GEOM 
+	gp.geom_3785 GEOM 
 FROM 
 	nwis_dwh_star.well_registry gp 
 WHERE 
@@ -18,10 +18,10 @@ WHERE
 <% if (!"".equals(wlWellType)) { %> wl_well_type IN (<%= wlWellType %>) AND <%}%>
 <% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
    	(sdo_filter(
-      gp.geom,
+      gp.geom_3785,
       mdsys.sdo_geometry(
         2003,
-        8307,
+        3785,
         NULL,
         mdsys.sdo_elem_info_array(1,1003,3),
       mdsys.sdo_ordinate_array(<%=bbox%>)
