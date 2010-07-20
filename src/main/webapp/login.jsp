@@ -7,13 +7,7 @@
 
 <html>
 	<head>
-		<title>United States Groundwater Data Portal</title>
-	
-		<!-- scrollable map assets -->
-		<script type="text/javascript" src="scrollable_map/JMap-header.js"></script>
-		<script type="text/javascript" src="scrollable_map/JMap-base.js"></script>
-		<script type="text/javascript" src="scrollable_map/JMap-all.js"></script>
-		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
+		<title>United States Groundwater Data Portal Log In</title>
 	
 		<!--  extjs assets -->
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
@@ -21,17 +15,37 @@
 		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
 		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
 		
-		<!-- application assets -->
-		<script type="text/javascript" src="assets/js/ui.js"></script>
-		<script type="text/javascript" src="assets/js/SiteIdSelector.js"></script>
-		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
+		<!-- application assets -->		
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
+		<script type="text/javascript">
+			Ext.onReady(function() {
+				new Ext.Viewport({
+					renderTo: document.body,
+					layout: 'border',
+					border: false,
+					defaults: {border: false},
+					items: [{
+						region: 'north',
+						contentEl: 'header'
+					},{
+						region: 'south',
+						contentEl: 'footer'
+					},{
+						region: 'center',
+						contentEl: 'wrapper'
+					}]
+				});
+			});
+		
+			
+		</script>
+
 	
 	</head>
 	
 	<body>
-		<div id="header">
+		<div id="header" class="x-hidden">
 			<div id="banner-area">
 			     
 				<h1>US Geological Survey</h1><!-- Not actually visible unless printed -->
@@ -79,85 +93,49 @@
 			</div>
 			
 			<h2 id="site-title">
-				United States Groundwater Data Portal
+				United States Groundwater Data Portal Log In
 			</h2>
 		</div> <!--  // END HEADER -->
 		
 		
 		
-		<div id="wrapper" style="width:100%" align="center">
-			<div id="content"></div>
+		<div id="wrapper" style="width:100%" align="center" class="x-hidden">
+			<div id="content" style="background-color: transparent">
+			
+			<form method="post" action=j_security_check>
+				<h2>Please enter your name and password.  To cancel, close this window.</h3><br/>
+				<table>
+					<tr>
+						<td>
+							<p>Name:</p>
+						</td>
+						<td style="text-align: right">
+							<p><input type="text" name="j_username" value="" /></p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>Password:</p>
+						</td>
+						<td style="text-align: right">
+							<p><input type="password" name="j_password" value="" /></p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align: center">
+							<br/>
+							<p><input type="submit" value="OK" style="width: 10em" /></p>
+						</td>
+					</tr>
+				</table>
+			</form>
+			
+			</div>
 		</div>
 		
-		<!-- render map to this div -->
-		<div id="map-area" class="x-hidden">
-			<div id="map-tools" class="map-tools"></div>
-			<img id="visid" src="http://internal.usgs.gov/visual/visual_id_files/raster/BW/80x22_black.jpg"/>
-			<div id="legend-div"></div>
-		</div>
-		
-		
-		
-<%
-		Connection connection = null;
-
-		try {
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
-			connection = ds.getConnection();
-
-%>
-		<!--  PARAM LISTS -->
-		<div id="agency-div" class="x-hidden">
-			<p class="caption">ctrl + click to select more than one</p>
-			<select id="agency" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Organization IDs</option>
-				<% HTMLUtil.getAgencyList(out, connection); %>
-			</select>
-		</div>
-
-		<div id="qw-well-type-div" class="x-hidden">
-			<p class="caption">ctrl + click to select more than one</p>
-			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Well Monitoring Purpose Types</option>
-				<% HTMLUtil.getQWWellTypeList(out, connection); %>
-			</select>
-		</div>
-		
-		
-		<div id="wl-well-type-div" class="x-hidden">
-			<p class="caption">ctrl + click to select more than one</p>
-			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Well Monitoring Purpose Types</option>
-				<% HTMLUtil.getWLWellTypeList(out, connection); %>
-			</select>
-		</div>
-		
-		<div id="ntlAquifer-div" class="x-hidden">
-			<p class="caption">ctrl + click to select more than one</p>
-			<select id="ntlAquifer" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All National Aquifer Names</option>
-				<% HTMLUtil.getNationalAquiferNameList(out, connection); %>
-			</select>
-		</div>
-
-
-
-<%
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (connection != null) {
-				try { connection.close(); } catch (SQLException e3) { ; }
-				connection = null;
-			}
-		}
-%>		
-		
-
 		
 		<!-- // START FOOTER -->
-		<div style="width: 100%; margin-right: -1em;" id="footer">
+		<div style="width: 100%; margin-right: -1em;" id="footer" class="x-hidden">
 			<div id="usgs-policy-links">
 				<h4 class="access-help">USGS Policy Information Links</h4>
 				<ul class="hnav">

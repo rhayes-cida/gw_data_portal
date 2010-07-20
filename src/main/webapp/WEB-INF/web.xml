@@ -25,6 +25,41 @@
    </servlet-mapping>
 
   <session-config>
-  	<session-timeout>1</session-timeout>
+  	<session-timeout>30</session-timeout>
   </session-config>
+  
+  
+  
+   <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>
+            SecretProtection
+        </web-resource-name>
+		<url-pattern>/index.jsp</url-pattern>
+        <http-method>GET</http-method>
+        <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+        <role-name>gwdp</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <login-config>
+      <auth-method>
+          FORM       <!-- BASIC, DIGEST, FORM, CLIENT-CERT -->
+      </auth-method>
+      <form-login-config>  <!-- only useful for FORM -->
+          <form-login-page>
+              /login.jsp
+          </form-login-page>
+          <form-error-page>
+              /login.jsp
+          </form-error-page>
+      </form-login-config>
+  </login-config>
+
+  <security-role>
+      <role-name>gwdp</role-name>
+  </security-role>
+  
 </web-app>

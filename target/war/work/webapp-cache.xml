@@ -15,6 +15,8 @@
           <string>assets/images/USGS_web_logo.gif</string>
           <string>assets/images/zoomInIcon.gif</string>
           <string>assets/images/zoomOutIcon.gif</string>
+          <string>assets/js/SiteIdentifyWindow.js</string>
+          <string>assets/js/SiteIdSelector.js</string>
           <string>assets/js/ui.js</string>
           <string>assets/wms/wms_default.xml</string>
           <string>ext_js/adapter/ext/ext-base-debug.js</string>
@@ -481,6 +483,7 @@
           <string>templates/base_query.jsp</string>
           <string>WEB-INF/web.xml</string>
           <string>WEB-INF/classes/gov/usgs/HTMLUtil.class</string>
+          <string>WEB-INF/classes/gov/usgs/IdentifyServlet.class</string>
           <string>WEB-INF/classes/gov/usgs/MVServlet.class</string>
           <string>WEB-INF/classes/gov/usgs/URLUtil.class</string>
         </pathsSet>
