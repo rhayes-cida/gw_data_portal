@@ -56,13 +56,6 @@
 				</div>
 				
 				<div id="ccsa-area">
-					<h4 class="access-help">Top Level USGS Links</h4>
-					<a title="Link to main USGS page" href="http://www.usgs.gov/">USGS Home</a>
-					<br/>
-					<a title="Link to main USGS contact page" href="http://www.usgs.gov/ask/index.html">Contact USGS</a>
-					<br/>
-					<a title="Link to main USGS search (not publications search)" href="http://search.usgs.gov/">Search USGS</a>
-					<br/>
 				</div>
 			</div><!-- End content -->
 				
@@ -92,7 +85,6 @@
 		<!-- render map to this div -->
 		<div id="map-area" class="x-hidden">
 			<div id="map-tools" class="map-tools"></div>
-			<img id="visid" src="http://internal.usgs.gov/visual/visual_id_files/raster/BW/80x22_black.jpg"/>
 			<div id="legend-div"></div>
 		</div>
 		
@@ -119,7 +111,7 @@
 		<div id="qw-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Well Monitoring Purpose Types</option>
+				<option value="" selected="selected">All Water Quality Well Types</option>
 				<% HTMLUtil.getQWWellTypeList(out, connection); %>
 			</select>
 		</div>
@@ -128,7 +120,7 @@
 		<div id="wl-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Well Monitoring Purpose Types</option>
+				<option value="" selected="selected">All Water Level Well Types</option>
 				<% HTMLUtil.getWLWellTypeList(out, connection); %>
 			</select>
 		</div>
@@ -195,7 +187,7 @@
    					<p id="footer-page-url">URL: </p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
-						<a href="mailto:nlbooth@usgs.gov?subject=GW Trends Map Comments" title="Contact Email">webmaster</a>
+						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>
 					</p>
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->

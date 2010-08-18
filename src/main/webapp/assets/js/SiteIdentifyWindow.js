@@ -5,7 +5,7 @@ var siteIdTpl = new Ext.XTemplate(
 				'<tr><td>Site Name</td><td>{siteName}</td></tr>',
 				'<tr><td>Site #</td><td>{siteNo}</td></tr>',
 				'<tr><td>Lat/Long(WGS84)</td><td>{decLatVa},{decLongVa}</td></tr>',
-				'<tr><td>QW Well Type</td><td>{qwWellType}</td></tr>',
+				'<tr><td>Water Quality Well Type</td><td>{qwWellType}</td></tr>',
 				'<tr><td>Water Level Well Type</td><td>{wlWellType}</td></tr>',
 				'<tr><td>National Aquifer Name</td><td>{nationalAquiferName}</td></tr>',
 				'<tr><td>Agency</td><td>{agency}</td></tr>',
