@@ -37,7 +37,7 @@ WHERE
 <% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
 <% if (!"".equals(qwWellType)) { %> qw_well_type IN (<%= qwWellType %>) AND <%}%>
 <% if (!"".equals(wlWellType)) { %> wl_well_type IN (<%= wlWellType %>) AND <%}%>
-<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
+<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
 1=1
 <%} else if ("identify".equals(queryId)) {
 	String idBBox = request.getParameter("idBBox");
