@@ -112,7 +112,7 @@
 		<div id="qw-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Water Quality Well Types</option>
+				<option value="" selected="selected">Do Not Filter By Water Quality Type</option>
 				<% HTMLUtil.getQWWellTypeList(out, connection); %>
 			</select>
 		</div>
@@ -121,7 +121,7 @@
 		<div id="wl-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Water Level Well Types</option>
+				<option value="" selected="selected">Do Not Filter By Water Level Type</option>
 				<% HTMLUtil.getWLWellTypeList(out, connection); %>
 			</select>
 		</div>

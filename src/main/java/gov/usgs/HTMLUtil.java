@@ -22,12 +22,12 @@ public class HTMLUtil {
 	}
 	
 	public static void getQWWellTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE QW_WELL_TYPE Value, QW_WELL_TYPE Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE qw_well_type is not null ORDER BY 1";
+		String sql = "SELECT UNIQUE QW_WELL_TYPE_US_FLAG Value, QW_WELL_TYPE_US_FLAG Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE qw_well_type_us_flag <> 'None' ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
 	public static void getWLWellTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE WL_WELL_TYPE Value, WL_WELL_TYPE Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE wl_well_type is not null ORDER BY 1";
+		String sql = "SELECT UNIQUE WL_WELL_TYPE_US_FLAG Value, WL_WELL_TYPE_US_FLAG Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE wl_well_type_us_flag <> 'None' ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 
