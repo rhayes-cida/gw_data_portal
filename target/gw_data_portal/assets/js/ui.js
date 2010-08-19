@@ -10,7 +10,7 @@ Ext.onReady(function() {
 		numTilesY: 5,
 		centerLat: 37,
 		centerLon: -96,
-		zoomLevel: 2,
+		zoomLevel: 3,
 		mapWidthPx: 600,
 		mapHeightPx: 600,
 		cacheTiles: true,
@@ -80,7 +80,7 @@ Ext.onReady(function() {
 	        listeners: {
 				checkchange: function(n, checked){
 
-                	if (n.isLeaf()) {
+                	if (n.isLeaf() && !n.attributes.layerId) {
                 		var ml = findParentMapLayer(n);
                 		if (n.ui.isChecked()) {
                 			ml.appendSubLayer(n.attributes.subId);
@@ -89,9 +89,9 @@ Ext.onReady(function() {
                 		}
                 		ml.draw();
                 	} else if (n.attributes.layerId) {
-                		if (n.attributes.type != 'tiled')
+                		if (n.attributes.type != 'tiled') {
                 			refreshSubLayers(n, n.attributes.layerId);
-                		
+                   		}
                 		if (n.ui.isChecked()) {
                 			map1.appendLayer(n.attributes.layerId);
                 		} else {
@@ -107,6 +107,19 @@ Ext.onReady(function() {
 	        root: new Ext.tree.AsyncTreeNode({
 	            expanded: true,
 	            children: [{
+	                text: 'National Map Composite',
+	                children: [{
+	                	text: 'Shaded Relief',
+		                checked: true,
+	                	leaf: true,
+	                	layerId: 29327
+	                },{
+	                	text: 'Vector Fills',
+		                checked: true,
+	                	leaf:true,
+	                	layerId: 29320
+	                }]
+	            },{
 	                text: 'U.S. Topo: Current Available',
 	                checked: false,
 	                layerId: 29331,

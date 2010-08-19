@@ -6,6 +6,7 @@
         <pathsSet class="linked-hash-set">
           <string>assets/css/custom.css</string>
           <string>assets/css/usgs_style_main.css</string>
+          <string>assets/images/acwi_logo.png</string>
           <string>assets/images/cir.png</string>
           <string>assets/images/draghand.gif</string>
           <string>assets/images/exportIcongif.gif</string>
@@ -420,6 +421,7 @@
           <string>ext_js/resources/images/vista/toolbar/tb-btn-sprite.gif</string>
           <string>ext_js/resources/resources.jsb</string>
           <string>index.jsp</string>
+          <string>login.jsp</string>
           <string>META-INF/MANIFEST.MF</string>
           <string>scrollable_map/css/scrollable_map.css</string>
           <string>scrollable_map/images/blank.gif</string>

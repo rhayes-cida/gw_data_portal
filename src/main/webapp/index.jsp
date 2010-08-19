@@ -19,6 +19,7 @@
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>
 		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
+		<script src="ext_js/examples/ux/StatusBar.js"></script>
 		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->
@@ -192,6 +193,9 @@
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->
 				<div id="gov-buttons">
+					<a href="http://cida.usgs.gov/" title="link to the official CIDA web portal">
+						<img alt="CIDA button" src="assets/images/logos/cida_logo.jpg" width="100"/>
+					</a>
 					<a href="http://firstgov.gov/" title="link to the official US Government web portal">
 						<img alt="FirstGov button" src="http://infotrek.er.usgs.gov/docs/nawqa_www/nawqa_public_template/assets/footer_graphic_firstGov.jpg"/>
 					</a>

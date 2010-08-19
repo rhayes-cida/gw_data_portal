@@ -520,3 +520,7 @@ td.long-text {
 	width: 100px;	
 	padding: 5px;
 }
+
+.hud-scale-bars div {
+	font-size: 80% !important;
+}

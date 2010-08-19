@@ -70,6 +70,13 @@
 				</div>
 				
 				<div id="ccsa-area">
+					<h4 class="access-help">Top Level USGS Links</h4>
+					<a title="Link to main USGS page" href="http://www.usgs.gov/">USGS Home</a>
+					<br/>
+					<a title="Link to main USGS contact page" href="http://www.usgs.gov/ask/index.html">Contact USGS</a>
+					<br/>
+					<a title="Link to main USGS search (not publications search)" href="http://search.usgs.gov/">Search USGS</a>
+					<br/>
 				</div>
 			</div><!-- End content -->
 				
@@ -124,21 +131,7 @@
 			</form>
 			
 			</div>
-			
-			<table id="logos" border="0">
-				<tr>
-					<td><img src="assets/images/logos/iepa_logo.jpg" alt=""/></td>
-					<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt=""/></td>
-					<td><img src="assets/images/logos/indnrtitle.gif" alt=""/></td>
-					<td><img src="assets/images/logos/mn_dnr_logo.gif" alt=""/></td>
-					<td><img src="assets/images/logos/mpca7000.gif" alt=""/></td>
-					<td><img src="assets/images/logos/njgslogo.gif" alt=""/></td>
-					<td><img src="assets/images/logos/twdb.gif" alt=""/></td>
-					<td><img src="assets/images/USGS_web_logo.gif" alt=""/></td>
-				</tr>
-			</table>
 		</div>
-		
 		
 		
 		<!-- // START FOOTER -->
@@ -180,14 +173,11 @@
    					<p id="footer-page-url">URL: </p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
-						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>
+						<a href="mailto:nlbooth@usgs.gov?subject=GW Trends Map Comments" title="Contact Email">webmaster</a>
 					</p>
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->
 				<div id="gov-buttons">
-					<a href="http://cida.usgs.gov/" title="link to the official CIDA web portal">
-						<img alt="CIDA button" src="assets/images/logos/cida_logo.jpg" width="100"/>
-					</a>
 					<a href="http://firstgov.gov/" title="link to the official US Government web portal">
 						<img alt="FirstGov button" src="http://infotrek.er.usgs.gov/docs/nawqa_www/nawqa_public_template/assets/footer_graphic_firstGov.jpg"/>
 					</a>

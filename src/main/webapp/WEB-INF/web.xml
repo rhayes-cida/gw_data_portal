@@ -14,14 +14,24 @@
 		<servlet-class>gov.usgs.IdentifyServlet</servlet-class>
 	</servlet>
 	
+	<servlet>
+	    <servlet-name>BBoxServlet</servlet-name>
+	    <servlet-class>gov.usgs.BBoxServlet</servlet-class>
+	</servlet>
+	
    <servlet-mapping>
    		<servlet-name>MVServlet</servlet-name>
   		<url-pattern>/mvwms</url-pattern>
    </servlet-mapping>
    
-      <servlet-mapping>
+   <servlet-mapping>
    		<servlet-name>IdentifyServlet</servlet-name>
   		<url-pattern>/identify</url-pattern>
+   </servlet-mapping>
+   
+   <servlet-mapping>
+   		<servlet-name>BBoxServlet</servlet-name>
+  		<url-pattern>/bbox</url-pattern>
    </servlet-mapping>
 
   <session-config>

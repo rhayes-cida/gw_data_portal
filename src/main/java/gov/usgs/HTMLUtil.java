@@ -27,7 +27,7 @@ public class HTMLUtil {
 	}
 	
 	public static void getWLWellTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE WL_WELL_TYPE Value, WL_WELL_TYPE Display FROM NWIS_DWH_STAR.WELL_REGISTRY ORDER BY 1";
+		String sql = "SELECT UNIQUE WL_WELL_TYPE Value, WL_WELL_TYPE Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE wl_well_type is not null ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 
