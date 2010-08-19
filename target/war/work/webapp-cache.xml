@@ -13,6 +13,15 @@
           <string>assets/images/extentUSA.gif</string>
           <string>assets/images/identifygif.gif</string>
           <string>assets/images/layersIcongif.gif</string>
+          <string>assets/images/logos/cida_logo.jpg</string>
+          <string>assets/images/logos/iepa_logo.jpg</string>
+          <string>assets/images/logos/ilstatewatersurvey.gif</string>
+          <string>assets/images/logos/indnrtitle.gif</string>
+          <string>assets/images/logos/mn_dnr_logo.gif</string>
+          <string>assets/images/logos/mpca7000.gif</string>
+          <string>assets/images/logos/njgslogo.gif</string>
+          <string>assets/images/logos/twdb.gif</string>
+          <string>assets/images/logos/USGS_logo.png</string>
           <string>assets/images/USGS_web_logo.gif</string>
           <string>assets/images/zoomInIcon.gif</string>
           <string>assets/images/zoomOutIcon.gif</string>
@@ -22,6 +31,74 @@
           <string>assets/wms/wms_default.xml</string>
           <string>ext_js/adapter/ext/ext-base-debug.js</string>
           <string>ext_js/adapter/ext/ext-base.js</string>
+          <string>ext_js/examples/ux/BufferView.js</string>
+          <string>ext_js/examples/ux/CenterLayout.js</string>
+          <string>ext_js/examples/ux/CheckColumn.js</string>
+          <string>ext_js/examples/ux/ColumnNodeUI.js</string>
+          <string>ext_js/examples/ux/css/CenterLayout.css</string>
+          <string>ext_js/examples/ux/css/ColumnNodeUI.css</string>
+          <string>ext_js/examples/ux/css/GroupSummary.css</string>
+          <string>ext_js/examples/ux/css/GroupTab.css</string>
+          <string>ext_js/examples/ux/css/MultiSelect.css</string>
+          <string>ext_js/examples/ux/css/PanelResizer.css</string>
+          <string>ext_js/examples/ux/css/Portal.css</string>
+          <string>ext_js/examples/ux/css/RowEditor.css</string>
+          <string>ext_js/examples/ux/css/Spinner.css</string>
+          <string>ext_js/examples/ux/css/StatusBar.css</string>
+          <string>ext_js/examples/ux/css/ux-all.css</string>
+          <string>ext_js/examples/ux/DataView-more.js</string>
+          <string>ext_js/examples/ux/FileUploadField.js</string>
+          <string>ext_js/examples/ux/Focus.js</string>
+          <string>ext_js/examples/ux/GMapPanel.js</string>
+          <string>ext_js/examples/ux/GroupSummary.js</string>
+          <string>ext_js/examples/ux/GroupTab.js</string>
+          <string>ext_js/examples/ux/GroupTabPanel.js</string>
+          <string>ext_js/examples/ux/images/accept.png</string>
+          <string>ext_js/examples/ux/images/bottom2.gif</string>
+          <string>ext_js/examples/ux/images/down2.gif</string>
+          <string>ext_js/examples/ux/images/elbow-minus-nl.gif</string>
+          <string>ext_js/examples/ux/images/elbow-plus-nl.gif</string>
+          <string>ext_js/examples/ux/images/exclamation.gif</string>
+          <string>ext_js/examples/ux/images/left2.gif</string>
+          <string>ext_js/examples/ux/images/loading.gif</string>
+          <string>ext_js/examples/ux/images/panel-handle.gif</string>
+          <string>ext_js/examples/ux/images/right2.gif</string>
+          <string>ext_js/examples/ux/images/row-editor-bg.gif</string>
+          <string>ext_js/examples/ux/images/row-editor-btns.gif</string>
+          <string>ext_js/examples/ux/images/saved.png</string>
+          <string>ext_js/examples/ux/images/saving.gif</string>
+          <string>ext_js/examples/ux/images/spinner-split.gif</string>
+          <string>ext_js/examples/ux/images/spinner.gif</string>
+          <string>ext_js/examples/ux/images/summary-bg.gif</string>
+          <string>ext_js/examples/ux/images/summary-group-bg.gif</string>
+          <string>ext_js/examples/ux/images/top2.gif</string>
+          <string>ext_js/examples/ux/images/up2.gif</string>
+          <string>ext_js/examples/ux/images/x-grouptabs-corners.gif</string>
+          <string>ext_js/examples/ux/ItemSelector.js</string>
+          <string>ext_js/examples/ux/MultiSelect.js</string>
+          <string>ext_js/examples/ux/PagingMemoryProxy.js</string>
+          <string>ext_js/examples/ux/PanelResizer.js</string>
+          <string>ext_js/examples/ux/Portal.js</string>
+          <string>ext_js/examples/ux/PortalColumn.js</string>
+          <string>ext_js/examples/ux/Portlet.js</string>
+          <string>ext_js/examples/ux/ProgressBarPager.js</string>
+          <string>ext_js/examples/ux/RowEditor.js</string>
+          <string>ext_js/examples/ux/RowExpander.js</string>
+          <string>ext_js/examples/ux/RowLayout.js</string>
+          <string>ext_js/examples/ux/SearchField.js</string>
+          <string>ext_js/examples/ux/SelectBox.js</string>
+          <string>ext_js/examples/ux/SliderTip.js</string>
+          <string>ext_js/examples/ux/SlidingPager.js</string>
+          <string>ext_js/examples/ux/Spinner.js</string>
+          <string>ext_js/examples/ux/SpinnerField.js</string>
+          <string>ext_js/examples/ux/Spotlight.js</string>
+          <string>ext_js/examples/ux/StatusBar.js</string>
+          <string>ext_js/examples/ux/TabCloseMenu.js</string>
+          <string>ext_js/examples/ux/TableGrid.js</string>
+          <string>ext_js/examples/ux/TabScrollerMenu.js</string>
+          <string>ext_js/examples/ux/ux-all-debug.js</string>
+          <string>ext_js/examples/ux/ux-all.js</string>
+          <string>ext_js/examples/ux/XmlTreeLoader.js</string>
           <string>ext_js/ext-all.js</string>
           <string>ext_js/resources/charts.swf</string>
           <string>ext_js/resources/css/borders.css</string>
@@ -484,6 +561,7 @@
           <string>templates/base_map_request.jsp</string>
           <string>templates/base_query.jsp</string>
           <string>WEB-INF/web.xml</string>
+          <string>WEB-INF/classes/gov/usgs/BBoxServlet.class</string>
           <string>WEB-INF/classes/gov/usgs/HTMLUtil.class</string>
           <string>WEB-INF/classes/gov/usgs/IdentifyServlet.class</string>
           <string>WEB-INF/classes/gov/usgs/MVServlet.class</string>

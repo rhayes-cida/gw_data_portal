@@ -1,5 +1,6 @@
-var map;
+var map1;
 var mapState = {};
+var pointsCount = new Ext.Toolbar.TextItem('0 Points Mapped');
 
 Ext.onReady(function() {
 	
@@ -18,9 +19,14 @@ Ext.onReady(function() {
 		projection: new JMap.projection.Mercator(),
 		HUD: {
 			zoomSlider: true, 
-			scaleRake: true
+			scaleRake: true,
+		 	overviewMap: true,
+		 	latLonLabel: true
 		}
 	});
+	
+	addOverviewLayers();
+	
 	
 	//create the EXTJS layout
 	new Ext.Panel({
@@ -32,15 +38,22 @@ Ext.onReady(function() {
 		plain: true,
 		style: 'text-align: left',
 		items: [{
-			title: 'Click and drag map',
+			border: true,
 			region: 'center',
-			id: 'cmp-map-area',
-			contentEl: 'map-area',
-			listeners: {
-				bodyresize: function(p) {
-					if (map1) map1.resize(p.body.getWidth()-2,p.body.getHeight()-1);
+			layout: 'border',
+		    items: [{
+				title: 'Click and drag map',
+				border: false,
+				id: 'cmp-map-area',
+				region: 'center',
+				contentEl: 'map-area',
+				listeners: {
+					resize: function(p) {
+						if (map1) map1.resize(p.body.getWidth(),p.getInnerHeight());
+					}
 				}
-			}
+		    }],
+			bbar: [pointsCount]
 		},{
 			region: 'west',
 			width: 300,
@@ -75,6 +88,7 @@ Ext.onReady(function() {
 			title: 'Base Data Layers',
 			width: 300,
 			rootVisible: false,
+			autoScroll: true,
 			xtype: 'treepanel',
 	        loader: new Ext.tree.TreeLoader({preloadChildren: true}),
 	        listeners: {
@@ -107,19 +121,6 @@ Ext.onReady(function() {
 	        root: new Ext.tree.AsyncTreeNode({
 	            expanded: true,
 	            children: [{
-	                text: 'National Map Composite',
-	                children: [{
-	                	text: 'Shaded Relief',
-		                checked: true,
-	                	leaf: true,
-	                	layerId: 29327
-	                },{
-	                	text: 'Vector Fills',
-		                checked: true,
-	                	leaf:true,
-	                	layerId: 29320
-	                }]
-	            },{
 	                text: 'U.S. Topo: Current Available',
 	                checked: false,
 	                layerId: 29331,
@@ -833,6 +834,41 @@ function addDataLayer() {
 		ntlAquiferName: getUrlParamStringFromPicklist('ntlAquifer', true)
 	};
 
+	
+	
+	Ext.getCmp('cmp-map-area').body.mask('Drawing Map.  Please wait...','x-mask-loading');
+	//Ext.getCmp('ext-content-panel').body.mask();
+	
+	//fit map to data
+	Ext.Ajax.request({
+		method: 'GET',
+		url: 'bbox',
+		params: mapState,
+		success: function(r,o) {
+			Ext.getCmp('cmp-map-area').body.unmask();
+			//Ext.getCmp('ext-content-panel').body.unmask();
+			var fitJSON = Ext.util.JSON.decode(r.responseText);
+			if (fitJSON.bbox == ',,,') {
+				Ext.Msg.show({
+				   title:'No Sites Found',
+				   msg: 'There are no data available for your selection or in your area of interest.',
+				   buttons: Ext.Msg.OK,
+				   icon: Ext.MessageBox.WARNING
+				});
+			} else {
+				var b = fitJSON.bbox.split(',');
+				map1.fitToBBox(parseFloat(b[0]),parseFloat(b[1]),parseFloat(b[2]),parseFloat(b[3]));
+				Ext.fly(pointsCount.getEl()).update('Number of points meeting criteria: ' + fitJSON.count);
+			}
+		},
+		failure: function() {
+			Ext.getCmp('cmp-map-area').body.unmask();
+			//Ext.getCmp('ext-content-panel').body.unmask();
+		}
+	});
+	
+	
+	
 	map1.layerManager.unloadMapLayer(-95);
 	map1.appendLayer(new JMap.web.mapLayer.WMSLayer({
 		name: 'Data Layer',
@@ -927,7 +963,7 @@ function loadMapLayers() {
 		]
 	}));
 	
-	map1.loadMapLayer(new JMap.web.mapLayer.MultiServiceLayer({
+	map1.appendLayer(new JMap.web.mapLayer.MultiServiceLayer({
 		id: 29322,
 		name: 'Vector',
 		description: 'Boundaries',
@@ -1108,4 +1144,90 @@ function loadMapLayers() {
 		//legendUrl: 'http://services.nationalmap.gov/ArcGIS/rest/services/nhd/MapServer/export?f=image&dpi=96&transparent=true&format=png8&bbox={%22xmin%22:-20037508.342789244,%22ymin%22:-20037508.342789236,%22xmax%22:20037508.342789244,%22ymax%22:20037508.342789244,%22spatialReference%22:{%22wkid%22:102113}}&bboxSR=102113&imageSR=102113&size=256,256',
 		baseUrl: 'http://raster.nationalmap.gov/ArcGIS/rest/services/Combined/TNM_Large_Scale_Imagery/MapServer/export'
 	}));
+}
+
+function addOverviewLayers() {
+	map1._HUDManager._HUDOverviewMap.overviewMap.appendLayer(
+		new JMap.web.mapLayer.MultiServiceLayer({
+			id: 29327,
+			name: 'Shaded Relief',
+			description: 'Shaded Relief',
+			title: 'Shaded Relief',
+			legendUrl: 'http://raster1.nationalmap.gov/ArcGIS/rest/services/TNM_Small_Scale_Shaded_Relief/MapServer/tile/0/0/0.png',
+			layers: [
+			    new JMap.web.mapLayer.NationalMapTileLayer({
+			    	id: 30005,
+			    	zDepth: -150000,
+			    	minZoom: 0,
+			    	maxZoom: 6,
+			    	baseUrl: 'http://raster1.nationalmap.gov/ArcGIS/rest/services/TNM_Small_Scale_Shaded_Relief/MapServer/tile'
+			    }),	
+			    new JMap.web.mapLayer.NationalMapTileLayer({
+			    	id: 30006,
+			    	zDepth: -150000,
+			    	minZoom: 7,
+			    	maxZoom: 10,
+			    	baseUrl: 'http://raster1.nationalmap.gov/ArcGIS/rest/services/TNM_Medium_Scale_Shaded_Relief/MapServer/tile'
+			    }),	
+			    new JMap.web.mapLayer.NationalMapWMSLayer({
+			    	id: 30007,
+			    	zDepth: -150000,
+			    	maxZoom: 18,
+			    	minZoom: 11,
+			    	baseUrl: 'http://raster.nationalmap.gov/ArcGIS/rest/services/TNM_Large_Scale_Shaded_Relief/MapServer/export'
+			    })
+			]
+		})
+	);
+	
+	map1._HUDManager._HUDOverviewMap.overviewMap.appendLayer(new JMap.web.mapLayer.MultiServiceLayer({
+		id: 29322,
+		name: 'Vector',
+		description: 'Boundaries',
+		title: 'Vector',
+		legendUrl: 'http://basemap.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Small/MapServer/tile/0/0/0.jpg',
+		layers: [
+		    new JMap.web.mapLayer.NationalMapTileLayer({
+		    	id: 30003,
+		    	zDepth: -500000,
+		    	minZoom: 0, 
+		    	maxZoom: 15,
+		    	format: 'jpg',
+		    	baseUrl: 'http://basemap.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Small/MapServer/tile'
+		    }),	
+		    new JMap.web.mapLayer.NationalMapWMSLayer({
+		    	id: 30004,
+		    	zDepth: -500000,
+		    	minZoom: 16, 
+		    	maxZoom: 18,
+		    	baseUrl: 'http://services.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Large/MapServer/export'
+		    })
+		]
+	}));
+
+	map1._HUDManager._HUDOverviewMap.overviewMap.appendLayer(new JMap.web.mapLayer.MultiServiceLayer({
+		id: 29320,
+		name: 'Vector Fills',
+		description: 'Vector Fills',
+		title: 'Vector Fills',
+		legendUrl: 'http://basemap.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Fills_Small/MapServer/tile/0/0/0.png',
+		layers: [
+		    new JMap.web.mapLayer.NationalMapTileLayer({
+		    	id: 30010,
+		    	zDepth: -400000,
+		    	minZoom: 0,
+		    	maxZoom: 13,
+		    	format: 'png',
+		    	baseUrl: 'http://basemap.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Fills_Small/MapServer/tile'
+		    }),	
+		    new JMap.web.mapLayer.NationalMapWMSLayer({
+		    	id: 30011,
+		    	zDepth: -400000,
+		    	minZoom: 14,
+		    	maxZoom: 18,
+		    	baseUrl: 'http://services.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Fills_Large/MapServer/export'
+		    })
+		]
+	}));
+	
 }

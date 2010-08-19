@@ -840,10 +840,12 @@ JMap.web.Map.prototype.fitToBBox = function(xmin, ymin, xmax, ymax) {
 	//	constraining bbox, then zoom out
 	var xExtent = xmax - xmin;
 	var yExtent = ymax - ymin;
-	while (this.zoom <= this.maxZoom) {
+	while (this.zoom <= this.maxZoom && this.zoom >= this.minZoom) {
 		var mapBBox = this.getViewportBoundingBox();
 		if (xExtent >= (mapBBox.xmax - mapBBox.xmin) || yExtent >= (mapBBox.ymax - mapBBox.ymin)) {
 			this.zoomOut(1);
+			break;
+		} else if (this.zoom == this.maxZoom) {
 			break;
 		}
 		this.zoomIn(1);

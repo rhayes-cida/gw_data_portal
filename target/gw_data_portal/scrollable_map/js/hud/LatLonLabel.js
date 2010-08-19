@@ -34,11 +34,14 @@ JMap.hud.LatLonLabel.prototype._createHTML = function() {
  */
 JMap.hud.LatLonLabel.prototype.update = function(event) {
 	if (!document.onmousemove) {
+		var mapCoords = this.HUD.map.getMapCoordsInPixelSpace();
 		var coords = JMap.util.getRelativeCoords(event, this.HUD.map.mapViewport);
-		var mousePosition = this.HUD.map.getLatLonFromPixel(coords.x, coords.y);
+		var mousePosition = this.HUD.map.getLatLonFromPixel(mapCoords.x + coords.x, mapCoords.y + (this.HUD.map.viewportHeight - coords.y));
 		
-		var tLat = mousePosition.lat;
+		var tLat = mousePosition.lat;		
 		var tLon = mousePosition.lon;
+		while (tLon > 180) tLon -= 360;
+		while (tLon < -180) tLon += 360;
 		
 		var latDegrees = Math.floor(tLat);
 		var latMinutes = Math.floor((tLat - latDegrees) * 60);

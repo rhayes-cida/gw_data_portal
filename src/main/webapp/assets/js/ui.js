@@ -88,6 +88,7 @@ Ext.onReady(function() {
 			title: 'Base Data Layers',
 			width: 300,
 			rootVisible: false,
+			autoScroll: true,
 			xtype: 'treepanel',
 	        loader: new Ext.tree.TreeLoader({preloadChildren: true}),
 	        listeners: {
@@ -120,21 +121,6 @@ Ext.onReady(function() {
 	        root: new Ext.tree.AsyncTreeNode({
 	            expanded: true,
 	            children: [{
-	                text: 'National Map Composite',
-	                children: [{
-	                	text: 'Shaded Relief',
-		                checked: true,
-	                	leaf: true,
-	                	type:'tiled',
-	                	layerId: 29327
-	                },{
-	                	text: 'Vector Fills',
-		                checked: true,
-	                	type:'tiled',
-	                	leaf:true,
-	                	layerId: 29320
-	                }]
-	            },{
 	                text: 'U.S. Topo: Current Available',
 	                checked: false,
 	                layerId: 29331,

@@ -99,8 +99,11 @@ JMap.util.Tools.zoomIn._ZoomInBBox.prototype._ZoomInEndDrag = function(event) {
 		this.map.pane.removeChild(this.bbox);
 		minLL.lon = (((minLL.lon + 180) % 360) - 180);
 		maxLL.lon = (((maxLL.lon + 180) % 360) - 180);
-
-		this.map.fitToBBox(minLL.lon, minLL.lat, maxLL.lon, maxLL.lat);
+		if (this.map.zoom == this.map.maxZoom) {
+			this.map.moveTo((minLL.lat + maxLL.lat)/2,(minLL.lon + maxLL.lon)/2);
+		} else {
+			this.map.fitToBBox(minLL.lon, minLL.lat, maxLL.lon, maxLL.lat);
+		}
 	}
 	this.map = null;
 	this.bbox = null;

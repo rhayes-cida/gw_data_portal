@@ -125,7 +125,7 @@
 			
 			</div>
 			
-			<table id="logos" border="0">
+			<table id="logos" border="0" style="text-align: center">
 				<tr>
 					<td><img src="assets/images/logos/iepa_logo.jpg" alt=""/></td>
 					<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt=""/></td>
@@ -135,6 +135,7 @@
 					<td><img src="assets/images/logos/njgslogo.gif" alt=""/></td>
 					<td><img src="assets/images/logos/twdb.gif" alt=""/></td>
 					<td><img src="assets/images/USGS_web_logo.gif" alt=""/></td>
+					<td><img src="assets/images/logos/MontanaBMG.jpg" alt=""/></td>
 				</tr>
 			</table>
 		</div>

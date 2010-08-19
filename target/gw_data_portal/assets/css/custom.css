@@ -509,3 +509,18 @@ td.long-text {
 .title-link:hover {
 	text-decoration: underline !important;
 }
+
+
+#logos {
+	width: 100%;
+	border-collapse: collapse;	
+}
+
+#logos tr td img {
+	width: 100px;	
+	padding: 5px;
+}
+
+.hud-scale-bars div {
+	font-size: 80% !important;
+}

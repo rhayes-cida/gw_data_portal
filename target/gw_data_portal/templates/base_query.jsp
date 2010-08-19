@@ -27,6 +27,18 @@ WHERE
       mdsys.sdo_ordinate_array(<%=bbox%>)
       )
     ) = 'TRUE') 
+<%} else if ("bbox".equals(queryId)) { %>
+SELECT 
+	min(gp.dec_long_va) || ',' || min(gp.dec_lat_va) ||','|| max(gp.dec_long_va) ||','||  max(gp.dec_lat_va) bbox,
+	count(*) num_points  
+FROM 
+	nwis_dwh_star.well_registry gp 
+WHERE 
+<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
+<% if (!"".equals(qwWellType)) { %> qw_well_type IN (<%= qwWellType %>) AND <%}%>
+<% if (!"".equals(wlWellType)) { %> wl_well_type IN (<%= wlWellType %>) AND <%}%>
+<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
+1=1
 <%} else if ("identify".equals(queryId)) {
 	String idBBox = request.getParameter("idBBox");
 %>
