@@ -26,7 +26,7 @@ public class MVServlet extends HttpServlet {
 //System.out.println(query.replaceAll("%2526lt;", "<").replaceAll("%252B", "+").replaceAll("FROM", "FROM\n"));	
 			//fetch xml request
 			mapreq =  URLUtil.getStringFromURL(baseUrl.toExternalForm() + "/base_map_request.jsp;jsessionid=" + req.getSession().getId(), params + "&query=" + query + "&requestId=map");      
-//System.out.println(mapreq);	
+//System.out.println(mapreq.replaceAll(">", ">\n"));	
 	
 			//POST xml request to mapviewer server and return byte stream (image)
 			URLUtil.writeBytesToOutputStream("http://maptrek.er.usgs.gov/mapviewer_11/omserver", "xml_request=" + mapreq, resp.getOutputStream());

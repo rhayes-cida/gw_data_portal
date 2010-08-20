@@ -47,9 +47,10 @@ public class BBoxServlet extends HttpServlet {
 			if (rset.next()) {  
 				
 				
-				os.print("{" + 
-						"bbox: \"" + rset.getString("bbox") + "\"," + 
-						"count: " + rset.getString("num_points") + 
+				os.print("{\n" + 
+						"bbox: \"" + rset.getString("bbox") + "\",\n" + 
+						"count: " + rset.getString("num_points") + ",\n" +
+						"query: \"" + query + "\"\n" +
 					"}"
 				);
 				

@@ -18,46 +18,10 @@ WHERE
 1 = 1  
 <% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
 <% if (!"".equals(qwSnFlag) || !"".equals(wlSnFlag)) { %>
- AND (
-	<% if (!"".equals(qwWellType) || !"".equals(qwSnFlag)) { %>
-		( 
-		<% if (!"".equals(qwSnFlag)) { %>
-			QW_SN_FLAG='Yes' 
-			<% if (!"".equals(qwWellType) && !"".equals(qwSnFlag)) { %> 
-				AND 
-			<% } %>
-			<% if (!"".equals(qwWellType)) { %>
-				qw_well_type_US_FLAG IN (<%= qwWellType %>) 
-			<% } %>
-		<% } else { %>
-			1 = 1 
-		<% } %>
-		)    
-	<%} else {%>
-		1 = 1 
-	<% } %>
-	<% if (!"".equals(wlWellType) || !"".equals(wlSnFlag)) { %> 
-		<% if (!"".equals(qwSnFlag) && !"".equals(wlSnFlag)) { %>
-			OR 
-		<% } else { %>
-			AND
-		<% } %> 
-		(
-		<% if (!"".equals(wlSnFlag)) { %>
-			WL_SN_FLAG='Yes' 
-			<% if (!"".equals(wlWellType) && !"".equals(wlSnFlag)) { %> 
-				AND 
-			<% } %>
-			<% if (!"".equals(wlWellType)) { %>
-				wl_well_type_US_FLAG IN (<%= wlWellType %>) 
-			<% } %> 
-		<% } else { %>
-			1 = 1 
-		<% } %>
-		) 
-	<% }%>
-	)   
-<% } %> 
+ AND (<% if (!"".equals(qwWellType) || !"".equals(qwSnFlag)) { %> ( <% if (!"".equals(qwSnFlag)) { %> QW_SN_FLAG='Yes' <% if (!"".equals(qwWellType) && !"".equals(qwSnFlag)) { %> AND <% } %>
+	<% if (!"".equals(qwWellType)) { %> qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %> <% } else { %> 1 = 1 <% } %>)  <%} else {%> 1 = 1  <% } %>
+	<% if (!"".equals(wlWellType) || !"".equals(wlSnFlag)) { %> <% if (!"".equals(qwSnFlag) && !"".equals(wlSnFlag)) { %> OR <% } else { %> AND <% } %> 
+	( <% if (!"".equals(wlSnFlag)) { %> WL_SN_FLAG='Yes' <% if (!"".equals(wlWellType) && !"".equals(wlSnFlag)) { %> AND  <% } %> <% if (!"".equals(wlWellType)) { %> wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>  <% } else { %> 1 = 1  <% } %> )  <% }%> )  <% } %> 
 <% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
  AND  	(sdo_filter(
       gp.geom_3785,
@@ -180,10 +144,10 @@ WHERE
 <% } %> 
 <% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
  AND  	(sdo_filter(
-      gp.geom_3785,
+      gp.geom,
       mdsys.sdo_geometry(
         2003,
-        3785,
+        8307,
         NULL,
         mdsys.sdo_elem_info_array(1,1003,3),
       mdsys.sdo_ordinate_array(<%=idBBox%>)
