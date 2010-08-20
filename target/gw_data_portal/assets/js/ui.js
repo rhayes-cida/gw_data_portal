@@ -33,7 +33,7 @@ Ext.onReady(function() {
 		id: 'ext-content-panel',
 		renderTo: 'content',
 		layout: 'border',
-		height: 630,
+		height: 640,
 		width: 1350,
 		plain: true,
 		style: 'text-align: left',
@@ -71,16 +71,16 @@ Ext.onReady(function() {
 				contentEl: 'agency-div'
 			},{
 				xtype: 'fieldset',
-				title: 'Water Quality Well Type',
+				title: 'National Aquifer Name',
+				contentEl: 'ntlAquifer-div'
+			},{
+				xtype: 'fieldset',
+				title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
 				contentEl: 'qw-well-type-div'
 			},{
 				xtype: 'fieldset',
-				title: 'Water Level Well Type',
+				title: '<input id="wl-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Level Network',
 				contentEl: 'wl-well-type-div'
-			},{
-				xtype: 'fieldset',
-				title: 'National Aquifer Name',
-				contentEl: 'ntlAquifer-div'
 			}]
 		},{
 			region: 'east',
@@ -831,6 +831,8 @@ function addDataLayer() {
 		agency: getUrlParamStringFromPicklist('agency', true),
 		qwWellType: getUrlParamStringFromPicklist('qw-well-type', true),
 		wlWellType: getUrlParamStringFromPicklist('wl-well-type', true),
+		qwSnFlag: document.getElementById('qw-sn-flag').checked?'Yes':'',
+		wlSnFlag: document.getElementById('wl-sn-flag').checked?'Yes':'',
 		ntlAquiferName: getUrlParamStringFromPicklist('ntlAquifer', true)
 	};
 

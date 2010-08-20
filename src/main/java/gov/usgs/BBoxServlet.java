@@ -36,7 +36,7 @@ public class BBoxServlet extends HttpServlet {
 
 			String query = URLUtil.getStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=bbox");
 //System.out.println(query);
-			//Both:
+			
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
 			connection = ds.getConnection();
@@ -44,12 +44,15 @@ public class BBoxServlet extends HttpServlet {
 			statement = connection.createStatement();
 			statement.setMaxRows(1);
 			rset = statement.executeQuery(query);      
-			if (rset.next()) {    
+			if (rset.next()) {  
+				
+				
 				os.print("{" + 
 						"bbox: \"" + rset.getString("bbox") + "\"," + 
 						"count: " + rset.getString("num_points") + 
 					"}"
 				);
+				
 			}
 			
 			statement.close();
