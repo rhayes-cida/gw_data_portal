@@ -1021,6 +1021,17 @@ function loadMapLayers() {
 		    })
 		]
 	}));
+	
+	
+	map1.appendLayer(new JMap.web.mapLayer.MVMapCacheLayer({
+		id: 23413,
+		zDepth: -420000,
+		opacity: 50,
+		baseUrl: 'http://maptrek.er.usgs.gov/mapviewer_11/mcserver',
+		name: 'natl_aquifers_cache',
+		dataSource: 'gis_cov',
+		title: 'National Aquifers'
+	}));
 		
 		
 	//http://services.nationalmap.gov/ArcGIS/rest/services/nhd/MapServer/export

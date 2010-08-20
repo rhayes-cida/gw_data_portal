@@ -13,17 +13,27 @@
 SELECT 
 	gp.geom_3785 GEOM 
 FROM 
-	nwis_dwh_star.well_registry gp  
-WHERE  
-1 = 1  
-<% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
-<% if (!"".equals(qwSnFlag) || !"".equals(wlSnFlag)) { %>
- AND (<% if (!"".equals(qwWellType) || !"".equals(qwSnFlag)) { %> ( <% if (!"".equals(qwSnFlag)) { %> QW_SN_FLAG='Yes' <% if (!"".equals(qwWellType) && !"".equals(qwSnFlag)) { %> AND <% } %>
-	<% if (!"".equals(qwWellType)) { %> qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %> <% } else { %> 1 = 1 <% } %>)  <%} else {%> 1 = 1  <% } %>
-	<% if (!"".equals(wlWellType) || !"".equals(wlSnFlag)) { %> <% if (!"".equals(qwSnFlag) && !"".equals(wlSnFlag)) { %> OR <% } else { %> AND <% } %> 
-	( <% if (!"".equals(wlSnFlag)) { %> WL_SN_FLAG='Yes' <% if (!"".equals(wlWellType) && !"".equals(wlSnFlag)) { %> AND  <% } %> <% if (!"".equals(wlWellType)) { %> wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>  <% } else { %> 1 = 1  <% } %> )  <% }%> )  <% } %> 
-<% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
- AND  	(sdo_filter(
+	nwis_dwh_star.well_registry gp,
+	(
+	<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %>
+		SELECT '-1' my_siteid from DUAL 
+	<% } else { %>
+		<% if (!"".equals(qwSnFlag)) { %>
+			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' 
+			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
+		<% } %>
+		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
+		<% if (!"".equals(wlSnFlag)) { %>
+			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' 
+			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
+		<% } %>
+	<% } %>
+	) inner 
+WHERE 
+	inner.my_siteid = gp.my_siteid AND 
+	<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
+	<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
+	(sdo_filter(
       gp.geom_3785,
       mdsys.sdo_geometry(
         2003,
@@ -32,57 +42,32 @@ WHERE
         mdsys.sdo_elem_info_array(1,1003,3),
       mdsys.sdo_ordinate_array(<%=bbox%>)
       )
-    ) = 'TRUE') 
+    ) = 'TRUE')  
 <%} else if ("bbox".equals(queryId)) { %>
 SELECT 
 	min(gp.dec_long_va) || ',' || min(gp.dec_lat_va) ||','|| max(gp.dec_long_va) ||','||  max(gp.dec_lat_va) bbox,
 	count(*) num_points  
 FROM 
-	nwis_dwh_star.well_registry gp 
-WHERE 
-1 = 1  
-<% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
-<% if (!"".equals(qwSnFlag) || !"".equals(wlSnFlag)) { %>
- AND (
-	<% if (!"".equals(qwWellType) || !"".equals(qwSnFlag)) { %>
-		( 
+		nwis_dwh_star.well_registry gp,
+	(
+	<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %>
+		SELECT '-1' my_siteid from DUAL 
+	<% } else { %>
 		<% if (!"".equals(qwSnFlag)) { %>
-			QW_SN_FLAG='Yes' 
-			<% if (!"".equals(qwWellType) && !"".equals(qwSnFlag)) { %> 
-				AND 
-			<% } %>
-			<% if (!"".equals(qwWellType)) { %>
-				qw_well_type_US_FLAG IN (<%= qwWellType %>) 
-			<% } %>
-		<% } else { %>
-			1 = 1 
+			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' 
+			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
 		<% } %>
-		)    
-	<%} else {%>
-		1 = 1 
-	<% } %>
-	<% if (!"".equals(wlWellType) || !"".equals(wlSnFlag)) { %> 
-		<% if (!"".equals(qwSnFlag) && !"".equals(wlSnFlag)) { %>
-			OR 
-		<% } else { %>
-			AND
-		<% } %> 
-		(
+		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
 		<% if (!"".equals(wlSnFlag)) { %>
-			WL_SN_FLAG='Yes' 
-			<% if (!"".equals(wlWellType) && !"".equals(wlSnFlag)) { %> 
-				AND 
-			<% } %>
-			<% if (!"".equals(wlWellType)) { %>
-				wl_well_type_US_FLAG IN (<%= wlWellType %>) 
-			<% } %> 
-		<% } else { %>
-			1 = 1 
+			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' 
+			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
 		<% } %>
-		) 
-	<%}%>
-	)   
-<% } %> 
+	<% } %>
+	) inner 
+WHERE 
+	inner.my_siteid = gp.my_siteid  
+	<% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
+	<% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
 <% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
 <%} else if ("identify".equals(queryId)) {
 	String idBBox = request.getParameter("idBBox");
@@ -97,53 +82,27 @@ SELECT
 	NAT_AQFR_DESC,
 	AGENCY_CD  
 FROM 
-	nwis_dwh_star.well_registry gp 
-WHERE 
-1 = 1  
-<% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
-<% if (!"".equals(qwSnFlag) || !"".equals(wlSnFlag)) { %>
- AND (
-	<% if (!"".equals(qwWellType) || !"".equals(qwSnFlag)) { %>
-		( 
+		nwis_dwh_star.well_registry gp,
+	(
+	<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %>
+		SELECT '-1' my_siteid from DUAL 
+	<% } else { %>
 		<% if (!"".equals(qwSnFlag)) { %>
-			QW_SN_FLAG='Yes' 
-			<% if (!"".equals(qwWellType) && !"".equals(qwSnFlag)) { %> 
-				AND 
-			<% } %>
-			<% if (!"".equals(qwWellType)) { %>
-				qw_well_type_US_FLAG IN (<%= qwWellType %>) 
-			<% } %>
-		<% } else { %>
-			1 = 1 
+			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' 
+			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
 		<% } %>
-		)    
-	<%} else {%>
-		1 = 1 
-	<% } %>
-	<% if (!"".equals(wlWellType) || !"".equals(wlSnFlag)) { %> 
-		<% if (!"".equals(qwSnFlag) && !"".equals(wlSnFlag)) { %>
-			OR 
-		<% } else { %>
-			AND
-		<% } %> 
-		(
+		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
 		<% if (!"".equals(wlSnFlag)) { %>
-			WL_SN_FLAG='Yes' 
-			<% if (!"".equals(wlWellType) && !"".equals(wlSnFlag)) { %> 
-				AND 
-			<% } %>
-			<% if (!"".equals(wlWellType)) { %>
-				wl_well_type_US_FLAG IN (<%= wlWellType %>) 
-			<% } %> 
-		<% } else { %>
-			1 = 1 
+			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' 
+			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
 		<% } %>
-		) 
-	<%}%>
-	)   
-<% } %> 
-<% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
- AND  	(sdo_filter(
+	<% } %>
+	) inner 
+WHERE 
+	inner.my_siteid = gp.my_siteid AND 
+	<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
+	<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
+ 	(sdo_filter(
       gp.geom,
       mdsys.sdo_geometry(
         2003,

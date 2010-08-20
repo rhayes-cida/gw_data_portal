@@ -30,7 +30,7 @@ JMap.web.mapLayer.MVBaseMapLayer.prototype.getSourceURL = function(x, y) {
 	var ymax = this.map.projection.getLatFromY(((y + 1) * this.map.tileSize) + this.overlapY);
 	
 	//convert to mercator meters
-	if (this.srs == 54004) {
+	if (this.srs == 3785) {
 		var min = JMap.util.degreesToMercatorMeters(ymin, xmin);
 		xmin = min.x;
 		ymin = min.y;

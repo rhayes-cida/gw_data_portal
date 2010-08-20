@@ -47,6 +47,6 @@ JMap.web.mapLayer.MVMapCacheLayer.prototype.getSourceURL = function(x, y) {
 	src += '&my=' + y;
 	src += '&mapcache=' + this.dataSource + "." + this.name;
 	src += '&format=' + this.format;  
-	
+		
 	return tempBase + src;
 }
