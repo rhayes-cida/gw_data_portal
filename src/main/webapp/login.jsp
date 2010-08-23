@@ -178,7 +178,7 @@
 							</span>
 						</span><!-- vcard -->
       				</p>
-   					<p id="footer-page-url">URL: </p>
+   					<p id="footer-page-url">URL: http://cida.usgs.gov/gw_data_portal/</p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
 						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>

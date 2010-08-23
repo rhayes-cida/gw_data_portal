@@ -66,7 +66,8 @@ SELECT
 	QW_WELL_TYPE_US_FLAG QW_WELL_TYPE,
 	WL_WELL_TYPE_US_FLAG WL_WELL_TYPE,
 	NAT_AQFR_DESC,
-	AGENCY_CD  
+	AGENCY_CD,
+	decode(AGENCY_CD, 'IN DNR','indnrtitle.gif','ISWS','ilstatewatersurvey.gif','MBMG','MontanaBMG.jpg','MN DNR','mn_dnr_logo.gif','MPCA','mpca7000.gif','TWDB','twdb.gif','USGS NJ / NJGS','njgslogo.gif','USGS_logo.png') LOGO    
 FROM 
 		nwis_dwh_star.well_registry gp,
 	(

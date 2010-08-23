@@ -12,7 +12,7 @@ Ext.onReady(function() {
 		numTilesY: 5,
 		centerLat: 37,
 		centerLon: -96,
-		zoomLevel: 3,
+		zoomLevel: 4,
 		mapWidthPx: 600,
 		mapHeightPx: 600,
 		cacheTiles: true,
@@ -75,12 +75,12 @@ Ext.onReady(function() {
 				contentEl: 'ntlAquifer-div'
 			},{
 				xtype: 'fieldset',
-				title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
-				contentEl: 'qw-well-type-div'
-			},{
-				xtype: 'fieldset',
 				title: '<input id="wl-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Level Network',
 				contentEl: 'wl-well-type-div'
+			},{
+				xtype: 'fieldset',
+				title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
+				contentEl: 'qw-well-type-div'
 			}]
 		},{
 			region: 'east',

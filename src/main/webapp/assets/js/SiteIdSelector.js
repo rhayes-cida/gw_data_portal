@@ -6,7 +6,7 @@ var identifyStore = new Ext.data.JsonStore({
     autoDestroy: false,
     storeId: 'myStore',
     root: 'sites',
-    fields: ['siteNo','siteName','decLatVa','decLongVa','qwWellType','wlWellType','nationalAquiferName','agency']
+    fields: ['siteNo','siteName','decLatVa','decLongVa','qwWellType','wlWellType','nationalAquiferName','agency','logo']
 });
 
 

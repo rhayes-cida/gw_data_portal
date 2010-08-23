@@ -114,7 +114,7 @@
 		<div id="qw-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">Do Not Filter By Water Quality Type</option>
+				<option value="" selected="selected">All Water Quality Sub Networks</option>
 				<% HTMLUtil.getQWWellTypeList(out, connection); %>
 			</select>
 		</div>
@@ -123,7 +123,7 @@
 		<div id="wl-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">Do Not Filter By Water Level Type</option>
+				<option value="" selected="selected">All Water Level Sub Networks</option>
 				<% HTMLUtil.getWLWellTypeList(out, connection); %>
 			</select>
 		</div>
@@ -131,7 +131,7 @@
 		<div id="ntlAquifer-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="ntlAquifer" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All National Aquifer Names</option>
+				<option value="" selected="selected">All National Aquifers</option>
 				<% HTMLUtil.getNationalAquiferNameList(out, connection); %>
 			</select>
 		</div>
@@ -187,7 +187,7 @@
 							</span>
 						</span><!-- vcard -->
       				</p>
-   					<p id="footer-page-url">URL: </p>
+   					<p id="footer-page-url">URL: http://cida.usgs.gov/gw_data_portal/</p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
 						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>
