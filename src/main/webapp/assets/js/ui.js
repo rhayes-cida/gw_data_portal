@@ -1034,7 +1034,7 @@ function loadMapLayers() {
 		name: 'natl_aquifers_cache',
 		dataSource: 'gis_cov',
 		title: 'National Aquifers',
-		description: '<a href="#">National Aquifers Key</a>'
+		description: '<a href="assets/images/USAaquiferMAP11_17.pdf" target="_blank">National Aquifers Key</a>'
 	}));
 		
 		
