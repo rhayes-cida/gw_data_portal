@@ -19,13 +19,14 @@
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>
 		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
-		<script src="ext_js/examples/ux/StatusBar.js"></script>
+		<script src="ext_js/examples/ux/SliderTip.js"></script>
 		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->
 		<script type="text/javascript" src="assets/js/ui.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdSelector.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
+		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script>
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 	
@@ -86,6 +87,7 @@
 		<!-- render map to this div -->
 		<div id="map-area" class="x-hidden">
 			<div id="map-tools" class="map-tools"></div>
+			<a href="#" onclick="baseLayersWindow.show(); return false;" id="base-layers" class="base-layers-button">Base Layers</a>
 			<div id="legend-div"></div>
 		</div>
 		

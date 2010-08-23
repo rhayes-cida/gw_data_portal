@@ -524,3 +524,20 @@ td.long-text {
 .hud-scale-bars div {
 	font-size: 80% !important;
 }
+
+.base-layers-button {
+	position: absolute;
+	right: 35px;
+	top: 10px;
+	text-decoration: none;
+	background-color: white;
+	border: outset black 2px;
+	padding: 3px;
+	color: black;
+	font-weight: bold;
+	text-align: center;
+	z-index: 99;
+	font-size: 80%;
+	outline: 0px;
+}
+

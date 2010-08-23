@@ -23,9 +23,11 @@
           <string>assets/images/logos/njgslogo.gif</string>
           <string>assets/images/logos/twdb.gif</string>
           <string>assets/images/logos/USGS_logo.png</string>
+          <string>assets/images/USAaquiferMAP11_17.pdf</string>
           <string>assets/images/USGS_web_logo.gif</string>
           <string>assets/images/zoomInIcon.gif</string>
           <string>assets/images/zoomOutIcon.gif</string>
+          <string>assets/js/BaseLayersWindow.js</string>
           <string>assets/js/SiteIdentifyWindow.js</string>
           <string>assets/js/SiteIdSelector.js</string>
           <string>assets/js/ui.js</string>
