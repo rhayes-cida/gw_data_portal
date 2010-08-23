@@ -14,21 +14,7 @@ SELECT
 	gp.geom_3785 GEOM 
 FROM 
 	nwis_dwh_star.well_registry gp,
-	(
-	<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %>
-		SELECT '-1' my_siteid from DUAL 
-	<% } else { %>
-		<% if (!"".equals(qwSnFlag)) { %>
-			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' 
-			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
-		<% } %>
-		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
-		<% if (!"".equals(wlSnFlag)) { %>
-			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' 
-			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
-		<% } %>
-	<% } %>
-	) inner 
+	(<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %> SELECT '-1' my_siteid from DUAL <% } else { %> <% if (!"".equals(qwSnFlag)) { %> SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' <% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %> <% } %> <% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %> <% if (!"".equals(wlSnFlag)) { %> SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' <% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %><% } %><% } %>) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
 	<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>

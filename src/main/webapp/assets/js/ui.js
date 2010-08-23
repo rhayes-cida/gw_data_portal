@@ -1,6 +1,7 @@
 var map1;
 var mapState = {};
 var pointsCount = new Ext.Toolbar.TextItem('0 Points Mapped');
+var baseLayersWindow;
 
 Ext.onReady(function() {
 	
@@ -26,8 +27,7 @@ Ext.onReady(function() {
 	});
 	
 	addOverviewLayers();
-	
-	
+		
 	//create the EXTJS layout
 	new Ext.Panel({
 		id: 'ext-content-panel',
@@ -85,7 +85,7 @@ Ext.onReady(function() {
 		},{
 			region: 'east',
 			id: 'ext-tnm-tree',
-			title: 'Base Data Layers',
+			title: 'National Map Overlays',
 			width: 300,
 			rootVisible: false,
 			autoScroll: true,
@@ -802,6 +802,8 @@ Ext.onReady(function() {
 	
 	loadMapLayers();
 	
+	baseLayersWindow = new BaseLayersWindow();
+	
 });
 
 
@@ -943,7 +945,7 @@ function loadMapLayers() {
 	map1.appendLayer(new JMap.web.mapLayer.MultiServiceLayer({
 		id: 29320,
 		name: 'Vector Fills',
-		description: 'Vector Fills',
+		description: 'Vector fills is a dynamic map service with the vector base map polygon area fills, i.e. the green national forest areas or the blue water areas. The fills have been split into separate services: _Small, which has tiles for the small scales cached, down through 1:289,000; and _Large, which is dynamic and covers scales 1:144,000 and larger.',
 		title: 'Vector Fills',
 		legendUrl: 'http://basemap.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Fills_Small/MapServer/tile/0/0/0.png',
 		layers: [
@@ -967,9 +969,9 @@ function loadMapLayers() {
 	
 	map1.appendLayer(new JMap.web.mapLayer.MultiServiceLayer({
 		id: 29322,
-		name: 'Vector',
-		description: 'Boundaries',
-		title: 'Vector',
+		name: 'Vectors',
+		description: 'This is the beta version of new The National Map, in the Web Mercator projection. There are 20 scales total, from 1:591,657,527 (global) down through 1:1,128. The Vector base map service has been split into two services: _Small, with tiles cached for the small scales, down through 1:288,000; and _Large, a dynamic service for 1:144,000 down through 1:1000. Data Sources: National Atlas - small scales National Map - large scales.',
+		title: 'Vectors',
 		legendUrl: 'http://basemap.nationalmap.gov/ArcGIS/rest/services/TNM_Vector_Small/MapServer/tile/0/0/0.jpg',
 		layers: [
 		    new JMap.web.mapLayer.NationalMapTileLayer({
@@ -994,7 +996,7 @@ function loadMapLayers() {
 	map1.appendLayer(new JMap.web.mapLayer.MultiServiceLayer({
 		id: 29327,
 		name: 'Shaded Relief',
-		description: 'Shaded Relief',
+		description: 'The USGS National Elevation Dataset (NED) has been developed by merging the highest resolution, best-quality elevation data available across the United States into a seamless raster format. NED is the result of the maturation of the USGS effort to provide 1:24,000-scale digital elevation model (DEM) data for the conterminous United States, and 1:63,360-scale DEM data for Alaska. The shaded relief display is derived from NED using a hill-shade technique. NED data are available nationally at grid spacings of 1 arc-second (approximately 30 meters) for the conterminous United States, and at 1/3 and 1/9 arc-seconds (approximately 10 meters and 3 meters, respectively) for parts of the U.S. For additional information, go to http://ned.usgs.gov.',
 		title: 'Shaded Relief',
 		legendUrl: 'http://raster1.nationalmap.gov/ArcGIS/rest/services/TNM_Small_Scale_Shaded_Relief/MapServer/tile/0/0/0.png',
 		layers: [
@@ -1027,10 +1029,12 @@ function loadMapLayers() {
 		id: 23413,
 		zDepth: -420000,
 		opacity: 50,
+		legendUrl: 'http://maptrek.er.usgs.gov/mapviewer_11/mcserver?request=gettile&zoomlevel=1&mx=0&my=1&mapcache=gis_cov.natl_aquifers_cache&format=PNG',
 		baseUrl: 'http://maptrek.er.usgs.gov/mapviewer_11/mcserver',
 		name: 'natl_aquifers_cache',
 		dataSource: 'gis_cov',
-		title: 'National Aquifers'
+		title: 'National Aquifers',
+		description: '<a href="#">National Aquifers Key</a>'
 	}));
 		
 		
