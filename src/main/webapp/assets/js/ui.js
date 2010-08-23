@@ -84,662 +84,674 @@ Ext.onReady(function() {
 			}]
 		},{
 			region: 'east',
-			id: 'ext-tnm-tree',
-			title: 'National Map Overlays',
-			width: 300,
-			rootVisible: false,
+			title: 'Map Layers',
 			autoScroll: true,
-			xtype: 'treepanel',
-	        loader: new Ext.tree.TreeLoader({preloadChildren: true}),
-	        listeners: {
-				checkchange: function(n, checked){
-
-                	if (n.isLeaf() && !n.attributes.layerId) {
-                		var ml = findParentMapLayer(n);
-                		if (n.ui.isChecked()) {
-                			ml.appendSubLayer(n.attributes.subId);
-                		} else {
-                			ml.removeSubLayer(n.attributes.subId);
-                		}
-                		ml.draw();
-                	} else if (n.attributes.layerId) {
-                		if (n.attributes.type != 'tiled') {
-                			refreshSubLayers(n, n.attributes.layerId);
-                   		}
-                		if (n.ui.isChecked()) {
-                			map1.appendLayer(n.attributes.layerId);
-                		} else {
-                			map1.removeLayer(n.attributes.layerId);
-                		}
-                	} else {
-                		if (n.attributes.type != 'tiled')
-                			refreshSubLayers(n, n.parentNode.attributes.layerId);
-                		
-                	}
-				}
+			layout: 'accordion',
+			layoutConfig: {
+				animate: true,
+				fill: false,
 			},
-	        root: new Ext.tree.AsyncTreeNode({
-	            expanded: true,
-	            children: [{
-	                text: 'U.S. Topo: Current Available',
-	                checked: false,
-	                layerId: 29331,
-	                children: [{
-	                	text: 'Index of Available Maps',
-		                checked: true,
-	                	leaf: true,
-	                	subId: 0
-	                },{
-	                	text: '7.5 Minute Index',
-		                checked: true,
-	                	leaf:true,
-	                	subId: 1
-	                },{
-	                	text: '7.5 Minute Labels',
-		                checked: true,
-	                	leaf: true,
-	                	subId: 2
-	                }]
-	            },{
-	                text: 'Geographic Names (GNIS)',
-	                checked: false,
-	                layerId: 29332,
-	                children: [{
-	                	text: 'Structure',
-		                checked: true,
-	                	leaf: true,
-	                	subId: 0
-	                },{
-	                	text: 'Transportation',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 1
-	                },{
-	                	text: 'Administrative',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 2
-	                },{
-	                	text: 'Historical',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 3
-	                },{
-	                	text: 'Community',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 4
-	                },{
-	                	text: 'Cultural',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 5
-	                },{
-	                	text: 'Landform',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 6
-	                },{
-	                	text: 'Hydro Points',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 7
-	                },{
-	                	text: 'Hydro Lines',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 8
-	                },{
-	                	text: 'Antarctica',
-	                	checked: true,
-	                	leaf: true,
-	                	subId: 9
-	                }]
-	            },{
-	                text: 'Structures',
-	                checked: false,
-	                layerId: 29333,
-	                children: [{
-	                	text: 'Public Attractions and Landmark Buildings',
-	                	checked: false,
-	                	children: [{
-	                		text: 'Campground',
-		                	checked: true,
-	                		leaf: true,
-	                		subId: 0
-	                	},{
-	                		text: 'Cemetery',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 1
-	                	},{
-	                		text: 'Trailhead',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 2
-	                	}]
-	                },{
-	                	text: 'Water Supply and Treatment',
+			width: 300,
+			items: [{
+				title: 'Background Maps',
+				bodyStyle: 'padding: 5px',
+				html: '<a href="#" onclick="baseLayersWindow.show(); return false;">Base Layers</a>'
+			},{
+				id: 'ext-tnm-tree',
+				title: 'More National Map Overlays',
+				rootVisible: false,
+				xtype: 'treepanel',
+		        loader: new Ext.tree.TreeLoader({preloadChildren: true}),
+		        listeners: {
+					checkchange: function(n, checked){
+	
+	                	if (n.isLeaf() && !n.attributes.layerId) {
+	                		var ml = findParentMapLayer(n);
+	                		if (n.ui.isChecked()) {
+	                			ml.appendSubLayer(n.attributes.subId);
+	                		} else {
+	                			ml.removeSubLayer(n.attributes.subId);
+	                		}
+	                		ml.draw();
+	                	} else if (n.attributes.layerId) {
+	                		if (n.attributes.type != 'tiled') {
+	                			refreshSubLayers(n, n.attributes.layerId);
+	                   		}
+	                		if (n.ui.isChecked()) {
+	                			map1.appendLayer(n.attributes.layerId);
+	                		} else {
+	                			map1.removeLayer(n.attributes.layerId);
+	                		}
+	                	} else {
+	                		if (n.attributes.type != 'tiled')
+	                			refreshSubLayers(n, n.parentNode.attributes.layerId);
+	                		
+	                	}
+					}
+				},
+		        root: new Ext.tree.AsyncTreeNode({
+		            expanded: true,
+		            children: [{
+		                text: 'U.S. Topo: Current Available',
 		                checked: false,
-	                	leaf:true
-	                },{
-	                	text: 'Health and Medical',
+		                layerId: 29331,
+		                children: [{
+		                	text: 'Index of Available Maps',
+			                checked: true,
+		                	leaf: true,
+		                	subId: 0
+		                },{
+		                	text: '7.5 Minute Index',
+			                checked: true,
+		                	leaf:true,
+		                	subId: 1
+		                },{
+		                	text: '7.5 Minute Labels',
+			                checked: true,
+		                	leaf: true,
+		                	subId: 2
+		                }]
+		            },{
+		                text: 'Geographic Names (GNIS)',
 		                checked: false,
-	                	leaf: true
-	                },{
-	                	text: 'Emergency Response and Law Enforcement',
+		                layerId: 29332,
+		                children: [{
+		                	text: 'Structure',
+			                checked: true,
+		                	leaf: true,
+		                	subId: 0
+		                },{
+		                	text: 'Transportation',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 1
+		                },{
+		                	text: 'Administrative',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 2
+		                },{
+		                	text: 'Historical',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 3
+		                },{
+		                	text: 'Community',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 4
+		                },{
+		                	text: 'Cultural',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 5
+		                },{
+		                	text: 'Landform',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 6
+		                },{
+		                	text: 'Hydro Points',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 7
+		                },{
+		                	text: 'Hydro Lines',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 8
+		                },{
+		                	text: 'Antarctica',
+		                	checked: true,
+		                	leaf: true,
+		                	subId: 9
+		                }]
+		            },{
+		                text: 'Structures',
 		                checked: false,
-	                	leaf: true
-	                },{
-	                	text: 'Education',
+		                layerId: 29333,
+		                children: [{
+		                	text: 'Public Attractions and Landmark Buildings',
+		                	checked: false,
+		                	children: [{
+		                		text: 'Campground',
+			                	checked: true,
+		                		leaf: true,
+		                		subId: 0
+		                	},{
+		                		text: 'Cemetery',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 1
+		                	},{
+		                		text: 'Trailhead',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 2
+		                	}]
+		                },{
+		                	text: 'Water Supply and Treatment',
+			                checked: false,
+		                	leaf:true
+		                },{
+		                	text: 'Health and Medical',
+			                checked: false,
+		                	leaf: true
+		                },{
+		                	text: 'Emergency Response and Law Enforcement',
+			                checked: false,
+		                	leaf: true
+		                },{
+		                	text: 'Education',
+			                checked: false,
+		                	leaf: true
+		                }]
+		            },{
+		                text: 'Transportation',
 		                checked: false,
-	                	leaf: true
-	                }]
-	            },{
-	                text: 'Transportation',
-	                checked: false,
-	                layerId: 29330,
-	                children: [{
-	                	text: 'Airports',
-		                checked: true,
-		                subId: 0,
-	                	leaf: true
-	                },{
-	                	text: 'Airport Labels',
-		                checked: true,
-		                subId: 1,
-	                	leaf:true
-	                },{
-	                	text: 'Interstate',
-		                checked: true,
-		                subId: 2,
-	                	leaf: true
-	                },{
-	                	text: 'Interstate Labels',
-		                checked: true,
-		                subId: 3,
-	                	leaf: true
-	                },{
-	                	text: 'US Route',
-		                checked: true,
-		                subId: 4,
-	                	leaf: true
-	                },{
-	                	text: 'US Route Labels',
-		                checked: true,
-		                subId: 5,
-	                	leaf: true
-	                },{
-	                	text: 'State Route',
-		                checked: true,
-		                subId: 6,
-	                	leaf: true
-	                },{
-	                	text: 'State Route Labels',
-		                checked: true,
-		                subId: 7,
-	                	leaf: true
-	                },{
-	                	text: 'County Route',
-		                checked: true,
-		                subId: 8,
-	                	leaf: true
-	                },{
-	                	text: 'County Route Labels',
-		                checked: true,
-		                subId: 9,
-	                	leaf: true
-	                },{
-	                	text: 'Local Road',
-		                checked: true,
-		                subId: 10,
-	                	leaf: true
-	                },{
-	                	text: 'Local Road Labels',
-		                checked: true,
-		                subId: 11,
-	                	leaf: true
-	                }]
-	            },{
-	            	text: 'Governmental Unit Boundaries',
-	            	checked: false,
-	            	layerId: 29334,
-	            	children: [{
-	            		text: 'Reserves',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 0
-	            	},{
-	            		text: 'Reserves Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 1
-	            	},{
-	            		text: 'Native American Areas',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 2
-	            	},{
-	            		text: 'Native American Areas Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 3
-	            	},{
-	            		text: 'Counties or Equivalent',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 4
-	            	},{
-	            		text: 'Counties or Equivalent Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 5
-	            	},{
-	            		text: 'Unincorporated Places',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 6
-	            	},{
-	            		text: 'Unincorporated Places Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 7
-	            	},{
-	            		text: 'Incorporated Places',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 8
-	            	},{
-	            		text: 'Incorporated Places Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 9
-	            	},{
-	            		text: 'Minor Civil Divisions',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 10
-	            	},{
-	            		text: 'Minor Civil Divisions Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 11
-	            	},{
-	            		text: 'Zip Codes',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 12
-	            	},{
-	            		text: 'Zip Codes Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 13
-	            	},{
-	            		text: 'School Districts',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 14
-	            	},{
-	            		text: 'School Districts Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 15
-	            	},{
-	            		text: 'State or Territory (low res)',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 16
-	            	},{
-	            		text: 'State or Territory (low res) Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 17
-	            	},{
-	            		text: 'State or Territory (high res)',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 18
-	            	},{
-	            		text: 'State or Territory (high res) Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 19
-	            	},{
-	            		text: '111th Congressional Districts',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 20
-	            	},{
-	            		text: '111th Congressional Districts Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 21
-	            	}]
-	            },{
-	            	text: 'Map Indices',
-	                checked: false,
-	                layerId: 29335,
-	                children: [{
-	            		text: '100K Index',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 0
-	            	},{
-	            		text: '100K Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 1
-	            	},{
-	            		text: '63K Index (AK)',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 2
-	            	},{
-	            		text: '63K Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 3
-	            	},{
-	            		text: '24K Index',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 4
-	            	},{
-	            		text: '24K Labels',
-	            		checked: true,
-	            		leaf: true,
-	            		subId: 5
-	            	}]
-	            },{
-	            	text: 'Hydrography (NHD)',
-	                checked: false,
-	                layerId: 29325,
-	                children: [{
-	                	text: 'Hydrologic Units',
-	                	checked: false,
-	                	children: [{
-	                		text: 'Regions',
-		                	checked: true,
-	                		leaf: true,
-	                		subId: 1
-	                	},{
-	                		text: 'Regions Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 2
-	                	},{
-	                		text: 'Subregions',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 3
-	                	},{
-	                		text: 'Subregions Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 4
-	                	},{
-	                		text: 'Basins',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 5
-	                	},{
-	                		text: 'Basins Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 6
-	                	},{
-	                		text: 'Subbasins Small Scale',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 7
-	                	},{
-	                		text: 'Subbasins Large Scale',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 8
-	                	},{
-	                		text: 'Subbasins Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 9
-	                	},{
-	                		text: 'Watersheds',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 10
-	                	},{
-	                		text: 'Subwatersheds',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 11
-	                	}]
-	                },{
-	                	text: 'Medium Resolution',
-	                	checked: false,
-	                	children: [{
-	                		text: 'Point',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 13
-	                	},{
-	                		text: 'Point Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 14
-	                	},{
-	                		text: 'Waterbody',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 15
-	                	},{
-	                		text: 'Waterbody Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 16
-	                	},{
-	                		text: 'Area',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 17
-	                	},{
-	                		text: 'Area Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 18
-	                	},{
-	                		text: 'Flowline',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 19
-	                	},{
-	                		text: 'Flowline Labels',
-	                		leaf: true,
-		                	checked: true,
-		                	subId: 20
-	                	},{
-	                		text: 'Line',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 21
-	                	},{
-	                		text: 'Line Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 22
-	                	}]
-	                },{
-	                	text: 'High Resolution',
-	                	checked: false,
-	                	children: [{
-	                		text: 'Point',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 24
-	                	},{
-	                		text: 'Point Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 25
-	                	},{
-	                		text: 'Point Event',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 26
-	                	},{
-	                		text: 'Waterbody',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 27
-	                	},{
-	                		text: 'Waterbody Labels',
-	                		leaf: true,
-		                	checked: true,
-		                	subId: 28
-	                	},{
-	                		text: 'Area',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 29
-	                	},{
-	                		text: 'Area Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 30
-	                	},{
-	                		text: 'Flowline',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 31
-	                	},{
-	                		text: 'Flowline Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 32
-	                	},{
-	                		text: 'Line',
-	                		leaf: true,
-		                	checked: true,
-		                	subId: 33
-	                	},{
-	                		text: 'Line Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 34
-	                	}]
-	                },{
-	                	text: 'Local Resolution',
-	                	checked: false,
-	                	children: [{
-	                		text: 'Point',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 36
-	                	},{
-	                		text: 'Point Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 37
-	                	},{
-	                		text: 'Waterbody',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 38
-	                	},{
-	                		text: 'Waterbody Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 39
-	                	},{
-	                		text: 'Area',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 40
-	                	},{
-	                		text: 'Area Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 41
-	                	},{
-	                		text: 'Flowline',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 42
-	                	},{
-	                		text: 'Flowline Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 43
-	                	},{
-	                		text: 'Line',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 44
-	                	},{
-	                		text: 'Line Labels',
-	                		leaf: true,
-		                	checked: true,
-	                		subId: 45
-	                	}]
-	                }]
-	            },{
-	            	text: 'Contours Beta (Small Scale)',
-	            	checked: false,
-	            	layerId: 29337,
-	            	type: 'tiled',
-	            	children: [{
-	            		text: 'Small Scale - 250k (100 foot)',
-            			leaf: true
-	            	},{
-	            		text: 'Mid Scale - 100k (50 foot)',
-            			leaf: true
-	            	}]
-	            },{
-	            	text: 'Large Scale Shaded Relief',
-	            	checked: false,
-	            	layerId: 29338,
-	            	children: [{
-	            		text: 'NED_1',
-	            		subId: 0,
-	            		leaf: true,
-	            		checked: true
-	            	},{
-	            		text: 'NED_13',
-	            		subId: 1,
-	            		leaf: true,
-	            		checked: true
-	            	},{
-	            		text: 'NED_1_AK_2',
-	            		subId: 2,
-	            		leaf: true,
-	            		checked: true
-	            	},{
-	            		text: 'NED_13_HI_TI',
-	            		subId: 3,
-	            		leaf: true,
-	            		checked: true
-	            	}]
-	            },{
-	            	text: 'Large Scale Imagery',
-	            	checked: false,
-	            	layerId: 29338,
-	            	children: [{
-	            		text: '1 Meter Imagery',
-	            		subId: 0,
-	            		leaf: true,
-	            		checked: true
-	            	}]
-	            },{
-	            	text: 'Scanned Maps (Beta)',
-	            	checked: false,
-	            	layerId: 29336,
-	            	children: [{
-	            		text: 'USGS_EDC_Ortho_DRG (Large - 289k)',
-	            		checked: true,
-	            		subId: 0,
-	            		leaf: true
-	            	}]
-	            }]
-	        })
+		                layerId: 29330,
+		                children: [{
+		                	text: 'Airports',
+			                checked: true,
+			                subId: 0,
+		                	leaf: true
+		                },{
+		                	text: 'Airport Labels',
+			                checked: true,
+			                subId: 1,
+		                	leaf:true
+		                },{
+		                	text: 'Interstate',
+			                checked: true,
+			                subId: 2,
+		                	leaf: true
+		                },{
+		                	text: 'Interstate Labels',
+			                checked: true,
+			                subId: 3,
+		                	leaf: true
+		                },{
+		                	text: 'US Route',
+			                checked: true,
+			                subId: 4,
+		                	leaf: true
+		                },{
+		                	text: 'US Route Labels',
+			                checked: true,
+			                subId: 5,
+		                	leaf: true
+		                },{
+		                	text: 'State Route',
+			                checked: true,
+			                subId: 6,
+		                	leaf: true
+		                },{
+		                	text: 'State Route Labels',
+			                checked: true,
+			                subId: 7,
+		                	leaf: true
+		                },{
+		                	text: 'County Route',
+			                checked: true,
+			                subId: 8,
+		                	leaf: true
+		                },{
+		                	text: 'County Route Labels',
+			                checked: true,
+			                subId: 9,
+		                	leaf: true
+		                },{
+		                	text: 'Local Road',
+			                checked: true,
+			                subId: 10,
+		                	leaf: true
+		                },{
+		                	text: 'Local Road Labels',
+			                checked: true,
+			                subId: 11,
+		                	leaf: true
+		                }]
+		            },{
+		            	text: 'Governmental Unit Boundaries',
+		            	checked: false,
+		            	layerId: 29334,
+		            	children: [{
+		            		text: 'Reserves',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 0
+		            	},{
+		            		text: 'Reserves Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 1
+		            	},{
+		            		text: 'Native American Areas',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 2
+		            	},{
+		            		text: 'Native American Areas Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 3
+		            	},{
+		            		text: 'Counties or Equivalent',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 4
+		            	},{
+		            		text: 'Counties or Equivalent Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 5
+		            	},{
+		            		text: 'Unincorporated Places',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 6
+		            	},{
+		            		text: 'Unincorporated Places Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 7
+		            	},{
+		            		text: 'Incorporated Places',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 8
+		            	},{
+		            		text: 'Incorporated Places Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 9
+		            	},{
+		            		text: 'Minor Civil Divisions',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 10
+		            	},{
+		            		text: 'Minor Civil Divisions Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 11
+		            	},{
+		            		text: 'Zip Codes',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 12
+		            	},{
+		            		text: 'Zip Codes Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 13
+		            	},{
+		            		text: 'School Districts',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 14
+		            	},{
+		            		text: 'School Districts Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 15
+		            	},{
+		            		text: 'State or Territory (low res)',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 16
+		            	},{
+		            		text: 'State or Territory (low res) Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 17
+		            	},{
+		            		text: 'State or Territory (high res)',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 18
+		            	},{
+		            		text: 'State or Territory (high res) Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 19
+		            	},{
+		            		text: '111th Congressional Districts',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 20
+		            	},{
+		            		text: '111th Congressional Districts Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 21
+		            	}]
+		            },{
+		            	text: 'Map Indices',
+		                checked: false,
+		                layerId: 29335,
+		                children: [{
+		            		text: '100K Index',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 0
+		            	},{
+		            		text: '100K Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 1
+		            	},{
+		            		text: '63K Index (AK)',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 2
+		            	},{
+		            		text: '63K Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 3
+		            	},{
+		            		text: '24K Index',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 4
+		            	},{
+		            		text: '24K Labels',
+		            		checked: true,
+		            		leaf: true,
+		            		subId: 5
+		            	}]
+		            },{
+		            	text: 'Hydrography (NHD)',
+		                checked: false,
+		                layerId: 29325,
+		                children: [{
+		                	text: 'Hydrologic Units',
+		                	checked: false,
+		                	children: [{
+		                		text: 'Regions',
+			                	checked: true,
+		                		leaf: true,
+		                		subId: 1
+		                	},{
+		                		text: 'Regions Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 2
+		                	},{
+		                		text: 'Subregions',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 3
+		                	},{
+		                		text: 'Subregions Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 4
+		                	},{
+		                		text: 'Basins',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 5
+		                	},{
+		                		text: 'Basins Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 6
+		                	},{
+		                		text: 'Subbasins Small Scale',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 7
+		                	},{
+		                		text: 'Subbasins Large Scale',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 8
+		                	},{
+		                		text: 'Subbasins Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 9
+		                	},{
+		                		text: 'Watersheds',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 10
+		                	},{
+		                		text: 'Subwatersheds',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 11
+		                	}]
+		                },{
+		                	text: 'Medium Resolution',
+		                	checked: false,
+		                	children: [{
+		                		text: 'Point',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 13
+		                	},{
+		                		text: 'Point Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 14
+		                	},{
+		                		text: 'Waterbody',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 15
+		                	},{
+		                		text: 'Waterbody Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 16
+		                	},{
+		                		text: 'Area',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 17
+		                	},{
+		                		text: 'Area Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 18
+		                	},{
+		                		text: 'Flowline',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 19
+		                	},{
+		                		text: 'Flowline Labels',
+		                		leaf: true,
+			                	checked: true,
+			                	subId: 20
+		                	},{
+		                		text: 'Line',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 21
+		                	},{
+		                		text: 'Line Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 22
+		                	}]
+		                },{
+		                	text: 'High Resolution',
+		                	checked: false,
+		                	children: [{
+		                		text: 'Point',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 24
+		                	},{
+		                		text: 'Point Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 25
+		                	},{
+		                		text: 'Point Event',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 26
+		                	},{
+		                		text: 'Waterbody',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 27
+		                	},{
+		                		text: 'Waterbody Labels',
+		                		leaf: true,
+			                	checked: true,
+			                	subId: 28
+		                	},{
+		                		text: 'Area',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 29
+		                	},{
+		                		text: 'Area Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 30
+		                	},{
+		                		text: 'Flowline',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 31
+		                	},{
+		                		text: 'Flowline Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 32
+		                	},{
+		                		text: 'Line',
+		                		leaf: true,
+			                	checked: true,
+			                	subId: 33
+		                	},{
+		                		text: 'Line Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 34
+		                	}]
+		                },{
+		                	text: 'Local Resolution',
+		                	checked: false,
+		                	children: [{
+		                		text: 'Point',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 36
+		                	},{
+		                		text: 'Point Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 37
+		                	},{
+		                		text: 'Waterbody',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 38
+		                	},{
+		                		text: 'Waterbody Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 39
+		                	},{
+		                		text: 'Area',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 40
+		                	},{
+		                		text: 'Area Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 41
+		                	},{
+		                		text: 'Flowline',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 42
+		                	},{
+		                		text: 'Flowline Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 43
+		                	},{
+		                		text: 'Line',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 44
+		                	},{
+		                		text: 'Line Labels',
+		                		leaf: true,
+			                	checked: true,
+		                		subId: 45
+		                	}]
+		                }]
+		            },{
+		            	text: 'Contours Beta (Small Scale)',
+		            	checked: false,
+		            	layerId: 29337,
+		            	type: 'tiled',
+		            	children: [{
+		            		text: 'Small Scale - 250k (100 foot)',
+	            			leaf: true
+		            	},{
+		            		text: 'Mid Scale - 100k (50 foot)',
+	            			leaf: true
+		            	}]
+		            },{
+		            	text: 'Large Scale Shaded Relief',
+		            	checked: false,
+		            	layerId: 29338,
+		            	children: [{
+		            		text: 'NED_1',
+		            		subId: 0,
+		            		leaf: true,
+		            		checked: true
+		            	},{
+		            		text: 'NED_13',
+		            		subId: 1,
+		            		leaf: true,
+		            		checked: true
+		            	},{
+		            		text: 'NED_1_AK_2',
+		            		subId: 2,
+		            		leaf: true,
+		            		checked: true
+		            	},{
+		            		text: 'NED_13_HI_TI',
+		            		subId: 3,
+		            		leaf: true,
+		            		checked: true
+		            	}]
+		            },{
+		            	text: 'Large Scale Imagery',
+		            	checked: false,
+		            	layerId: 29338,
+		            	children: [{
+		            		text: '1 Meter Imagery',
+		            		subId: 0,
+		            		leaf: true,
+		            		checked: true
+		            	}]
+		            },{
+		            	text: 'Scanned Maps (Beta)',
+		            	checked: false,
+		            	layerId: 29336,
+		            	children: [{
+		            		text: 'USGS_EDC_Ortho_DRG (Large - 289k)',
+		            		checked: true,
+		            		subId: 0,
+		            		leaf: true
+		            	}]
+		            }]
+		        })
+			}]
 		}]
 	});
 	

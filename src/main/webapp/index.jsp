@@ -87,7 +87,6 @@
 		<!-- render map to this div -->
 		<div id="map-area" class="x-hidden">
 			<div id="map-tools" class="map-tools"></div>
-			<a href="#" onclick="baseLayersWindow.show(); return false;" id="base-layers" class="base-layers-button">Base Layers</a>
 			<div id="legend-div"></div>
 		</div>
 		
