@@ -4,26 +4,31 @@ BaseLayersWindow = Ext.extend(Ext.Window, {
 	height: 400,
 	modal: true,
 	layout: 'border',
-	closeAction: 'hide',
 	resizable: false,
 	
 	initComponent: function() {
+	
+		var layersList = [];
+		var layers = map1.layerManager.getAvailableLayers();	
+		for (var i = 0; i < layers.length; i++) {
+			var l = layers[i];
+			if (!l.isHiddenFromUser && map1.layerManager.isLayerAvailable(l)) {
+				layersList.push(this.createBaseLayerEntry(l.id));
+			}
+		}
+
+	
 		Ext.apply(this, {
 			items: [{
 				region: 'center',
 				autoScroll: true,
 				bodyStyle: 'padding: 5px',
-				items: [
-				    this.createBaseLayerEntry(29320),
-				    this.createBaseLayerEntry(29322),
-				    this.createBaseLayerEntry(29327),
-				    this.createBaseLayerEntry(23413)
-				]
+				items: layersList
 			}],
 			buttons: [{
 				text: 'Close',
 				handler: function() {
-					this.hide();
+					this.close();
 				},
 				scope: this
 			}]
