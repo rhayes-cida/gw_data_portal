@@ -44,7 +44,7 @@ public class IdentifyServlet extends HttpServlet {
 			statement = connection.createStatement();
 
 			rset = statement.executeQuery(query);
-//System.out.println(query);
+System.out.println(query);
 			while (rset.next()) {	  
 				
 
@@ -57,6 +57,8 @@ public class IdentifyServlet extends HttpServlet {
 				", wlWellType: '" + rset.getString("WL_WELL_TYPE") + "'" + 
 				", nationalAquiferName: '" + rset.getString("NAT_AQFR_DESC") + "'" + 
 				", agency: '" + rset.getString("AGENCY_CD") + "'" +
+				", qwSnFlag: '" + rset.getString("QW_SN_FLAG") + "'" +
+				", wlSnFlag: '" + rset.getString("WL_SN_FLAG") + "'" +
 				", logo: '" + rset.getString("LOGO") + "'" +
 				"},";
 				

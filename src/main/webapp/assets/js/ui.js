@@ -225,7 +225,7 @@ function addDataLayer() {
 		id: -95,
 		baseUrl: 'mvwms',
 		srs: 3785,
-		overlap: 10,
+		overlap: 15,
 		zDepth: -900000,
 		isHiddenFromUser: true,
 		customParams: mapState
@@ -233,31 +233,7 @@ function addDataLayer() {
 }
 
 function loadMapLayers() {
-	map1.loadMapLayer(new JMap.web.mapLayer.MultiServiceLayer({
-		id: 29321,
-		name: 'Satellite Imagery',
-		description: 'Some photos from outer space',
-		title: 'Satellite Imagery',
-		legendUrl: 'http://raster1.nationalmap.gov/ArcGIS/rest/services/TNM_Small_Scale_Imagery/MapServer/tile/0/0/0.jpg',
-		layers: [
-		    new JMap.web.mapLayer.NationalMapTileLayer({
-		    	id: 30001,
-		    	zDepth: -50000,
-		    	minZoom: 0,
-		    	maxZoom: 11,
-		    	format: 'jpg',
-		    	baseUrl: 'http://raster1.nationalmap.gov/ArcGIS/rest/services/TNM_Small_Scale_Imagery/MapServer/tile'
-		    }),	
-		    new JMap.web.mapLayer.NationalMapWMSLayer({
-		    	id: 30002,
-		    	zDepth: -50000,
-		    	minZoom: 12,
-		    	maxZoom: 18,
-		    	baseUrl: 'http://raster.nationalmap.gov/ArcGIS/rest/services/Combined/TNM_Large_Scale_Imagery/MapServer/export'
-		    })
-		]
-	}));
-	
+
 	map1.appendLayer(new JMap.web.mapLayer.MultiServiceLayer({
 		id: 29320,
 		name: 'Vector Fills',
@@ -351,17 +327,6 @@ function loadMapLayers() {
 		dataSource: 'gis_cov',
 		title: 'National Aquifers',
 		description: '<a href="assets/images/USAaquiferMAP11_17.pdf" target="_blank">National Aquifers Key</a>'
-	}));
-		
-
-	map1.loadMapLayer(new JMap.web.mapLayer.NationalMapWMSLayer({
-		id: 29339,
-    	zDepth: -150000,
-		name: 'Large Scale Imagery',
-		description: 'Orthoimagery data are typically high resolution aerial images that combine the visual attributes of an aerial photograph with the spatial accuracy and reliability of a map. Digital orthoimage resolution may vary from 6 inches to 1 meter. In the former resolution, every pixel in an orthoimage covers a six inch square of the earth’s surface, while in the latter resolution, one meter square is represented by each pixel. The National Map allows free downloads of public domain, 1-meter orthoimagery for the conterminous United States, with many urban areas and other locations at 2-feet or finer resolution. Many States contribute orthoimagery to The National Map, and the USGS also relies on a partnership with the U.S. Department of Agriculture’s Farm Service Agency. For additional information, go to http://gisdata.usgs.net/website/Orthoimagery/. This layer is a mosaic of 1-meter resolution natural color and color infrared aerial imagery, and contains National Agriculture Imagery Program data and other sources to complete the mosaic.',
-		title: 'Large Scale Imagery',
-		//legendUrl: 'http://services.nationalmap.gov/ArcGIS/rest/services/nhd/MapServer/export?f=image&dpi=96&transparent=true&format=png8&bbox={%22xmin%22:-20037508.342789244,%22ymin%22:-20037508.342789236,%22xmax%22:20037508.342789244,%22ymax%22:20037508.342789244,%22spatialReference%22:{%22wkid%22:102113}}&bboxSR=102113&imageSR=102113&size=256,256',
-		baseUrl: 'http://raster.nationalmap.gov/ArcGIS/rest/services/Combined/TNM_Large_Scale_Imagery/MapServer/export'
 	}));
 }
 

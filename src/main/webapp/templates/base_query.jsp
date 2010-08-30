@@ -29,6 +29,8 @@ WHERE
       mdsys.sdo_ordinate_array(<%=bbox%>)
       )
     ) = 'TRUE')  
+ORDER BY 
+	SITE_NO 
 <%} else if ("bbox".equals(queryId)) { %>
 SELECT 
 	min(gp.dec_long_va) || ',' || min(gp.dec_lat_va) ||','|| max(gp.dec_long_va) ||','||  max(gp.dec_lat_va) bbox,
@@ -67,6 +69,8 @@ SELECT
 	WL_WELL_TYPE_US_FLAG WL_WELL_TYPE,
 	NAT_AQFR_DESC,
 	AGENCY_CD,
+	WL_SN_FLAG,
+	QW_SN_FLAG,
 	decode(AGENCY_CD, 'IN DNR','indnrtitle.gif','ISWS','ilstatewatersurvey.gif','MBMG','MontanaBMG.jpg','MN DNR','mn_dnr_logo.gif','MPCA','mpca7000.gif','TWDB','twdb.gif','USGS NJ / NJGS','njgslogo.gif','USGS_logo.png') LOGO    
 FROM 
 		nwis_dwh_star.well_registry gp,

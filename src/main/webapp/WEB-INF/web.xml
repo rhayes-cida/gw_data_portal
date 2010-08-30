@@ -19,6 +19,11 @@
 	    <servlet-class>gov.usgs.BBoxServlet</servlet-class>
 	</servlet>
 	
+	<servlet>
+	    <servlet-name>IdentifyDataProxy</servlet-name>
+	    <servlet-class>gov.usgs.IdentifyDataProxy</servlet-class>
+	</servlet>
+		
    <servlet-mapping>
    		<servlet-name>MVServlet</servlet-name>
   		<url-pattern>/mvwms</url-pattern>
@@ -34,6 +39,11 @@
   		<url-pattern>/bbox</url-pattern>
    </servlet-mapping>
 
+   <servlet-mapping>
+   		<servlet-name>IdentifyDataProxy</servlet-name>
+  		<url-pattern>/iddata</url-pattern>
+   </servlet-mapping>
+   
   <session-config>
   	<session-timeout>30</session-timeout>
   </session-config>

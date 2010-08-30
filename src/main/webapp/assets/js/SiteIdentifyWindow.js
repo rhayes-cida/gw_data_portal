@@ -27,9 +27,14 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	modal: true,
 	layout: 'fit',
 	initComponent: function() {
-		Ext.apply(this, {
-			title: this.siteRecord.get('siteName'),
+	
+		var tabPanel = new Ext.TabPanel({
+			id: 'ext-id-tabpanel',
+			xtype: 'tabpanel',
+			autoscroll: true,
+			activeTab: 0,
 			items: [{
+				title: 'Summary',
 				id: 'site-id-panel',
 				record: this.siteRecord,
 				border: false,
@@ -41,7 +46,38 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						siteIdTpl.overwrite(p.body, p.record.data);
 					}
 				}
-			}],
+			}]
+		});
+		
+		if (this.siteRecord.get('agency') == 'USGS NJ / NJGS') {
+			//add well log
+			tabPanel.add(new Ext.Panel({
+				title: 'Well Log',
+				autoLoad: 'iddata?request=well_log&siteNo=' + this.siteRecord.get('siteNo')
+			}));
+			
+			//add water level
+			if (this.siteRecord.get('wlSnFlag').toUpperCase() == 'YES') {
+				tabPanel.add(new Ext.Panel({
+					title: 'Water Levels',
+					autoLoad: 'iddata?request=water_level&siteNo=' + this.siteRecord.get('siteNo')
+				}));
+			}
+			
+			//add water quality
+			if (this.siteRecord.get('qwSnFlag').toUpperCase() == 'YES') {
+				tabPanel.add(new Ext.Panel({
+					title: 'Water Quality',
+					autoLoad: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo')
+				}));
+			}
+		}
+		
+
+	
+		Ext.apply(this, {
+			title: this.siteRecord.get('siteName'),
+			items: [tabPanel],
 			buttons: [{
 				text: 'Close',
 				handler: function() {

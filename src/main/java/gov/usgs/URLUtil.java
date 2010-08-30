@@ -1,5 +1,7 @@
 package gov.usgs;
 
+import gov.usgs.URLUtil;
+
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -88,4 +90,40 @@ public class URLUtil {
 
 		}
 	}
+	
+	
+  public static String getStringFromURLGET(String urlString) throws Exception {
+    DataInputStream input = null;
+    StringBuffer page = new StringBuffer();
+    
+    String returnString = "";
+    
+    //fetch base query
+    try {
+      // Get response data.
+      input = new DataInputStream(
+          URLUtil.makeUrlGetRequest(urlString).getInputStream()
+      );
+            
+      String str = "";
+      while (null != ((str = input.readLine()))) {
+        page.append(str);
+      }
+      
+      input.close();
+      returnString = page.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }      
+    
+    return returnString;
+    
+  }
+
+  private static URLConnection makeUrlGetRequest(String urlString) throws Exception {
+    URL url = new URL(urlString);
+    URLConnection conn = url.openConnection();
+    
+    return conn;
+  }
 }
