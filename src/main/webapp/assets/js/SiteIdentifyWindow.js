@@ -31,6 +31,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 		var tabPanel = new Ext.TabPanel({
 			id: 'ext-id-tabpanel',
 			xtype: 'tabpanel',
+			deferredRender: true,
 			autoscroll: true,
 			activeTab: 0,
 			items: [{
@@ -53,22 +54,88 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			//add well log
 			tabPanel.add(new Ext.Panel({
 				title: 'Well Log',
-				autoLoad: 'iddata?request=well_log&siteNo=' + this.siteRecord.get('siteNo')
+				//autoLoad: 'iddata?request=well_log&siteNo=' + this.siteRecord.get('siteNo')
+				autoLoad: {
+					url: 'iddata?request=well_log&siteNo=' + this.siteRecord.get('siteNo'),
+					method: 'GET',
+					callback: function(e,s,r,o) {
+						
+					}
+				}
 			}));
 			
 			//add water level
 			if (this.siteRecord.get('wlSnFlag').toUpperCase() == 'YES') {
 				tabPanel.add(new Ext.Panel({
 					title: 'Water Levels',
-					autoLoad: 'iddata?request=water_level&siteNo=' + this.siteRecord.get('siteNo')
+					//autoLoad: 'iddata?request=water_level&siteNo=' + this.siteRecord.get('siteNo')
+					autoLoad: {
+						url: 'iddata?request=water_level&siteNo=' + this.siteRecord.get('siteNo'),
+						method: 'GET',
+						callback: function(e,s,r,o) {
+							new Ext.data.XmlStore({
+								record: 'Result',
+								data: r.responseXml,
+								fields: [
+									    { name: 'CharacteristicName', mapping: 'ResultDescription > CharacteristicName'},
+									    { name: 'ResultSampleFractionText', mapping: 'ResultDescription > ResultSampleFractionText'},
+									    { name: 'ResultMeasureValue', mapping: 'ResultDescription > ResultMeasure > ResultMeasureValue'},
+									    { name: 'MeasureUnitCode', mapping: 'ResultDescription > ResultMeasure > MeasureUnitCode'},
+									    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'}
+								],
+								listeners: {
+									load: function(s,r,o) {
+										//s.data
+									}
+								}
+							});
+						},
+						scope: this
+					}
 				}));
 			}
 			
 			//add water quality
 			if (this.siteRecord.get('qwSnFlag').toUpperCase() == 'YES') {
 				tabPanel.add(new Ext.Panel({
+					id: 'water-quality-tab',
 					title: 'Water Quality',
-					autoLoad: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo')
+					layout: 'border',
+
+					items: [{
+						xtype: 'grid',
+						border: false,
+						loadMask: true,
+						autoScroll: true,
+						region: 'center',
+						layout: 'fit',
+						viewConfig: {forceFit: true},
+					    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
+					    colModel: new Ext.grid.ColumnModel([
+			                { header: "Characteristic", width: 200, dataIndex: 'CharacteristicName'},
+			                { header: "ResultSampleFractionText", width: 200, sortable: true, dataIndex: 'ResultSampleFractionText'},
+			                { header: "ResultMeasureValue", width: 150, sortable: true, dataIndex: 'ResultMeasureValue'},
+			                { header: "MeasureUnitCode", width: 150, sortable: true, dataIndex: 'MeasureUnitCode'},
+			                { header: "USGSPCode", width: 100, sortable: true, dataIndex: 'USGSPCode'}	                
+			            ]),
+						store: new Ext.data.XmlStore({
+							autoLoad: true,
+							id: 'wq-store',
+							url: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
+							record: 'Result',
+							sortInfo: {
+								field: 'CharacteristicName',
+								direction: 'ASC'
+							},
+							fields: [
+								    { name: 'CharacteristicName', mapping: 'ResultDescription > CharacteristicName'},
+								    { name: 'ResultSampleFractionText', mapping: 'ResultDescription > ResultSampleFractionText'},
+								    { name: 'ResultMeasureValue', mapping: 'ResultDescription > ResultMeasure > ResultMeasureValue'},
+								    { name: 'MeasureUnitCode', mapping: 'ResultDescription > ResultMeasure > MeasureUnitCode'},
+								    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'}
+							]
+						})
+					}]
 				}));
 			}
 		}
