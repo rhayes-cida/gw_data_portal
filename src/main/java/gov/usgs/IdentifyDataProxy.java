@@ -22,9 +22,7 @@ public class IdentifyDataProxy extends HttpServlet {
 						req.getParameter("siteNo") + 
 						"&typeName=gwml:WaterWell";
 		} else if ("water_level".equals(requestType)) {
-			url = "http://qwwebservices.usgs.gov/Result/search?siteid=USGS-" + 
-						req.getParameter("siteNo") + 
-						"&mimeType=xml";
+			url = "http://infotrek.er.usgs.gov/ogc-ie/sosbbox?north=43&south=42.9&east=-89.57&west=-89.65";
 		} else if ("water_quality".equals(requestType)) {
 			url = "http://qwwebservices.usgs.gov/Result/search?siteid=USGS-" + 
 						req.getParameter("siteNo") + 

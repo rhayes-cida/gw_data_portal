@@ -3,7 +3,7 @@ body {
 }
 
 
-#summary-table {
+.summary-table {
 	border-collapse: collapse;	
 	width: 100%;
 	margin-top: 1em;
@@ -11,23 +11,23 @@ body {
 	font-size: smaller;	
 }
 
-#summary-table th {
+.summary-table th {
 	font-weight: bold;
 	background-color: #eee;
 	padding: 3px;
 	text-align: center;
 }
 
-#summary-table td {
+.summary-table td {
 	padding: 3px;
 	text-align: center;
 }
 
-#summary-table .points {
+.summary-table .points {
 	background-color: #cff;
 }
 
-#summary-table .national {
+.summary-table .national {
 	background-color: #fcf;
 }
 
