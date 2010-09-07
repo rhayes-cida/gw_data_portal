@@ -159,13 +159,11 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 							);
 							
 							t.overwrite(Ext.getCmp('well-log-tab').body, so);
-							
-							
 						}
 					});
 				},
 				scope: this
-			},
+			}
 			}));
 			
 			//add water level
