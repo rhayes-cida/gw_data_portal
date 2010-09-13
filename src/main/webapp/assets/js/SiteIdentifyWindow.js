@@ -70,11 +70,35 @@ var waterLevelStore = new Ext.data.XmlStore({
 	]
 });
 
+var waterQualityStore = new Ext.data.XmlStore({
+	//url: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
+	proxy: new Ext.data.HttpProxy({
+		method: 'GET',
+		url: 'iddata'
+	}),
+	baseParams: {
+		request: 'water_quality'
+	},
+	record: 'Result',
+	sortInfo: {
+		field: 'CharacteristicName',
+		direction: 'ASC'
+	},
+	fields: [
+		    { name: 'CharacteristicName', mapping: 'ResultDescription > CharacteristicName'},
+		    { name: 'ResultSampleFractionText', mapping: 'ResultDescription > ResultSampleFractionText'},
+		    { name: 'ResultMeasureValue', mapping: 'ResultDescription > ResultMeasure > ResultMeasureValue'},
+		    { name: 'MeasureUnitCode', mapping: 'ResultDescription > ResultMeasure > MeasureUnitCode'},
+		    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'},
+		    { name: 'AnalysisStartDate', mapping: 'LabSamplePreparation > PreparationStartDate', xtype: 'datecolumn', format: 'Y-M-d'}
+	]
+})
+
 
 var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	id: 'identify-site-window',
 	height: 300,
-	width: 700,
+	width: 800,
 	modal: true,
 	layout: 'fit',
 	initComponent: function() {
@@ -168,6 +192,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			
 			//add water level
 			if (this.siteRecord.get('wlSnFlag').toUpperCase() == 'YES') {
+				waterLevelStore.removeAll();
 				tabPanel.add(new Ext.Panel({
 					title: 'Water Levels',
 					//autoLoad: 'iddata?request=water_level&siteNo=' + this.siteRecord.get('siteNo')
@@ -214,6 +239,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			
 			//add water quality
 			if (this.siteRecord.get('qwSnFlag').toUpperCase() == 'YES') {
+				waterQualityStore.removeAll();
+				waterQualityStore.load({
+					params:{siteNo:this.siteRecord.get('siteNo')}
+				});
 				tabPanel.add(new Ext.Panel({
 					id: 'water-quality-tab',
 					title: 'Water Quality',
@@ -231,27 +260,19 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					    colModel: new Ext.grid.ColumnModel([
 			                { header: "Characteristic", width: 200, dataIndex: 'CharacteristicName'},
 			                { header: "ResultSampleFractionText", width: 200, sortable: true, dataIndex: 'ResultSampleFractionText'},
-			                { header: "ResultMeasureValue", width: 150, sortable: true, dataIndex: 'ResultMeasureValue'},
+			                { header: "ResultMeasureValue", width: 150, sortable: true, dataIndex: 'ResultMeasureValue', 
+			                	renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+			                		if (value == '') {
+			                			return 'Not Detected';
+			                		}
+			                		return value;
+			                	}
+			                },
 			                { header: "MeasureUnitCode", width: 150, sortable: true, dataIndex: 'MeasureUnitCode'},
-			                { header: "USGSPCode", width: 100, sortable: true, dataIndex: 'USGSPCode'}	                
+			                { header: "USGSPCode", width: 100, sortable: true, dataIndex: 'USGSPCode'},	                
+			                { header: "AnalysisStartDate", width: 100, sortable: true, dataIndex: 'AnalysisStartDate'}	                
 			            ]),
-						store: new Ext.data.XmlStore({
-							autoLoad: true,
-							id: 'wq-store',
-							url: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
-							record: 'Result',
-							sortInfo: {
-								field: 'CharacteristicName',
-								direction: 'ASC'
-							},
-							fields: [
-								    { name: 'CharacteristicName', mapping: 'ResultDescription > CharacteristicName'},
-								    { name: 'ResultSampleFractionText', mapping: 'ResultDescription > ResultSampleFractionText'},
-								    { name: 'ResultMeasureValue', mapping: 'ResultDescription > ResultMeasure > ResultMeasureValue'},
-								    { name: 'MeasureUnitCode', mapping: 'ResultDescription > ResultMeasure > MeasureUnitCode'},
-								    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'}
-							]
-						})
+						store: waterQualityStore
 					}]
 				}));
 			}
