@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<title>United States Groundwater Data Portal</title>
-	
+
 		<!-- scrollable map assets -->
 		<script type="text/javascript" src="scrollable_map/JMap-header.js"></script>
 		<script type="text/javascript" src="scrollable_map/JMap-base.js"></script>
@@ -16,6 +16,9 @@
 		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
 	
 		<!--  extjs assets -->
+		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
+	    <script language="javascript" type='text/javascript' src='ext_flot/jquery-1.3.2-old-extend.js'></script>
+	    <script language="javascript" type='text/javascript' src='ext_js/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>
 		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
@@ -29,10 +32,22 @@
 		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script>
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
+
+		<!-- more flot assets -->
+	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.js"></script>
+	
+	    <link rel='stylesheet' type='text/css' href='ext_flot/Flot.css' />
+	    <script language="javascript" type="text/javascript" src="ext_flot/Csv.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/GetText.js"></script>
+	
+	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.ja.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.pack.js"></script>
+	
 	
 	</head>
 	
 	<body>
+		<div id="placeholder"></div>
 		<div id="header">
 			<div id="banner-area">
 			     

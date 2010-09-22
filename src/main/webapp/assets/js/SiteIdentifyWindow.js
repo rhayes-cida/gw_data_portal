@@ -67,7 +67,22 @@ var waterLevelStore = new Ext.data.XmlStore({
 	 		{ name: 'time', mapping: 'TimeValuePair > time'},
 			{ name: 'value', mapping: 'TimeValuePair > value > Quantity > value'},
 			{ name: 'unit', mapping: 'TimeValuePair > value > Quantity > uom@code'}
-	]
+	],
+	listeners: {
+		load: function(s,r,o) {
+			var data = [];
+			for (var i = 0; i < r.length; i++) {
+				var dt = Date.parseDate(
+					r[i].get('time').split('+')[0],
+					'Y-m-dTH:i:s'
+				);
+				data.push([dt.getTime(), r[i].get('value')]);
+			}
+			Ext.getCmp('ext-flot').setData([{label: 'Water level in feet', data:data}]);
+			Ext.getCmp('ext-flot').setupGrid();
+			Ext.getCmp('ext-flot').draw();
+		}
+	}
 });
 
 var waterQualityStore = new Ext.data.XmlStore({
@@ -97,7 +112,7 @@ var waterQualityStore = new Ext.data.XmlStore({
 
 var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	id: 'identify-site-window',
-	height: 300,
+	height: 500,
 	width: 800,
 	modal: true,
 	layout: 'fit',
@@ -106,8 +121,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 		var tabPanel = new Ext.TabPanel({
 			id: 'ext-id-tabpanel',
 			xtype: 'tabpanel',
-			deferredRender: true,
-			autoscroll: true,
+			autoScroll: true,
 			activeTab: 0,
 			border: false,
 			items: [{
@@ -136,10 +150,11 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				listeners: {
 					afterrender: function() {
 					Ext.Ajax.request({
-						url: 'iddata?request=well_log&siteNo=435629089353901',
-						/*baseParams: {
+						method: 'GET',
+						url: 'iddata?request=well_log',
+						params: {
 							siteNo: this.siteRecord.get('siteNo')
-						},*/
+						},
 						success: function(r, o) {
 							var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
 							rs = rs.replace(/<\/[a-zA-Z0-9]+:/g,'</');
@@ -151,7 +166,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 								wellDepth: x.getElementsByTagName('principalValue')[0].firstChild.nodeValue,
 								onlineResource: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:href'),
 								onlineResourceTitle: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:title')
-							}
+							};
 							
 							var logEls = x.getElementsByTagName('logElement');
 							so.logObjs = [];
@@ -159,8 +174,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 								so.logObjs.push({
 									intervalFrom: logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0],
 									intervalTo: logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1],
-									description: logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue
-								})
+									description: (logEls[i].getElementsByTagName('description'))?logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue : 'No Description'
+								});
 							}
 							
 							var t = new Ext.XTemplate(
@@ -201,8 +216,9 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					listeners: {
 						afterrender: function() {
 							Ext.Ajax.request({
+								method: 'GET',
 								url: 'iddata?request=water_level',
-								baseParams: {
+								params: {
 									siteNo: this.siteRecord.get('siteNo')
 								},
 								success: function(r, o) {
@@ -216,20 +232,48 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						scope: this
 					},
 					items: [{
-						xtype: 'grid',
-						border: false,
-						loadMask: true,
-						autoScroll: true,
 						region: 'center',
-						layout: 'fit',
-						viewConfig: {forceFit: true},
-					    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
-					    colModel: new Ext.grid.ColumnModel([
-			                { header: "Time", width: 200, dataIndex: 'time' },
-			                { header: "Value", width: 200, dataIndex: 'value' },
-			                { header: "Unit", width: 200, dataIndex: 'unit' }
-			            ]),
-						store: waterLevelStore
+						autoScroll: true,
+						padding: 5,
+						items: [{
+							title: 'Graph',
+							xtype: 'flot',
+							height: 400,
+							//autoWidth: true,
+							width: 600,
+							id: 'ext-flot',
+							tooltipEvent: 'plotclick',
+							legend: {
+							    show: true,
+							    labelBoxBorderColor: 'black',
+							    position: "ne"
+							},
+							xaxis: {
+								mode: 'time',
+								timeformat: "%m/%y",
+								minTickSize: [1, "year"]
+							},
+					        series: [ {data: [[]]} ],
+					        grid: {
+								backgroundColor: 'white'
+							}
+						},{
+							border: false,
+							height: 25,
+							html:''
+						},{
+							xtype: 'grid',
+							loadMask: true,
+							autoHeight: true,
+							viewConfig: {forceFit: true},
+						    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
+						    colModel: new Ext.grid.ColumnModel([
+				                { header: "Date", width: 200, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
+				                { header: "Value", width: 200, dataIndex: 'value' },
+				                { header: "Unit", width: 200, dataIndex: 'unit' }
+				            ]),
+							store: waterLevelStore	
+						}]
 					}]
 				}));
 			}
@@ -239,15 +283,22 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			
 			//add water quality
 			if (this.siteRecord.get('qwSnFlag').toUpperCase() == 'YES') {
+				/*
 				waterQualityStore.removeAll();
 				waterQualityStore.load({
 					params:{siteNo:this.siteRecord.get('siteNo')}
 				});
+				*/
 				tabPanel.add(new Ext.Panel({
 					id: 'water-quality-tab',
 					title: 'Water Quality',
-					layout: 'border',
-
+					padding: 5,
+					bodyCfg: {
+				        cls: 'x-panel-body qw-table'
+				    },
+					autoLoad: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
+					autoScroll: true
+/*
 					items: [{
 						xtype: 'grid',
 						border: false,
@@ -273,7 +324,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			                { header: "AnalysisStartDate", width: 100, sortable: true, dataIndex: 'AnalysisStartDate'}	                
 			            ]),
 						store: waterQualityStore
-					}]
+					}]*/
 				}));
 			}
 		}

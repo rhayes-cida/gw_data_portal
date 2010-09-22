@@ -542,3 +542,28 @@ td.long-text {
 	outline: 0px;
 }
 
+.qw-table table {
+	font-size: 90%;
+	border-collapse: collapse;
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: gray;
+	background-color: white;
+}
+.qw-table table  th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: gray;
+	background-color: white;
+	-moz-border-radius: 0px 0px 0px 0px;
+}
+.qw-table table  td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: gray;
+	background-color: white;
+	-moz-border-radius: 0px 0px 0px 0px;
+}
