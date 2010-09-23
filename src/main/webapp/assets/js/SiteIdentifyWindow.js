@@ -297,7 +297,16 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				        cls: 'x-panel-body qw-table'
 				    },
 					autoLoad: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
-					autoScroll: true
+					autoScroll: true,
+					tbar: [{
+				    	text: 'Export as CSV',
+				    	handler: function() {
+							document.getElementById('qw-siteid').value = 'USGS-' + this.siteRecord.get('siteNo');
+							document.getElementById('qw-csv-export').submit();
+						}, 
+						scope: this
+				    }]
+				
 /*
 					items: [{
 						xtype: 'grid',

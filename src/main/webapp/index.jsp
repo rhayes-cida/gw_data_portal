@@ -162,7 +162,11 @@
 			}
 		}
 %>		
-		
+		<form method="GET" target="_blank" class="x-hidden" id="qw-csv-export" action="http://qwwebservices.usgs.gov/Result/search">
+			<input type="hidden" name="siteid" id="qw-siteid"/>
+			<input type="hidden" name="mimeType" value="csv"/>
+			<input type="hidden" name="zip" value="yes"/>
+		</form>
 
 		
 		<!-- // START FOOTER -->

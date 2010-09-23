@@ -17,22 +17,22 @@ public class HTMLUtil {
 	 */
 	
 	public static void getAgencyList(JspWriter out, Connection connection) {		
-		String sql = "SELECT UNIQUE a.AGENCY_CD value, AGENCY_NM display FROM NWIS_DWH_STAR.WELL_REGISTRY a, NWIS_DWH_STAR.AGENCY_LOV b where a.agency_cd = b.agency_cd ORDER BY 1";
+		String sql = "SELECT UNIQUE a.AGENCY_CD value, a.AGENCY_MED display, a.AGENCY_NM title FROM NWIS_DWH_STAR.WELL_REGISTRY a, NWIS_DWH_STAR.AGENCY_LOV b where a.agency_cd = b.agency_cd ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
 	public static void getQWWellTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE QW_WELL_TYPE_US_FLAG Value, QW_WELL_TYPE_US_FLAG Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE qw_well_type <> 'None' ORDER BY 1";
+		String sql = "SELECT UNIQUE QW_WELL_TYPE_US_FLAG Value, QW_WELL_TYPE_US_FLAG Display, QW_WELL_TYPE_US_FLAG title FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE qw_well_type <> 'None' ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
 	public static void getWLWellTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE WL_WELL_TYPE_US_FLAG Value, WL_WELL_TYPE_US_FLAG Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE wl_well_type <> 'None' ORDER BY 1";
+		String sql = "SELECT UNIQUE WL_WELL_TYPE_US_FLAG Value, WL_WELL_TYPE_US_FLAG Display, WL_WELL_TYPE_US_FLAG title FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE wl_well_type <> 'None' ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 
 	public static void getNationalAquiferNameList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE nat_aqfr_desc Value, nat_aqfr_desc Display FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE nat_aqfr_desc is not null ORDER BY 1";
+		String sql = "SELECT UNIQUE nat_aqfr_desc Value, nat_aqfr_desc Display, nat_aqfr_desc title FROM NWIS_DWH_STAR.WELL_REGISTRY WHERE nat_aqfr_desc is not null ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
@@ -45,7 +45,7 @@ public class HTMLUtil {
 			statement = connection.createStatement();
 			rset = statement.executeQuery(sql);
 			while (rset.next()) {
-				out.write("<option value=\"" + rset.getString("value") + "\">" + rset.getString("display") + "</option>");
+				out.write("<option title=\"" + rset.getString("title") + "\"value=\"" + rset.getString("value") + "\">" + rset.getString("display") + "</option>");
 			}
 			rset.close();  
 			rset = null;
