@@ -66,7 +66,8 @@ var waterLevelStore = new Ext.data.XmlStore({
 	fields: [
 	 		{ name: 'time', mapping: 'TimeValuePair > time'},
 			{ name: 'value', mapping: 'TimeValuePair > value > Quantity > value'},
-			{ name: 'unit', mapping: 'TimeValuePair > value > Quantity > uom@code'}
+			{ name: 'method', mapping: 'TimeValuePair > method'},
+			{ name: 'unit', mapping: 'TimeValuePair > method > Quantity > uom@code'}
 	],
 	listeners: {
 		load: function(s,r,o) {
@@ -154,6 +155,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						url: 'iddata?request=well_log',
 						params: {
 							siteNo: this.siteRecord.get('siteNo')
+							//siteNo: 425856089320601
 						},
 						success: function(r, o) {
 							var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
@@ -171,17 +173,47 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 							var logEls = x.getElementsByTagName('logElement');
 							so.logObjs = [];
 							for (var i = 0; i < logEls.length; i++) {
+								var f = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0];
+								var t = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1];
+								
 								so.logObjs.push({
-									intervalFrom: logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0],
-									intervalTo: logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1],
+									intervalFrom: f,
+									intervalTo: t,
+									height: t - f,
 									description: (logEls[i].getElementsByTagName('description'))?logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue : 'No Description'
 								});
+							}
+							
+							var graphicHTML = '';
+							if (so.logObjs && so.logObjs.length > 0) {
+								
+								//create graphic
+								var graphicHeight = 200;
+								var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];
+								graphicHTML = '<table class="well-log-graphic">';
+								var totalDepth = (so.logObjs[so.logObjs.length-1].intervalTo - so.logObjs[0].intervalFrom);
+								for (var i = 0; i < so.logObjs.length; i++) {
+									var relHeight = graphicHeight * ((so.logObjs[i].height) / totalDepth);
+									graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
+											'<div style="height: 100%; position: relative; background-color: ' + intervalColor[(i%intervalColor.length)] + ';">';
+									if (i == 0) {
+										graphicHTML += '<span style="position: absolute; top: 0px; font-size: 80%;">' + so.logObjs[i].intervalFrom + '</span>'; 
+
+									}
+									graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + so.logObjs[i].intervalTo + '</span>' + 
+											'</div>' + 
+										'</td>' + 
+										'<td style="height:' + relHeight + 'px; padding: 5px;" valign="middle">' + 
+											so.logObjs[i].description + 
+										'</td></tr>';
+								}
+								graphicHTML += '</table>';
 							}
 							
 							var t = new Ext.XTemplate(
 								'<tpl for=".">',
 									'<table>',
-										'<tr><td>Longitude: {[values.position.split(" ")[0]]}</td></tr>',
+										'<tr><td>Longitude: {[values.position.split(" ")[0]]}</td><td rowspan="5">' + graphicHTML + '</td></tr>',
 										'<tr><td>Latitude: {[values.position.split(" ")[1]]}</td></tr>',
 										'<tr><td>Elevation: {elevation} ft.</td></tr>',
 										'<tr><td>Well Depth: {wellDepth} ft.</td></tr>',
@@ -270,7 +302,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						    colModel: new Ext.grid.ColumnModel([
 				                { header: "Date", width: 200, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
 				                { header: "Value", width: 200, dataIndex: 'value' },
-				                { header: "Unit", width: 200, dataIndex: 'unit' }
+				                { header: "Unit", width: 200, dataIndex: 'unit' },
+				                { header: "Method", width: 200, dataIndex: 'method' }
 				            ]),
 							store: waterLevelStore	
 						}]

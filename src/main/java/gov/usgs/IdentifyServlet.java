@@ -44,7 +44,7 @@ public class IdentifyServlet extends HttpServlet {
 			statement = connection.createStatement();
 
 			rset = statement.executeQuery(query);
-System.out.println(query);
+//System.out.println(query);
 			while (rset.next()) {	  
 				
 

@@ -42,7 +42,7 @@ public class IdentifyDataProxy extends HttpServlet {
 						"&mimeType=html";
 		}
 		
-		System.out.println("gw_data_portal fetching data from url: " + url);
+		//System.out.println("gw_data_portal fetching data from url: " + url);
 		
 		try {
 			resp.getOutputStream().print(

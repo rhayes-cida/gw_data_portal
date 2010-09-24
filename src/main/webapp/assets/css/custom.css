@@ -567,3 +567,8 @@ td.long-text {
 	background-color: white;
 	-moz-border-radius: 0px 0px 0px 0px;
 }
+
+.well-log-graphic {
+	border-collapse: collapse;
+	margin-left: 5em;	
+}
