@@ -64,18 +64,22 @@ var waterLevelStore = new Ext.data.XmlStore({
 	id: 'water-level-store',
 	record: 'element',
 	fields: [
-	 		{ name: 'time', mapping: 'TimeValuePair > time'},
+	 		{ name: 'time', mapping: 'TimeValuePair > time', type:'date', dateFormat:'Y-m-d\\TG:i:sP'},
 			{ name: 'value', mapping: 'TimeValuePair > value > Quantity > value'},
 			{ name: 'method', mapping: 'TimeValuePair > method'},
-			{ name: 'unit', mapping: 'TimeValuePair > method > Quantity > uom@code'}
+			{ name: 'unit', mapping: 'TimeValuePair > value > Quantity > uom@code'}
 	],
+	sortInfo: {
+		field: 'time',
+		direction: 'ASC'
+	},
 	listeners: {
 		load: function(s,r,o) {
 			var data = [];
 			for (var i = 0; i < r.length; i++) {
 				var dt = Date.parseDate(
 					r[i].get('time').split('+')[0],
-					'Y-m-dTH:i:s'
+					'Y-m-dTG:i:s'
 				);
 				data.push([dt.getTime(), r[i].get('value')]);
 			}
@@ -108,7 +112,7 @@ var waterQualityStore = new Ext.data.XmlStore({
 		    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'},
 		    { name: 'AnalysisStartDate', mapping: 'LabSamplePreparation > PreparationStartDate', xtype: 'datecolumn', format: 'Y-M-d'}
 	]
-})
+});
 
 
 var SiteIdentifyWindow = Ext.extend(Ext.Window, {
@@ -300,10 +304,11 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 							viewConfig: {forceFit: true},
 						    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 						    colModel: new Ext.grid.ColumnModel([
-				                { header: "Date", width: 200, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
-				                { header: "Value", width: 200, dataIndex: 'value' },
-				                { header: "Unit", width: 200, dataIndex: 'unit' },
-				                { header: "Method", width: 200, dataIndex: 'method' }
+				                { header: "Date", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
+				                { header: "Time", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'G:i:sP' },
+				                { header: "Value", width: 100, dataIndex: 'value' },
+				                { header: "Unit", width: 50, dataIndex: 'unit' },
+				                { header: "Method", width: 300, dataIndex: 'method' }
 				            ]),
 							store: waterLevelStore	
 						}]
