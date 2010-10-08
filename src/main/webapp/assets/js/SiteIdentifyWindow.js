@@ -64,10 +64,10 @@ var waterLevelStore = new Ext.data.XmlStore({
 	id: 'water-level-store',
 	record: 'TimeValuePair',
 	fields: [
-	 		{ name: 'time', mapping: 'time'},
+	 		{ name: 'time', mapping: 'time', type: 'date', dateFormat: 'c'},
 			{ name: 'value', mapping: 'value > Quantity > value'},
 			{ name: 'method', mapping: 'method'},
-			{ name: 'unit', mapping: 'Quantity > uom@code'}
+			{ name: 'unit', mapping: 'Quantity > uom'}
 	],
 	sortInfo: {
 		field: 'time',
@@ -77,7 +77,7 @@ var waterLevelStore = new Ext.data.XmlStore({
 		load: function(s,r,o) {
 			var data = [];
 			for (var i = 0; i < r.length; i++) {
-				data.push([Date.parseDate(r[i].get('time'),'c'), r[i].get('value')]);
+				data.push([r[i].get('time'), r[i].get('value')]);
 			}
 			Ext.getCmp('ext-flot').setData([{label: 'Water level in feet', data:data}]);
 			Ext.getCmp('ext-flot').setupGrid();
@@ -242,24 +242,29 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				waterLevelStore.removeAll();
 				tabPanel.add(new Ext.Panel({
 					title: 'Water Levels',
+					renderWL: 0,
 					//autoLoad: 'iddata?request=water_level&siteNo=' + this.siteRecord.get('siteNo')
 					//http://infotrek.er.usgs.gov/ogc-ie/sosbbox?north=43&south=42.9&east=-89.57&west=-89.65
 					layout: 'border',
 					listeners: {
-						afterrender: function() {
-							Ext.Ajax.request({
-								method: 'GET',
-								url: 'iddata?request=water_level',
-								params: {
-									siteNo: this.siteRecord.get('siteNo')
-								},
-								success: function(r, o) {
-									var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
-									rs = rs.replace(/<\/[a-zA-Z0-9]+:/g,'</');
-									rs = rs.replace('wml2:value','wml2_value');
-									waterLevelStore.loadData(createXmlDoc(rs));
-								}
-							});
+						afterlayout: function(p) {
+							if (p.renderWL++ == 2) {
+								p.body.mask('Loading...','x-mask-loading');
+								Ext.Ajax.request({
+									method: 'GET',
+									url: 'iddata?request=water_level',
+									params: {
+										siteNo: this.siteRecord.get('siteNo')
+									},
+									success: function(r, o) {
+										var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
+										rs = rs.replace(/<\/[a-zA-Z0-9]+:/g,'</');
+										rs = rs.replace('wml2:value','wml2_value');
+										waterLevelStore.loadData(createXmlDoc(rs));
+										p.body.unmask();
+									}
+								});
+							}
 						},
 						scope: this
 					},
@@ -301,7 +306,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 						    colModel: new Ext.grid.ColumnModel([
 				                { header: "Date", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
-				                { header: "Time", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'G:i:sP' },
+				                { header: "Time", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'H:iP' },
 				                { header: "Value", width: 100, dataIndex: 'value' },
 				                { header: "Unit", width: 50, dataIndex: 'unit' },
 				                { header: "Method", width: 300, dataIndex: 'method' }
