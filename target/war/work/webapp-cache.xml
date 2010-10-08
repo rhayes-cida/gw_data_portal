@@ -23,6 +23,7 @@
           <string>assets/images/logos/njgslogo.gif</string>
           <string>assets/images/logos/twdb.gif</string>
           <string>assets/images/logos/USGS_logo.png</string>
+          <string>assets/images/ogw-banner.jpg</string>
           <string>assets/images/USAaquiferMAP11_17.pdf</string>
           <string>assets/images/USGS_web_logo.gif</string>
           <string>assets/images/zoomInIcon.gif</string>
@@ -32,8 +33,54 @@
           <string>assets/js/SiteIdSelector.js</string>
           <string>assets/js/ui.js</string>
           <string>assets/wms/wms_default.xml</string>
+          <string>ext_flot/BarFlot.js</string>
+          <string>ext_flot/basic.html</string>
+          <string>ext_flot/basic.js</string>
+          <string>ext_flot/card.html</string>
+          <string>ext_flot/card.js</string>
+          <string>ext_flot/Csv.js</string>
+          <string>ext_flot/CsvFlot.js</string>
+          <string>ext_flot/debits.html</string>
+          <string>ext_flot/debits.js</string>
+          <string>ext_flot/debits.xml</string>
+          <string>ext_flot/dual_axis.html</string>
+          <string>ext_flot/dual_axis.js</string>
+          <string>ext_flot/dynamic.html</string>
+          <string>ext_flot/dynamic.js</string>
+          <string>ext_flot/excanvas.js</string>
+          <string>ext_flot/excanvas.pack.js</string>
+          <string>ext_flot/excanvas.r60.js</string>
+          <string>ext_flot/excanvas.silverlight.r60.js</string>
+          <string>ext_flot/Flot.css</string>
+          <string>ext_flot/Flot.ja.js</string>
+          <string>ext_flot/Flot.js</string>
+          <string>ext_flot/Flot.pack.js</string>
+          <string>ext_flot/flotdemo.js</string>
+          <string>ext_flot/GetText.js</string>
+          <string>ext_flot/horizontal.html</string>
+          <string>ext_flot/horizontal.js</string>
+          <string>ext_flot/index.html</string>
+          <string>ext_flot/jquery-1.3.2-old-extend.js</string>
+          <string>ext_flot/jquery.flot.js</string>
+          <string>ext_flot/jquery.flot.pack.js</string>
+          <string>ext_flot/jquery.flot.trunk.js</string>
+          <string>ext_flot/jquery.flot.trunk.pie.js</string>
+          <string>ext_flot/latest.html</string>
+          <string>ext_flot/latest_ext3.html</string>
+          <string>ext_flot/pie.html</string>
+          <string>ext_flot/pie.js</string>
+          <string>ext_flot/PieFlot.js</string>
+          <string>ext_flot/setting_options.html</string>
+          <string>ext_flot/setting_options.js</string>
+          <string>ext_flot/visitors.html</string>
+          <string>ext_flot/visitors.js</string>
+          <string>ext_flot/zooming.html</string>
+          <string>ext_flot/zooming.js</string>
           <string>ext_js/adapter/ext/ext-base-debug.js</string>
           <string>ext_js/adapter/ext/ext-base.js</string>
+          <string>ext_js/adapter/jquery/ext-jquery-adapter-debug.js</string>
+          <string>ext_js/adapter/jquery/ext-jquery-adapter.js</string>
+          <string>ext_js/adapter/jquery/jquery.js</string>
           <string>ext_js/examples/ux/BufferView.js</string>
           <string>ext_js/examples/ux/CenterLayout.js</string>
           <string>ext_js/examples/ux/CheckColumn.js</string>
@@ -566,6 +613,7 @@
           <string>WEB-INF/web.xml</string>
           <string>WEB-INF/classes/gov/usgs/BBoxServlet.class</string>
           <string>WEB-INF/classes/gov/usgs/HTMLUtil.class</string>
+          <string>WEB-INF/classes/gov/usgs/IdentifyDataProxy.class</string>
           <string>WEB-INF/classes/gov/usgs/IdentifyServlet.class</string>
           <string>WEB-INF/classes/gov/usgs/MVServlet.class</string>
           <string>WEB-INF/classes/gov/usgs/URLUtil.class</string>

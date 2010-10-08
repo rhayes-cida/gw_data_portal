@@ -2,7 +2,8 @@ body {
 	font-family: tahoma,arial,verdana,sans-serif !important;	
 }
 
-#summary-table {
+
+.summary-table {
 	border-collapse: collapse;	
 	width: 100%;
 	margin-top: 1em;
@@ -10,23 +11,23 @@ body {
 	font-size: smaller;	
 }
 
-#summary-table th {
+.summary-table th {
 	font-weight: bold;
 	background-color: #eee;
 	padding: 3px;
 	text-align: center;
 }
 
-#summary-table td {
+.summary-table td {
 	padding: 3px;
 	text-align: center;
 }
 
-#summary-table .points {
+.summary-table .points {
 	background-color: #cff;
 }
 
-#summary-table .national {
+.summary-table .national {
 	background-color: #fcf;
 }
 
@@ -448,7 +449,7 @@ td.long-text {
 }
 
 #id-container table th {
-	text-align: center;
+	text-align: left;
 	background-color: #eee;
 	font-weight: bold;
 	padding: 2px;
@@ -541,3 +542,33 @@ td.long-text {
 	outline: 0px;
 }
 
+.qw-table table {
+	font-size: 90%;
+	border-collapse: collapse;
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: gray;
+	background-color: white;
+}
+.qw-table table  th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: gray;
+	background-color: white;
+	-moz-border-radius: 0px 0px 0px 0px;
+}
+.qw-table table  td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: gray;
+	background-color: white;
+	-moz-border-radius: 0px 0px 0px 0px;
+}
+
+.well-log-graphic {
+	border-collapse: collapse;
+	margin-left: 5em;	
+}

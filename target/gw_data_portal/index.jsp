@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<title>United States Groundwater Data Portal</title>
-	
+
 		<!-- scrollable map assets -->
 		<script type="text/javascript" src="scrollable_map/JMap-header.js"></script>
 		<script type="text/javascript" src="scrollable_map/JMap-base.js"></script>
@@ -16,6 +16,9 @@
 		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
 	
 		<!--  extjs assets -->
+		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
+	    <script language="javascript" type='text/javascript' src='ext_flot/jquery-1.3.2-old-extend.js'></script>
+	    <script language="javascript" type='text/javascript' src='ext_js/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>
 		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
@@ -29,10 +32,22 @@
 		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script>
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
+
+		<!-- more flot assets -->
+	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.js"></script>
+	
+	    <link rel='stylesheet' type='text/css' href='ext_flot/Flot.css' />
+	    <script language="javascript" type="text/javascript" src="ext_flot/Csv.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/GetText.js"></script>
+	
+	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.ja.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.pack.js"></script>
+	
 	
 	</head>
 	
 	<body>
+		<div id="placeholder"></div>
 		<div id="header">
 			<div id="banner-area">
 			     
@@ -87,7 +102,6 @@
 		<!-- render map to this div -->
 		<div id="map-area" class="x-hidden">
 			<div id="map-tools" class="map-tools"></div>
-			<a href="#" onclick="baseLayersWindow.show(); return false;" id="base-layers" class="base-layers-button">Base Layers</a>
 			<div id="legend-div"></div>
 		</div>
 		
@@ -114,7 +128,7 @@
 		<div id="qw-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">Do Not Filter By Water Quality Type</option>
+				<option value="" selected="selected">All Water Quality Sub Networks</option>
 				<% HTMLUtil.getQWWellTypeList(out, connection); %>
 			</select>
 		</div>
@@ -123,7 +137,7 @@
 		<div id="wl-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">Do Not Filter By Water Level Type</option>
+				<option value="" selected="selected">All Water Level Sub Networks</option>
 				<% HTMLUtil.getWLWellTypeList(out, connection); %>
 			</select>
 		</div>
@@ -131,7 +145,7 @@
 		<div id="ntlAquifer-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="ntlAquifer" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All National Aquifer Names</option>
+				<option value="" selected="selected">All National Aquifers</option>
 				<% HTMLUtil.getNationalAquiferNameList(out, connection); %>
 			</select>
 		</div>
@@ -148,7 +162,11 @@
 			}
 		}
 %>		
-		
+		<form method="GET" target="_blank" class="x-hidden" id="qw-csv-export" action="http://qwwebservices.usgs.gov/Result/search">
+			<input type="hidden" name="siteid" id="qw-siteid"/>
+			<input type="hidden" name="mimeType" value="csv"/>
+			<input type="hidden" name="zip" value="yes"/>
+		</form>
 
 		
 		<!-- // START FOOTER -->
@@ -187,7 +205,7 @@
 							</span>
 						</span><!-- vcard -->
       				</p>
-   					<p id="footer-page-url">URL: </p>
+   					<p id="footer-page-url">URL: http://cida.usgs.gov/gw_data_portal/</p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
 						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>

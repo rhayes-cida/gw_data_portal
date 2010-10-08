@@ -62,12 +62,12 @@ function createXmlDoc(str) {
 
 var waterLevelStore = new Ext.data.XmlStore({							
 	id: 'water-level-store',
-	record: 'element',
+	record: 'TimeValuePair',
 	fields: [
-	 		{ name: 'time', mapping: 'TimeValuePair > time', type:'date', dateFormat:'Y-m-d\\TG:i:sP'},
-			{ name: 'value', mapping: 'TimeValuePair > value > Quantity > value'},
-			{ name: 'method', mapping: 'TimeValuePair > method'},
-			{ name: 'unit', mapping: 'TimeValuePair > value > Quantity > uom@code'}
+	 		{ name: 'time', mapping: 'time'},
+			{ name: 'value', mapping: 'value > Quantity > value'},
+			{ name: 'method', mapping: 'method'},
+			{ name: 'unit', mapping: 'Quantity > uom@code'}
 	],
 	sortInfo: {
 		field: 'time',
@@ -77,11 +77,7 @@ var waterLevelStore = new Ext.data.XmlStore({
 		load: function(s,r,o) {
 			var data = [];
 			for (var i = 0; i < r.length; i++) {
-				var dt = Date.parseDate(
-					r[i].get('time').split('+')[0],
-					'Y-m-dTG:i:s'
-				);
-				data.push([dt.getTime(), r[i].get('value')]);
+				data.push([Date.parseDate(r[i].get('time'),'c'), r[i].get('value')]);
 			}
 			Ext.getCmp('ext-flot').setData([{label: 'Water level in feet', data:data}]);
 			Ext.getCmp('ext-flot').setupGrid();

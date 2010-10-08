@@ -13,8 +13,8 @@
 SELECT 
 	gp.geom_3785 GEOM 
 FROM 
-	nwis_dwh_star.well_registry gp,
-	(<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %> SELECT '-1' my_siteid from DUAL <% } else { %> <% if (!"".equals(qwSnFlag)) { %> SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' <% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %> <% } %> <% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %> <% if (!"".equals(wlSnFlag)) { %> SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' <% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %><% } %><% } %>) inner 
+	gw_data_portal.well_registry gp,
+	(<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %> SELECT '-1' my_siteid from DUAL <% } else { %> <% if (!"".equals(qwSnFlag)) { %> SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = 'Yes' <% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %> <% } %> <% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %> <% if (!"".equals(wlSnFlag)) { %> SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = 'Yes' <% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %><% } %><% } %>) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
 	<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
@@ -36,18 +36,18 @@ SELECT
 	min(gp.dec_long_va) || ',' || min(gp.dec_lat_va) ||','|| max(gp.dec_long_va) ||','||  max(gp.dec_lat_va) bbox,
 	count(*) num_points  
 FROM 
-		nwis_dwh_star.well_registry gp,
+		gw_data_portal.well_registry gp,
 	(
 	<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %>
 		SELECT '-1' my_siteid from DUAL 
 	<% } else { %>
 		<% if (!"".equals(qwSnFlag)) { %>
-			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' 
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = 'Yes' 
 			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
 		<% } %>
 		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
 		<% if (!"".equals(wlSnFlag)) { %>
-			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' 
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = 'Yes' 
 			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
 		<% } %>
 	<% } %>
@@ -73,18 +73,18 @@ SELECT
 	QW_SN_FLAG,
 	decode(AGENCY_CD, 'IN DNR','indnrtitle.gif','ISWS','ilstatewatersurvey.gif','MBMG','MontanaBMG.jpg','MN DNR','mn_dnr_logo.gif','MPCA','mpca7000.gif','TWDB','twdb.gif','USGS NJ / NJGS','njgslogo.gif','USGS_logo.png') LOGO    
 FROM 
-		nwis_dwh_star.well_registry gp,
+		gw_data_portal.well_registry gp,
 	(
 	<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %>
 		SELECT '-1' my_siteid from DUAL 
 	<% } else { %>
 		<% if (!"".equals(qwSnFlag)) { %>
-			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE QW_SN_FLAG = 'Yes' 
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = 'Yes' 
 			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
 		<% } %>
 		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
 		<% if (!"".equals(wlSnFlag)) { %>
-			SELECT my_siteid FROM nwis_dwh_star.well_registry WHERE WL_SN_FLAG = 'Yes' 
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = 'Yes' 
 			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
 		<% } %>
 	<% } %>
