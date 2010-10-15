@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
 	
 		<!--  extjs assets -->
-		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
+		<!--[if IE]><script language="javascript" type="text/javascript" src="ext_flot/excanvas.js"></script><![endif]-->
 	    <script language="javascript" type='text/javascript' src='ext_flot/jquery-1.3.2-old-extend.js'></script>
 	    <script language="javascript" type='text/javascript' src='ext_js/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext_js/adapter/ext/ext-base.js"></script>

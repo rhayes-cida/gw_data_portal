@@ -188,22 +188,29 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 							if (so.logObjs && so.logObjs.length > 0) {
 								
 								//create graphic
-								var graphicHeight = 200;
+								var graphicHeight = 300;
 								var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];
+								var fontColor = ['#000','#000','#000','#000','#fff','#fff','#fff','#fff'];
 								graphicHTML = '<table class="well-log-graphic">';
+								
 								var totalDepth = (so.logObjs[so.logObjs.length-1].intervalTo - so.logObjs[0].intervalFrom);
 								for (var i = 0; i < so.logObjs.length; i++) {
 									var relHeight = graphicHeight * ((so.logObjs[i].height) / totalDepth);
-									graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
-											'<div style="height: 100%; position: relative; background-color: ' + intervalColor[(i%intervalColor.length)] + ';">';
-									if (i == 0) {
-										graphicHTML += '<span style="position: absolute; top: 0px; font-size: 80%;">' + so.logObjs[i].intervalFrom + '</span>'; 
 
+									if (i == 0) {
+										graphicHTML += '<tr><td><span style="font-size: 80%;">' + so.logObjs[i].intervalFrom + '</span></td></tr>'; 
 									}
+									
+									graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
+											'<div style="height: 100%; position: relative; ' + 
+												'background-color: ' + intervalColor[(i%intervalColor.length)] + '; ' + 
+												'color: ' + fontColor[(i%fontColor.length)] + 
+											';">';
+
 									graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + so.logObjs[i].intervalTo + '</span>' + 
 											'</div>' + 
 										'</td>' + 
-										'<td style="height:' + relHeight + 'px; padding: 5px;" valign="middle">' + 
+										'<td style="height:' + relHeight + 'px; padding-left: 5px;" valign="middle">' + 
 											so.logObjs[i].description + 
 										'</td></tr>';
 								}
@@ -213,11 +220,12 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 							var t = new Ext.XTemplate(
 								'<tpl for=".">',
 									'<table>',
-										'<tr><td>Longitude: {[values.position.split(" ")[0]]}</td><td rowspan="5">' + graphicHTML + '</td></tr>',
-										'<tr><td>Latitude: {[values.position.split(" ")[1]]}</td></tr>',
-										'<tr><td>Elevation: {elevation} ft.</td></tr>',
-										'<tr><td>Well Depth: {wellDepth} ft.</td></tr>',
-										'<tr><td>Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
+										'<tr><td style="height:35px">Longitude: {[values.position.split(" ")[0]]}</td><td rowspan="6">' + graphicHTML + '</td></tr>',
+										'<tr><td style="height:35px">Latitude: {[values.position.split(" ")[1]]}</td></tr>',
+										'<tr><td style="height:35px">Elevation: {elevation} ft.</td></tr>',
+										'<tr><td style="height:35px">Well Depth: {wellDepth} ft.</td></tr>',
+										'<tr><td style="height:35px">Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
+										'<tr><td>&nbsp;</td></tr>',
 									'</table>',
 									'<br/>',
 									'<table class="summary-table" border="1">',
