@@ -79,7 +79,7 @@ var waterLevelStore = new Ext.data.XmlStore({
 			for (var i = 0; i < r.length; i++) {
 				data.push([r[i].get('time'), r[i].get('value')]);
 			}
-			Ext.getCmp('ext-flot').setData([{label: 'Water level in feet', data:data}]);
+			Ext.getCmp('ext-flot').setData([{label: 'Depth to water in feet', data:data}]);
 			Ext.getCmp('ext-flot').setupGrid();
 			Ext.getCmp('ext-flot').draw();
 		}
@@ -147,102 +147,113 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				id: 'well-log-tab',
 				title: 'Well Log',
 				bodyStyle: 'padding:5px',
+				renderWL: 0,
+				layout: 'fit',
 				autoScroll: true,
 				listeners: {
-					afterrender: function() {
-					Ext.Ajax.request({
-						method: 'GET',
-						url: 'iddata?request=well_log',
-						params: {
-							siteNo: this.siteRecord.get('siteNo')
-							//siteNo: 425856089320601
-						},
-						success: function(r, o) {
-							var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
-							rs = rs.replace(/<\/[a-zA-Z0-9]+:/g,'</');
-							var x = createXmlDoc(rs);
-							
-							var so = {
-								position: x.getElementsByTagName('pos')[0].firstChild.nodeValue,
-								elevation: x.getElementsByTagName('referenceElevation')[0].firstChild.nodeValue,
-								wellDepth: x.getElementsByTagName('principalValue')[0].firstChild.nodeValue,
-								onlineResource: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:href'),
-								onlineResourceTitle: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:title')
-							};
-							
-							var logEls = x.getElementsByTagName('logElement');
-							so.logObjs = [];
-							for (var i = 0; i < logEls.length; i++) {
-								var f = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0];
-								var t = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1];
-								
-								so.logObjs.push({
-									intervalFrom: f,
-									intervalTo: t,
-									height: t - f,
-									description: (logEls[i].getElementsByTagName('description'))?logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue : 'No Description'
-								});
-							}
-							
-							var graphicHTML = '';
-							if (so.logObjs && so.logObjs.length > 0) {
-								
-								//create graphic
-								var graphicHeight = 300;
-								var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];
-								var fontColor = ['#000','#000','#000','#000','#fff','#fff','#fff','#fff'];
-								graphicHTML = '<table class="well-log-graphic">';
-								
-								var totalDepth = (so.logObjs[so.logObjs.length-1].intervalTo - so.logObjs[0].intervalFrom);
-								for (var i = 0; i < so.logObjs.length; i++) {
-									var relHeight = graphicHeight * ((so.logObjs[i].height) / totalDepth);
-
-									if (i == 0) {
-										graphicHTML += '<tr><td><span style="font-size: 80%;">' + so.logObjs[i].intervalFrom + '</span></td></tr>'; 
+					afterlayout: function(p) {
+						if (p.renderWL++ == 2) {
+							p.body.mask('Loading...','x-mask-loading');
+							Ext.Ajax.request({
+								method: 'GET',
+								url: 'iddata?request=well_log',
+								params: {
+									siteNo: this.siteRecord.get('siteNo')
+									//siteNo: 425856089320601
+								},
+								success: function(r, o) {
+									p.body.unmask();
+									var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
+									rs = rs.replace(/<\/[a-zA-Z0-9]+:/g,'</');
+									var x = createXmlDoc(rs);
+									
+									if (x.getElementsByTagName('pos').length == 0) {
+										Ext.getCmp('well-log-tab').body.innerHTML = '<h1>No Data Found</h1>';
+										return;
 									}
 									
-									graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
-											'<div style="height: 100%; position: relative; ' + 
-												'background-color: ' + intervalColor[(i%intervalColor.length)] + '; ' + 
-												'color: ' + fontColor[(i%fontColor.length)] + 
-											';">';
-
-									graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + so.logObjs[i].intervalTo + '</span>' + 
-											'</div>' + 
-										'</td>' + 
-										'<td style="height:' + relHeight + 'px; padding-left: 5px;" valign="middle">' + 
-											so.logObjs[i].description + 
-										'</td></tr>';
+									var so = {
+										position: x.getElementsByTagName('pos')[0].firstChild.nodeValue,
+										elevation: x.getElementsByTagName('referenceElevation')[0].firstChild.nodeValue,
+										wellDepth: x.getElementsByTagName('principalValue')[0].firstChild.nodeValue,
+										onlineResource: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:href'),
+										onlineResourceTitle: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:title')
+									};
+									
+									var logEls = x.getElementsByTagName('logElement');
+									so.logObjs = [];
+									for (var i = 0; i < logEls.length; i++) {
+										var f = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0];
+										var t = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1];
+										
+										so.logObjs.push({
+											intervalFrom: f,
+											intervalTo: t,
+											height: t - f,
+											description: (logEls[i].getElementsByTagName('description'))?logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue : 'No Description'
+										});
+									}
+									
+									var graphicHTML = '';
+									if (so.logObjs && so.logObjs.length > 0) {
+										
+										//create graphic
+										var graphicHeight = 300;
+										var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];
+										var fontColor = ['#000','#000','#000','#000','#fff','#fff','#fff','#fff'];
+										graphicHTML = '<table class="well-log-graphic">';
+										
+										var totalDepth = (so.logObjs[so.logObjs.length-1].intervalTo - so.logObjs[0].intervalFrom);
+										for (var i = 0; i < so.logObjs.length; i++) {
+											var relHeight = graphicHeight * ((so.logObjs[i].height) / totalDepth);
+		
+											if (i == 0) {
+												graphicHTML += '<tr><td><span style="font-size: 80%;">' + so.logObjs[i].intervalFrom + '</span></td></tr>'; 
+											}
+											
+											graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
+													'<div style="height: 100%; position: relative; ' + 
+														'background-color: ' + intervalColor[(i%intervalColor.length)] + '; ' + 
+														'color: ' + fontColor[(i%fontColor.length)] + 
+													';">';
+		
+											graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + so.logObjs[i].intervalTo + '</span>' + 
+													'</div>' + 
+												'</td>' + 
+												'<td style="height:' + relHeight + 'px; padding-left: 5px;" valign="middle">' + 
+													so.logObjs[i].description + 
+												'</td></tr>';
+										}
+										graphicHTML += '</table>';
+									}
+									
+									var t = new Ext.XTemplate(
+										'<tpl for=".">',
+											'<table>',
+												'<tr><td style="height:35px">Longitude: {[values.position.split(" ")[0]]}</td><td rowspan="6">' + graphicHTML + '</td></tr>',
+												'<tr><td style="height:35px">Latitude: {[values.position.split(" ")[1]]}</td></tr>',
+												'<tr><td style="height:35px">Elevation: {elevation} ft.</td></tr>',
+												'<tr><td style="height:35px">Well Depth: {wellDepth} ft.</td></tr>',
+												'<tr><td style="height:35px">Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
+												'<tr><td>&nbsp;</td></tr>',
+											'</table>',
+											'<br/>',
+											'<table class="summary-table" border="1">',
+												'<tr><th>Depth From</th><th>Depth To</th><th>Lithography</th></tr>',
+											'<tpl for="logObjs">',
+												'<tr><td>{intervalFrom}</td><td>{intervalTo}</td><td>{description}</td></tr>',
+											'</tpl>',
+											'</table>',
+										'</tpl>'
+									);
+									
+									t.overwrite(Ext.getCmp('well-log-tab').body, so);
 								}
-								graphicHTML += '</table>';
-							}
-							
-							var t = new Ext.XTemplate(
-								'<tpl for=".">',
-									'<table>',
-										'<tr><td style="height:35px">Longitude: {[values.position.split(" ")[0]]}</td><td rowspan="6">' + graphicHTML + '</td></tr>',
-										'<tr><td style="height:35px">Latitude: {[values.position.split(" ")[1]]}</td></tr>',
-										'<tr><td style="height:35px">Elevation: {elevation} ft.</td></tr>',
-										'<tr><td style="height:35px">Well Depth: {wellDepth} ft.</td></tr>',
-										'<tr><td style="height:35px">Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
-										'<tr><td>&nbsp;</td></tr>',
-									'</table>',
-									'<br/>',
-									'<table class="summary-table" border="1">',
-										'<tr><th>Depth From</th><th>Depth To</th><th>Lithography</th></tr>',
-									'<tpl for="logObjs">',
-										'<tr><td>{intervalFrom}</td><td>{intervalTo}</td><td>{description}</td></tr>',
-									'</tpl>',
-									'</table>',
-								'</tpl>'
-							);
-							
-							t.overwrite(Ext.getCmp('well-log-tab').body, so);
+							});
 						}
-					});
-				},
-				scope: this
-			}
+					},
+					scope: this
+				}
 			}));
 			
 			//add water level
@@ -254,6 +265,14 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					//autoLoad: 'iddata?request=water_level&siteNo=' + this.siteRecord.get('siteNo')
 					//http://infotrek.er.usgs.gov/ogc-ie/sosbbox?north=43&south=42.9&east=-89.57&west=-89.65
 					layout: 'border',
+					tbar: [{
+				    	text: 'Export as XML',
+				    	handler: function() {
+							document.getElementById('wl-siteid').value = 'USGS.' + this.siteRecord.get('siteNo');
+							document.getElementById('wl-xml-export').submit();
+						}, 
+						scope: this
+				    }],
 					listeners: {
 						afterlayout: function(p) {
 							if (p.renderWL++ == 2) {
@@ -281,31 +300,48 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						autoScroll: true,
 						padding: 5,
 						items: [{
+							colors: ['darkblue'],
 							title: 'Graph',
 							xtype: 'flot',
 							height: 400,
 							//autoWidth: true,
 							width: 600,
 							id: 'ext-flot',
-							tooltipEvent: 'plotclick',
+							hoverable: true,
+							lines: {
+								show: true,
+								lineWidth: 1,
+							},
+							points: {
+								show: true,
+								radius: 2,
+								fillColor: 'blue'
+							},
 							legend: {
 							    show: true,
 							    labelBoxBorderColor: 'black',
-							    position: "ne"
+							    position: "se"
 							},
 							xaxis: {
 								mode: 'time',
-								timeformat: "%m/%y",
-								minTickSize: [1, "year"]
+								timeformat: "%m/%d/%y",
+								minTickSize: [1, "year"],
+					            axisLabel: 'Month/Year',
+					            axisLabelUseCanvas: true
 							},
-					        series: [ {data: [[]]} ],
+							yaxis: {
+								invert: true,
+								axisLabel: 'Depth to water level, feet below land surface',
+						        axisLabelUseCanvas: true
+							},
+							series: [ {data: [[]]} ],
 					        grid: {
 								backgroundColor: 'white'
 							}
 						},{
 							border: false,
 							height: 25,
-							html:''
+							html:'<div>Date created: ' + document.lastModified + '</div><br/>'
 						},{
 							xtype: 'grid',
 							loadMask: true,
