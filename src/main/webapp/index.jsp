@@ -34,7 +34,7 @@
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 
 		<!-- more flot assets -->
-	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.0.6.js"></script>
 	
 	    <link rel='stylesheet' type='text/css' href='ext_flot/Flot.css' />
 	    <script language="javascript" type="text/javascript" src="ext_flot/Csv.js"></script>
@@ -42,6 +42,7 @@
 	
 	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.ja.js"></script>
 	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.pack.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.axislabels.js"></script>
 	
 	
 	</head>
@@ -166,6 +167,11 @@
 			<input type="hidden" name="siteid" id="qw-siteid"/>
 			<input type="hidden" name="mimeType" value="csv"/>
 			<input type="hidden" name="zip" value="yes"/>
+		</form>
+
+		<form method="GET" target="_blank" class="x-hidden" id="wl-xml-export" action="http://infotrek.er.usgs.gov/ogc-ie/sosbbox">
+			<input type="hidden" name="featureId" id="wl-siteid"/>
+			<input type="hidden" name="request" value="GetObservation"/>
 		</form>
 
 		
