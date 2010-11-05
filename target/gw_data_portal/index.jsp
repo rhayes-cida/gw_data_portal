@@ -16,13 +16,12 @@
 		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
 	
 		<!--  extjs assets -->
-		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
+		<!--[if IE]><script language="javascript" type="text/javascript" src="ext_flot/excanvas.r60.js"></script><![endif]-->
 	    <script language="javascript" type='text/javascript' src='ext_flot/jquery-1.3.2-old-extend.js'></script>
 	    <script language="javascript" type='text/javascript' src='ext_js/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>
-		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
-		<script src="ext_js/examples/ux/SliderTip.js"></script>
+		<script src="ext_js/examples/ux/BufferView.js"></script>
 		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->
@@ -34,7 +33,7 @@
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 
 		<!-- more flot assets -->
-	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.0.6.js"></script>
 	
 	    <link rel='stylesheet' type='text/css' href='ext_flot/Flot.css' />
 	    <script language="javascript" type="text/javascript" src="ext_flot/Csv.js"></script>
@@ -42,6 +41,7 @@
 	
 	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.ja.js"></script>
 	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.pack.js"></script>
+	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.axislabels.js"></script>
 	
 	
 	</head>
@@ -166,6 +166,11 @@
 			<input type="hidden" name="siteid" id="qw-siteid"/>
 			<input type="hidden" name="mimeType" value="csv"/>
 			<input type="hidden" name="zip" value="yes"/>
+		</form>
+
+		<form method="GET" target="_blank" class="x-hidden" id="wl-xml-export" action="http://infotrek.er.usgs.gov/ogc-ie/sosbbox">
+			<input type="hidden" name="featureId" id="wl-siteid"/>
+			<input type="hidden" name="request" value="GetObservation"/>
 		</form>
 
 		

@@ -60,7 +60,7 @@ JMap.hud.LatLonLabel.prototype.update = function(event) {
 		if (tLat > 0) {
 			tLat = latDegrees + '\u00B0 ' + latMinutes + "' " + latSeconds + '" N';
 		} else if (tLat < 0) {
-			tLat = Math.abs(latDegrees) + '\u00B0 ' + latMinutes + "' " + latSeconds + '" S';
+			tLat = Math.abs(latDegrees) + '\u00B0 ' + (60 - latMinutes) + "' " + (60 - latSeconds) + '" S';
 
 		} else {
 			tLat = "0\u00B0 0' " + ' 0"';
@@ -69,7 +69,7 @@ JMap.hud.LatLonLabel.prototype.update = function(event) {
 		if (tLon > 0) {
 			tLon = lonDegrees + '\u00B0 ' + lonMinutes + "' " + lonSeconds + '" E';
 		} else if (tLon < 0) {
-			tLon = Math.abs(lonDegrees) + '\u00B0 ' + lonMinutes + "' " + lonSeconds + '" W';
+			tLon = Math.abs(lonDegrees) + '\u00B0 ' + (60 - lonMinutes) + "' " + (60 - lonSeconds) + '" W';
 		} else {
 			tLon = "0\u00B0 0' " + ' 0"';	
 		}

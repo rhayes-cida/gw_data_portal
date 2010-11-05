@@ -20,8 +20,7 @@ Ext.onReady(function() {
 		HUD: {
 			zoomSlider: true, 
 			scaleRake: true,
-		 	overviewMap: true,
-		 	latLonLabel: true
+		 	overviewMap: true//, latLonLabel: true
 		}
 	});
 	

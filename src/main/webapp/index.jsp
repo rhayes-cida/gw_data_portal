@@ -16,13 +16,12 @@
 		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
 	
 		<!--  extjs assets -->
-		<!--[if IE]><script language="javascript" type="text/javascript" src="ext_flot/excanvas.js"></script><![endif]-->
+		<!--[if IE]><script language="javascript" type="text/javascript" src="ext_flot/excanvas.r60.js"></script><![endif]-->
 	    <script language="javascript" type='text/javascript' src='ext_flot/jquery-1.3.2-old-extend.js'></script>
 	    <script language="javascript" type='text/javascript' src='ext_js/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>
-		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
-		<script src="ext_js/examples/ux/SliderTip.js"></script>
+		<script src="ext_js/examples/ux/BufferView.js"></script>
 		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->

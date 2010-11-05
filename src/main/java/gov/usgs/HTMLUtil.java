@@ -17,7 +17,7 @@ public class HTMLUtil {
 	 */
 	
 	public static void getAgencyList(JspWriter out, Connection connection) {		
-		String sql = "SELECT UNIQUE a.AGENCY_CD value, a.AGENCY_MED display, a.AGENCY_NM title FROM gw_data_portal.WELL_REGISTRY a, NWIS_DWH_STAR.AGENCY_LOV b where a.agency_cd = b.agency_cd ORDER BY 1";
+		String sql = "SELECT UNIQUE a.AGENCY_CD value, a.AGENCY_MED display, a.AGENCY_NM title FROM gw_data_portal.WELL_REGISTRY a, gw_data_portal.AGENCY_LOV b where a.agency_cd = b.agency_cd ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	

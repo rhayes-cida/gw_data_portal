@@ -1,6 +1,6 @@
 /*!
- * Ext JS Library 3.0.0
- * Copyright(c) 2006-2009 Ext JS, LLC
+ * Ext JS Library 3.3.0
+ * Copyright(c) 2006-2010 Ext JS, Inc.
  * licensing@extjs.com
  * http://www.extjs.com/license
  */
@@ -49,7 +49,7 @@
 .x-panel-tl .x-panel-header {
     padding:5px 0 4px 0;
     border:0 none;
-    background:transparent;
+    background:transparent no-repeat;
 }
 
 .x-panel-tl .x-panel-icon, .x-window-tl .x-panel-icon {
@@ -122,7 +122,7 @@
 }
 
 .x-panel-mc .x-panel-body {
-    background:transparent;
+    background-color:transparent;
     border: 0 none;
 }
 
@@ -364,6 +364,22 @@
     background-position:-15px -315px;
 }
 
+.x-tool-resize {
+    background-position:0 -360px;
+}
+
+.x-tool-resize-over {
+    background-position:-15px -360px;
+}
+
+.x-tool-move {
+    background-position:0 -375px;
+}
+
+.x-tool-move-over {
+    background-position:-15px -375px;
+}
+
 /* Ghosting */
 .x-panel-ghost {
     z-index:12000;
@@ -398,29 +414,6 @@
 .x-panel-btns {
     padding:5px;
     overflow:hidden;
-}
-
-.x-panel-btns-right .x-panel-fbar {
-	float:right;
-	clear:none;
-}
-
-.x-panel-btns-left .x-panel-fbar {
-	clear:none;
-}
-
-.x-panel-btns-center{
-	text-align:center; /*ie*/
-}
-
-.x-panel-btns-center .x-toolbar-ct {
-	margin:0 auto; /*everyone else*/
-    text-align:left;
-    width:auto;
-}
-
-.ext-gecko2 .x-panel-btns-right .x-toolbar-ct {
-    width:auto;
 }
 
 .x-panel-btns td.x-toolbar-cell{

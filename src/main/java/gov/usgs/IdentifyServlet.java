@@ -59,6 +59,7 @@ public class IdentifyServlet extends HttpServlet {
 				", agency: '" + rset.getString("AGENCY_CD") + "'" +
 				", qwSnFlag: '" + rset.getString("QW_SN_FLAG") + "'" +
 				", wlSnFlag: '" + rset.getString("WL_SN_FLAG") + "'" +
+				", wellDepth: '" + rset.getString("well_depth_va") + "'" +
 				", logo: '" + rset.getString("LOGO") + "'" +
 				"},";
 				

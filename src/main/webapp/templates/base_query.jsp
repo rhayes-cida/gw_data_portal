@@ -17,6 +17,7 @@ FROM
 	(<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %> SELECT '-1' my_siteid from DUAL <% } else { %> <% if (!"".equals(qwSnFlag)) { %> SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = 'Yes' <% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %> <% } %> <% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %> <% if (!"".equals(wlSnFlag)) { %> SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = 'Yes' <% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %><% } %><% } %>) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
+	gp.display_flag = 'Y' AND 
 	<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
 	<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
 	(sdo_filter(
@@ -53,7 +54,8 @@ FROM
 	<% } %>
 	) inner 
 WHERE 
-	inner.my_siteid = gp.my_siteid  
+	inner.my_siteid = gp.my_siteid AND 
+	gp.display_flag = 'Y' 
 	<% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
 	<% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
 <% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
@@ -61,17 +63,18 @@ WHERE
 	String idBBox = request.getParameter("idBBox");
 %>
 SELECT 
-	SITE_NO, 
-	SITE_NAME, 
-	trunc(DEC_LAT_VA,3) DEC_LAT_VA,	
-	trunc(DEC_LONG_VA,3) DEC_LONG_VA,
-	QW_WELL_TYPE_US_FLAG QW_WELL_TYPE,
-	WL_WELL_TYPE_US_FLAG WL_WELL_TYPE,
-	NAT_AQFR_DESC,
-	AGENCY_CD,
-	WL_SN_FLAG,
-	QW_SN_FLAG,
-	decode(AGENCY_CD, 'IN DNR','indnrtitle.gif','ISWS','ilstatewatersurvey.gif','MBMG','MontanaBMG.jpg','MN DNR','mn_dnr_logo.gif','MPCA','mpca7000.gif','TWDB','twdb.gif','USGS NJ / NJGS','njgslogo.gif','USGS_logo.png') LOGO    
+	gp.SITE_NO, 
+	gp.SITE_NAME, 
+	trunc(gp.DEC_LAT_VA,3) DEC_LAT_VA,	
+	trunc(gp.DEC_LONG_VA,3) DEC_LONG_VA,
+	gp.QW_WELL_TYPE_US_FLAG QW_WELL_TYPE,
+	gp.WL_WELL_TYPE_US_FLAG WL_WELL_TYPE,
+	gp.NAT_AQFR_DESC,
+	gp.AGENCY_CD,
+	gp.WL_SN_FLAG,
+	gp.QW_SN_FLAG,
+	'' well_depth_va,
+	decode(gp.AGENCY_CD,'IL EPA', 'iepa_logo.jpg', 'IN DNR','indnrtitle.gif','ISWS','ilstatewatersurvey.gif','MBMG','MontanaBMG.jpg','MN DNR','mn_dnr_logo.gif','MPCA','mpca7000.gif','TWDB','twdb.gif','USGS NJ / NJGS','njgslogo.gif','USGS_logo.png') LOGO    
 FROM 
 		gw_data_portal.well_registry gp,
 	(
@@ -91,8 +94,9 @@ FROM
 	) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
-	<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
-	<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
+	gp.display_flag = 'Y' AND 
+	<% if (!"".equals(agency)) { %> gp.agency_cd IN (<%= agency %>) AND <%}%>
+	<% if (!"".equals(ntlAquiferName)) { %> gp.nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
  	(sdo_filter(
       gp.geom,
       mdsys.sdo_geometry(
