@@ -155,9 +155,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				this.siteRecord.get('agency') == 'IL EPA' ||
 				this.siteRecord.get('agency') == 'IN DNR') {*/
 		if (true) {
-						
-			if (this.siteRecord.get('agency') == 'USGS PA') {
-			
+									
 			//add well log
 			tabPanel.add(new Ext.Panel({
 				id: 'well-log-tab',
