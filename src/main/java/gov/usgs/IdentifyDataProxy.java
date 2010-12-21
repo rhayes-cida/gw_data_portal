@@ -19,6 +19,9 @@ public class IdentifyDataProxy extends HttpServlet {
 		String wlMediator = req.getParameter("mediator");
 		if (wlMediator == null || "".equals(wlMediator)) wlMediator = "usgs";
 		
+		String agency_cd = req.getParameter("agency_cd");
+
+		
 		if ("well_log".equals(requestType)) {
 			url = "http://cida.usgs.gov/cocoon/gin/wfs/gw_"+wlMediator+"?request=GetFeature&FID=USGS." + 
 						req.getParameter("siteNo") + 
