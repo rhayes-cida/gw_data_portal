@@ -9,6 +9,7 @@ var siteIdTpl = new Ext.XTemplate(
 				'<tr><th>Site Name</th><td>{siteName}</td></tr>',
 				'<tr><th>Site #</th><td>{siteNo}</td></tr>',
 				'<tr><th>Lat/Long(WGS84)</th><td>{[parseFloat(values.decLatVa).toFixed(4)]},{[parseFloat(values.decLongVa).toFixed(4)]}</td></tr>',
+				'<tr><th>Local Aquifer Name</th><td>{localAquiferName}</td></tr>',
 				'<tr><th>National Aquifer Name</th><td>{nationalAquiferName}</td></tr>',
 				'<tr><th>Water Level Network</th><td>{wlWellType}</td></tr>',
 				'<tr><th>Water Quality Network</th><td>{qwWellType}</td></tr>',
@@ -449,7 +450,8 @@ function loadWaterLevelTab(record, mediator) {
 		url: 'iddata?request=water_level',
 		params: {
 			siteNo: record.get('siteNo'),
-			mediator: mediator
+			mediator: mediator,
+			agency_cd: record.get('agency')
 		},
 		
 		success: function(r, o) {
@@ -480,7 +482,8 @@ function loadWellLogTab(record, mediator) {
 		url: 'iddata?request=well_log',
 		params: {
 			siteNo: record.get('siteNo'),
-			mediator: mediator
+			mediator: mediator,
+			agency_cd: record.get('agency')
 			//siteNo: 425856089320601
 		},
 		
