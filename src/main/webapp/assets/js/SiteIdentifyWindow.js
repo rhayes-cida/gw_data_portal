@@ -155,39 +155,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				this.siteRecord.get('agency') == 'IL EPA' ||
 				this.siteRecord.get('agency') == 'IN DNR') {*/
 		if (true) {
-			
-			var tbar = null;
-			
+						
 			if (this.siteRecord.get('agency') == 'USGS PA') {
-				
-				tbar = new Ext.Toolbar({items:[{xtype: 'tbtext', text: 'Select Mediator:'}]});
-				
-				var c = new Ext.form.ComboBox({
-					store: new Ext.data.ArrayStore({
-						fields: ['name'],
-						data: [['usgs'],['PA']]
-					}),
-			        displayField:'name',
-			        mode: 'local',
-			        forceSelection: true,
-			        triggerAction: 'all',
-			        selectOnFocus:true,
-			        value: 'usgs',
-			        getListParent: function() {
-			            return this.el.up('.x-menu');
-			        },
-			        listeners: {
-			        	select: function(c,r,i) {
-			        		loadWellLogTab(this.siteRecord, r.get('name'))
-			        	},
-			        	scope: this
-			        }
-				});
-				
-				tbar.addField(c);
-				tbar.doLayout();
-			} 
-			
 			
 			//add well log
 			tabPanel.add(new Ext.Panel({
@@ -197,7 +166,6 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				isLoaded: false,
 				layout: 'fit',
 				autoScroll: true,
-				tbar: tbar,
 				listeners: {
 					activate: function(p) {
 						if (!p.isLoaded) {
@@ -212,58 +180,12 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			//add water level
 			if (this.siteRecord.get('wlSnFlag').toUpperCase() == 'YES') {
 				
-				var waterLevelTbar = null;
-				
-				if (this.siteRecord.get('agency') == 'ISWS') {
-					
-					waterLevelTbar = new Ext.Toolbar({
-						items:[{
-					    	text: 'Export as XML',
-					    	handler: function() {
-								document.getElementById('wl-siteid').value = 'USGS.' + this.siteRecord.get('siteNo');
-								document.getElementById('wl-xml-export').submit();
-							}, 
-							scope: this
-					    },{
-							xtype: 'tbtext', 
-							text: 'Select Mediator:'
-						}]
-					});
-								
-					var c = new Ext.form.ComboBox({
-						store: new Ext.data.ArrayStore({
-							fields: ['name'],
-							data: [['usgs'],['ISWS']]
-						}),
-				        displayField:'name',
-				        mode: 'local',
-				        forceSelection: true,
-				        triggerAction: 'all',
-				        selectOnFocus:true,
-				        value: 'usgs',
-				        getListParent: function() {
-				            return this.el.up('.x-menu');
-				        },
-				        listeners: {
-				        	select: function(c,r,i) {
-				        		loadWaterLevelTab(this.siteRecord, r.get('name'))
-				        	},
-				        	scope: this
-				        }
-					});
-					
-					waterLevelTbar.addField(c);
-					waterLevelTbar.doLayout();
-					
-				} 
-				
 				waterLevelStore.removeAll();
 				tabPanel.add(new Ext.Panel({
 					id: 'ext-water-level-tab',
 					title: 'Water Levels',
 					isLoaded: false,
 					layout: 'border',
-					tbar: waterLevelTbar,
 					listeners: {
 						activate: function(p) {
 							if (!p.isLoaded) {
@@ -435,7 +357,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	}
 });
 
-function loadWaterLevelTab(record, mediator) {
+function loadWaterLevelTab(record) {
 	Ext.getCmp('ext-water-level-tab').body.mask('Loading...','x-mask-loading');
 	Ext.Ajax.request({
 		method: 'GET',
@@ -450,7 +372,6 @@ function loadWaterLevelTab(record, mediator) {
 		url: 'iddata?request=water_level',
 		params: {
 			siteNo: record.get('siteNo'),
-			mediator: mediator,
 			agency_cd: record.get('agency')
 		},
 		
@@ -465,7 +386,7 @@ function loadWaterLevelTab(record, mediator) {
 }
 
 
-function loadWellLogTab(record, mediator) {
+function loadWellLogTab(record) {
 	Ext.getCmp('well-log-tab').body.mask('Loading...','x-mask-loading');
 	Ext.Ajax.request({
 		method: 'GET',
@@ -482,7 +403,6 @@ function loadWellLogTab(record, mediator) {
 		url: 'iddata?request=well_log',
 		params: {
 			siteNo: record.get('siteNo'),
-			mediator: mediator,
 			agency_cd: record.get('agency')
 			//siteNo: 425856089320601
 		},
