@@ -3,8 +3,10 @@ package gov.usgs;
 import gov.usgs.URLUtil;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -13,7 +15,7 @@ import javax.servlet.ServletOutputStream;
 
 public class URLUtil {
 
-	
+
 	//USE THIS CALL WHEN GETTING A BASE QUERY
 	public static String getStringFromURL(String urlString, String params) throws Exception {
 		DataInputStream input = null;
@@ -41,8 +43,8 @@ public class URLUtil {
 		return returnString;
 
 	}
-	
-	
+
+
 	//USE THIS CALL WHEN STREAMING BACK IMAGE FROM MAPVIEWER
 	public static void writeBytesToOutputStream(String urlString, String params, ServletOutputStream out)
 	throws Exception {
@@ -90,40 +92,37 @@ public class URLUtil {
 
 		}
 	}
-	
-	
-  public static String getStringFromURLGET(String urlString) throws Exception {
-    DataInputStream input = null;
-    StringBuffer page = new StringBuffer();
-    
-    String returnString = "";
-    
-    //fetch base query
-    try {
-      // Get response data.
-      input = new DataInputStream(
-          URLUtil.makeUrlGetRequest(urlString).getInputStream()
-      );
-            
-      String str = "";
-      while (null != ((str = input.readLine()))) {
-        page.append(str);
-      }
-      
-      input.close();
-      returnString = page.toString();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }      
-    
-    return returnString;
-    
-  }
 
-  private static URLConnection makeUrlGetRequest(String urlString) throws Exception {
-    URL url = new URL(urlString);
-    URLConnection conn = url.openConnection();
-    
-    return conn;
-  }
+
+	public static StringBuffer getStringFromURLGET(String urlString) throws Exception {
+		DataInputStream input = null;
+		StringBuffer page = new StringBuffer();
+
+		//fetch base query
+		try {
+			// Get response data.
+			input = new DataInputStream(
+					URLUtil.makeUrlGetRequest(urlString).getInputStream()
+			);
+			BufferedReader br = new BufferedReader(new InputStreamReader(input));
+
+			String str = "";
+			while (null != ((str = br.readLine()))) {
+				page.append(str);
+			}
+
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}      
+
+		return page;
+	}
+
+	private static URLConnection makeUrlGetRequest(String urlString) throws Exception {
+		URL url = new URL(urlString);
+		URLConnection conn = url.openConnection();
+
+		return conn;
+	}
 }
