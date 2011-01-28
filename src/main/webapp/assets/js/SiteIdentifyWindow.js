@@ -288,7 +288,9 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 								p.isLoaded = true;
 								waterQualityStore.removeAll();
 								waterQualityStore.load({
-									params:{siteNo:this.siteRecord.get('siteNo')}
+									params:{siteNo:this.siteRecord.get('siteNo'),
+											agency_cd:MEDIATOR.cleanAgencyCode(this.siteRecord.get('agency'))
+									}
 								});
 							}
 						},
@@ -370,7 +372,7 @@ function loadWaterLevelTab(record) {
 		url: 'iddata?request=water_level',
 		params: {
 			siteNo: record.get('siteNo'),
-			agency_cd: record.get('agency')
+			agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
 		},
 		
 		success: function(r, o) {
@@ -401,7 +403,7 @@ function loadWellLogTab(record) {
 		url: 'iddata?request=well_log',
 		params: {
 			siteNo: record.get('siteNo'),
-			agency_cd: record.get('agency')
+			agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
 			//siteNo: 425856089320601
 		},
 		

@@ -25,6 +25,7 @@
 		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->
+		<script type="text/javascript" src="assets/js/Mediator.js"></script>
 		<script type="text/javascript" src="assets/js/ui.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdSelector.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
