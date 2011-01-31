@@ -8,7 +8,7 @@ public enum RequestType {
 	public static final String prodServerBase = "http://cida.usgs.gov";
 	public static final String localServerBase = "http://localhost:8280";
 
-	public static final String serverBase = localServerBase; // used to switch between local and prod development
+	public static final String serverBase = prodServerBase; // used to switch between local and prod development
 	public static final String mediatorPath = "/cocoon/gin/gwdp/agency/";
 
 	protected final String path;
