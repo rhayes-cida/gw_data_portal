@@ -55,6 +55,7 @@ public class IdentifyServlet extends HttpServlet {
 				", decLongVa: '" + rset.getString("DEC_LONG_VA") + "'" + 
 				", qwWellType: '" + rset.getString("QW_WELL_TYPE") + "'" + 
 				", wlWellType: '" + rset.getString("WL_WELL_TYPE") + "'" + 
+				", localAquiferName: '" + rset.getString("local_aquifer_name") + "'" +
 				", nationalAquiferName: '" + rset.getString("NAT_AQFR_DESC") + "'" + 
 				", agency: '" + rset.getString("AGENCY_CD") + "'" +
 				", qwSnFlag: '" + rset.getString("QW_SN_FLAG") + "'" +
