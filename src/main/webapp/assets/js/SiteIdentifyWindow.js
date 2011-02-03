@@ -347,7 +347,13 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			title: this.siteRecord.get('siteName'),
 			items: [tabPanel],
 			buttons: [{
-				text: 'Close',
+				text: 'Download Data',
+				handler: function() {
+					downloadSiteData(this.siteRecord)
+				},
+				scope: this
+			},{
+				text: 'Done',
 				handler: function() {
 					Ext.getCmp('identify-site-window').close();
 				}
@@ -497,4 +503,75 @@ function loadWellLogTab(record) {
 			t.overwrite(Ext.getCmp('well-log-tab').body, so);
 		}
 	});
+}
+
+
+
+function downloadSiteData(siteRecord) {
+
+	var exportForm = document.getElementById('exportForm');
+	
+	//pop up a new window that displays progress of download
+	var downloadWindow = new Ext.Window({
+		height: 200,
+		width: 300,
+		resizable: false,
+		title: 'Downloading Site Data...',
+		modal: true,
+		layout: 'border',
+		closable: false,
+		items: [{
+			border: false,
+			region: 'center',
+			html: ''
+		}],
+		buttonAlign: 'center',
+		buttons: [{
+			text: 'Cancel',
+			handler: function() {
+				Ext.Msg.show({
+					title:'Warning',
+					msg: 'Cancel the download?',
+					buttons: Ext.Msg.YESNO,
+					fn: function(bid) {
+						if (bid == 'yes') {
+							downloadWindow.close();
+						}
+					},
+					icon: Ext.MessageBox.QUESTION
+				});
+			},
+			scope: this
+		}]
+	});
+	
+	downloadWindow.show();
+	downloadWindow.body.mask('Please wait...','x-mask-loading');
+	
+	
+	//set src of donwloadIframe to begin download...
+	var sn = siteRecord.get('siteNo');
+	var ac = MEDIATOR.cleanAgencyCode(siteRecord.get('agency'));
+	var qwf = siteRecord.get('qwSnFlag');
+	var wlf = siteRecord.get('wlSnFlag');
+	var token = (new Date()).getTime();
+	
+	exportForm.siteNo.value = sn;
+	exportForm.agency_cd.value = ac;
+	exportForm.qwSnFlag.value = qwf;
+	exportForm.wlSnFlag.value = wlf;
+	exportForm.token.value = token;
+	
+	
+	var exportStatus = setInterval(function() {
+		var cookieValue = Ext.util.Cookies.get('exportToken');
+		if (cookieValue == token) {
+			Ext.util.Cookies.clear('exportToken');
+			downloadWindow.close();
+			clearInterval(exportStatus);
+		}	  
+	}, 1000);
+	
+	exportForm.submit();
+
 }

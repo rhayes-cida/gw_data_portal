@@ -196,6 +196,7 @@ function addDataLayer() {
 			//Ext.getCmp('ext-content-panel').body.unmask();
 			var fitJSON = Ext.util.JSON.decode(r.responseText);
 			if (fitJSON.bbox == ',,,') {
+				Ext.fly(pointsCount.getEl()).update('Number of points meeting criteria: 0');
 				Ext.Msg.show({
 				   title:'No Sites Found',
 				   msg: 'There are no data available for your selection or in your area of interest.',
