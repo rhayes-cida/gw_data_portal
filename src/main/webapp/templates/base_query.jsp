@@ -73,6 +73,7 @@ SELECT
 	gp.AGENCY_CD,
 	gp.WL_SN_FLAG,
 	gp.QW_SN_FLAG,
+	gp.local_aquifer_name,
 	'' well_depth_va,
 	decode(gp.AGENCY_CD,'IL EPA', 'iepa_logo.jpg', 'IN DNR','indnrtitle.gif','ISWS','ilstatewatersurvey.gif','MBMG','MontanaBMG.jpg','MN DNR','mn_dnr_logo.gif','MPCA','mpca7000.gif','TWDB','twdb.gif','USGS NJ / NJGS','njgslogo.gif','USGS_logo.png') LOGO    
 FROM 

@@ -233,5 +233,13 @@
 		</div>
 		<!-- // END FOOTER -->
 		
+		<form id="exportForm" style="display:none" method="GET" action="export">
+			<input type="hidden" name="siteNo"/>
+			<input type="hidden" name="agency_cd"/>
+			<input type="hidden" name="wlSnFlag"/>
+			<input type="hidden" name="qwSnFlag"/>
+			<input type="hidden" name="token"/>
+		</form>
+		
 	</body>
 </html>
