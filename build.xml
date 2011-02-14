@@ -1,4 +1,4 @@
-<project name="CIDA-convenience-tools" default="setup-unwar" basedir=".">
+<project name="CIDA-convenience-tools-for-gwdp-map" default="setup-unwar" basedir=".">
 	<description>
 		Convenience tasks to enhance local development
 	</description>

@@ -151,12 +151,11 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			}]
 		});
 		
-		/*if (this.siteRecord.get('agency') == 'USGS NJ / NJGS' ||
-				this.siteRecord.get('agency') == 'IL EPA' ||
-				this.siteRecord.get('agency') == 'IN DNR') {*/
-		if (true) {
-									
-			//add well log
+		// We currently don't have any way to address which wells have well logs.
+		// Just by virtue of being in NWIS doesn't guarantee that well log information 
+		// is available.
+		// Add well log
+		if (true) {		
 			tabPanel.add(new Ext.Panel({
 				id: 'well-log-tab',
 				title: 'Well Log',
@@ -174,173 +173,170 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					scope: this
 				}
 			}));
-			
-			//add water level
-			if (this.siteRecord.get('wlSnFlag').toUpperCase() == 'YES') {
-				
-				waterLevelStore.removeAll();
-				tabPanel.add(new Ext.Panel({
-					id: 'ext-water-level-tab',
-					title: 'Water Levels',
-					isLoaded: false,
-					layout: 'border',
-					listeners: {
-						activate: function(p) {
-							if (!p.isLoaded) {
-								p.isLoaded = true;
-				        		loadWaterLevelTab(this.siteRecord)
-							}
-						},
-						scope: this
-					},
-					items: [{
-						region: 'center',
-						autoScroll: true,
-						padding: 5,
-						items: [{
-							colors: ['darkblue'],
-							title: 'Graph',
-							xtype: 'flot',
-							height: 400,
-							//autoWidth: true,
-							width: 600,
-							id: 'ext-flot',
-							hoverable: true,
-							lines: {
-								show: true,
-								lineWidth: 1
-							},
-							points: {
-								show: true,
-								radius: 2,
-								fillColor: 'blue'
-							},
-							legend: {
-							    show: true,
-							    labelBoxBorderColor: 'black',
-							    position: "se"
-							},
-							xaxis: {
-								mode: 'time',
-								timeformat: "%m/%d/%y",
-								minTickSize: [1, "year"],
-					            axisLabel: 'Month/Year',
-					            axisLabelUseCanvas: true
-							},
-							yaxis: {
-								invert: true,
-								axisLabel: 'Depth to water level, feet below land surface',
-						        axisLabelUseCanvas: true
-							},
-							series: [ {data: [[]]} ],
-					        grid: {
-								backgroundColor: 'white'
-							}
-						},{
-							border: false,
-							height: 25,
-							html:'<div>Date created: ' + document.lastModified + '</div><br/>'
-						},{
-							xtype: 'grid',
-							loadMask: true,
-							autoHeight: true,
-							//autoScroll: true,
-							//height: 500,
-							viewConfig: {forceFit: true},
-						    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
-						    colModel: new Ext.grid.ColumnModel([
-				                { header: "Date", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
-				                { header: "Time", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'H:iP' },
-				                { header: "Value", width: 100, dataIndex: 'value' },
-				                { header: "Unit", width: 50, dataIndex: 'unit' }//,
-//				                { header: "Method", width: 300, dataIndex: 'method' }
-				            ]),
-							store: waterLevelStore/*,
-						    view: new Ext.ux.grid.BufferView({
-							    // custom row height
-							    rowHeight: 34,
-							    // render rows as they come into viewable area.
-							    scrollDelay: false
-						    })
-						    */
-						}]
-					}]
-				}));
-			}
-			
-			
-			
-			
-			//add water quality
-			if (this.siteRecord.get('qwSnFlag').toUpperCase() == 'YES') {
-				
-				tabPanel.add(new Ext.Panel({
-					id: 'water-quality-tab',
-					title: 'Water Quality',
-					//padding: 5,
-					//autoLoad: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
-					autoScroll: true,
-					isLoaded: false,
-					listeners: {
-						activate: function(p) {
-							if (!p.isLoaded) {
-								p.doLayout();
-								p.isLoaded = true;
-								waterQualityStore.removeAll();
-								waterQualityStore.load({
-									params:{siteNo:this.siteRecord.get('siteNo'),
-											agency_cd:MEDIATOR.cleanAgencyCode(this.siteRecord.get('agency'))
-									}
-								});
-							}
-						},
-						scope: this
-					},
-					tbar: [{
-				    	text: 'Export as CSV',
-				    	handler: function() {
-							document.getElementById('qw-siteid').value = 'USGS-' + this.siteRecord.get('siteNo');
-							document.getElementById('qw-csv-export').submit();
-						}, 
-						scope: this
-				    }],
-				    //layout: 'border',
-					items: [{
-						xtype: 'grid',
-						border: false,
-						loadMask: true,
-						autoHeight: true,
-						width: 1450,
-						//region: 'center',
-						//layout: 'fit',
-						viewConfig: {forceFit: true},
-					    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
-					    colModel: new Ext.grid.ColumnModel([
-			                { header: "Characteristic Name", width: 200, dataIndex: 'CharacteristicName'},
-			                { header: "Detection Condition", width: 200, sortable: true, dataIndex: 'ResultDetectionConditionText'},
-			                { header: "Measure Value", width: 150, sortable: true, dataIndex: 'ResultMeasureValue',
-			                	renderer: function(value, metaData, record, rowIndex, colIndex, store) {
-			                		if (value == '') {
-			                			return 'Not Detected';
-			                		}
-			                		return value;
-			                	}
-			                },
-			                { header: "Units", width: 150, sortable: true, dataIndex: 'MeasureUnitCode'},
-			                { header: "Value Type", width: 150, sortable: true, dataIndex: 'ResultValueTypeName'},
-			                { header: "Sample Fraction", width: 150, sortable: true, dataIndex: 'ResultSampleFractionText'},
-			                { header: "USGS P-Code", width: 100, sortable: true, dataIndex: 'USGSPCode'},	                
-			                //{ header: "Activity Media Subdivision Name", width: 150, sortable: true, dataIndex: 'ActivityMediaSubdivisionName'},
-			                { header: "Activity Start Date", width: 100, sortable: true, dataIndex: 'ActivityStartDate'},	                
-			                { header: "Activity Start Time", width: 100, sortable: true, dataIndex: 'ActivityStartTime'},	                
-			                { header: "Time Zone Code", width: 150, sortable: true, dataIndex: 'TimeZoneCode'}
-			            ]),
-						store: waterQualityStore
-					}]
-				}));
-			}
 		}
 		
+		// Add water level
+		if (this.siteRecord.get('wlSnFlag').toUpperCase() == 'YES') {
+
+			waterLevelStore.removeAll();
+			tabPanel.add(new Ext.Panel({
+				id: 'ext-water-level-tab',
+				title: 'Water Levels',
+				isLoaded: false,
+				layout: 'border',
+				listeners: {
+					activate: function(p) {
+						if (!p.isLoaded) {
+							p.isLoaded = true;
+							loadWaterLevelTab(this.siteRecord)
+						}
+					},
+					scope: this
+				},
+				items: [{
+					region: 'center',
+					autoScroll: true,
+					padding: 5,
+					items: [{
+						colors: ['darkblue'],
+						title: 'Graph',
+						xtype: 'flot',
+						height: 400,
+						//autoWidth: true,
+						width: 600,
+						id: 'ext-flot',
+						hoverable: true,
+						lines: {
+							show: true,
+							lineWidth: 1
+						},
+						points: {
+							show: true,
+							radius: 2,
+							fillColor: 'blue'
+						},
+						legend: {
+							 show: true,
+							 labelBoxBorderColor: 'black',
+							 position: "se"
+						},
+						xaxis: {
+							mode: 'time',
+							timeformat: "%m/%d/%y",
+							minTickSize: [1, "year"],
+								axisLabel: 'Month/Year',
+								axisLabelUseCanvas: true
+						},
+						yaxis: {
+							invert: true,
+							axisLabel: 'Depth to water level, feet below land surface',
+							  axisLabelUseCanvas: true
+						},
+						series: [ {data: [[]]} ],
+						  grid: {
+							backgroundColor: 'white'
+						}
+					},{
+						border: false,
+						height: 25,
+						html:'<div>Date created: ' + document.lastModified + '</div><br/>'
+					},{
+						xtype: 'grid',
+						loadMask: true,
+						autoHeight: true,
+						//autoScroll: true,
+						//height: 500,
+						viewConfig: {forceFit: true},
+						 sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
+						 colModel: new Ext.grid.ColumnModel([
+								 { header: "Date", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
+								 { header: "Time", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'H:iP' },
+								 { header: "Value", width: 100, dataIndex: 'value' },
+								 { header: "Unit", width: 50, dataIndex: 'unit' }//,
+	//				          { header: "Method", width: 300, dataIndex: 'method' }
+							]),
+						store: waterLevelStore/*,
+						 view: new Ext.ux.grid.BufferView({
+							 // custom row height
+							 rowHeight: 34,
+							 // render rows as they come into viewable area.
+							 scrollDelay: false
+						 })
+						 */
+					}]
+				}]
+			}));
+		}
+			
+			
+		// Add water quality
+		if (this.siteRecord.get('qwSnFlag').toUpperCase() == 'YES') {
+
+			tabPanel.add(new Ext.Panel({
+				id: 'water-quality-tab',
+				title: 'Water Quality',
+				//padding: 5,
+				//autoLoad: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
+				autoScroll: true,
+				isLoaded: false,
+				listeners: {
+					activate: function(p) {
+						if (!p.isLoaded) {
+							p.doLayout();
+							p.isLoaded = true;
+							waterQualityStore.removeAll();
+							waterQualityStore.load({
+								params:{siteNo:this.siteRecord.get('siteNo'),
+										agency_cd:MEDIATOR.cleanAgencyCode(this.siteRecord.get('agency'))
+								}
+							});
+						}
+					},
+					scope: this
+				},
+				tbar: [{
+					text: 'Export as CSV',
+					handler: function() {
+						document.getElementById('qw-siteid').value = 'USGS-' + this.siteRecord.get('siteNo');
+						document.getElementById('qw-csv-export').submit();
+					}, 
+					scope: this
+				 }],
+				 //layout: 'border',
+				items: [{
+					xtype: 'grid',
+					border: false,
+					loadMask: true,
+					autoHeight: true,
+					width: 1450,
+					//region: 'center',
+					//layout: 'fit',
+					viewConfig: {forceFit: true},
+					 sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
+					 colModel: new Ext.grid.ColumnModel([
+							 { header: "Characteristic Name", width: 200, dataIndex: 'CharacteristicName'},
+							 { header: "Detection Condition", width: 200, sortable: true, dataIndex: 'ResultDetectionConditionText'},
+							 { header: "Measure Value", width: 150, sortable: true, dataIndex: 'ResultMeasureValue',
+								renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+									if (value == '') {
+										return 'Not Detected';
+									}
+									return value;
+								}
+							 },
+							 { header: "Units", width: 150, sortable: true, dataIndex: 'MeasureUnitCode'},
+							 { header: "Value Type", width: 150, sortable: true, dataIndex: 'ResultValueTypeName'},
+							 { header: "Sample Fraction", width: 150, sortable: true, dataIndex: 'ResultSampleFractionText'},
+							 { header: "USGS P-Code", width: 100, sortable: true, dataIndex: 'USGSPCode'},	                
+							 //{ header: "Activity Media Subdivision Name", width: 150, sortable: true, dataIndex: 'ActivityMediaSubdivisionName'},
+							 { header: "Activity Start Date", width: 100, sortable: true, dataIndex: 'ActivityStartDate'},	                
+							 { header: "Activity Start Time", width: 100, sortable: true, dataIndex: 'ActivityStartTime'},	                
+							 { header: "Time Zone Code", width: 150, sortable: true, dataIndex: 'TimeZoneCode'}
+						]),
+					store: waterQualityStore
+				}]
+			}));
+		}		
 
 	
 		Ext.apply(this, {
@@ -362,6 +358,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 		SiteIdentifyWindow.superclass.initComponent.call(this);
 	}
 });
+
 
 function loadWaterLevelTab(record) {
 	Ext.getCmp('ext-water-level-tab').body.mask('Loading...','x-mask-loading');
