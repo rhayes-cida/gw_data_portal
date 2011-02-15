@@ -432,15 +432,19 @@ function loadWellLogTab(record) {
 			var logEls = x.getElementsByTagName('logElement');
 			so.logObjs = [];
 			for (var i = 0; i < logEls.length; i++) {
-				var f = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0];
-				var t = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1];
-				
-				so.logObjs.push({
-					intervalFrom: f,
-					intervalTo: t,
-					height: t - f,
-					description: (logEls[i].getElementsByTagName('description'))?logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue : 'No Description'
-				});
+				try{
+					var f = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0];
+					var t = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1];
+					
+					so.logObjs.push({
+						intervalFrom: f,
+						intervalTo: t,
+						height: t - f,
+						description: (logEls[i].getElementsByTagName('description'))?logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue : 'No Description'
+					});
+				} catch(err){
+					// Don't do anything
+				}
 			}
 			
 			var graphicHTML = '';
