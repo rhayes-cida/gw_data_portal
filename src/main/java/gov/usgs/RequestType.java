@@ -3,7 +3,8 @@ package gov.usgs;
 public enum RequestType {
 	well_log("/wfs?request=GetFeature&typeName=gwml:WaterWell&INFO_FORMAT=text/xml&featureId="),
 	water_level("/sos?request=GetObservation&featureId="),
-	water_quality("/qw?mimeType=xml&siteid=");
+	water_quality("/qw?mimeType=xml&siteid="),
+	download("?featureId=", "/cocoon/gin/gwdp/download/xls/");
 
 
 
@@ -14,7 +15,11 @@ public enum RequestType {
 	protected final String serviceQuery;
 
 	private RequestType(String serviceQuery) {
-		this.path = mediatorPath;
+		this(serviceQuery, mediatorPath);
+	}
+
+	private RequestType(String serviceQuery, String path) {
+		this.path = path;
 		this.serviceQuery = serviceQuery;
 	}
 
