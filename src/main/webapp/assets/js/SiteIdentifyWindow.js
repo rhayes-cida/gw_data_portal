@@ -294,14 +294,15 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					},
 					scope: this
 				},
-				tbar: [{
-					text: 'Export as CSV',
-					handler: function() {
-						document.getElementById('qw-siteid').value = 'USGS-' + this.siteRecord.get('siteNo');
-						document.getElementById('qw-csv-export').submit();
-					}, 
-					scope: this
-				 }],
+				// Commenting out for now, will probably remove later
+//				tbar: [{
+//					text: 'Export as CSV',
+//					handler: function() {
+//						document.getElementById('qw-siteid').value = 'USGS-' + this.siteRecord.get('siteNo');
+//						document.getElementById('qw-csv-export').submit();
+//					}, 
+//					scope: this
+//				 }],
 				 //layout: 'border',
 				items: [{
 					xtype: 'grid',
@@ -314,24 +315,25 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					viewConfig: {forceFit: true},
 					 sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 					 colModel: new Ext.grid.ColumnModel([
-							 { header: "Characteristic Name", width: 200, dataIndex: 'CharacteristicName'},
-							 { header: "Detection Condition", width: 200, sortable: true, dataIndex: 'ResultDetectionConditionText'},
-							 { header: "Measure Value", width: 150, sortable: true, dataIndex: 'ResultMeasureValue',
+							{ header: "Activity Start Date", width: 100, sortable: true, dataIndex: 'ActivityStartDate'},	                
+							{ header: "Activity Start Time", width: 100, sortable: true, dataIndex: 'ActivityStartTime'},	                
+							{ header: "Time Zone Code", width: 150, sortable: true, dataIndex: 'TimeZoneCode'},
+							{ header: "Characteristic Name", width: 200, dataIndex: 'CharacteristicName'},
+							{ header: "Measure Value", width: 150, sortable: true, dataIndex: 'ResultMeasureValue',
 								renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 									if (value == '') {
 										return 'Not Detected';
 									}
 									return value;
 								}
-							 },
-							 { header: "Units", width: 150, sortable: true, dataIndex: 'MeasureUnitCode'},
-							 { header: "Value Type", width: 150, sortable: true, dataIndex: 'ResultValueTypeName'},
-							 { header: "Sample Fraction", width: 150, sortable: true, dataIndex: 'ResultSampleFractionText'},
-							 { header: "USGS P-Code", width: 100, sortable: true, dataIndex: 'USGSPCode'},	                
+							},
+							{ header: "Units", width: 150, sortable: true, dataIndex: 'MeasureUnitCode'},
+							{ header: "Detection Condition", width: 200, sortable: true, dataIndex: 'ResultDetectionConditionText'},
+							{ header: "Value Type", width: 150, sortable: true, dataIndex: 'ResultValueTypeName'},
+							{ header: "Sample Fraction", width: 150, sortable: true, dataIndex: 'ResultSampleFractionText'},
+							{ header: "USGS P-Code", width: 100, sortable: true, dataIndex: 'USGSPCode'}	                
 							 //{ header: "Activity Media Subdivision Name", width: 150, sortable: true, dataIndex: 'ActivityMediaSubdivisionName'},
-							 { header: "Activity Start Date", width: 100, sortable: true, dataIndex: 'ActivityStartDate'},	                
-							 { header: "Activity Start Time", width: 100, sortable: true, dataIndex: 'ActivityStartTime'},	                
-							 { header: "Time Zone Code", width: 150, sortable: true, dataIndex: 'TimeZoneCode'}
+
 						]),
 					store: waterQualityStore
 				}]
@@ -364,14 +366,6 @@ function loadWaterLevelTab(record) {
 	Ext.getCmp('ext-water-level-tab').body.mask('Loading...','x-mask-loading');
 	Ext.Ajax.request({
 		method: 'GET',
-		/*
-		url: '../cocoon/gin/sos/gw_' + (mediator||'usgs'),
-		params: {
-			request: 'GetObservation',
-			featureId: 'USGS-' + record.get('siteNo')
-		},
-		*/
-		
 		url: 'iddata?request=water_level',
 		params: {
 			siteNo: record.get('siteNo'),
@@ -392,22 +386,11 @@ function loadWaterLevelTab(record) {
 function loadWellLogTab(record) {
 	Ext.getCmp('well-log-tab').body.mask('Loading...','x-mask-loading');
 	Ext.Ajax.request({
-		method: 'GET',
-		/*
-		url: '../cocoon/gin/wfs/gw_' + (mediator||'usgs'),
-		params: {
-			request: 'GetFeature',
-			typeName: 'gwml:WaterWell',
-			INFO_FORMAT: 'text/xml',
-			FID: 'USGS.' + record.get('siteNo')
-		},
-		*/
-		
+		method: 'GET',		
 		url: 'iddata?request=well_log',
 		params: {
-			siteNo: record.get('siteNo'),
+			siteNo: record.get('siteNo'), //siteNo: 425856089320601
 			agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
-			//siteNo: 425856089320601
 		},
 		
 		success: function(r, o) {
@@ -421,65 +404,8 @@ function loadWellLogTab(record) {
 				return;
 			}
 			
-			var so = {
-				position: x.getElementsByTagName('pos')[0].firstChild.nodeValue,
-				elevation: x.getElementsByTagName('referenceElevation')[0].firstChild.nodeValue,
-				wellDepth: x.getElementsByTagName('principalValue')[0].firstChild.nodeValue,
-				onlineResource: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:href'),
-				onlineResourceTitle: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:title')
-			};
-			
-			var logEls = x.getElementsByTagName('logElement');
-			so.logObjs = [];
-			for (var i = 0; i < logEls.length; i++) {
-				try{
-					var f = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[0];
-					var t = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ')[1];
-					
-					so.logObjs.push({
-						intervalFrom: f,
-						intervalTo: t,
-						height: t - f,
-						description: (logEls[i].getElementsByTagName('description'))?logEls[i].getElementsByTagName('description')[0].firstChild.nodeValue : 'No Description'
-					});
-				} catch(err){
-					// Don't do anything
-				}
-			}
-			
-			var graphicHTML = '';
-			if (so.logObjs && so.logObjs.length > 0) {
-				
-				//create graphic
-				var graphicHeight = 300;
-				var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];
-				var fontColor = ['#000','#000','#000','#000','#fff','#fff','#fff','#fff'];
-				graphicHTML = '<table class="well-log-graphic">';
-				
-				var totalDepth = (so.logObjs[so.logObjs.length-1].intervalTo - so.logObjs[0].intervalFrom);
-				for (var i = 0; i < so.logObjs.length; i++) {
-					var relHeight = graphicHeight * ((so.logObjs[i].height) / totalDepth);
-					if (relHeight < 20) relHeight = 20;
-	
-					if (i == 0) {
-						graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 3.2808399).toFixed(2) + ' ft</span></td></tr>'; 
-					}
-					
-					graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
-							'<div style="height: 100%; position: relative; ' + 
-								'background-color: ' + intervalColor[(i%intervalColor.length)] + '; ' + 
-								'color: ' + fontColor[(i%fontColor.length)] + 
-							';">';
-	
-					graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 3.2808399).toFixed(2) + ' ft</span>' + 
-							'</div>' + 
-						'</td>' + 
-						'<td style="height:' + relHeight + 'px; padding-left: 5px;" valign="middle">' + 
-							so.logObjs[i].description + 
-						'</td></tr>';
-				}
-				graphicHTML += '</table>';
-			}
+			var so = populateServiceObjectFromXML(x);
+			var graphicHTML = createWellLogGraphic(so);
 			
 			var t = new Ext.XTemplate(
 				'<tpl for=".">',
@@ -493,17 +419,112 @@ function loadWellLogTab(record) {
 					'</table>',
 					'<br/>',
 					'<table class="summary-table" border="1">',
-						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithography</th></tr>',
+						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th></tr>',
 					'<tpl for="logObjs">',
 						'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
 					'</tpl>',
 					'</table>',
+					'<br/>',
+					'<table class="summary-table" border="1">',
+						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing</th></tr>',
+					'<tpl for="constrObjs">',
+						'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
+					'</tpl>',
+					'</table>',					
 				'</tpl>'
 			);
 			
 			t.overwrite(Ext.getCmp('well-log-tab').body, so);
 		}
 	});
+	
+	var populateServiceObjectFromXML = function(x /* xml document from createXmlDoc()*/){
+		var so = {
+				position: x.getElementsByTagName('pos')[0].firstChild.nodeValue,
+				elevation: x.getElementsByTagName('referenceElevation')[0].firstChild.nodeValue,
+				wellDepth: x.getElementsByTagName('principalValue')[0].firstChild.nodeValue,
+				onlineResource: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:href'),
+				onlineResourceTitle: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:title')
+			};
+			
+			var logEls = x.getElementsByTagName('logElement');
+			so.logObjs = [];
+			for (var i = 0; i < logEls.length; i++) {
+				try{
+					var coords = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ');
+					var f = coords[0];
+					var t = coords[1];
+					var desc = logEls[i].getElementsByTagName('description');
+					
+					so.logObjs.push({
+						intervalFrom: f,
+						intervalTo: t,
+						height: t - f,
+						description: (desc)?desc[0].firstChild.nodeValue : 'No Description'
+					});
+				} catch(err){
+					// Don't do anything
+				}
+			}
+			
+			var constrEls = x.getElementsByTagName('construction');
+			so.constrObjs = [];
+			for (var i = 0; i < constrEls.length; i++) {
+				try{
+					var coords = constrEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ');
+					var f = coords[0];
+					var t = coords[1];
+					var desc = constrEls[i].getElementsByTagName('value');
+					
+					so.constrObjs.push({
+						intervalFrom: f,
+						intervalTo: t,
+						height: t - f,
+						description: (desc)? desc[0].firstChild.nodeValue : 'No Description'
+					});
+				} catch(err){
+					// Don't do anything
+				}
+			}
+		return so;
+	};
+	
+	var createWellLogGraphic = function(so /* service object */){
+		var graphicHTML = '';
+		if (so.logObjs && so.logObjs.length > 0) {
+			
+			//create graphic
+			var graphicHeight = 300;
+			var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];
+			var fontColor = ['#000','#000','#000','#000','#fff','#fff','#fff','#fff'];
+			graphicHTML = '<table class="well-log-graphic">';
+			
+			var totalDepth = (so.logObjs[so.logObjs.length-1].intervalTo - so.logObjs[0].intervalFrom);
+			for (var i = 0; i < so.logObjs.length; i++) {
+				var relHeight = graphicHeight * ((so.logObjs[i].height) / totalDepth);
+				if (relHeight < 20) relHeight = 20;
+
+				if (i == 0) {
+					graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 3.2808399).toFixed(2) + ' ft</span></td></tr>'; 
+				}
+				
+				graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
+						'<div style="height: 100%; position: relative; ' + 
+							'background-color: ' + intervalColor[(i%intervalColor.length)] + '; ' + 
+							'color: ' + fontColor[(i%fontColor.length)] + 
+						';">';
+
+				graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 3.2808399).toFixed(2) + ' ft</span>' + 
+						'</div>' + 
+					'</td>' + 
+					'<td style="height:' + relHeight + 'px; padding-left: 5px;" valign="middle">' + 
+						so.logObjs[i].description + 
+					'</td></tr>';
+			}
+			graphicHTML += '</table>';
+		}
+		return graphicHTML;
+	};
 }
 
 
