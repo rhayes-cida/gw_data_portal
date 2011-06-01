@@ -41,9 +41,15 @@ function identifyPoint(event, map) {
 			} else if (r.length == 1) {
 				//auto id the one site
 				var siteRecord = r[0];
+				// we don't want null sitenames
+				siteRecord.data.siteName = createSiteName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
 				//open ID dialog with site record
 				(new SiteIdentifyWindow({siteRecord: siteRecord})).show();
 			} else {
+				for (var j=0; j<r.length; j++){
+					var siteRecord = r[j];
+					siteRecord.data.siteName = createSiteName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
+				}
 				//open site selection window
 				(new SiteIdSelector({store: identifyStore})).show();
 			}

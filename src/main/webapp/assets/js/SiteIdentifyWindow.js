@@ -6,7 +6,7 @@ var siteIdTpl = new Ext.XTemplate(
 			'</td><td width="80%">',
 			'<table id="id-table" width="100%" border="1">',
 				'<tr><th>Agency</th><td>{agency}</td></tr>',
-				'<tr><th>Site Name</th><td>{siteName}</td></tr>',
+				'<tr><th>Site Name</th><td>{[createSiteName(values.siteName, values.agency, values.siteNo)]}</td></tr>',
 				'<tr><th>Site #</th><td>{siteNo}</td></tr>',
 				'<tr><th>Lat/Long(WGS84)</th><td>{[parseFloat(values.decLatVa).toFixed(4)]},{[parseFloat(values.decLongVa).toFixed(4)]}</td></tr>',
 				'<tr><th>Local Aquifer Name</th><td>{localAquiferName}</td></tr>',
@@ -20,6 +20,11 @@ var siteIdTpl = new Ext.XTemplate(
 	'</tpl>'
 );
 siteIdTpl.compile();
+
+function createSiteName(siteName, agency, siteNo){
+	if (siteName && siteName != 'null') return siteName;
+	return agency + '-' + siteNo;
+}
 
 function createXmlDoc(str) {
 
@@ -69,7 +74,8 @@ var waterLevelStore = new Ext.data.XmlStore({
 	 		{ name: 'time', mapping: 'time', type: 'date', dateFormat: 'c'},
 			{ name: 'value', mapping: 'value > Quantity > value'},
 //			{ name: 'method', mapping: 'method'},
-			{ name: 'unit', mapping: 'Quantity > uom@code'}
+			{ name: 'unit', mapping: 'Quantity > uom@code'},
+			{ name: 'comment', mapping: 'comment'}
 	],
 	sortInfo: {
 		field: 'time',
@@ -113,7 +119,8 @@ var waterQualityStore = new Ext.data.XmlStore({
 	    { name: 'MeasureUnitCode', mapping: 'ResultDescription > ResultMeasure > MeasureUnitCode'},
 	    { name: 'ResultDetectionConditionText', mapping: 'ResultDescription > ResultDetectionConditionText'},
 	    { name: 'ResultValueTypeName', mapping: 'ResultDescription > ResultValueTypeName'},
-	    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'}
+	    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'},
+	    { name: 'MethodName', mapping: 'ResultAnalyticalMethod > MethodName'}
 	]
 });
 //ActivityStartDate, ActivityStartTime, TimeZoneCode, CharacteristicName, ActivityMediaSubdivisionName, 
@@ -249,11 +256,11 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						viewConfig: {forceFit: true},
 						 sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 						 colModel: new Ext.grid.ColumnModel([
-								 { header: "Date", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
-								 { header: "Time", width: 150, dataIndex: 'time', xtype:'datecolumn', format: 'H:iP' },
-								 { header: "Value", width: 100, dataIndex: 'value' },
-								 { header: "Unit", width: 50, dataIndex: 'unit' }//,
-	//				          { header: "Method", width: 300, dataIndex: 'method' }
+								 { header: "Date", width: 60, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
+								 { header: "Time", width: 60, dataIndex: 'time', xtype:'datecolumn', format: 'H:iP' },
+								 { header: "Value", width: 60, dataIndex: 'value' },
+								 { header: "Unit", width: 60, dataIndex: 'unit' },
+								 { header: "Comment", width: 130, dataIndex: 'comment' }
 							]),
 						store: waterLevelStore/*,
 						 view: new Ext.ux.grid.BufferView({
@@ -317,9 +324,9 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					 colModel: new Ext.grid.ColumnModel([
 							{ header: "Activity Start Date", width: 100, sortable: true, dataIndex: 'ActivityStartDate'},	                
 							{ header: "Activity Start Time", width: 100, sortable: true, dataIndex: 'ActivityStartTime'},	                
-							{ header: "Time Zone Code", width: 150, sortable: true, dataIndex: 'TimeZoneCode'},
+							{ header: "Time Zone", width: 60, sortable: true, dataIndex: 'TimeZoneCode'},
 							{ header: "Characteristic Name", width: 200, dataIndex: 'CharacteristicName'},
-							{ header: "Measure Value", width: 150, sortable: true, dataIndex: 'ResultMeasureValue',
+							{ header: "Measure Value", width: 80, sortable: true, dataIndex: 'ResultMeasureValue',
 								renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 									if (value == '') {
 										return 'Not Detected';
@@ -327,11 +334,12 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 									return value;
 								}
 							},
-							{ header: "Units", width: 150, sortable: true, dataIndex: 'MeasureUnitCode'},
+							{ header: "Units", width: 90, sortable: true, dataIndex: 'MeasureUnitCode'},
 							{ header: "Detection Condition", width: 200, sortable: true, dataIndex: 'ResultDetectionConditionText'},
-							{ header: "Value Type", width: 150, sortable: true, dataIndex: 'ResultValueTypeName'},
-							{ header: "Sample Fraction", width: 150, sortable: true, dataIndex: 'ResultSampleFractionText'},
-							{ header: "USGS P-Code", width: 100, sortable: true, dataIndex: 'USGSPCode'}	                
+							{ header: "Value Type", width: 80, sortable: true, dataIndex: 'ResultValueTypeName'},
+							{ header: "Sample Fraction", width: 80, sortable: true, dataIndex: 'ResultSampleFractionText'},
+							{ header: "USGS P-Code", width: 70, sortable: true, dataIndex: 'USGSPCode'},
+							{ header: 'Method Name', width: 180, sortable: true, dataIndex: 'MethodName'}
 							 //{ header: "Activity Media Subdivision Name", width: 150, sortable: true, dataIndex: 'ActivityMediaSubdivisionName'},
 
 						]),
@@ -412,8 +420,10 @@ function loadWellLogTab(record) {
 					'<table>',
 						'<tr><td style="height:35px">Longitude: {[parseFloat(values.position.split(" ")[0]).toFixed(4)]}</td><td rowspan="6">' + graphicHTML + '</td></tr>',
 						'<tr><td style="height:35px">Latitude: {[parseFloat(values.position.split(" ")[1]).toFixed(4)]}</td></tr>',
-						'<tr><td style="height:35px">Elevation: {[(values.elevation * 3.2808399).toFixed(2)]} ft.</td></tr>',
-						'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 3.2808399).toFixed(2)]} ft.</td></tr>',
+						'<tr><td style="height:35px">Elevation: {[(values.elevation * 1.0).toFixed(2)]} ft.</td></tr>',
+						'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 1.0).toFixed(2)]} ft.</td></tr>',
+//						'<tr><td style="height:35px">Elevation: {[(values.elevation * 3.2808399).toFixed(2)]} ft.</td></tr>',
+//						'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 3.2808399).toFixed(2)]} ft.</td></tr>',
 						'<tr><td style="height:35px">Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
 						'<tr><td>&nbsp;</td></tr>',
 					'</table>',
@@ -421,14 +431,16 @@ function loadWellLogTab(record) {
 					'<table class="summary-table" border="1">',
 						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th></tr>',
 					'<tpl for="logObjs">',
-						'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
-					'</tpl>',
+						'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
+//						'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
+						'</tpl>',
 					'</table>',
 					'<br/>',
 					'<table class="summary-table" border="1">',
 						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing</th></tr>',
 					'<tpl for="constrObjs">',
-						'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
+					'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
+//					'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
 					'</tpl>',
 					'</table>',					
 				'</tpl>'
@@ -505,7 +517,8 @@ function loadWellLogTab(record) {
 				if (relHeight < 20) relHeight = 20;
 
 				if (i == 0) {
-					graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 3.2808399).toFixed(2) + ' ft</span></td></tr>'; 
+					//graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 3.2808399).toFixed(2) + ' ft</span></td></tr>'; 
+					graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 1.0).toFixed(2) + ' ft</span></td></tr>'; 
 				}
 				
 				graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
@@ -514,7 +527,8 @@ function loadWellLogTab(record) {
 							'color: ' + fontColor[(i%fontColor.length)] + 
 						';">';
 
-				graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 3.2808399).toFixed(2) + ' ft</span>' + 
+				//graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 3.2808399).toFixed(2) + ' ft</span>' + 
+				graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 1.0).toFixed(2) + ' ft</span>' + 
 						'</div>' + 
 					'</td>' + 
 					'<td style="height:' + relHeight + 'px; padding-left: 5px;" valign="middle">' + 
