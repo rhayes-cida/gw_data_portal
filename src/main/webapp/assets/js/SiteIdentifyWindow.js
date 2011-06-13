@@ -430,17 +430,17 @@ function loadWellLogTab(record) {
 					'<br/>',
 					'<table class="summary-table" border="1">',
 //						'<caption><strong>Lithology</strong></caption>',
-						'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th></tr></thead>',
+						'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th><th>Description</th></tr></thead>',
 						'<tbody>',
 							'<tpl for="logObjs">',
-								'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
+								'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{contrConcept}</td><td>{description}</td></tr>',
 //								'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
 							'</tpl>',
 						'</tbody>',
 					'</table>',
 					'<br/>',
 					'<table class="summary-table" border="1">',
-						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing</th></tr>',
+						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing Material</th></tr>',
 					'<tpl for="constrObjs">',
 					'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
 //					'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
@@ -470,11 +470,13 @@ function loadWellLogTab(record) {
 					var f = coords[0];
 					var t = coords[1];
 					var desc = logEls[i].getElementsByTagName('description');
+					var controlledConcept = logEls[i].getElementsByTagName('name').nodeValue;
 					
 					so.logObjs.push({
 						intervalFrom: f,
 						intervalTo: t,
 						height: t - f,
+						contrConcept: controlledConcept,
 						description: (desc)?desc[0].firstChild.nodeValue : 'No Description'
 					});
 				} catch(err){
