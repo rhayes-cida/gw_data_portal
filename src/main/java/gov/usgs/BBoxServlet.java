@@ -34,7 +34,7 @@ public class BBoxServlet extends HttpServlet {
 		
 		try {
 
-			String query = URLUtil.getStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=bbox");
+			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=bbox");
 //System.out.println(query);
 			
 			Context ctx = new InitialContext();

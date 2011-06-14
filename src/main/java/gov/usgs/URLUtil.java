@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 
@@ -17,7 +19,7 @@ public class URLUtil {
 
 
 	//USE THIS CALL WHEN GETTING A BASE QUERY
-	public static String getStringFromURL(String urlString, String params) throws Exception {
+	public static String getResponseAsStringFromURL(String urlString, String params) throws Exception {
 		DataInputStream input = null;
 		StringBuffer page = new StringBuffer();
 
@@ -44,12 +46,29 @@ public class URLUtil {
 
 	}
 
+	public static String getHeaders(URLConnection uCon) {
+		StringBuilder sb = new StringBuilder();
+		Map<String, List<String>> headers = uCon.getHeaderFields();
+		for (Map.Entry<String, List<String>> header: headers.entrySet()) {
+			sb.append(header.getKey() + ": " + header.getValue().toString() + "\n");
+		}
+		return sb.toString();
+	}
 
 	//USE THIS CALL WHEN STREAMING BACK IMAGE FROM MAPVIEWER
 	public static void writeBytesToOutputStream(String urlString, String params, ServletOutputStream out)
 	throws Exception {
-		DataInputStream input = new DataInputStream(URLUtil.makeUrlPostRequest(urlString, params)
-				.getInputStream());
+		URLConnection uCon = URLUtil.makeUrlPostRequest(urlString, params);
+		//System.out.println(getHeaders(uCon));
+		DataInputStream input = null;
+		try {
+
+			input = new DataInputStream(uCon.getInputStream());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			//System.out.println(getHeaders(uCon));
+		}
+
 
 		BufferedInputStream buf = new BufferedInputStream(input);
 		int readBytes = 0;
@@ -87,9 +106,8 @@ public class URLUtil {
 
 			return urlConn;
 		} catch (Exception e) {
-
+			System.out.println("Problem with URL Post request for " + urlString + " -- " + e.getMessage());
 			return null;
-
 		}
 	}
 
