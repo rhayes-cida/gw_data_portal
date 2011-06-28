@@ -1,3 +1,4 @@
+// Define and compile templates
 var siteIdTpl = new Ext.XTemplate(
 	'<tpl for=".">',
 		'<div id="id-container">',
@@ -6,7 +7,7 @@ var siteIdTpl = new Ext.XTemplate(
 			'</td><td width="80%">',
 			'<table id="id-table" width="100%" border="1">',
 				'<tr><th>Agency</th><td>{agency}</td></tr>',
-				'<tr><th>Site Name</th><td>{[createSiteName(values.siteName, values.agency, values.siteNo)]}</td></tr>',
+				'<tr><th>Site Name</th><td>{[SITE.createName(values.siteName, values.agency, values.siteNo)]}</td></tr>',
 				'<tr><th>Site #</th><td>{siteNo}</td></tr>',
 				'<tr><th>Lat/Long(WGS84)</th><td>{[parseFloat(values.decLatVa).toFixed(4)]},{[parseFloat(values.decLongVa).toFixed(4)]}</td></tr>',
 				'<tr><th>Local Aquifer Name</th><td>{localAquiferName}</td></tr>',
@@ -21,111 +22,123 @@ var siteIdTpl = new Ext.XTemplate(
 );
 siteIdTpl.compile();
 
-function createSiteName(siteName, agency, siteNo){
-	if (siteName && siteName != 'null') return siteName;
-	return agency + '-' + siteNo;
-}
+var wellLogTemplate = new Ext.XTemplate(
+		'<tpl for=".">',
+			'<table>',
+				'<tr><td style="height:35px">Longitude: {[parseFloat(values.position.split(" ")[0]).toFixed(4)]}</td><td rowspan="6">{values.graphicHTML}</td></tr>',
+				'<tr><td style="height:35px">Latitude: {[parseFloat(values.position.split(" ")[1]).toFixed(4)]}</td></tr>',
+				'<tr><td style="height:35px">Elevation: {[(values.elevation * 1.0).toFixed(2)]} ft.</td></tr>',
+				'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 1.0).toFixed(2)]} ft.</td></tr>',
+//					'<tr><td style="height:35px">Elevation: {[(values.elevation * 3.2808399).toFixed(2)]} ft.</td></tr>',
+//					'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 3.2808399).toFixed(2)]} ft.</td></tr>',
+				'<tr><td style="height:35px">Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
+				'<tr><td>&nbsp;</td></tr>',
+			'</table>',
+			'<br/>',
+			'<table class="summary-table" border="1">',
+//					'<caption><strong>Lithology</strong></caption>',
+				'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th><th>Description</th></tr></thead>',
+				'<tbody>',
+					'<tpl for="logObjs">',
+						'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{contrConcept}</td><td>{description}</td></tr>',
+//							'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
+					'</tpl>',
+				'</tbody>',
+			'</table>',
+			'<br/>',
+			'<table class="summary-table" border="1">',
+				'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing Material</th></tr>',
+			'<tpl for="constrObjs">',
+			'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
+//				'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
+			'</tpl>',
+			'</table>',					
+		'</tpl>'
+	);
+wellLogTemplate.compile();
 
-function createXmlDoc(str) {
-
-	var theDocument = false;	//this will be the XML document
-
-	if (window.ActiveXObject) {		//for IE users......
-
-		try {
-
-			//parse the request String to form an XML document.
-			theDocument = new ActiveXObject("Microsoft.XMLDOM");
-			theDocument.async = false;
-			theDocument.loadXML(str);
-
-		} catch (e) {
-
-			//oops. something went wrong in your parsing.		
-			alert("Error parsing XML.");
-
-			return false;
-		}
-	} else if (window.XMLHttpRequest) {		//for everyone else
-
-		try {
-
-			//parse the request String to form an XML document.
-			var parser = new DOMParser();        
-			theDocument = parser.parseFromString(str, "text/xml");
-
-		} catch (e) {
-			//oops. something went wrong in your parsing.
-			alert("Error parsing XML.");
-
-			return false;
-		}
-
-	} 
-
-	return theDocument;
-}
-
-
-var waterLevelStore = new Ext.data.XmlStore({							
-	id: 'water-level-store',
-	record: 'TimeValuePair',
-	fields: [
-	 		{ name: 'time', mapping: 'time', type: 'date', dateFormat: 'c'},
-			{ name: 'value', mapping: 'value > Quantity > value'},
-//			{ name: 'method', mapping: 'method'},
-			{ name: 'unit', mapping: 'Quantity > uom@code'},
-			{ name: 'comment', mapping: 'comment'}
-	],
-	sortInfo: {
-		field: 'time',
-		direction: 'DESC'
+var SITE = {
+	createName: function(siteName, agency, siteNo){ /*slightly worried that this won't get called in template */
+		if (siteName && siteName != 'null') return siteName;
+		return agency + '-' + siteNo;
 	},
-	listeners: {
-		load: function(s,r,o) {
-			var data = [];
-			for (var i = 0; i < r.length; i++) {
-				data.push([r[i].get('time'), parseFloat(r[i].get('value')).toFixed(4)]);
-			}
-			Ext.getCmp('ext-flot').setData([{label: 'Depth to water in feet', data:data}]);
-			Ext.getCmp('ext-flot').setupGrid();
-			Ext.getCmp('ext-flot').draw();
-		}
+	hasWaterLevelData: function(siteRecord) {return siteRecord.get('wlSnFlag').toUpperCase() == 'YES';},
+	hasWaterQualityData: function(siteRecord) {return siteRecord.get('qwSnFlag').toUpperCase() == 'YES';},
+	downloadData: function(siteRecord) {
+
+		var exportForm = document.getElementById('exportForm');
+		
+		//pop up a new window that displays progress of download
+		var downloadWindow = new Ext.Window({
+			height: 200,
+			width: 300,
+			resizable: false,
+			title: 'Downloading Site Data...',
+			modal: true,
+			layout: 'border',
+			closable: false,
+			items: [{
+				border: false,
+				region: 'center',
+				html: ''
+			}],
+			buttonAlign: 'center',
+			buttons: [{
+				text: 'Cancel',
+				handler: function() {
+					Ext.Msg.show({
+						title:'Warning',
+						msg: 'Cancel the download?',
+						buttons: Ext.Msg.YESNO,
+						fn: function(bid) {
+							if (bid == 'yes') {
+								downloadWindow.close();
+							}
+						},
+						icon: Ext.MessageBox.QUESTION
+					});
+				},
+				scope: this
+			}]
+		});
+		
+		downloadWindow.show();
+		downloadWindow.body.mask('Please wait...','x-mask-loading');
+		
+		
+		//set src of downloadIframe to begin download...
+		var sn = siteRecord.get('siteNo');
+		var ac = MEDIATOR.cleanAgencyCode(siteRecord.get('agency'));
+		var qwf = siteRecord.get('qwSnFlag');
+		var wlf = siteRecord.get('wlSnFlag');
+		var token = (new Date()).getTime();
+		
+		exportForm.siteNo.value = sn;
+		exportForm.agency_cd.value = ac;
+		exportForm.qwSnFlag.value = qwf;
+		exportForm.wlSnFlag.value = wlf;
+		exportForm.token.value = token;
+		
+		
+		var exportStatus = setInterval(function() {
+			var cookieValue = Ext.util.Cookies.get('exportToken');
+			if (cookieValue == token) {
+				Ext.util.Cookies.clear('exportToken');
+				downloadWindow.close();
+				clearInterval(exportStatus);
+			}	  
+		}, 1000);
+		
+		exportForm.submit();
 	}
-});
+}
 
-var waterQualityStore = new Ext.data.XmlStore({
-	//url: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
-	proxy: new Ext.data.HttpProxy({
-		method: 'GET',
-		url: 'iddata'
-	}),
-	baseParams: {
-		request: 'water_quality'
-	},
-	record: 'Result',
-	sortInfo: {
-		field: 'ActivityStartDate',
-		direction: 'DESC'
-	},
-	fields: [
-	    { name: 'ActivityStartDate', mapping: 'date', xtype: 'datecolumn', format: 'Y-M-d'},
-	    { name: 'ActivityStartTime', mapping: 'time', xtype: 'datecolumn', format: 'H:i:s'},
-	    //{ name: 'ActivityMediaSubdivisionName', mapping: 'ActivityDescription > ActivityMediaSubdivisionName'},
-	    { name: 'TimeZoneCode', mapping: 'zone'},
-	    { name: 'CharacteristicName', mapping: 'ResultDescription > CharacteristicName'},
-	    { name: 'ResultSampleFractionText', mapping: 'ResultDescription > ResultSampleFractionText'},
-	    { name: 'ResultMeasureValue', mapping: 'ResultDescription > ResultMeasure > ResultMeasureValue'},
-	    { name: 'MeasureUnitCode', mapping: 'ResultDescription > ResultMeasure > MeasureUnitCode'},
-	    { name: 'ResultDetectionConditionText', mapping: 'ResultDescription > ResultDetectionConditionText'},
-	    { name: 'ResultValueTypeName', mapping: 'ResultDescription > ResultValueTypeName'},
-	    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'},
-	    { name: 'MethodName', mapping: 'ResultAnalyticalMethod > MethodName'}
-	]
-});
-//ActivityStartDate, ActivityStartTime, TimeZoneCode, CharacteristicName, ActivityMediaSubdivisionName, 
-//ResultSampleFractionTest, ResultMeasureValue, ResultDetectionConditionText, MeasureUnitCode, 
-//ResultValueTypeName, USGSPCode
+
+function removeNameSpaces(xmlStr){
+	var result = xmlStr.replace(/<[a-zA-Z0-9]+:/g,'<')
+	result = result.replace(/<\/[a-zA-Z0-9]+:/g,'</');
+	return result;
+}
 
 
 var SiteIdentifyWindow = Ext.extend(Ext.Window, {
@@ -158,9 +171,6 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			}]
 		});
 		
-		// We currently don't have any way to address which wells have well logs.
-		// Just by virtue of being in NWIS doesn't guarantee that well log information 
-		// is available.
 		// Add well log
 		if (true) {		
 			tabPanel.add(new Ext.Panel({
@@ -174,7 +184,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					activate: function(p) {
 						if (!p.isLoaded) {
 							p.isLoaded = true;
-							loadWellLogTab(this.siteRecord);
+							WELL_LOG_TAB.load(this.siteRecord);
 						}
 					},
 					scope: this
@@ -182,12 +192,12 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			}));
 		}
 		
-		// Add water level
-		if (this.siteRecord.get('wlSnFlag').toUpperCase() == 'YES') {
+		// Conditionally add water level tab
+		if (SITE.hasWaterLevelData(this.siteRecord)) {
 
-			waterLevelStore.removeAll();
+			WATER_LEVEL_TAB.store.removeAll();
 			tabPanel.add(new Ext.Panel({
-				id: 'ext-water-level-tab',
+				id: 'water-level-tab',
 				title: 'Water Levels',
 				isLoaded: false,
 				layout: 'border',
@@ -195,7 +205,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					activate: function(p) {
 						if (!p.isLoaded) {
 							p.isLoaded = true;
-							loadWaterLevelTab(this.siteRecord)
+							WATER_LEVEL_TAB.load(this.siteRecord)
 						}
 					},
 					scope: this
@@ -262,7 +272,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 								 { header: "Unit", width: 60, dataIndex: 'unit' },
 								 { header: "Comment", width: 130, dataIndex: 'comment' }
 							]),
-						store: waterLevelStore/*,
+						store: WATER_LEVEL_TAB.store/*,
 						 view: new Ext.ux.grid.BufferView({
 							 // custom row height
 							 rowHeight: 34,
@@ -276,14 +286,12 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 		}
 			
 			
-		// Add water quality
-		if (this.siteRecord.get('qwSnFlag').toUpperCase() == 'YES') {
+		// Add water quality tab
+		if (SITE.hasWaterQualityData(this.siteRecord)) {
 
 			tabPanel.add(new Ext.Panel({
 				id: 'water-quality-tab',
 				title: 'Water Quality',
-				//padding: 5,
-				//autoLoad: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
 				autoScroll: true,
 				isLoaded: false,
 				listeners: {
@@ -291,8 +299,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						if (!p.isLoaded) {
 							p.doLayout();
 							p.isLoaded = true;
-							waterQualityStore.removeAll();
-							waterQualityStore.load({
+							WATER_QUALITY_TAB.store.removeAll();
+							WATER_QUALITY_TAB.store.load({
 								params:{siteNo:this.siteRecord.get('siteNo'),
 										agency_cd:MEDIATOR.cleanAgencyCode(this.siteRecord.get('agency'))
 								}
@@ -301,24 +309,12 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					},
 					scope: this
 				},
-				// Commenting out for now, will probably remove later
-//				tbar: [{
-//					text: 'Export as CSV',
-//					handler: function() {
-//						document.getElementById('qw-siteid').value = 'USGS-' + this.siteRecord.get('siteNo');
-//						document.getElementById('qw-csv-export').submit();
-//					}, 
-//					scope: this
-//				 }],
-				 //layout: 'border',
 				items: [{
 					xtype: 'grid',
 					border: false,
 					loadMask: true,
 					autoHeight: true,
 					width: 1450,
-					//region: 'center',
-					//layout: 'fit',
 					viewConfig: {forceFit: true},
 					 sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 					 colModel: new Ext.grid.ColumnModel([
@@ -340,10 +336,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 							{ header: "Sample Fraction", width: 80, sortable: true, dataIndex: 'ResultSampleFractionText'},
 							{ header: "USGS P-Code", width: 70, sortable: true, dataIndex: 'USGSPCode'},
 							{ header: 'Method Name', width: 180, sortable: true, dataIndex: 'MethodName'}
-							 //{ header: "Activity Media Subdivision Name", width: 150, sortable: true, dataIndex: 'ActivityMediaSubdivisionName'},
-
 						]),
-					store: waterQualityStore
+					store: WATER_QUALITY_TAB.store
 				}]
 			}));
 		}		
@@ -355,7 +349,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			buttons: [{
 				text: 'Download Data',
 				handler: function() {
-					downloadSiteData(this.siteRecord)
+					SITE.downloadData(this.siteRecord)
 				},
 				scope: this
 			},{
@@ -369,144 +363,65 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	}
 });
 
-
-function loadWaterLevelTab(record) {
-	Ext.getCmp('ext-water-level-tab').body.mask('Loading...','x-mask-loading');
-	Ext.Ajax.request({
-		method: 'GET',
-		url: 'iddata?request=water_level',
-		params: {
-			siteNo: record.get('siteNo'),
-			agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
+var WATER_LEVEL_TAB = {
+	mask: function(){this.getBody().mask('Loading...','x-mask-loading');},
+	unmask: function(){this.getBody().unmask();},
+	get: function() {return Ext.getCmp('water-level-tab');},
+	getBody: function() {return this.get().body;}, 
+	store : new Ext.data.XmlStore({						
+		id: 'water-level-store',
+		record: 'TimeValuePair',
+		fields: [
+		 		{ name: 'time', mapping: 'time', type: 'date', dateFormat: 'c'},
+				{ name: 'value', mapping: 'value > Quantity > value'},
+//				{ name: 'method', mapping: 'method'},
+				{ name: 'unit', mapping: 'Quantity > uom@code'},
+				{ name: 'comment', mapping: 'comment'}
+		],
+		sortInfo: {
+			field: 'time',
+			direction: 'DESC'
 		},
-		
-		success: function(r, o) {
-			var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
-			rs = rs.replace(/<\/[a-zA-Z0-9]+:/g,'</');
-			//rs = rs.replace('wml2:value','wml2_value');
-			waterLevelStore.loadData(createXmlDoc(rs));
-			Ext.getCmp('ext-water-level-tab').body.unmask();
+		listeners: {
+			load: function(s,r,o) {
+				var data = [];
+				for (var i = 0; i < r.length; i++) {
+					data.push([r[i].get('time'), parseFloat(r[i].get('value')).toFixed(4)]);
+				}
+				Ext.getCmp('ext-flot').setData([{label: 'Depth to water in feet', data:data}]);
+				Ext.getCmp('ext-flot').setupGrid();
+				Ext.getCmp('ext-flot').draw();
+			}
 		}
-	});
+	}),
+	load: function(record) {
+		WATER_LEVEL_TAB.mask();
+		Ext.Ajax.request({
+			method: 'GET',
+			url: 'iddata?request=water_level',
+			params: {
+				siteNo: record.get('siteNo'),
+				agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
+			},
+			
+			success: function(r, o) {
+				var rs = removeNameSpaces(r.responseText);
+				WATER_LEVEL_TAB.store.loadData(DNH.createXmlDocFromString(rs));
+				WATER_LEVEL_TAB.unmask();
+			}
+		});
+	}
 }
 
 
-function loadWellLogTab(record) {
-	Ext.getCmp('well-log-tab').body.mask('Loading...','x-mask-loading');
-	Ext.Ajax.request({
-		method: 'GET',		
-		url: 'iddata?request=well_log',
-		params: {
-			siteNo: record.get('siteNo'), //siteNo: 425856089320601
-			agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
-		},
-		
-		success: function(r, o) {
-			Ext.getCmp('well-log-tab').body.unmask();
-			var rs = r.responseText.replace(/<[a-zA-Z0-9]+:/g,'<')
-			rs = rs.replace(/<\/[a-zA-Z0-9]+:/g,'</');
-			var x = createXmlDoc(rs);
-			
-			if (x.getElementsByTagName('pos').length == 0) {
-				Ext.getCmp('well-log-tab').body.innerHTML = '<h1>No Data Found</h1>';
-				return;
-			}
-			
-			var so = populateServiceObjectFromXML(x);
-			var graphicHTML = createWellLogGraphic(so);
-			
-			var t = new Ext.XTemplate(
-				'<tpl for=".">',
-					'<table>',
-						'<tr><td style="height:35px">Longitude: {[parseFloat(values.position.split(" ")[0]).toFixed(4)]}</td><td rowspan="6">' + graphicHTML + '</td></tr>',
-						'<tr><td style="height:35px">Latitude: {[parseFloat(values.position.split(" ")[1]).toFixed(4)]}</td></tr>',
-						'<tr><td style="height:35px">Elevation: {[(values.elevation * 1.0).toFixed(2)]} ft.</td></tr>',
-						'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 1.0).toFixed(2)]} ft.</td></tr>',
-//						'<tr><td style="height:35px">Elevation: {[(values.elevation * 3.2808399).toFixed(2)]} ft.</td></tr>',
-//						'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 3.2808399).toFixed(2)]} ft.</td></tr>',
-						'<tr><td style="height:35px">Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
-						'<tr><td>&nbsp;</td></tr>',
-					'</table>',
-					'<br/>',
-					'<table class="summary-table" border="1">',
-//						'<caption><strong>Lithology</strong></caption>',
-						'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th><th>Description</th></tr></thead>',
-						'<tbody>',
-							'<tpl for="logObjs">',
-								'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{contrConcept}</td><td>{description}</td></tr>',
-//								'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
-							'</tpl>',
-						'</tbody>',
-					'</table>',
-					'<br/>',
-					'<table class="summary-table" border="1">',
-						'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing Material</th></tr>',
-					'<tpl for="constrObjs">',
-					'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
-//					'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
-					'</tpl>',
-					'</table>',					
-				'</tpl>'
-			);
-			
-			t.overwrite(Ext.getCmp('well-log-tab').body, so);
-		}
-	});
-	
-	var populateServiceObjectFromXML = function(x /* xml document from createXmlDoc()*/){
-		var so = {
-				position: x.getElementsByTagName('pos')[0].firstChild.nodeValue,
-				elevation: x.getElementsByTagName('referenceElevation')[0].firstChild.nodeValue,
-				wellDepth: x.getElementsByTagName('principalValue')[0].firstChild.nodeValue,
-				onlineResource: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:href'),
-				onlineResourceTitle: x.getElementsByTagName('onlineResource')[0].getAttribute('xlink:title')
-			};
-			
-			var logEls = x.getElementsByTagName('logElement');
-			so.logObjs = [];
-			for (var i = 0; i < logEls.length; i++) {
-				try{
-					var coords = logEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ');
-					var f = coords[0];
-					var t = coords[1];
-					var desc = logEls[i].getElementsByTagName('description');
-					var controlledConcept = logEls[i].getElementsByTagName('name').nodeValue;
-					
-					so.logObjs.push({
-						intervalFrom: f,
-						intervalTo: t,
-						height: t - f,
-						contrConcept: controlledConcept,
-						description: (desc)?desc[0].firstChild.nodeValue : 'No Description'
-					});
-				} catch(err){
-					// Don't do anything
-				}
-			}
-			
-			var constrEls = x.getElementsByTagName('construction');
-			so.constrObjs = [];
-			for (var i = 0; i < constrEls.length; i++) {
-				try{
-					var coords = constrEls[i].getElementsByTagName('coordinates')[0].firstChild.nodeValue.split(' ');
-					var f = coords[0];
-					var t = coords[1];
-					var desc = constrEls[i].getElementsByTagName('value');
-					
-					so.constrObjs.push({
-						intervalFrom: f,
-						intervalTo: t,
-						height: t - f,
-						description: (desc)? desc[0].firstChild.nodeValue : 'No Description'
-					});
-				} catch(err){
-					// Don't do anything
-				}
-			}
-		return so;
-	};
-	
-	var createWellLogGraphic = function(so /* service object */){
+
+var WELL_LOG_TAB = {
+	mask: function(){this.getBody().mask('Loading...','x-mask-loading');},
+	unmask: function(){this.getBody().unmask();},
+	get: function() {return Ext.getCmp('well-log-tab');},
+	getBody: function() {return this.get().body;},
+	update: function(htmlStr) { this.get().update(htmlStr);},
+	createGraphic: function(so /* well log service object */){
 		var graphicHTML = '';
 		if (so.logObjs && so.logObjs.length > 0) {
 			
@@ -543,76 +458,127 @@ function loadWellLogTab(record) {
 			graphicHTML += '</table>';
 		}
 		return graphicHTML;
-	};
+	},
+	populateServiceObjectFromXML: function(x /* xml document from createXmlDocFromString()*/){
+		var so = {
+				position: DNH.extractValue(x, 'pos'),
+				elevation: DNH.extractValue(x,'referenceElevation'),
+				wellDepth: DNH.extractValue(x,'principalValue'),
+				onlineResource: DNH.extractValue(x,'onlineResource','xlink:href'),
+				onlineResourceTitle: DNH.extractValue(x,'onlineResource','xlink:title')
+			};
+			
+			var logEls = x.getElementsByTagName('logElement');
+			so.logObjs = [];
+			for (var i = 0; i < logEls.length; i++) {
+				try{
+					var coords = DNH.extractValue(logEls[i],'coordinates').split(' ');
+					var f = coords[0];
+					var t = coords[1];
+					var desc = logEls[i].getElementsByTagName('description');
+					var controlledConcept = logEls[i].getElementsByTagName('name').nodeValue;
+					
+					so.logObjs.push({
+						intervalFrom: f,
+						intervalTo: t,
+						height: t - f,
+						contrConcept: controlledConcept,
+						description: (desc)?desc[0].firstChild.nodeValue : 'No Description'
+					});
+				} catch(err){
+					// Don't do anything
+				}
+			}
+			
+			var constrEls = x.getElementsByTagName('construction');
+			so.constrObjs = [];
+			for (var i = 0; i < constrEls.length; i++) {
+				try{
+					var coords = DNH.extractValue(constrEls[i],'coordinates').split(' ');
+					var f = coords[0];
+					var t = coords[1];
+					var desc = constrEls[i].getElementsByTagName('value');
+					
+					so.constrObjs.push({
+						intervalFrom: f,
+						intervalTo: t,
+						height: t - f,
+						description: (desc)? desc[0].firstChild.nodeValue : 'No Description'
+					});
+				} catch(err){
+					// Don't do anything
+				}
+			}
+		return so;
+	},
+	onSuccess: function(r, o) {
+		try {
+			WELL_LOG_TAB.unmask();
+			var rs = removeNameSpaces(r.responseText);
+			var x = DNH.createXmlDocFromString(rs);
+			
+			if (DNH.isEmptyOrNull(x,'pos')) {
+				WELL_LOG_TAB.update('<h1>No Data Found. Service may be down or unavailable</h1>');
+				return;
+			}
+			
+			var so = WELL_LOG_TAB.populateServiceObjectFromXML(x);
+			so.graphicHTML = WELL_LOG_TAB.createGraphic(so);
+
+			wellLogTemplate.overwrite(WELL_LOG_TAB.getBody(), so);
+		} catch (err){
+			// TODO log this
+			WELL_LOG_TAB.update('<h1>Problem loading data</h1>');
+		}
+
+	},
+	load: function (record) {
+		WELL_LOG_TAB.mask();
+		Ext.Ajax.request({
+			method: 'GET',		
+			url: 'iddata?request=well_log',
+			params: {
+					siteNo: record.get('siteNo'), //siteNo: 425856089320601
+					agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
+				},
+			success: WELL_LOG_TAB.onSuccess
+		});
+	}
 }
-
-
-
-function downloadSiteData(siteRecord) {
-
-	var exportForm = document.getElementById('exportForm');
-	
-	//pop up a new window that displays progress of download
-	var downloadWindow = new Ext.Window({
-		height: 200,
-		width: 300,
-		resizable: false,
-		title: 'Downloading Site Data...',
-		modal: true,
-		layout: 'border',
-		closable: false,
-		items: [{
-			border: false,
-			region: 'center',
-			html: ''
-		}],
-		buttonAlign: 'center',
-		buttons: [{
-			text: 'Cancel',
-			handler: function() {
-				Ext.Msg.show({
-					title:'Warning',
-					msg: 'Cancel the download?',
-					buttons: Ext.Msg.YESNO,
-					fn: function(bid) {
-						if (bid == 'yes') {
-							downloadWindow.close();
-						}
-					},
-					icon: Ext.MessageBox.QUESTION
-				});
+var WATER_QUALITY_TAB = {
+		store: new Ext.data.XmlStore({
+			//url: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
+			proxy: new Ext.data.HttpProxy({
+				method: 'GET',
+				url: 'iddata'
+			}),
+			baseParams: {
+				request: 'water_quality'
 			},
-			scope: this
-		}]
-	});
-	
-	downloadWindow.show();
-	downloadWindow.body.mask('Please wait...','x-mask-loading');
-	
-	
-	//set src of donwloadIframe to begin download...
-	var sn = siteRecord.get('siteNo');
-	var ac = MEDIATOR.cleanAgencyCode(siteRecord.get('agency'));
-	var qwf = siteRecord.get('qwSnFlag');
-	var wlf = siteRecord.get('wlSnFlag');
-	var token = (new Date()).getTime();
-	
-	exportForm.siteNo.value = sn;
-	exportForm.agency_cd.value = ac;
-	exportForm.qwSnFlag.value = qwf;
-	exportForm.wlSnFlag.value = wlf;
-	exportForm.token.value = token;
-	
-	
-	var exportStatus = setInterval(function() {
-		var cookieValue = Ext.util.Cookies.get('exportToken');
-		if (cookieValue == token) {
-			Ext.util.Cookies.clear('exportToken');
-			downloadWindow.close();
-			clearInterval(exportStatus);
-		}	  
-	}, 1000);
-	
-	exportForm.submit();
+			record: 'Result',
+			sortInfo: {
+				field: 'ActivityStartDate',
+				direction: 'DESC'
+			},
+			fields: [
+			    { name: 'ActivityStartDate', mapping: 'date', xtype: 'datecolumn', format: 'Y-M-d'},
+			    { name: 'ActivityStartTime', mapping: 'time', xtype: 'datecolumn', format: 'H:i:s'},
+			    //{ name: 'ActivityMediaSubdivisionName', mapping: 'ActivityDescription > ActivityMediaSubdivisionName'},
+			    { name: 'TimeZoneCode', mapping: 'zone'},
+			    { name: 'CharacteristicName', mapping: 'ResultDescription > CharacteristicName'},
+			    { name: 'ResultSampleFractionText', mapping: 'ResultDescription > ResultSampleFractionText'},
+			    { name: 'ResultMeasureValue', mapping: 'ResultDescription > ResultMeasure > ResultMeasureValue'},
+			    { name: 'MeasureUnitCode', mapping: 'ResultDescription > ResultMeasure > MeasureUnitCode'},
+			    { name: 'ResultDetectionConditionText', mapping: 'ResultDescription > ResultDetectionConditionText'},
+			    { name: 'ResultValueTypeName', mapping: 'ResultDescription > ResultValueTypeName'},
+			    { name: 'USGSPCode', mapping: 'ResultDescription > USGSPCode'},
+			    { name: 'MethodName', mapping: 'ResultAnalyticalMethod > MethodName'}
+			]
+		})
+		//ActivityStartDate, ActivityStartTime, TimeZoneCode, CharacteristicName, ActivityMediaSubdivisionName, 
+		//ResultSampleFractionTest, ResultMeasureValue, ResultDetectionConditionText, MeasureUnitCode, 
+		//ResultValueTypeName, USGSPCode
+	}
 
-}
+
+

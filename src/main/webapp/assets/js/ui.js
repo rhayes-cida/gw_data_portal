@@ -114,7 +114,7 @@ Ext.onReady(function() {
 			toggleGroup: 'map-tool-buttons',
 			handler: function(b) {
 				if (!b.pressed) b.toggle();
-				map1.setMouseAction(identifyPoint);
+				map1.setMouseAction(IDENTIFY.find);
 				Ext.getCmp('cmp-map-area').setTitle('Click on map to identify a point of interest');
 			}
 		},{

@@ -27,7 +27,8 @@
 		<!-- application assets -->
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
 		<script type="text/javascript" src="assets/js/ui.js"></script>
-		<script type="text/javascript" src="assets/js/SiteIdSelector.js"></script>
+		<script type="text/javascript" src="assets/js/SiteIdSelectorPopup.js"></script>
+		<script type="text/javascript" src="assets/js/DocNavHelper.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
 		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script>
 		<link rel="stylesheet" href="assets/css/custom.css"/>
