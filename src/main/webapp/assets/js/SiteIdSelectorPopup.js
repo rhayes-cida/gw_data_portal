@@ -77,9 +77,9 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 				viewConfig: {forceFit: true},
 			    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 			    colModel: new Ext.grid.ColumnModel([
-	                { header: "Site Name", width: 250, dataIndex: 'siteName'},
-	                { header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'nationalAquiferName'},
-	                { header: "Agency", width: 100, sortable: true, dataIndex: 'agency'}	                
+					{ header: "Site Name", width: 250, dataIndex: 'siteName'},
+					{ header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'nationalAquiferName'},
+					{ header: "Agency", width: 100, sortable: true, dataIndex: 'agency'}	                
 	            ])
 			},
 			buttons: [{
@@ -92,10 +92,10 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 						(new SiteIdentifyWindow({siteRecord: siteRecord})).show();
 					} else {
 						Ext.Msg.show({
-						   title:'Error',
-						   msg: 'Click on a site in the grid, then click the "identify" button.',
-						   buttons: Ext.Msg.OK,
-						   icon: Ext.MessageBox.WARNING
+							title:'Error',
+							msg: 'Click on a site in the grid, then click the "identify" button.',
+							buttons: Ext.Msg.OK,
+							icon: Ext.MessageBox.WARNING
 						});
 					}
 				}
