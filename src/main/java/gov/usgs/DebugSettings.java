@@ -5,6 +5,6 @@ public class DebugSettings {
 
 	public static final String prodServerBase = "http://cida.usgs.gov";
 	public static final String localServerBase = "http://localhost:8280";
-	public static final String serverBase = localServerBase;
+	public static final String serverBase = prodServerBase;
 
 }
