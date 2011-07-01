@@ -18,9 +18,9 @@ var siteIdTpl = new Ext.XTemplate(
 			'</table>',
 			'</td></tr></table>',
 		'</div>',
-	'</tpl>'
+	'</tpl>',
+	{compiled: true}
 );
-siteIdTpl.compile();
 
 var wellLogTemplate = new Ext.XTemplate(
 		'<tpl for=".">',
@@ -35,30 +35,42 @@ var wellLogTemplate = new Ext.XTemplate(
 				'<tr><td>&nbsp;</td></tr>',
 			'</table>',
 			'<br/>',
-			'<table class="summary-table" border="1">',
-//					'<caption><strong>Lithology</strong></caption>',
-				'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th><th>Description</th></tr></thead>',
-				'<tbody>',
-					'<tpl for="logObjs">',
-						'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{contrConcept}</td><td>{description}</td></tr>',
+			// lithology table
+			'<tpl if="logObjs.length &gt; 0">',
+//				'<caption><strong>Lithology</strong></caption>',
+				'<table class="summary-table" border="1">',				
+					'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th><th>Description</th></tr></thead>',
+					'<tbody>',
+						'<tpl for="logObjs">',
+							'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{contrConcept}</td><td>{description}</td></tr>',
 //							'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
-					'</tpl>',
-				'</tbody>',
-			'</table>',
-			'<br/>',
-			'<table class="summary-table" border="1">',
-				'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing Material</th></tr>',
-			'<tpl for="constrObjs">',
-			'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
-//				'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
+						'</tpl>',
+					'</tbody>',
+				'</table>',
 			'</tpl>',
-			'</table>',					
-		'</tpl>'
+			'<tpl if="logObjs.length == 0">',
+				'<h1>Either lithology service is down or simply unavailable for this site.</h1>',
+			'</tpl>',
+			'<br/>',
+			// well construction table
+			'<tpl if="constrObjs.length &gt; 0">',
+				'<table class="summary-table" border="1">',
+					'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing Material</th></tr>',
+					'<tpl for="constrObjs">',
+						'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
+//						'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
+					'</tpl>',
+				'</table>',	
+			'</tpl>',
+			'<tpl if="constrObjs.length == 0">',
+				'<h1>Either well construction service is down or simply unavailable for this site.</h1>',
+			'</tpl>',
+		'</tpl>',
+		{compiled: true}
 	);
-wellLogTemplate.compile();
 
 var SITE = {
-	createName: function(siteName, agency, siteNo){ /*slightly worried that this won't get called in template */
+	createName: function(siteName, agency, siteNo){
 		if (siteName && siteName != 'null') return siteName;
 		return agency + '-' + siteNo;
 	},
