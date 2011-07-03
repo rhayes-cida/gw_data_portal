@@ -42,7 +42,10 @@ var wellLogTemplate = new Ext.XTemplate(
 					'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th><th>Description</th></tr></thead>',
 					'<tbody>',
 						'<tpl for="logObjs">',
-							'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{contrConcept}</td><td>{description}</td></tr>',
+							'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td>',
+							'<td>{[(values.intervalTo * 1.0).toFixed(2)]}</td>',
+							'<td>{contrConcept}</td>',
+							'<td>{description}</td></tr>',
 //							'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
 						'</tpl>',
 					'</tbody>',
@@ -280,13 +283,16 @@ var WELL_LOG_TAB = {
 					var f = coords[0];
 					var t = coords[1];
 					var desc = logEls[i].getElementsByTagName('description');
-					var controlledConcept = logEls[i].getElementsByTagName('name').nodeValue;
+					var controlledConcept = logEls[i].getElementsByTagName('ControlledConcept')[0];
+					var ccName = DNH.extractValue(controlledConcept, 'name');
+					//var cChild = controlledConcept.firstChild;
+					//var ccName = cChild.firstChild.nodeValue;
 					
 					so.logObjs.push({
 						intervalFrom: f,
 						intervalTo: t,
 						height: t - f,
-						contrConcept: controlledConcept,
+						contrConcept: ccName,
 						description: (desc)?desc[0].firstChild.nodeValue : 'No Description'
 					});
 				} catch(err){
