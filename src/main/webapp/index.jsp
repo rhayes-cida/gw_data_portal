@@ -91,7 +91,7 @@
 			</div>
 			
 			<h2 id="site-title">
-				United States Groundwater Data Portal
+				National Ground Water Monitoring Network Portal
 			</h2>
 		</div> <!--  // END HEADER -->
 		

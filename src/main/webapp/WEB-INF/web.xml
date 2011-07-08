@@ -1,30 +1,37 @@
 <?xml version = '1.0' encoding = 'windows-1252'?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+	version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
 
-<display-name>GW Data Portal Map {Owner: JRH, Coder: JRH}</display-name>
-<description></description>
+<display-name>NGWMN Map Client {Owner: NB, JL Coder: IK}</display-name>
+<description>Client Application of the NGWMN (formerly GWDP)</description>
 
 	<servlet>
+		<description>Proxy to forward requests to the Oracle MapViewer server</description>
 		<servlet-name>MVServlet</servlet-name>
 		<servlet-class>gov.usgs.MVServlet</servlet-class>
 	</servlet>
 
 	<servlet>
+		<description>Process IDENTIFY map click spatially</description>
 		<servlet-name>IdentifyServlet</servlet-name>
 		<servlet-class>gov.usgs.IdentifyServlet</servlet-class>
 	</servlet>
 	
 	<servlet>
+		<description>Process BOUNDING BOX action on map</description>
 	    <servlet-name>BBoxServlet</servlet-name>
 	    <servlet-class>gov.usgs.BBoxServlet</servlet-class>
 	</servlet>
 	
 	<servlet>
+		<description>Retrieve site summary data</description>
 	    <servlet-name>IdentifyDataProxy</servlet-name>
 	    <servlet-class>gov.usgs.IdentifyDataProxy</servlet-class>
 	</servlet>
 	
 	<servlet>
+		<description></description>
 	    <servlet-name>ExportServlet</servlet-name>
 	    <servlet-class>gov.usgs.ExportServlet</servlet-class>
 	</servlet>
@@ -59,7 +66,7 @@
   </session-config>
   
   
-  
+  <!-- 
    <security-constraint>
     <web-resource-collection>
         <web-resource-name>
@@ -73,12 +80,15 @@
         <role-name>gwdp</role-name>
     </auth-constraint>
   </security-constraint>
-  
+   -->
+  <!-- 
   <login-config>
       <auth-method>
-          FORM       <!-- BASIC, DIGEST, FORM, CLIENT-CERT -->
+          FORM        --><!-- BASIC, DIGEST, FORM, CLIENT-CERT -->
+          <!-- 
       </auth-method>
-      <form-login-config>  <!-- only useful for FORM -->
+      <form-login-config>   --><!-- only useful for FORM -->
+      <!-- 
           <form-login-page>
               /login.jsp
           </form-login-page>
@@ -91,5 +101,5 @@
   <security-role>
       <role-name>gwdp</role-name>
   </security-role>
-  
+   -->
 </web-app>
