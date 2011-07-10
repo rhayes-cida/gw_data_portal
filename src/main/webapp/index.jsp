@@ -7,7 +7,7 @@
 
 <html>
 	<head>
-		<title>United States Groundwater Data Portal</title>
+		<title>National Ground Water Monitoring Network Portal</title>
 
 		<!-- scrollable map assets -->
 		<script type="text/javascript" src="scrollable_map/JMap-header.js"></script>

@@ -7,7 +7,7 @@
 
 <html>
 	<head>
-		<title>United States Groundwater Data Portal Log In</title>
+		<title>National Ground Water Monitoring Network Portal Log In</title>
 	
 		<!--  extjs assets -->
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
@@ -86,7 +86,7 @@
 			</div>
 			
 			<h2 id="site-title">
-				United States Groundwater Data Portal Log In
+				National Ground Water Monitoring Network Portal Log In
 			</h2>
 		</div> <!--  // END HEADER -->
 		

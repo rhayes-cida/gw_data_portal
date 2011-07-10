@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<title>National Ground Water Monitoring Network Portal</title>
@@ -13,8 +12,20 @@
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 		<style>
-			p {margin: 15px;}
-			dl {magin: 10px;}
+			body {background-color: #dddddd;}
+			p {
+				margin: 15px; 
+				text-align:left;
+			}
+			dl {margin: 2px;}
+			dt {font-weight:bold}
+			dd {margin: 10px;}
+			#contentTable {
+				background-color: #ffffff;
+				padding: 10px
+			}
+			#links {margin-left: 20px;}
+			#inlineImage {text-align: center}
 		</style>
 	
 	</head>
@@ -69,16 +80,16 @@
 		
 		<div id="wrapper" style="width:100%" align="center">
 			<div id="content" style="background-color: transparent">
-				<h2>NGWMN Groundwater Data Portal</h2>
-				<table width="600">
+				<table width="800" id="contentTable">
 					<tr>
 						<td>
+							<h2>NGWMN Groundwater Data Portal</h2>
 							<p>
 								The data portal developed as part of the NGWMN pilot 
 								study can be accessed at the link below. 
 							</p>
 							
-							<a href="index.jsp">NGWMN Groundwater Data Portal</a>
+							<p><a href="index.jsp">NGWMN Groundwater Data Portal</a></p>
 							
 							<p>
 								The goal of the National Groundwater Monitoring Network (NGWMN) is to 
@@ -96,53 +107,53 @@
 								document for the NGWMN. The Pilot areas were the Mahomet-Teays aquifer 
 								in Illinois and Indiana, the Cambrian-Ordovician aquifer in southeastern 
 								Minnesota, and statewide aquifers in  Montana, New Jersey,  and Texas. 
-								<a href="#">Include link to synthesis report here when approved.</a> 
+								<!-- <a href="#">Include link to synthesis report here when approved.</a>  -->
 								The locations of the 5 pilots and the Principal aquifers included in 
 								them are shown on the map below followed by the logos of the 
 								agencies participating in the Pilot study.
 							</p>
 							
-							<div>
+							<div id="inlineImage">
 								<img src="assets/images/participatingStates.JPG">
-							</div>
 							
-							<table  border="0" style="text-align: center">
-								<tr>
-									<!-- These are the originals sizes, for reference id="contributors"
-									<td><img src="assets/images/logos/iepa_logo.jpg" alt="iepa logo" height="101" width="101"/></td>
-									<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt="ISWS logo" height="72" width="100"/></td>
-									<td><img src="assets/images/logos/indnrtitle.gif" alt="IN DNR logo" height="63" width="100"/></td>
-									<td><img src="assets/images/logos/mn_dnr_logo.gif" alt="MN DNR logo" height="30" width="100"/></td>
-									<td><img src="assets/images/logos/mpca7000.gif" alt="MPCA logo" height="158" width="100"/></td>
-									<td><img src="assets/images/logos/njgslogo.gif" alt="NJGS logo" height="139" width="100"/></td>
-									<td><img src="assets/images/logos/twdb.gif" alt="TWDB logo" height="64" width="100"/></td>
-									<td><img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="42" width="100"/></td>
-									<td><img src="assets/images/logos/MontanaBMG.jpg" alt="MBMG logo" height="64" width="100"/></td>
-				 					-->
-				 					
-									<td><img src="assets/images/logos/iepa_logo.jpg" alt="iepa logo" height="40" width="40"/></td>
-									<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt="ISWS logo" height="33" width="44"/></td>
-									<td><img src="assets/images/logos/indnrtitle.gif" alt="IN DNR logo" height="28" width="46"/></td>
-								</tr>
-								<tr>
-									<td><img src="assets/images/logos/mn_dnr_logo.gif" alt="MN DNR logo" height="18" width="60"/></td>
-									<td><img src="assets/images/logos/mpca7000.gif" alt="MPCA logo" height="48" width="27"/></td>
-									<td><img src="assets/images/logos/njgslogo.gif" alt="NJGS logo" height="44" width="32"/></td>
-								</tr>
-								<tr>
-									<td><img src="assets/images/logos/twdb.gif" alt="TWDB logo" height="32" width="48"/></td>
-									<td><img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="23" width="55"/></td>
-									<td><img src="assets/images/logos/MontanaBMG.jpg" alt="MBMG logo" height="30" width="48"/></td>
-								</tr>
-							</table>
+								<table  border="0" style="text-align: center">
+									<tr>
+										<!-- These are the originals sizes, for reference id="contributors"
+										<td><img src="assets/images/logos/iepa_logo.jpg" alt="iepa logo" height="101" width="101"/></td>
+										<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt="ISWS logo" height="72" width="100"/></td>
+										<td><img src="assets/images/logos/indnrtitle.gif" alt="IN DNR logo" height="63" width="100"/></td>
+										<td><img src="assets/images/logos/mn_dnr_logo.gif" alt="MN DNR logo" height="30" width="100"/></td>
+										<td><img src="assets/images/logos/mpca7000.gif" alt="MPCA logo" height="158" width="100"/></td>
+										<td><img src="assets/images/logos/njgslogo.gif" alt="NJGS logo" height="139" width="100"/></td>
+										<td><img src="assets/images/logos/twdb.gif" alt="TWDB logo" height="64" width="100"/></td>
+										<td><img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="42" width="100"/></td>
+										<td><img src="assets/images/logos/MontanaBMG.jpg" alt="MBMG logo" height="64" width="100"/></td>
+					 					-->
+					 					
+										<td><img src="assets/images/logos/iepa_logo.jpg" alt="iepa logo" height="40" width="40"/></td>
+										<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt="ISWS logo" height="33" width="44"/></td>
+										<td><img src="assets/images/logos/indnrtitle.gif" alt="IN DNR logo" height="28" width="46"/></td>
+									</tr>
+									<tr>
+										<td><img src="assets/images/logos/mn_dnr_logo.gif" alt="MN DNR logo" height="18" width="60"/></td>
+										<td><img src="assets/images/logos/mpca7000.gif" alt="MPCA logo" height="48" width="27"/></td>
+										<td><img src="assets/images/logos/njgslogo.gif" alt="NJGS logo" height="44" width="32"/></td>
+									</tr>
+									<tr>
+										<td><img src="assets/images/logos/twdb.gif" alt="TWDB logo" height="32" width="48"/></td>
+										<td><img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="23" width="55"/></td>
+										<td><img src="assets/images/logos/MontanaBMG.jpg" alt="MBMG logo" height="30" width="48"/></td>
+									</tr>
+								</table>
+							</div>
 							
 							<p>
 								A data portal was developed using data from the 5 pilots and included data 
 								contributed by 9 organizations. An important aspect of the Data Portal 
 								is that the Portal is not an aggregated database of data from all 
 								participants, but it is a gateway to the data as it is maintained and 
-								served by each participating organization.  <a href="">Include link to Portal 
-								report here, when approved.</a>
+								served by each participating organization.  <!-- <a href="">Include link to Portal 
+								report here, when approved.</a> -->
 							</p>
 							
 							<p>
@@ -165,8 +176,8 @@
 									Surveillance monitoring would be used in conjunction with 
 									Trend monitoring to periodically report on the overall 
 									water-level and water-quality conditions, or status, of 
-									the Nation’s ground-water resources. NGWMN surveillance 
-									monitoring can be thought of as a periodic “census” of ground-water 
+									the Nation's ground-water resources. NGWMN surveillance 
+									monitoring can be thought of as a periodic "census" of ground-water 
 									level and quality. An overall snapshot of ground-water conditions 
 									in an aquifer is obtained with Surveillance monitoring. The 
 									frequency of Surveillance monitoring generally is much less than 
@@ -186,9 +197,36 @@
 									Monitoring points located within unstressed portions of aquifers.
 								</dd>
 							</dl>
-
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h3>Links:</h3>
+							<table id="links">
+								<tr>
+									<td>ACWI  Link:</td>
+									<td><a href="http://acwi.gov/">http://acwi.gov/</a></td>
+								</tr>
+								<tr>
+									<td>SOGW link:</td>
+									<td><a href="http://acwi.gov/sogw/index.html">http://acwi.gov/sogw/index.html</a></td>
+								</tr>
+								<tr>
+									<td>Framework Document link</td>
+									<td><a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a></td>
+								</tr>
+								<tr>
+									<td>Synthesis report:</td>
+									<td>when complete</td>
+								</tr>
+								<tr>
+									<td>Data Portal Report:</td>
+									<td>when complete</td>
+								</tr>
+							</table>
+						
 							<div>
-								Disclaimer goes here?
+								<b><i>Disclaimer goes here?</i></b>
 							</div>
 						</td>
 					</tr>
