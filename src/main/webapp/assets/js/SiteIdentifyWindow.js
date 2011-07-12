@@ -10,16 +10,18 @@ var siteIdTpl = new Ext.XTemplate(
 				'<tr><th>Site Name</th><td>{[SITE.createName(values.siteName, values.agency, values.siteNo)]}</td></tr>',
 				'<tr><th>Site #</th><td>{siteNo}</td></tr>',
 				'<tr><th>Lat/Long(WGS84)</th><td>{[parseFloat(values.decLatVa).toFixed(4)]},{[parseFloat(values.decLongVa).toFixed(4)]}</td></tr>',
+				'<tr><th>Well Depth</th><td>{[SITE.formatWellDepth(values.wellDepth)]}</td></tr>',
 				'<tr><th>Local Aquifer Name</th><td>{localAquiferName}</td></tr>',
 				'<tr><th>National Aquifer Name</th><td>{nationalAquiferName}</td></tr>',
 				'<tr><th>Water Level Network</th><td>{wlWellType}</td></tr>',
 				'<tr><th>Water Quality Network</th><td>{qwWellType}</td></tr>',
-//				'<tr><th>Well Depth</th><td>{wellDepth} ft.</td></tr>',
 			'</table>',
 			'</td></tr></table>',
 		'</div>',
 	'</tpl>',
-	{compiled: true}
+	{ 
+		compiled: true
+	}
 );
 
 var wellLogTemplate = new Ext.XTemplate(
@@ -82,6 +84,10 @@ var SITE = {
 	loadingErrorMessage: "<h1>Problem loading data, or data for site not available</h1>",
 	connectionErrorMessage: "<h1>Could not connect to data service. Try again later.</h1>",
 	noDataMessage: "<h1>No Data Found. Service may be down or unavailable</h1>",
+	formatWellDepth: function(value){
+		if (value == null || value == 'null') return '';
+		return value + ' ft';
+	},
 	downloadData: function(siteRecord) {
 
 		var exportForm = document.getElementById('exportForm');
@@ -173,7 +179,6 @@ var WATER_LEVEL_TAB = {
 		fields: [
 		 		{ name: 'time', mapping: 'time', type: 'date', dateFormat: 'c'},
 				{ name: 'value', mapping: 'value > Quantity > value'},
-//				{ name: 'method', mapping: 'method'},
 				{ name: 'unit', mapping: 'Quantity > uom@code'},
 				{ name: 'comment', mapping: 'comment'}
 		],
@@ -244,7 +249,6 @@ var WELL_LOG_TAB = {
 				if (relHeight < 20) relHeight = 20;
 
 				if (i == 0) {
-					//graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 3.2808399).toFixed(2) + ' ft</span></td></tr>'; 
 					graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 1.0).toFixed(2) + ' ft</span></td></tr>'; 
 				}
 				
@@ -254,7 +258,6 @@ var WELL_LOG_TAB = {
 							'color: ' + fontColor[(i%fontColor.length)] + 
 						';">';
 
-				//graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 3.2808399).toFixed(2) + ' ft</span>' + 
 				graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 1.0).toFixed(2) + ' ft</span>' + 
 						'</div>' + 
 					'</td>' + 

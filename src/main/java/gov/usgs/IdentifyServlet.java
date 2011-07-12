@@ -20,21 +20,21 @@ import javax.sql.DataSource;
 public class IdentifyServlet extends HttpServlet {
 
 	@Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	  resp.setContentType("text/json");
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/json");
 
-	  ServletOutputStream os = resp.getOutputStream();
-	  StringBuffer siteJsonOut = new StringBuffer(" ");
+		ServletOutputStream os = resp.getOutputStream();
+		StringBuffer siteJsonOut = new StringBuffer(" ");
 		String params = req.getQueryString();
-		
 
-  	URL baseUrl = new URL("http",req.getServerName(),req.getServerPort(),req.getContextPath() + "/templates");
-		
-  	Statement statement = null;
+
+		URL baseUrl = new URL("http",req.getServerName(),req.getServerPort(),req.getContextPath() + "/templates");
+
+		Statement statement = null;
 		ResultSet rset = null;
 		Connection connection = null; 	
-		
-  	try {  		
+
+		try {  		
 			//fetch base query
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=identify");
 
@@ -44,9 +44,9 @@ public class IdentifyServlet extends HttpServlet {
 			statement = connection.createStatement();
 
 			rset = statement.executeQuery(query);
-//System.out.println(query);
+			//System.out.println(query);
 			while (rset.next()) {	  
-				
+
 
 				String jsonObj = "{" + 
 				"siteNo: '" + rset.getString("SITE_NO") + "'" + 
@@ -60,14 +60,15 @@ public class IdentifyServlet extends HttpServlet {
 				", agency: '" + rset.getString("AGENCY_CD") + "'" +
 				", qwSnFlag: '" + rset.getString("QW_SN_FLAG") + "'" +
 				", wlSnFlag: '" + rset.getString("WL_SN_FLAG") + "'" +
-				", wellDepth: '" + rset.getString("well_depth_va") + "'" +
+				", wellDepth: '" + rset.getString("WELL_DEPTH") + "'" + 
+				//", wellDepth: '" + rset.getString("well_depth_va") + "'" +
 				", logo: '" + rset.getString("LOGO") + "'" +
 				"},";
-				
+
 				siteJsonOut.append(jsonObj);
 
 			}
-	
+
 			statement.close();
 			statement = null;
 			rset.close();  
@@ -78,22 +79,22 @@ public class IdentifyServlet extends HttpServlet {
 			System.out.println("gw data portal map - identify servlet - query data retrieved failed");   
 			e.printStackTrace();
 		} finally {
-	    if (rset != null) {
-	      try { rset.close(); } catch (SQLException e1) { ; }
-	      rset = null;
-	    }
-	    if (statement != null) {
-	      try { statement.close(); } catch (SQLException e2) { ; }
-	      statement = null;
-	    }
-	    if (connection != null) {
-	      try { connection.close(); } catch (SQLException e3) { ; }
-	      connection = null;
-	    }
+			if (rset != null) {
+				try { rset.close(); } catch (SQLException e1) { ; }
+				rset = null;
+			}
+			if (statement != null) {
+				try { statement.close(); } catch (SQLException e2) { ; }
+				statement = null;
+			}
+			if (connection != null) {
+				try { connection.close(); } catch (SQLException e3) { ; }
+				connection = null;
+			}
 		}
-	    
-    os.print("{sites:[" + siteJsonOut.substring(0,siteJsonOut.length()-1) + "]}");
+
+		os.print("{sites:[" + siteJsonOut.substring(0,siteJsonOut.length()-1) + "]}");
 		os.flush();
-  }
+	}
 
 }
