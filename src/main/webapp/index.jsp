@@ -7,7 +7,7 @@
 
 <html>
 	<head>
-		<title>National Ground Water Monitoring Network Portal</title>
+		<title>National Ground Water Monitoring Network Data Portal (BETA)</title>
 
 		<!-- scrollable map assets -->
 		<script type="text/javascript" src="scrollable_map/JMap-header.js"></script>
@@ -75,6 +75,12 @@
 				</div>
 				
 				<div id="ccsa-area">
+				<!-- 
+					<h4 class="access-help">Top Level USGS Links</h4>
+		            <br /><a href="http://www.usgs.gov/" title="Link to main USGS page">USGS Home</a>
+		            <br /><a href="http://www.usgs.gov/ask/index.html" title="Link to main USGS contact page">Contact USGS</a>
+		            <br /><a href="http://search.usgs.gov/" title="Link to main USGS search (not publications search)">Search USGS</a>
+				 -->
 				</div>
 			</div><!-- End content -->
 				
@@ -91,7 +97,7 @@
 			</div>
 			
 			<h2 id="site-title">
-				National Ground Water Monitoring Network Portal
+				National Ground Water Monitoring Network Data Portal (BETA)
 			</h2>
 		</div> <!--  // END HEADER -->
 		
@@ -163,7 +169,14 @@
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="agency" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All Organization IDs</option>
-				<option title="Illinois Environmental Protection Agency"value="IL EPA">IL Envtl Protection Agency</option><option title="Indiana Department of Natural Resources"value="IN DNR">IN Dept. of Natural Resources</option><option title="Illinois State Water Survey"value="ISWS">IL State Water Survey</option><option title="Montana Bureau of Mines and Geology"value="MBMG">MT Bureau of Mines and Geology</option><option title="Minnesota Department of Natural Resources"value="MN DNR">MN Dept. of Natural Resources</option><option title="Minnesota Pollution Control Agency"value="MPCA">MN Pollution Control Agency</option><option title="Texas Water Development Board"value="TWDB">TX Water Development Board</option><option title="United States Geological Survey New Jersey / New Jersey Geological Survey"value="USGS NJ / NJGS">US Geo Survey NJ / NJ Geo Survey</option>
+				<option title="Illinois Environmental Protection Agency"value="IL EPA">IL Envtl Protection Agency</option>
+				<option title="Indiana Department of Natural Resources"value="IN DNR">IN Dept. of Natural Resources</option>
+				<option title="Illinois State Water Survey"value="ISWS">IL State Water Survey</option>
+				<option title="Montana Bureau of Mines and Geology"value="MBMG">MT Bureau of Mines and Geology</option>
+				<option title="Minnesota Department of Natural Resources"value="MN DNR">MN Dept. of Natural Resources</option>
+				<option title="Minnesota Pollution Control Agency"value="MPCA">MN Pollution Control Agency</option>
+				<option title="United States Geological Survey New Jersey / New Jersey Geological Survey"value="USGS NJ / NJGS">NJ Geological Survey</option>
+				<option title="Texas Water Development Board"value="TWDB">TX Water Development Board</option>
 			</select>
 		</div>
 
@@ -171,21 +184,42 @@
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All Water Quality Sub Networks</option>
-				<option title="Surveillance - Targeted"value="Surveillance - Targeted">Surveillance - Targeted</option><option title="Surveillance - Unstressed"value="Surveillance - Unstressed">Surveillance - Unstressed</option><option title="Trend - Targeted"value="Trend - Targeted">Trend - Targeted</option><option title="Trend - Unknown"value="Trend - Unknown">Trend - Unknown</option><option title="Trend - Unstressed"value="Trend - Unstressed">Trend - Unstressed</option>
+				<option title="Surveillance - Targeted"value="Surveillance - Targeted">Surveillance - Targeted</option>
+				<option title="Surveillance - Unstressed"value="Surveillance - Unstressed">Surveillance - Unstressed</option>
+				<option title="Trend - Targeted"value="Trend - Targeted">Trend - Targeted</option>
+				<option title="Trend - Unknown"value="Trend - Unknown">Trend - Unknown</option>
+				<option title="Trend - Unstressed"value="Trend - Unstressed">Trend - Unstressed</option>
 			</select>
 		</div>
 		<div id="wl-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All Water Level Sub Networks</option>
-				<option title="Surveillance - Targeted"value="Surveillance - Targeted">Surveillance - Targeted</option><option title="Surveillance - Unstressed"value="Surveillance - Unstressed">Surveillance - Unstressed</option><option title="Trend - Targeted"value="Trend - Targeted">Trend - Targeted</option><option title="Trend - Unstressed"value="Trend - Unstressed">Trend - Unstressed</option>
+				<option title="Surveillance - Targeted"value="Surveillance - Targeted">Surveillance - Targeted</option>
+				<option title="Surveillance - Unstressed"value="Surveillance - Unstressed">Surveillance - Unstressed</option>
+				<option title="Trend - Targeted"value="Trend - Targeted">Trend - Targeted</option>
+				<option title="Trend - Unstressed"value="Trend - Unstressed">Trend - Unstressed</option>
 			</select>
 		</div>
 		<div id="ntlAquifer-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="ntlAquifer" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All National Aquifers</option>
-				<option title="Alluvial aquifers"value="Alluvial aquifers">Alluvial aquifers</option><option title="Cambrian-Ordovician aquifer system"value="Cambrian-Ordovician aquifer system">Cambrian-Ordovician aquifer system</option><option title="Coastal lowlands aquifer system"value="Coastal lowlands aquifer system">Coastal lowlands aquifer system</option><option title="Early Mesozoic basin aquifers"value="Early Mesozoic basin aquifers">Early Mesozoic basin aquifers</option><option title="Edwards-Trinity aquifer system"value="Edwards-Trinity aquifer system">Edwards-Trinity aquifer system</option><option title="Lower Tertiary aquifers"value="Lower Tertiary aquifers">Lower Tertiary aquifers</option><option title="Northern Atlantic Coastal Plain aquifer system"value="Northern Atlantic Coastal Plain aquifer system">Northern Atlantic Coastal Plain aquifer system</option><option title="Northern Rocky Mountains Intermontane Basins aquifer systems"value="Northern Rocky Mountains Intermontane Basins aquifer systems">Northern Rocky Mountains Intermontane Basins aquifer systems</option><option title="Paleozoic aquifers"value="Paleozoic aquifers">Paleozoic aquifers</option><option title="Pecos River Basin alluvial aquifer"value="Pecos River Basin alluvial aquifer">Pecos River Basin alluvial aquifer</option><option title="Piedmont and Blue Ridge crystalline-rock aquifers"value="Piedmont and Blue Ridge crystalline-rock aquifers">Piedmont and Blue Ridge crystalline-rock aquifers</option><option title="Rio Grande aquifer system"value="Rio Grande aquifer system">Rio Grande aquifer system</option><option title="Sand and gravel aquifers (glaciated regions)"value="Sand and gravel aquifers (glaciated regions)">Sand and gravel aquifers (glaciated regions)</option><option title="Seymour aquifer"value="Seymour aquifer">Seymour aquifer</option><option title="Texas coastal uplands aquifer system"value="Texas coastal uplands aquifer system">Texas coastal uplands aquifer system</option><option title="Upper Cretaceous aquifers"value="Upper Cretaceous aquifers">Upper Cretaceous aquifers</option><option title="Valley and Ridge aquifers"value="Valley and Ridge aquifers">Valley and Ridge aquifers</option>
+				<option title="Alluvial aquifers"value="Alluvial aquifers">Alluvial aquifers</option>
+				<option title="Cambrian-Ordovician aquifer system"value="Cambrian-Ordovician aquifer system">Cambrian-Ordovician aquifer system</option>
+				<option title="Coastal lowlands aquifer system"value="Coastal lowlands aquifer system">Coastal lowlands aquifer system</option>
+				<option title="Early Mesozoic basin aquifers"value="Early Mesozoic basin aquifers">Early Mesozoic basin aquifers</option>
+				<option title="Edwards-Trinity aquifer system"value="Edwards-Trinity aquifer system">Edwards-Trinity aquifer system</option>
+				<option title="Lower Tertiary aquifers"value="Lower Tertiary aquifers">Lower Tertiary aquifers</option>
+				<option title="Northern Atlantic Coastal Plain aquifer system"value="Northern Atlantic Coastal Plain aquifer system">Northern Atlantic Coastal Plain aquifer system</option>
+				<option title="Northern Rocky Mountains Intermontane Basins aquifer systems"value="Northern Rocky Mountains Intermontane Basins aquifer systems">Northern Rocky Mountains Intermontane Basins aquifer systems</option>
+				<option title="Paleozoic aquifers"value="Paleozoic aquifers">Paleozoic aquifers</option><option title="Pecos River Basin alluvial aquifer"value="Pecos River Basin alluvial aquifer">Pecos River Basin alluvial aquifer</option>
+				<option title="Piedmont and Blue Ridge crystalline-rock aquifers"value="Piedmont and Blue Ridge crystalline-rock aquifers">Piedmont and Blue Ridge crystalline-rock aquifers</option><option title="Rio Grande aquifer system"value="Rio Grande aquifer system">Rio Grande aquifer system</option>
+				<option title="Sand and gravel aquifers (glaciated regions)"value="Sand and gravel aquifers (glaciated regions)">Sand and gravel aquifers (glaciated regions)</option>
+				<option title="Seymour aquifer"value="Seymour aquifer">Seymour aquifer</option>
+				<option title="Texas coastal uplands aquifer system"value="Texas coastal uplands aquifer system">Texas coastal uplands aquifer system</option>
+				<option title="Upper Cretaceous aquifers"value="Upper Cretaceous aquifers">Upper Cretaceous aquifers</option>
+				<option title="Valley and Ridge aquifers"value="Valley and Ridge aquifers">Valley and Ridge aquifers</option>
 			</select>
 		</div>
 
@@ -252,7 +286,7 @@
    					<p id="footer-page-url">URL: http://cida.usgs.gov/gw_data_portal/</p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
-						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>
+						<a href="mailto:gwdp_help@usgs.gov" title="Contact Email">webmaster</a>
 					</p>
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->

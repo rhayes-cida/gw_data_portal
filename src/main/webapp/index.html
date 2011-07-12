@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>National Ground Water Monitoring Network Portal</title>
+		<title>National Ground Water Monitoring Network Data Portal (BETA)</title>
 	
 		<!--  extjs assets -->
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
@@ -26,6 +26,18 @@
 			}
 			#links {margin-left: 20px;}
 			#inlineImage {text-align: center}
+			#appLink {
+				text-align: center;
+				align: center}
+			#horribleLongTitle {text-align: center}
+			#NGWMNDisclaimer {
+				align: center;
+				background-color: #eeeeff;
+				padding: 15px;
+				border-style: solid;
+				border-width: 2px;
+				border-color: #000000;
+			}
 		</style>
 	
 	</head>
@@ -72,7 +84,7 @@
 			</div>
 			
 			<h2 id="site-title">
-				National Ground Water Monitoring Network Portal
+				National Ground Water Monitoring Network Data Portal (BETA)
 			</h2>
 		</div> <!--  // END HEADER -->
 		
@@ -83,42 +95,40 @@
 				<table width="800" id="contentTable">
 					<tr>
 						<td>
-							<h2>NGWMN Groundwater Data Portal</h2>
+							<h1 id="horribleLongTitle">National Ground Water Monitoring Network Data 
+							Portal of the Federal Advisory Committee on Water Information 
+							Subcommittee on Ground Water
+							</h1>
 							<p>
-								The data portal developed as part of the NGWMN pilot 
-								study can be accessed at the link below. 
-							</p>
-							
-							<p><a href="index.jsp">NGWMN Groundwater Data Portal</a></p>
-							
-							<p>
-								The goal of the National Groundwater Monitoring Network (NGWMN) is to 
-								provide information needed for planning, management, and development 
-								of groundwater supplies. This will be accomplished by using data from 
-								local, state, and federal organizations that collect groundwater data. 
-								A <a href="http://acwi.gov/sogw/pubs/tr/index.html">framework document</a> 
-								was created to provide guidance to ensure that the data are comparable 
-								and can be included in a nationally consistent network.  The network will 
-								be based on the Principal Aquifers of the United States.
+								This page serves as a gateway to a pilot U.S. National Ground 
+								Water Monitoring Network (NGWMN) data portal developed as part 
+								of a NGWMN pilot study.  The Network Portal can be accessed 
+								<a href="index.jsp">here</a> or by clicking the image below.
 							</p>
 							
 							<p>
-								Five Pilots were selected to test the concepts outlined in the Framework 
-								document for the NGWMN. The Pilot areas were the Mahomet-Teays aquifer 
-								in Illinois and Indiana, the Cambrian-Ordovician aquifer in southeastern 
-								Minnesota, and statewide aquifers in  Montana, New Jersey,  and Texas. 
-								<!-- <a href="#">Include link to synthesis report here when approved.</a>  -->
-								The locations of the 5 pilots and the Principal aquifers included in 
-								them are shown on the map below followed by the logos of the 
-								agencies participating in the Pilot study.
+								Information about the NGWMN and the Pilot study, definitions 
+								of terms used in the portal follow, and links to related 
+								websites follow.
 							</p>
 							
 							<div id="inlineImage">
-								<img src="assets/images/participatingStates.JPG">
+								<a href="index.jsp"><img src="assets/images/screenshot.jpg" border="0"></a>
 							
-								<table  border="0" style="text-align: center">
-									<tr>
-										<!-- These are the originals sizes, for reference id="contributors"
+								<br/>
+									<img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="23" width="55"/>
+									<img src="assets/images/logos/ilstatewatersurvey.gif" alt="ISWS logo" height="33" width="44"/>
+									<img src="assets/images/logos/indnrtitle.gif" alt="IN DNR logo" height="28" width="46"/>
+								</br/>
+									<img src="assets/images/logos/twdb.gif" alt="TWDB logo" height="32" width="48"/>
+									<img src="assets/images/logos/mpca7000.gif" alt="MPCA logo" height="48" width="27"/>
+									<img src="assets/images/logos/njgslogo.gif" alt="NJGS logo" height="44" width="32"/>
+								<br/>
+									<img src="assets/images/logos/iepa_logo.jpg" alt="iepa logo" height="40" width="40"/>
+									<img src="assets/images/logos/mn_dnr_logo.gif" alt="MN DNR logo" height="18" width="60"/>
+									<img src="assets/images/logos/MontanaBMG.jpg" alt="MBMG logo" height="30" width="48"/>
+								
+									<!-- These are the originals sizes, for reference id="contributors"
 										<td><img src="assets/images/logos/iepa_logo.jpg" alt="iepa logo" height="101" width="101"/></td>
 										<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt="ISWS logo" height="72" width="100"/></td>
 										<td><img src="assets/images/logos/indnrtitle.gif" alt="IN DNR logo" height="63" width="100"/></td>
@@ -128,45 +138,109 @@
 										<td><img src="assets/images/logos/twdb.gif" alt="TWDB logo" height="64" width="100"/></td>
 										<td><img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="42" width="100"/></td>
 										<td><img src="assets/images/logos/MontanaBMG.jpg" alt="MBMG logo" height="64" width="100"/></td>
-					 					-->
-					 					
-										<td><img src="assets/images/logos/iepa_logo.jpg" alt="iepa logo" height="40" width="40"/></td>
-										<td><img src="assets/images/logos/ilstatewatersurvey.gif" alt="ISWS logo" height="33" width="44"/></td>
-										<td><img src="assets/images/logos/indnrtitle.gif" alt="IN DNR logo" height="28" width="46"/></td>
-									</tr>
-									<tr>
-										<td><img src="assets/images/logos/mn_dnr_logo.gif" alt="MN DNR logo" height="18" width="60"/></td>
-										<td><img src="assets/images/logos/mpca7000.gif" alt="MPCA logo" height="48" width="27"/></td>
-										<td><img src="assets/images/logos/njgslogo.gif" alt="NJGS logo" height="44" width="32"/></td>
-									</tr>
-									<tr>
-										<td><img src="assets/images/logos/twdb.gif" alt="TWDB logo" height="32" width="48"/></td>
-										<td><img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="23" width="55"/></td>
-										<td><img src="assets/images/logos/MontanaBMG.jpg" alt="MBMG logo" height="30" width="48"/></td>
-									</tr>
-								</table>
+					 				-->
+
 							</div>
 							
-							<p>
-								A data portal was developed using data from the 5 pilots and included data 
-								contributed by 9 organizations. An important aspect of the Data Portal 
-								is that the Portal is not an aggregated database of data from all 
-								participants, but it is a gateway to the data as it is maintained and 
-								served by each participating organization.  <!-- <a href="">Include link to Portal 
-								report here, when approved.</a> -->
+							<p id="appLink">
+							
+								<table width="500" id="NGWMNDisclaimer" align="center">
+									<tr>
+										<td>
+											<b>Disclaimer:</b> Please note that this is a beta version of the 
+											Pilot NGWMN Data Portal, which is still undergoing 
+											development and testing. Should you encounter any bugs, 
+											glitches, lack of functionality or other problems with the, 
+											please contact the site administrator immediately so they can 
+											rectify these accordingly. Your help in this regard is greatly 
+											appreciated. 
+											<br/>
+											<br/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											All information published herein is gathered from sources which 
+											are thought to be reliable, but the user should not assume that 
+											the information is official or final. The NGWMN Data Portal 
+											does not assume responsibility for errors, and all information 
+											is subject to change without notice.  
+										</td>
+									</tr>
+								</table>
 							</p>
 							
 							<p>
-								The data portal allows the user to select wells based on the Agency 
-								collecting the data, the Principal aquifer, and whether they are in 
-								various water-level or water-quality networks. For these networks, wells 
-								are categorized as either Trend or Surveillance, indicating monitoring 
-								frequency and Unstressed/Targeted, indicating conditions of the aquifer 
-								at the well. The definitions of these terms are given below:
+								The goal of the National Ground Water Monitoring Network (NGWMN) 
+								is to provide information needed for planning, management, and 
+								development of ground-water supplies to meet current and future 
+								water needs and ecosystem requirements. This will be accomplished 
+								by aggregating suitable ground-water data from local, state, and 
+								federal organizations. A consensus-based framework document 
+								(<a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a>) 
+								was developed to provide 
+								guidance to ensure that the data are comparable and can be included 
+								in a nationally consistent network.  The framework design focuses 
+								on providing information needed to assess the quantity of 
+								ground-water reserves as constrained by quality.  The scale of 
+								the network will focus on Principal and Major Aquifers of the 
+								United States. 
 							</p>
+							
+							<p>
+								Five Pilots tested the concepts outlined in the Framework document 
+								for the NGWMN. The Pilot areas were the Mahomet-Teays aquifer in 
+								<a href="http://acwi.gov/sogw/pubs/tr/pilot_results/IL-IN_NGWMN_Pilot_Final_Repor_.2011.pdf">Illinois and Indiana</a>, 
+								the Cambrian-Ordovician aquifer in southeastern 
+								<a href="http://acwi.gov/sogw/pubs/tr/pilot_results/MN NGWMNa_Pilot_Project_Final_Report_March_ 2011.pdf">Minnesota</a>, 
+								and statewide aquifers in 
+								<a href="http://acwi.gov/sogw/pubs/tr/pilot_results/Montana_NGWMN_Pilot_Study_2011-01-13.pdf">Montana</a>, 
+								<a href="http://acwi.gov/sogw/pubs/tr/pilot_results/New_Jersey/index.html">New Jersey</a>, 
+								and <a href="http://acwi.gov/sogw/pubs/tr/pilot_results/Texas/index.html">Texas</a>. 
+							</p>
+							
+							
+							<p>
+								A pilot Network portal was developed using data from the 5 pilots 
+								and included data contributed by 9 organizations. An important 
+								aspect of the Network portal is that the portal is not an 
+								aggregated database of data from all participants, but it is a 
+								gateway to the data as it is maintained and served by each 
+								participating organization.  Original data are retrieved from 
+								each data provider by the portal in real time.   The portal is 
+								capable of displaying water levels, well logs, and water quality 
+								in tabular or graphical formats and allows the user to bulk 
+								download all of the available data.
+							</p>
+							
+							
+							<p>
+								Users may select water-level and water-quality wells by 
+								subnetwork and based on the Agency collecting the data or 
+								the Principal aquifer. Most wells are classified into 
+								"Unstressed" or "Targeted:" subnetworks.  Within these 
+								subnetworks, wells are categorized as either Trend or 
+								Surveillance, based on the monitoring frequency. The 
+								definitions of these terms are given below:
+							</p>
+							
 							<dl>
+								<dt>Unstressed:</dt>
+								<dd>
+									Monitoring points located within unstressed portions of aquifers.
+								</dd>
+								<dt>Targeted:</dt>
+								<dd>
+									Monitoring points that provide data from aquifers that (1) 
+									are known to be heavily pumped, (2) have experienced substantial 
+									recharge-altering land-use changes, or (3) are located in areas 
+									with managed ground-water resources, are (4) known to have 
+									degraded water quality from  human activities, or (5) are in 
+									an area expected to soon be developed. 	
+								</dd>
 								<dt>Trend:</dt>
-								<dd>Wells that are generally monitored to determine changes over 
+								<dd>
+									Wells that are generally monitored to determine changes over 
 									time. The frequency of monitoring depends on the hydrologic 
 									conditions of the aquifer and can range from daily data to 
 									annual data.
@@ -177,25 +251,15 @@
 									Trend monitoring to periodically report on the overall 
 									water-level and water-quality conditions, or status, of 
 									the Nation's ground-water resources. NGWMN surveillance 
-									monitoring can be thought of as a periodic "census" of ground-water 
-									level and quality. An overall snapshot of ground-water conditions 
-									in an aquifer is obtained with Surveillance monitoring. The 
-									frequency of Surveillance monitoring generally is much less than 
-									Trend monitoring.
+									monitoring can be thought of as a periodic "census" 
+									of ground-water level and quality. An overall snapshot of 
+									ground-water conditions in an aquifer is obtained with 
+									Surveillance monitoring. The frequency of Surveillance 
+									monitoring generally is much less than Trend monitoring. 
 								</dd>
-								<dt>Targeted:</dt>
-								<dd>
-									Monitoring points that provide data from aquifers that (1) 
-									are known to be heavily pumped, (2) have experienced substantial 
-									recharge-altering land-use changes, or (3) are located in areas with 
-									managed ground-water resources, are (4) known to have degraded water 
-									quality from  human activities, or (5) are in an area expected  to 
-									soon be developed
-								</dd>
-								<dt>Unstressed:</dt>
-								<dd>
-									Monitoring points located within unstressed portions of aquifers.
-								</dd>
+								
+
+
 							</dl>
 						</td>
 					</tr>
@@ -215,6 +279,7 @@
 									<td>Framework Document link</td>
 									<td><a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a></td>
 								</tr>
+								<!-- 
 								<tr>
 									<td>Synthesis report:</td>
 									<td>when complete</td>
@@ -223,11 +288,9 @@
 									<td>Data Portal Report:</td>
 									<td>when complete</td>
 								</tr>
+								 -->
 							</table>
 						
-							<div>
-								<b><i>Disclaimer goes here?</i></b>
-							</div>
 						</td>
 					</tr>
 				
@@ -280,7 +343,7 @@
    					<p id="footer-page-url">URL: http://cida.usgs.gov/gw_data_portal/</p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
-						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>
+						<a href="mailto:gwdp_help@usgs.gov" title="Contact Email">webmaster</a>
 					</p>
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->

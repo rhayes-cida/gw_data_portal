@@ -181,7 +181,7 @@
    					<p id="footer-page-url">URL: http://cida.usgs.gov/gw_data_portal/</p>
 					<p id="footer-contact-info">
 						  Page Contact Information:
-						<a href="mailto:nlbooth@usgs.gov?subject=GW Data Portal" title="Contact Email">webmaster</a>
+						<a href="mailto:gwdp_help@usgs.gov" title="Contact Email">webmaster</a>
 					</p>
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->

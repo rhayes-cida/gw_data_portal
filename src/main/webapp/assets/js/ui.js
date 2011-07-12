@@ -65,11 +65,11 @@ Ext.onReady(function() {
 			}],
 			items: [{
 				xtype: 'fieldset',
-				title: 'Agency',
+				title: 'Agency Contributing Data',
 				contentEl: 'agency-div'
 			},{
 				xtype: 'fieldset',
-				title: 'National Aquifer Name',
+				title: 'U.S. Principal Aquifer Name',
 				contentEl: 'ntlAquifer-div'
 			},{
 				xtype: 'fieldset',
