@@ -4,6 +4,46 @@
 	<artifactId>gw_data_portal</artifactId>
 	<packaging>war</packaging>
 	<name>gw_data_portal</name>
+	<version>1.0.1-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cida.maven.url>http://igsarmewfsbbl.er.usgs.gov:8081/nexus</cida.maven.url>
+		<cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>CIDA Nexus</name>
+			<url>${cida.maven.url}/content/groups/public/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>plugin-nexus</id>
+			<name>CIDA Plugin repo</name>
+			<url>${cida.maven.url}/content/groups/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<scm>
+		<developerConnection>scm:svn:${cida.svn.url}/usgs/gw_data_portal_map/trunk</developerConnection>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>cida-releases</id>
+			<name>CIDA Releases</name>
+			<url>${cida.maven.url}/content/repositories/cida-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>cida-snapshots</id>
+			<name>CIDA Snapshots</name>
+			<url>${cida.maven.url}/content/repositories/cida-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -20,18 +60,39 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	<version>1.0.0</version>
+	
+	
 	<build>
 		<finalName>gw_data_portal</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<tagBase>${cida.svn.url}/usgs/gw_data_portal_map/tags</tagBase>
+				</configuration>
+			</plugin>
+			
 		</plugins>
-	</build>	
+	</build>
+	
 </project>
