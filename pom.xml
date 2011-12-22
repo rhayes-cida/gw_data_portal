@@ -8,9 +8,17 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cida.maven.url>http://igsarmewfsbbl.er.usgs.gov:8081/nexus</cida.maven.url>
+		<netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+		<build.scm.version>${buildNumber}</build.scm.version>
+		<cida.maven.url>http://internal.cida.usgs.gov/maven</cida.maven.url>
 		<cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
 	</properties>
+
+	<issueManagement>
+		<system>JIRA</system>
+		<!-- This needs to be corrected -->
+		<url>http://internal.cida.usgs.gov/jira/browse/GWDP</url>
+	</issueManagement>
 
 	<repositories>
 		<repository>
@@ -80,7 +88,18 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-
+					<archive>
+						<manifestEntries>
+							<Implementation-Build>${build.scm.version}</Implementation-Build>
+							<!-- The following are non-standard manifest entries. Tag names have been styled according to Manifest conventions -->
+							<BuildTime>${maven.build.timestamp}</BuildTime>
+							<Project-GroupId>${project.groupId}</Project-GroupId>
+							<Project-ArtifactId>${project.artifactId}</Project-ArtifactId>
+							<Project-Version>${project.version}</Project-Version>
+							<SCM-Url>${project.scm.developerConnection}</SCM-Url>
+							<IssueManagement-Url>${project.issueManagement.url}</IssueManagement-Url>
+						</manifestEntries>
+					</archive>
 				</configuration>
 			</plugin>
 			
@@ -89,6 +108,25 @@
 				<version>2.1</version>
 				<configuration>
 					<tagBase>${cida.svn.url}/usgs/gw_data_portal_map/tags</tagBase>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<revisionOnScmFailure>unknown</revisionOnScmFailure>					
 				</configuration>
 			</plugin>
 			
