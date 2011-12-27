@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MVServlet extends HttpServlet {
 
-	public static final String MAPPING_SERVER = DebugSettings.mvBase;
+	public static final String MAPPING_SERVER = DebugSettings.MAPPING_SERVER;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

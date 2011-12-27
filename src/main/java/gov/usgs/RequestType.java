@@ -8,7 +8,7 @@ public enum RequestType {
 
 
 
-	public static final String serverBase = DebugSettings.serverBase; // used to switch between local and prod development
+	public static final String serverBase = DebugSettings.SERVER_BASE; // used to switch between local and prod development
 	public static final String mediatorPath = "/cocoon/gin/gwdp/agency/";
 
 	protected final String path;
