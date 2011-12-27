@@ -65,6 +65,7 @@
  		<session-timeout>30</session-timeout>
  	</session-config>
  
+ <!-- 
   	<env-entry>
 		<description>GWDP Portal server</description>
 		<env-entry-name>GWDP_Portal/baseServer</env-entry-name>
@@ -77,7 +78,7 @@
 		<env-entry-type>java.lang.String</env-entry-type>
 		<env-entry-value>http://maptrek.er.usgs.gov/mapviewer_11/omserver</env-entry-value>
 	</env-entry>
-
+ -->
   <!-- 
 	<security-constraint>
 		<web-resource-collection>
