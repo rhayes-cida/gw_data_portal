@@ -19,6 +19,8 @@ import javax.sql.DataSource;
 
 public class IdentifyServlet extends HttpServlet {
 
+	public static final String GWP_DATASOURCE = "java:comp/env/jdbc/gwDataPortalUserDS";
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/json");
@@ -39,7 +41,7 @@ public class IdentifyServlet extends HttpServlet {
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=identify");
 
 			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
+			DataSource ds = (DataSource) ctx.lookup(GWP_DATASOURCE);
 			connection = ds.getConnection();
 			statement = connection.createStatement();
 

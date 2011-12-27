@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MVServlet extends HttpServlet {
 
+	public static final String MAPPING_SERVER = DebugSettings.mvBase;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("image/png");   
@@ -28,12 +30,12 @@ public class MVServlet extends HttpServlet {
 			mapreq =  URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_map_request.jsp;jsessionid=" + req.getSession().getId(), params + "&query=" + query + "&requestId=map");      
 			//System.out.println(mapreq.replaceAll(">", ">\n"));	
 			if (DebugSettings.isTraceSet) {
-				System.out.println("requesting maptile[" + mapreq + "] from http://maptrek.er.usgs.gov/mapviewer_11/omserver"  );
+				System.out.println("requesting maptile[" + mapreq + "] from " + MAPPING_SERVER  );
 			}
 
-			//String errorResponse = URLUtil.getResponseAsStringFromURL("http://maptrek.er.usgs.gov/mapviewer_11/omserver","");
+			//String errorResponse = URLUtil.getResponseAsStringFromURL(MAPPING_SERVER,"");
 			//POST xml request to mapviewer server and return byte stream (image)
-			URLUtil.writeBytesToOutputStream("http://maptrek.er.usgs.gov/mapviewer_11/omserver", "xml_request=" + mapreq, resp.getOutputStream());
+			URLUtil.writeBytesToOutputStream(MAPPING_SERVER, "xml_request=" + mapreq, resp.getOutputStream());
 		} catch (Exception e) {
 			System.out.println("Error retrieving tile: " + e.getMessage()); //nothing
 		}
