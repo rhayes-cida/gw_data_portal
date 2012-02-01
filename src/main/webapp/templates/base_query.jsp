@@ -162,8 +162,27 @@ SELECT
 	gp.SITE_NAME, 
 	trunc(gp.DEC_LAT_VA,3) DEC_LAT_VA,	
 	trunc(gp.DEC_LONG_VA,3) DEC_LONG_VA,
-	gp.QW_WELL_TYPE_US_FLAG QW_WELL_TYPE,
-	gp.WL_WELL_TYPE_US_FLAG WL_WELL_TYPE,
+	
+	decode(QW_WELL_TYPE, 	'1', 	'Surveillance',
+							'2', 	'Trend',
+							'3',	'Special',
+							'999',	'Unknown'
+	) || ' - ' ||
+	decode(QW_WELL_CHARS, 	'1', 	'Background',
+							'2', 	'Suspected / Anticipated Changes',
+							'3',	'Known Changes',
+							'999',	'Unknown'
+	) as QW_WELL_TYPE,
+	decode(WL_WELL_TYPE, 	'1', 	'Surveillance', 
+							'2', 	'Trend', 
+							'3',	'Special', 
+							'999',	'Unknown' 
+	) || ' - ' ||
+	decode(WL_WELL_CHARS, 	'1', 	'Background',
+							'2', 	'Suspected / Anticipated Changes',
+							'3',	'Known Changes',
+							'999',	'Unknown'
+	) as WL_WELL_TYPE,
 	gp.WELL_DEPTH,
 	gp.NAT_AQFR_DESC,
 	gp.AGENCY_CD,
@@ -171,7 +190,15 @@ SELECT
 	gp.QW_SN_FLAG,
 	gp.local_aquifer_name,
 	'' well_depth_va,
-	decode(gp.AGENCY_CD,'IL EPA', 'iepa_logo.jpg', 'IN DNR','indnrtitle.gif','ISWS','ilstatewatersurvey.gif','MBMG','MontanaBMG.jpg','MN DNR','mn_dnr_logo.gif','MPCA','mpca7000.gif','TWDB','twdb.gif','USGS NJ / NJGS','njgslogo.gif','USGS_logo.png') LOGO    
+	decode(gp.AGENCY_CD,'IL EPA', 'iepa_logo.jpg', 'IN DNR',
+								'indnrtitle.gif','ISWS',
+								'ilstatewatersurvey.gif',
+								'MBMG','MontanaBMG.jpg',
+								'MN DNR','mn_dnr_logo.gif',
+								'MPCA','mpca7000.gif',
+								'TWDB','twdb.gif',
+								'USGS NJ / NJGS',
+								'njgslogo.gif','USGS_logo.png') LOGO    
 FROM 
 		gw_data_portal.well_registry gp,
 	(
