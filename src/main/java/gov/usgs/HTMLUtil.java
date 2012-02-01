@@ -8,6 +8,12 @@ import java.sql.Statement;
 import javax.servlet.jsp.JspWriter;
 
 
+/**
+ * Perform SQL query to populate HTML dropdowns
+ * 
+ * @author ilinkuo
+ *
+ */
 public class HTMLUtil {
 
 	/*
@@ -22,12 +28,58 @@ public class HTMLUtil {
 	}
 	
 	public static void getQWWellTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE QW_WELL_TYPE_US_FLAG Value, QW_WELL_TYPE_US_FLAG Display, QW_WELL_TYPE_US_FLAG title FROM gw_data_portal.WELL_REGISTRY WHERE qw_well_type <> 'None' ORDER BY 1";
+		String sql = "SELECT UNIQUE QW_WELL_TYPE || '-' || QW_WELL_CHARS as Value, " +
+				"	decode(QW_WELL_TYPE, 	'1', 	'Surveillance'," +
+				"							'2', 	'Trend'," +
+				"							'3',	'Special'," +
+				"							'999',	'Unknown'" +
+				"	) || ' - ' ||" +
+				"	decode(QW_WELL_CHARS, 	'1', 	'Background'," +
+				"							'2', 	'Suspected / Anticipated Changes'," +
+				"							'3',	'Known Changes'," +
+				"							'999',	'Unknown'" +
+				"	) as Display," +
+				"	decode(QW_WELL_TYPE, 	'1', 	'Surveillance'," +
+				"							'2', 	'Trend'," +
+				"							'3',	'Special'," +
+				"							'999',	'Unknown'" +
+				"	) || ' - ' ||" +
+				"	decode(QW_WELL_CHARS, 	'1', 	'Background'," +
+				"							'2', 	'Suspected / Anticipated Changes'," +
+				"							'3',	'Known Changes'," +
+				"							'999',	'Unknown'" +
+				"	) as title " +
+				"					FROM gw_data_portal.WELL_REGISTRY " +
+				"					WHERE wl_well_type <> '999' " +
+				"					ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 	
 	public static void getWLWellTypeList(JspWriter out, Connection connection) {
-		String sql = "SELECT UNIQUE WL_WELL_TYPE_US_FLAG Value, WL_WELL_TYPE_US_FLAG Display, WL_WELL_TYPE_US_FLAG title FROM gw_data_portal.WELL_REGISTRY WHERE wl_well_type <> 'None' ORDER BY 1";
+		String sql = "SELECT UNIQUE WL_WELL_TYPE || '-' || WL_WELL_CHARS as Value, " +
+				"	decode(WL_WELL_TYPE, 	'1', 	'Surveillance'," +
+				"							'2', 	'Trend'," +
+				"							'3',	'Special'," +
+				"							'999',	'Unknown'" +
+				"	) || ' - ' ||" +
+				"	decode(WL_WELL_CHARS, 	'1', 	'Background'," +
+				"							'2', 	'Suspected / Anticipated Changes'," +
+				"							'3',	'Known Changes'," +
+				"							'999',	'Unknown'" +
+				"	) as Display," +
+				"	decode(WL_WELL_TYPE, 	'1', 	'Surveillance'," +
+				"							'2', 	'Trend'," +
+				"							'3',	'Special'," +
+				"							'999',	'Unknown'" +
+				"	) || ' - ' ||" +
+				"	decode(WL_WELL_CHARS, 	'1', 	'Background'," +
+				"							'2', 	'Suspected / Anticipated Changes'," +
+				"							'3',	'Known Changes'," +
+				"							'999',	'Unknown'" +
+				"	) as title " +
+				"					FROM gw_data_portal.WELL_REGISTRY " +
+				"					WHERE wl_well_type <> '999' " +
+				"					ORDER BY 1";
 		runQuery(sql, out, connection);
 	}
 
@@ -44,8 +96,11 @@ public class HTMLUtil {
 		try {
 			statement = connection.createStatement();
 			rset = statement.executeQuery(sql);
+			//System.out.println(sql);
 			while (rset.next()) {
-				out.write("<option title=\"" + rset.getString("title") + "\"value=\"" + rset.getString("value") + "\">" + rset.getString("display") + "</option>");
+				String option = "<option title=\"" + rset.getString("title") + "\"value=\"" + rset.getString("value") + "\">" + rset.getString("display") + "</option>";
+				out.write(option);
+				//System.out.println(option);
 			}
 			rset.close();  
 			rset = null;

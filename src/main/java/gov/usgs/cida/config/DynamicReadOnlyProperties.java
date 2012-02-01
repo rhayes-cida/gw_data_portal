@@ -350,7 +350,11 @@ public class DynamicReadOnlyProperties extends Properties {
 				}
 			}
 		} catch (NamingException e){
-			System.err.println("[ERROR] unable to get bindings for " + fullContextName);
+			// This is be expected behavior for tomcat's jndi implementation, but it's not clear why
+			// What about other jndi implementation?
+			if (!"java:/comp".equals(fullContextName)) { 
+				System.err.println("[ERROR] unable to get bindings for " + fullContextName);
+			}
 		}
 		return result;
 	}

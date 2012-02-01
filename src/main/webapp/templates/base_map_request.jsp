@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <map_request 
-             datasource="gw_data_portal_user" 
+             datasource="GW_DATA_PORTAL_USER_DEV" 
 			 srid="3785" 
              width="<%=request.getParameter("width")%>" 
              height="<%=request.getParameter("height")%>" 
@@ -15,10 +15,11 @@
         spatial_column="geom" 
         render_style="M.WELL" 
         jdbc_srid="3785" 
-        datasource="gw_data_portal_user" 
+        datasource="GW_DATA_PORTAL_USER_DEV" 
         asis="true">
         <%=request.getParameter("query")%>
       </jdbc_query>
     </theme>
   </themes>
 </map_request>
+<!-- datasource="gw_data_portal_user"  -->

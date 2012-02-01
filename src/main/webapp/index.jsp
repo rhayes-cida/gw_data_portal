@@ -184,21 +184,39 @@
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All Water Quality Sub Networks</option>
+				<option title="Surveillance - Background"value="1-1">Surveillance - Background</option>
+				<option title="Surveillance - Known Changes"value="1-3">Surveillance - Known Changes</option>
+				<option title="Trend - Background"value="2-1">Trend - Background</option>
+				<option title="Trend - Known Changes"value="2-3">Trend - Known Changes</option>
+				<option title="Unknown - Background"value="999-1">Unknown - Background</option>
+				<option title="Unknown - Unknown"value="999-999">Unknown - Unknown</option>
+				
+				<!--
+				<option value="" selected="selected">All Water Quality Sub Networks</option>
 				<option title="Surveillance - Targeted"value="Surveillance - Targeted">Surveillance - Targeted</option>
 				<option title="Surveillance - Unstressed"value="Surveillance - Unstressed">Surveillance - Unstressed</option>
 				<option title="Trend - Targeted"value="Trend - Targeted">Trend - Targeted</option>
 				<option title="Trend - Unknown"value="Trend - Unknown">Trend - Unknown</option>
 				<option title="Trend - Unstressed"value="Trend - Unstressed">Trend - Unstressed</option>
+				-->
 			</select>
 		</div>
 		<div id="wl-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
 				<option value="" selected="selected">All Water Level Sub Networks</option>
+				<option title="Surveillance - Background"value="1-1">Surveillance - Background</option>
+				<option title="Surveillance - Known Changes"value="1-3">Surveillance - Known Changes</option>
+				<option title="Trend - Background"value="2-1">Trend - Background</option>
+				<option title="Trend - Known Changes"value="2-3">Trend - Known Changes</option>
+								
+				<!--
+				<option value="" selected="selected">All Water Level Sub Networks</option>
 				<option title="Surveillance - Targeted"value="Surveillance - Targeted">Surveillance - Targeted</option>
 				<option title="Surveillance - Unstressed"value="Surveillance - Unstressed">Surveillance - Unstressed</option>
 				<option title="Trend - Targeted"value="Trend - Targeted">Trend - Targeted</option>
 				<option title="Trend - Unstressed"value="Trend - Unstressed">Trend - Unstressed</option>
+				-->
 			</select>
 		</div>
 		<div id="ntlAquifer-div" class="x-hidden">

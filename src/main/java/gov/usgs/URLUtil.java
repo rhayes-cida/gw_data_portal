@@ -21,7 +21,7 @@ public class URLUtil {
 	//USE THIS CALL WHEN GETTING A BASE QUERY
 	public static String getResponseAsStringFromURL(String urlString, String params) throws Exception {
 		DataInputStream input = null;
-		StringBuffer page = new StringBuffer();
+		StringBuilder page = new StringBuilder();
 
 		String returnString = "";
 
@@ -37,6 +37,7 @@ public class URLUtil {
 
 			input.close();
 			returnString = page.toString();
+			System.out.println("return string: " + returnString);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Url: " + urlString + "?" + params);

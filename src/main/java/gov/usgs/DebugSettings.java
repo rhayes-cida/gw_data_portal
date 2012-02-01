@@ -13,6 +13,7 @@ public class DebugSettings {
 	/**
 	 * Usually, choice of http://cida.usgs.gov and http://localhost:8090. It has to be
 	 * publicly visible to the js front end
+	 * 
 	 */
 	public static final String MAPPING_SERVER = props.getProperty("java:/comp/env/GWDP_Portal/mappingServer");
 	public static final String SERVER_BASE = props.getProperty("java:/comp/env/GWDP_Portal/baseServer");	

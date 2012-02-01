@@ -1,11 +1,40 @@
+<%@page import="java.util.*"%>
+
+<%!
+	// Splits into pairs using , as pair delimiter, - as within-pair delimiter
+	public List<String[]> splitParam(String param){
+		List<String[]> result = new ArrayList<String[]>();
+		if (param != null && !param.isEmpty()){
+			String[] params = param.split(",");
+			for (String pair: params){
+				if (!pair.isEmpty()){
+					String[] parts =  pair.split("-");
+					result.add(parts);
+				}
+			}
+		}
+		return result;
+	}
+	
+	public String removeSingleQuotes(String value){
+		if (value != null && !value.isEmpty()){
+			value = value.replaceAll("'", "");
+		}
+		return value;
+	}
+%>
+
 <%
+	// removeSingleQuotes() must be called on those multi-parameters processed by getUrlParamStringFromPicklist() from ui.js
 	String queryId = request.getParameter("queryId");
 	String agency = request.getParameter("agency");
 	String qwSnFlag = request.getParameter("qwSnFlag");
-	String qwWellType = request.getParameter("qwWellType");
+	String qwWellParam = removeSingleQuotes(request.getParameter("qwWellType"));
 	String wlSnFlag = request.getParameter("wlSnFlag");
-	String wlWellType = request.getParameter("wlWellType");
+	String wlWellParam = removeSingleQuotes(request.getParameter("wlWellType"));
+	// ntlAquiferName does not get removeSingleQuotes because it's inserted directly into an IN clause
 	String ntlAquiferName = request.getParameter("ntlAquiferName");
+	String WELL_CLAUSE = "( QW_WELL_TYPE = '%s' AND QW_WELL_CHARS = '%s' ) ";
 %>
 <% if ("map".equals(queryId)) {
 	String bbox = request.getParameter("BBOX");
@@ -14,7 +43,47 @@ SELECT
 	gp.geom_3785 GEOM 
 FROM 
 	gw_data_portal.well_registry gp,
-	(<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %> SELECT '-1' my_siteid from DUAL <% } else { %> <% if (!"".equals(qwSnFlag)) { %> SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = 'Yes' <% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %> <% } %> <% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %> <% if (!"".equals(wlSnFlag)) { %> SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = 'Yes' <% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %><% } %><% } %>) inner 
+	(<% if ("".equals(qwSnFlag) && "".equals(wlSnFlag)) { %> 
+		SELECT '-1' my_siteid from DUAL 
+	<% } else { %> 
+		<% if (!"".equals(qwSnFlag)) { %> 
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = '1' 
+			<% if (!"".equals(qwWellParam)) { %> 
+				AND (
+					<% 
+						List<String> clauses = new ArrayList<String>();
+						for (String[] pair: splitParam(qwWellParam)) {
+							clauses.add("( QW_WELL_TYPE = '" + pair[0] + "' AND QW_WELL_CHARS = '" + pair[1] + "' )");
+						}
+						for (int i=0; i<clauses.size(); i++) {
+							if (i != 0) out.println(" OR ");
+							out.println(clauses.get(i));
+						}
+					%>
+				)
+			<% } %> 
+		<% } %> 
+		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> 
+			UNION 
+		<% } %> 
+		<% if (!"".equals(wlSnFlag)) { %> 
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = '1' 
+			<% if (!"".equals(wlWellParam)) { %> 
+				AND (
+					<% 
+						List<String> clauses = new ArrayList<String>();
+						for (String[] pair: splitParam(wlWellParam)) {
+							clauses.add("( WL_WELL_TYPE = '" + pair[0] + "' AND WL_WELL_CHARS = '" + pair[1] + "' )");
+						}
+						for (int i=0; i<clauses.size(); i++) {
+							if (i != 0) out.println(" OR ");
+							out.println(clauses.get(i));
+						}
+					%>
+				)
+			<% } %>
+		<% } %>
+	<% } %>) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
 	gp.display_flag = 'Y' AND 
@@ -43,13 +112,39 @@ FROM
 		SELECT '-1' my_siteid from DUAL 
 	<% } else { %>
 		<% if (!"".equals(qwSnFlag)) { %>
-			SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = 'Yes' 
-			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = '1' 
+			<% if (!"".equals(qwWellParam)) { %> 
+				AND (
+					<% 
+						List<String> clauses = new ArrayList<String>();
+						for (String[] pair: splitParam(qwWellParam)) {
+							clauses.add(String.format(WELL_CLAUSE, pair[0], pair[1]));
+						}
+						for (int i=0; i<clauses.size(); i++) {
+							if (i != 0) out.println(" OR ");
+							out.println(clauses.get(i));
+						}
+					%>
+				)
+			<% } %>
 		<% } %>
 		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
 		<% if (!"".equals(wlSnFlag)) { %>
-			SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = 'Yes' 
-			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = '1' 
+			<% if (!"".equals(wlWellParam)) { %> 
+				AND (
+					<% 
+						List<String> clauses = new ArrayList<String>();
+						for (String[] pair: splitParam(wlWellParam)) {
+							clauses.add("( WL_WELL_TYPE = '" + pair[0] + "' AND WL_WELL_CHARS = '" + pair[1] + "' )");
+						}
+						for (int i=0; i<clauses.size(); i++) {
+							if (i != 0) out.println(" OR ");
+							out.println(clauses.get(i));
+						}
+					%>
+				)
+			<% } %>			
 		<% } %>
 	<% } %>
 	) inner 
@@ -58,7 +153,7 @@ WHERE
 	gp.display_flag = 'Y' 
 	<% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
 	<% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
-<% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
+
 <%} else if ("identify".equals(queryId)) {
 	String idBBox = request.getParameter("idBBox");
 %>
@@ -84,13 +179,40 @@ FROM
 		SELECT '-1' my_siteid from DUAL 
 	<% } else { %>
 		<% if (!"".equals(qwSnFlag)) { %>
-			SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = 'Yes' 
-			<% if (!"".equals(qwWellType)) { %> AND qw_well_type_US_FLAG IN (<%= qwWellType %>) <% } %>
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = '1' 
+			<% if (!"".equals(qwWellParam)) { %> 
+				AND (
+					<% 
+						List<String> clauses = new ArrayList<String>();
+						for (String[] pair: splitParam(qwWellParam)) {
+							System.err.println(pair[0]);
+							clauses.add(" ( QW_WELL_TYPE = '" + pair[0] + "' AND QW_WELL_CHARS = '" + pair[1] + "' ) ");
+						}
+						for (int i=0; i<clauses.size(); i++) {
+							if (i != 0) out.println(" OR ");
+							out.println(clauses.get(i));
+						}
+					%>
+				)
+			<% } %>
 		<% } %>
 		<% if (!"".equals(wlSnFlag) && !"".equals(qwSnFlag)) { %> UNION <% } %>
 		<% if (!"".equals(wlSnFlag)) { %>
-			SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = 'Yes' 
-			<% if (!"".equals(wlWellType)) { %> AND wl_well_type_US_FLAG IN (<%= wlWellType %>) <% } %>
+			SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = '1'
+			<% if (!"".equals(wlWellParam)) { %> 
+				AND (
+					<% 
+						List<String> clauses = new ArrayList<String>();
+						for (String[] pair: splitParam(wlWellParam)) {
+							clauses.add("( WL_WELL_TYPE = '" + pair[0] + "' AND WL_WELL_CHARS = '" + pair[1] + "' )");
+						}
+						for (int i=0; i<clauses.size(); i++) {
+							if (i != 0) out.println(" OR ");
+							out.println(clauses.get(i));
+						}
+					%>
+				)
+			<% } %>		
 		<% } %>
 	<% } %>
 	) inner 
@@ -98,7 +220,9 @@ WHERE
 	inner.my_siteid = gp.my_siteid AND 
 	gp.display_flag = 'Y' AND 
 	<% if (!"".equals(agency)) { %> gp.agency_cd IN (<%= agency %>) AND <%}%>
-	<% if (!"".equals(ntlAquiferName)) { %> gp.nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
+	<% if (!"".equals(ntlAquiferName)) { %> 
+		gp.nat_aqfr_desc IN (<%= ntlAquiferName %>) AND 
+	<%}%>
  	(sdo_filter(
       gp.geom,
       mdsys.sdo_geometry(

@@ -36,7 +36,7 @@
 	</pluginRepositories>
 
 	<scm>
-		<developerConnection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/usgs/gw_data_portal_map/trunk</developerConnection>
+		<developerConnection>scm:svn:${cida.svn.url}/usgs/gw_data_portal_map/trunk</developerConnection>
 	</scm>
 
 	<distributionManagement>
@@ -80,6 +80,7 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 			
