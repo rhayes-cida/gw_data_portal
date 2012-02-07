@@ -8,7 +8,9 @@
 <html>
 	<head>
 		<title>National Ground Water Monitoring Network Data Portal (BETA)</title>
-
+		<link rel="icon" 
+      		type="image/png" 
+      		href="favicon.ico">
 		<!-- scrollable map assets -->
 		<script type="text/javascript" src="scrollable_map/JMap-header.js"></script>
 		<script type="text/javascript" src="scrollable_map/JMap-base.js"></script>

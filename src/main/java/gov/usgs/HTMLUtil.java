@@ -50,7 +50,7 @@ public class HTMLUtil {
 				"							'999',	'Unknown'" +
 				"	) as title " +
 				"					FROM gw_data_portal.WELL_REGISTRY " +
-				"					WHERE wl_well_type <> '999' " +
+				"					WHERE qw_well_type <> '999' " +
 				"					ORDER BY 1";
 		runQuery(sql, out, connection);
 	}

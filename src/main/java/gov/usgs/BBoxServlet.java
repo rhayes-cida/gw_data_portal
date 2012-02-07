@@ -35,8 +35,8 @@ public class BBoxServlet extends HttpServlet {
 		try {
 
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=bbox");
-System.out.println(query);
-			
+			System.out.println("NGWMN: " + query);
+
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
 			connection = ds.getConnection();

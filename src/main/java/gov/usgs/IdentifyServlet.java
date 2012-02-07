@@ -39,7 +39,8 @@ public class IdentifyServlet extends HttpServlet {
 		try {  		
 			//fetch base query
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=identify");
-
+			System.out.println("NGWMN: " + query);
+			
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup(GWP_DATASOURCE);
 			connection = ds.getConnection();

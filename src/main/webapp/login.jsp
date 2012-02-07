@@ -8,7 +8,10 @@
 <html>
 	<head>
 		<title>National Ground Water Monitoring Network Portal Log In</title>
-	
+		<link rel="icon" 
+      		type="image/png" 
+      		href="favicon.ico">
+      		
 		<!--  extjs assets -->
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>

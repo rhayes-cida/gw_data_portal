@@ -25,6 +25,7 @@ public class MVServlet extends HttpServlet {
 
 			//fetch base query
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=map");
+			System.out.println("NGWMN: " + query);
 			//System.out.println(query.replaceAll("%2526lt;", "<").replaceAll("%252B", "+").replaceAll("FROM", "FROM\n"));	
 			//fetch xml request
 			mapreq =  URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_map_request.jsp;jsessionid=" + req.getSession().getId(), params + "&query=" + query + "&requestId=map");      
