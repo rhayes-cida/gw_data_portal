@@ -8,8 +8,8 @@
 		localAquiferName: '112SNGR, SAND AND GRAVEL (PLEISTOCENE)', 
 		nationalAquiferName: 'Sand and gravel aquifers (glaciated regions)', 
 		agency: 'MBMG', 
-		qwSnFlag: 'Yes', 
-		wlSnFlag: 'Yes', 
+		qwSnFlag: '1', 
+		wlSnFlag: '1', 
 		wellDepth: 'null', 
 		logo: 'MontanaBMG.jpg'
 	}

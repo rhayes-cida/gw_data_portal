@@ -177,7 +177,7 @@
 				<option title="Montana Bureau of Mines and Geology"value="MBMG">MT Bureau of Mines and Geology</option>
 				<option title="Minnesota Department of Natural Resources"value="MN DNR">MN Dept. of Natural Resources</option>
 				<option title="Minnesota Pollution Control Agency"value="MPCA">MN Pollution Control Agency</option>
-				<option title="United States Geological Survey New Jersey / New Jersey Geological Survey"value="USGS NJ / NJGS">NJ Geological Survey</option>
+				<option title="United States Geological Survey New Jersey / New Jersey Geological Survey"value="USGS">USGS NWIS</option>
 				<option title="Texas Water Development Board"value="TWDB">TX Water Development Board</option>
 			</select>
 		</div>

@@ -176,8 +176,8 @@ function addDataLayer() {
 		agency: getUrlParamStringFromPicklist('agency', true),
 		qwWellType: getUrlParamStringFromPicklist('qw-well-type', true),
 		wlWellType: getUrlParamStringFromPicklist('wl-well-type', true),
-		qwSnFlag: document.getElementById('qw-sn-flag').checked?'Yes':'',
-		wlSnFlag: document.getElementById('wl-sn-flag').checked?'Yes':'',
+		qwSnFlag: document.getElementById('qw-sn-flag').checked?'1':'',
+		wlSnFlag: document.getElementById('wl-sn-flag').checked?'1':'',
 		ntlAquiferName: getUrlParamStringFromPicklist('ntlAquifer', true)
 	};
 
