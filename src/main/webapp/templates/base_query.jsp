@@ -197,7 +197,11 @@ SELECT
 			'MN DNR','mn_dnr_logo.gif',
 			'MPCA','mpca7000.gif',
 			'TWDB','twdb.gif',
-			'USGS','njgslogo.gif',
+			'USGS', decode(gp.STATE_CD, 
+							34, 'njgslogo.gif',
+							17, 'ilstatewatersurvey.gif',
+							18, 'indnrtitle.gif',
+							'USGS_logo.png'),
 			'USGS_logo.png') LOGO    
 FROM 
 		gw_data_portal.well_registry gp,
