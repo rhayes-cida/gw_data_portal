@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
 
@@ -69,6 +70,15 @@ public class URLUtil {
 			System.out.println(e.getMessage());
 			//System.out.println(getHeaders(uCon));
 		}
+		
+		// Added code to detect/log if image size is too small, indicating a possible problem
+		String contentLength = uCon.getHeaderField("Content-Length");
+		if (contentLength != null) {
+			Integer cl = Integer.parseInt(contentLength);
+			if (cl != null && cl < 175) { // 175 just arbitrary. images should normally be at least 1K
+				System.out.println("WARNING: maptile request response undersized at " + cl + " bytes");
+			}
+		}
 
 
 		BufferedInputStream buf = new BufferedInputStream(input);
@@ -100,6 +110,7 @@ public class URLUtil {
 			urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			// Send POST output.
 			printout = new DataOutputStream(urlConn.getOutputStream());
+
 
 			printout.writeBytes(params);
 			printout.flush();

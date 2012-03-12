@@ -16,7 +16,8 @@ public class DebugSettings {
 	 * 
 	 */
 	public static final String MAPPING_SERVER = props.getProperty("java:/comp/env/GWDP_Portal/mappingServer");
-	public static final String SERVER_BASE = props.getProperty("java:/comp/env/GWDP_Portal/baseServer");	
+	public static final String SERVER_BASE = props.getProperty("java:/comp/env/GWDP_Portal/baseServer");
+	public static final String MAPPING_SERVER_USER = props.getProperty("java:/comp/env/GWDP_Portal/mappingServerUser");
 
 	private static DynamicReadOnlyProperties initProps() {
 		try {
