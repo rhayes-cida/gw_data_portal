@@ -1,5 +1,5 @@
 {
 bbox: "-115.6390056,44.9997,-104.049242,48.99942364",
 count: 271,
-query: "SELECT 	min(gp.dec_long_va) || ',' || min(gp.dec_lat_va) ||','|| max(gp.dec_long_va) ||','||  max(gp.dec_lat_va) bbox,	count(*) num_points  FROM 		gw_data_portal.well_registry gp,	(						SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = '1' 							 UNION 					SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = '1' 							) inner WHERE 	inner.my_siteid = gp.my_siteid AND 	gp.display_flag = 'Y' 	 AND agency_cd IN ('MBMG') 	"
+query: "SELECT 	min(gp.dec_long_va) || ',' || min(gp.dec_lat_va) ||','|| max(gp.dec_long_va) ||','||  max(gp.dec_lat_va) bbox,	count(*) num_points  FROM 		gw_data_portal.well_registry gp,	(						SELECT my_siteid FROM gw_data_portal.well_registry WHERE QW_SN_FLAG = '1' 							 UNION 					SELECT my_siteid FROM gw_data_portal.well_registry WHERE WL_SN_FLAG = '1' 							) inner WHERE 	inner.my_siteid = gp.my_siteid AND 	gp.display_flag = '1' 	 AND agency_cd IN ('MBMG') 	"
 }

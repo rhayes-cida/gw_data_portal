@@ -86,7 +86,7 @@ FROM
 	<% } %>) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
-	gp.display_flag = 'Y' AND 
+	gp.display_flag = '1' AND 
 	<% if (!"".equals(agency)) { %> agency_cd IN (<%= agency %>) AND <%}%>
 	<% if (!"".equals(ntlAquiferName)) { %> nat_aqfr_desc IN (<%= ntlAquiferName %>) AND <%}%>
 	(sdo_filter(
@@ -150,7 +150,7 @@ FROM
 	) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
-	gp.display_flag = 'Y' 
+	gp.display_flag = '1' 
 	<% if (!"".equals(agency)) { %> AND agency_cd IN (<%= agency %>) <%}%>
 	<% if (!"".equals(ntlAquiferName)) { %> AND nat_aqfr_desc IN (<%= ntlAquiferName %>) <%}%>
 
@@ -249,7 +249,7 @@ FROM
 	) inner 
 WHERE 
 	inner.my_siteid = gp.my_siteid AND 
-	gp.display_flag = 'Y' AND 
+	gp.display_flag = '1' AND 
 	<% if (!"".equals(agency)) { %> gp.agency_cd IN (<%= agency %>) AND <%}%>
 	<% if (!"".equals(ntlAquiferName)) { %> 
 		gp.nat_aqfr_desc IN (<%= ntlAquiferName %>) AND 
