@@ -8,7 +8,9 @@
 		<script src="ext_js/adapter/ext/ext-base.js"></script>
 		<script src="ext_js/ext-all.js"></script>
 		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
+		
 		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
+		
 		
 		<!-- application assets -->		
 		<link rel="stylesheet" href="assets/css/custom.css"/>
@@ -115,7 +117,7 @@
 							</p>
 							
 							<div id="inlineImage">
-								<a href="index.jsp"><img src="assets/images/screenshot.jpg" border="0"></a>
+								<a href="index.jsp"><img src="assets/images/screenshot.jpg" height="250" width="458" border="0"></a>
 							
 								<br/>
 									<img src="assets/images/USGS_web_logo.gif" alt="USGS logo" height="23" width="55"/>
@@ -215,30 +217,51 @@
 								download all of the available data.
 							</p>
 							
-							
+
 							<p>
 								Users may select water-level and water-quality wells by 
 								subnetwork and based on the Agency collecting the data or 
 								the Principal aquifer. Most wells are classified into 
-								"Unstressed" or "Targeted:" subnetworks.  Within these 
+								"Background", "Suspected/Anticipated Change" or "Known Changes" subnetworks. Within these 
 								subnetworks, wells are categorized as either Trend or 
 								Surveillance, based on the monitoring frequency. The 
 								definitions of these terms are given below:
 							</p>
 							
 							<dl>
-								<dt>Unstressed:</dt>
+								<dt>Background:</dt>
 								<dd>
-									Monitoring points located within unstressed portions of aquifers.
+									Monitoring points that provide data from aquifers or 
+									parts of aquifers with no (or minimal) anthropogenic 
+									effects. These are from areas that have been minimally 
+									affected by human activities and are expected to remain so.
 								</dd>
-								<dt>Targeted:</dt>
+								<dt>Suspected/Anticipated changes:</dt>
 								<dd>
-									Monitoring points that provide data from aquifers that (1) 
-									are known to be heavily pumped, (2) have experienced substantial 
-									recharge-altering land-use changes, or (3) are located in areas 
-									with managed ground-water resources, are (4) known to have 
-									degraded water quality from  human activities, or (5) are in 
-									an area expected to soon be developed. 	
+									Monitoring points that provide data from aquifers or 
+									parts of aquifers that may have been affected by man's activity, 
+									but that is not documented or conclusive. These wells 
+									may also be in areas where changes are anticipated. 
+									These may be areas with withdrawals are occurring or 
+									where land-use has changed, but the effect 
+									has not yet been clearly identified.
+								</dd>
+								<dt>Known Changes:</dt>
+								<dd>
+									<!-- 
+										The ext-all.css stylesheet has messed up the default ol formatting
+										but I'm not going to redo this right now, as it changes some other things.
+										So... the bottom is hardcoded to make it somewhat resemble the default
+										formatting
+									 -->
+									Monitoring points that provide data from aquifers that 
+									<ol>
+										<li>&nbsp;&nbsp;(1) are known to be heavily pumped,</li>
+										<li>&nbsp;&nbsp;(2) have experienced substantial recharge-altering land-use changes, or </li>
+										<li>&nbsp;&nbsp;(3) are located in areas with managed ground-water resources,</li>
+										<li>&nbsp;&nbsp;(4) are known to have degraded water quality from human activities, or </li>
+										<li>&nbsp;&nbsp;(5) are in an area expected to soon be developed.</li>
+									</ol>
 								</dd>
 								<dt>Trend:</dt>
 								<dd>
