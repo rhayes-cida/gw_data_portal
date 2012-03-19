@@ -164,6 +164,7 @@
 
 <%
 		} catch (Exception e) {
+			System.err.println("Error in NGWMN portal index.jsp");
 			e.printStackTrace();
 %>
 			<jsp:text><![CDATA[
