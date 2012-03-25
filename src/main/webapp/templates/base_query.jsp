@@ -186,6 +186,7 @@ SELECT
 	gp.WELL_DEPTH,
 	gp.NAT_AQFR_DESC,
 	gp.AGENCY_CD,
+	gp.AGENCY_NM,
 	gp.WL_SN_FLAG,
 	gp.QW_SN_FLAG,
 	gp.local_aquifer_name,
@@ -202,7 +203,12 @@ SELECT
 							17, 'ilstatewatersurvey.gif',
 							18, 'indnrtitle.gif',
 							'USGS_logo.png'),
-			'USGS_logo.png') LOGO    
+			'USGS_logo.png') LOGO,
+	gp.link,
+	decode(gp.AGENCY_CD, 
+			'MBMG', 'login required',
+			'')
+	as linkDesc 
 FROM 
 		gw_data_portal.well_registry gp,
 	(

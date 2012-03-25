@@ -7,7 +7,7 @@ var IDENTIFY = {
 	    autoDestroy: false,
 	    storeId: 'myStore',
 	    root: 'sites',
-	    fields: ['siteNo','siteName','decLatVa','decLongVa','qwWellType','wlWellType','wellDepth','localAquiferName','nationalAquiferName','agency','wlSnFlag','qwSnFlag','logo']
+	    fields: ['siteNo','siteName','decLatVa','decLongVa','qwWellType','wlWellType','wellDepth','localAquiferName','nationalAquiferName','agency','agencyName','wlSnFlag','qwSnFlag','logo','link','linkDesc']
 	}),
 	find: function(event, map) {
 

@@ -6,7 +6,8 @@ var siteIdTpl = new Ext.XTemplate(
 			'<img src="assets/images/logos/{logo}" width="150"/>',
 			'</td><td width="80%">',
 			'<table id="id-table" width="100%" border="1">',
-				'<tr><th>Agency</th><td>{agency}</td></tr>',
+				'<tr><th>Agency</th><td>{agencyName}</td></tr>',
+				//'<tr><th>Agency Code</th><td>{agency}</td></tr>',
 				'<tr><th>Site Name</th><td>{[SITE.createName(values.siteName, values.agency, values.siteNo)]}</td></tr>',
 				'<tr><th>Site #</th><td>{siteNo}</td></tr>',
 				'<tr><th>Lat/Long(WGS84)</th><td>{[parseFloat(values.decLatVa).toFixed(4)]},{[parseFloat(values.decLongVa).toFixed(4)]}</td></tr>',
@@ -15,6 +16,7 @@ var siteIdTpl = new Ext.XTemplate(
 				'<tr><th>National Aquifer Name</th><td>{nationalAquiferName}</td></tr>',
 				'<tr><th>Water Level Network</th><td>{wlWellType}</td></tr>',
 				'<tr><th>Water Quality Network</th><td>{qwWellType}</td></tr>',
+				'<tr><th>Additional info</th><td>{[SITE.formatLink(values.link, values.linkDesc)]}</tr>',
 			'</table>',
 			'</td></tr></table>',
 		'</div>',
@@ -33,7 +35,6 @@ var wellLogTemplate = new Ext.XTemplate(
 				'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 1.0).toFixed(2)]} ft.</td></tr>',
 //					'<tr><td style="height:35px">Elevation: {[(values.elevation * 3.2808399).toFixed(2)]} ft.</td></tr>',
 //					'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 3.2808399).toFixed(2)]} ft.</td></tr>',
-				'<tr><td style="height:35px">Resource: <a href="{onlineResource}" target="_blank">{onlineResourceTitle}</a></td></tr>',
 				'<tr><td>&nbsp;</td></tr>',
 			'</table>',
 			'<br/>',
@@ -87,6 +88,11 @@ var SITE = {
 	formatWellDepth: function(value){
 		if (value == null || value == 'null') return '';
 		return value + ' ft';
+	},
+	formatLink: function(link, desc){
+		if (link == null || link == 'null') return '';
+		if (desc == null || desc == 'null') desc = "link";
+		return '<a href="' + link + '}" target="_blank">' + desc + '</a>';
 	},
 	downloadData: function(siteRecord) {
 
@@ -274,8 +280,7 @@ var WELL_LOG_TAB = {
 				position: DNH.extractValue(x, 'pos'),
 				elevation: DNH.extractValue(x,'referenceElevation'),
 				wellDepth: DNH.extractValue(x,'principalValue'),
-				onlineResource: DNH.extractValue(x,'onlineResource','xlink:href'),
-				onlineResourceTitle: DNH.extractValue(x,'onlineResource','xlink:title')
+				onlineResource: DNH.extractValue(x,'onlineResource','xlink:href')
 			};
 			
 			var logEls = x.getElementsByTagName('logElement');

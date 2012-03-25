@@ -61,11 +61,14 @@ public class IdentifyServlet extends HttpServlet {
 				", localAquiferName: '" + rset.getString("local_aquifer_name") + "'" +
 				", nationalAquiferName: '" + rset.getString("NAT_AQFR_DESC") + "'" + 
 				", agency: '" + rset.getString("AGENCY_CD") + "'" +
+				", agencyName: '" + rset.getString("AGENCY_NM") + "'" +
 				", qwSnFlag: '" + rset.getString("QW_SN_FLAG") + "'" +
 				", wlSnFlag: '" + rset.getString("WL_SN_FLAG") + "'" +
 				", wellDepth: '" + rset.getString("WELL_DEPTH") + "'" + 
 				//", wellDepth: '" + rset.getString("well_depth_va") + "'" +
 				", logo: '" + rset.getString("LOGO") + "'" +
+				", link: '" + rset.getString("LINK") + "'" +
+				", linkDesc: '" + rset.getString("LINKDESC") + "'" +
 				"},";
 
 				siteJsonOut.append(jsonObj);

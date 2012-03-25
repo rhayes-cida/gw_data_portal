@@ -180,7 +180,7 @@
 			<div id="agency-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="agency" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Organization IDs</option>
+				<option value="" selected="selected">(cached)All Organization IDs</option>
 				<option title="Illinois Environmental Protection Agency"value="IL EPA">IL Envtl Protection Agency</option>
 				<option title="Indiana Department of Natural Resources"value="IN DNR">IN Dept. of Natural Resources</option>
 				<option title="Illinois State Water Survey"value="ISWS">IL State Water Survey</option>
@@ -195,7 +195,7 @@
 		<div id="qw-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="qw-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Water Quality Sub Networks</option>
+				<option value="" selected="selected">(cached)All Water Quality Sub Networks</option>
 				<option title="Surveillance - Background"value="1-1">Surveillance - Background</option>
 				<option title="Surveillance - Known Changes"value="1-3">Surveillance - Known Changes</option>
 				<option title="Trend - Background"value="2-1">Trend - Background</option>
@@ -204,7 +204,7 @@
 				<option title="Unknown - Unknown"value="999-999">Unknown - Unknown</option>
 				
 				<!--
-				<option value="" selected="selected">All Water Quality Sub Networks</option>
+				<option value="" selected="selected">(cached)All Water Quality Sub Networks</option>
 				<option title="Surveillance - Targeted"value="Surveillance - Targeted">Surveillance - Targeted</option>
 				<option title="Surveillance - Unstressed"value="Surveillance - Unstressed">Surveillance - Unstressed</option>
 				<option title="Trend - Targeted"value="Trend - Targeted">Trend - Targeted</option>
@@ -216,7 +216,7 @@
 		<div id="wl-well-type-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="wl-well-type" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All Water Level Sub Networks</option>
+				<option value="" selected="selected">(cached)All Water Level Sub Networks</option>
 				<option title="Surveillance - Background"value="1-1">Surveillance - Background</option>
 				<option title="Surveillance - Known Changes"value="1-3">Surveillance - Known Changes</option>
 				<option title="Trend - Background"value="2-1">Trend - Background</option>
@@ -234,7 +234,7 @@
 		<div id="ntlAquifer-div" class="x-hidden">
 			<p class="caption">ctrl + click to select more than one</p>
 			<select id="ntlAquifer" multiple="multiple" size="5" style="width: 100%">
-				<option value="" selected="selected">All National Aquifers</option>
+				<option value="" selected="selected">(cached)All National Aquifers</option>
 				<option title="Alluvial aquifers"value="Alluvial aquifers">Alluvial aquifers</option>
 				<option title="Cambrian-Ordovician aquifer system"value="Cambrian-Ordovician aquifer system">Cambrian-Ordovician aquifer system</option>
 				<option title="Coastal lowlands aquifer system"value="Coastal lowlands aquifer system">Coastal lowlands aquifer system</option>
