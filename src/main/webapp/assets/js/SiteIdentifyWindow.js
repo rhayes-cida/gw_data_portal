@@ -92,7 +92,7 @@ var SITE = {
 	formatLink: function(link, desc){
 		if (link == null || link == 'null') return '';
 		if (desc == null || desc == 'null') desc = "link";
-		return '<a href="' + link + '}" target="_blank">' + desc + '</a>';
+		return '<a href="' + link + '" target="_blank">' + desc + '</a>';
 	},
 	downloadData: function(siteRecord) {
 
