@@ -2,10 +2,10 @@ package gov.usgs;
 
 public enum RequestType {
 	well_log("/wfs?request=GetFeature&typeName=gwml:WaterWell&INFO_FORMAT=text/xml&featureId="),
-	water_level("/sos?request=GetObservation&featureId="),
+	water_level("/sos?request=GetObservation&featureId=", "/cocoon/gin/gwdp/cache/agency/"),
 	water_quality("/qw?mimeType=xml&siteid="),
-	download("?featureId=", "/cocoon/gin/gwdp/download/xls/");
-
+	download("?featureId=", "/cocoon/gin/gwdp/cache/download/xls/");
+	//download("?featureId=", "/cocoon/gin/gwdp/download/xls/");
 
 
 	public static final String serverBase = DebugSettings.SERVER_BASE; // used to switch between local and prod development
