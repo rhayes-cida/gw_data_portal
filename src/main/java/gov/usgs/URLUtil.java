@@ -128,23 +128,19 @@ public class URLUtil {
 		DataInputStream input = null;
 		StringBuffer page = new StringBuffer();
 
-		//fetch base query
-		try {
-			// Get response data.
-			input = new DataInputStream(
-					URLUtil.makeUrlGetRequest(urlString).getInputStream()
-			);
-			BufferedReader br = new BufferedReader(new InputStreamReader(input));
 
-			String str = "";
-			while (null != ((str = br.readLine()))) {
-				page.append(str);
-			}
+		// Get response data.
+		input = new DataInputStream(
+				URLUtil.makeUrlGetRequest(urlString).getInputStream()
+				);
+		BufferedReader br = new BufferedReader(new InputStreamReader(input));
 
-			br.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}      
+		String str = "";
+		while (null != ((str = br.readLine()))) {
+			page.append(str);
+		}
+
+		br.close();
 
 		return page;
 	}

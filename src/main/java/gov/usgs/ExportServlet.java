@@ -1,10 +1,10 @@
 package gov.usgs;
 
+import static gov.usgs.HTTPParameters.ExtParam.*;
+
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.ZipEntry;
@@ -17,15 +17,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static gov.usgs.HTTPParameters.ExtParam.*;
+
 public class ExportServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 
-		String downloadToken = req.getParameter("token");
-		String siteNo = req.getParameter("siteNo");
-		String agencyCd = req.getParameter("agency_cd");
+		String downloadToken = DOWNLOAD_TOKEN.parse(req);
+		String siteNo = SITE_NO.parse(req);
+		String agencyCd = AGENCY_CODE.parse(req);
 
 
 		resp.setContentType("application/zip");
@@ -58,11 +60,11 @@ public class ExportServlet extends HttpServlet {
 	protected void zipDoGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 
-		String downloadToken = req.getParameter("token");
-		String siteNo = req.getParameter("siteNo");
-		String agencyCd = req.getParameter("agency_cd");
-		String wlSnFlag = req.getParameter("wlSnFlag");
-		String qwSnFlag = req.getParameter("qwSnFlag");
+		String downloadToken = DOWNLOAD_TOKEN.parse(req);
+		String siteNo = SITE_NO.parse(req);
+		String agencyCd = AGENCY_CODE.parse(req);
+		String wlSnFlag = WATER_LEVEL_FLAG.parse(req);
+		String qwSnFlag = WATER_QUALITY_FLAG.parse(req);
 
 		resp.setContentType("application/zip");
 		resp.setHeader("Content-Disposition", "attachment; filename=gwdp_"

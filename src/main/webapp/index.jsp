@@ -336,6 +336,8 @@
 		<!-- // END FOOTER -->
 		
 		<form id="exportForm" style="display:none" method="GET" action="export">
+			<%-- For list of parameters, see the java class HTTPParameters.ExtParam --%>
+			<%-- TODO: write these out instead of explicit --%>
 			<input type="hidden" name="siteNo"/>
 			<input type="hidden" name="agency_cd"/>
 			<input type="hidden" name="wlSnFlag"/>

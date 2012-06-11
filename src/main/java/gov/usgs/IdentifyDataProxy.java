@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import static gov.usgs.HTTPParameters.ExtParam.*;
 
 
 public class IdentifyDataProxy extends HttpServlet {
@@ -19,7 +19,7 @@ public class IdentifyDataProxy extends HttpServlet {
 		resp.setContentType("text/xml");
 
 		RequestType serviceRequest = RequestType.valueOf(req.getParameter("request"));
-		String url = serviceRequest.makeRESTUrl(req.getParameter("agency_cd"), req.getParameter("siteNo"));
+		String url = serviceRequest.makeRESTUrl(AGENCY_CODE.parse(req), SITE_NO.parse(req));
 
 		System.out.println("gw_data_portal fetching " + serviceRequest + " data from get url: " + url);
 
