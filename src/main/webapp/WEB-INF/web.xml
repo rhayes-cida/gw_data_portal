@@ -5,6 +5,18 @@
 
 <display-name>NGWMN Map Client (formerly GWDP MAP){Owner: NB, JL Coder: IK}</display-name>
 <description>Client Application of the NGWMN (formerly GWDP)</description>
+<filter>
+	<description>
+	</description>
+	<display-name>DownloadTokenFilter</display-name>
+	<filter-name>DownloadTokenFilter</filter-name>
+	<filter-class>gov.usgs.DownloadTokenFilter</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>DownloadTokenFilter</filter-name>
+	<servlet-name>ExportServlet</servlet-name>
+	<dispatcher>REQUEST</dispatcher>
+</filter-mapping>
 
 	<servlet>
 		<description>Proxy to forward requests to the Oracle MapViewer server</description>
