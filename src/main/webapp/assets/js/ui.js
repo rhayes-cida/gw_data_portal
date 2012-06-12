@@ -143,6 +143,15 @@ Ext.onReady(function() {
 			handler: function() {
 				(new BaseLayersWindow()).show();
 			}
+		},{
+			tooltip: 'Download Data',
+			iconCls: 'download-icon',
+			handler: function() {
+				// TODO Can we start this earlier?
+				DOWNLOAD_SITES.find(map1,mapState.clone());
+				var dl = new DownloadPopup();
+				dl.show();
+			}
 		}]
 	});
 	
@@ -178,7 +187,20 @@ function addDataLayer() {
 		wlWellType: getUrlParamStringFromPicklist('wl-well-type', true),
 		qwSnFlag: document.getElementById('qw-sn-flag').checked?'1':'',
 		wlSnFlag: document.getElementById('wl-sn-flag').checked?'1':'',
-		ntlAquiferName: getUrlParamStringFromPicklist('ntlAquifer', true)
+		ntlAquiferName: getUrlParamStringFromPicklist('ntlAquifer', true),
+		clone: function() {
+			var c = {
+					agency: this.agency,
+					qwWellType: this.qwWellType,
+					wlWellType: this.wlWellType,
+					qwSnFlag: this.qwSnFlag,
+					wlSnFlag: this.wlSnFlag,
+					ntlAquiferName: this.ntlAquiferName,
+					clone: this.clone
+			};
+			
+			return c;
+		}
 	};
 
 	

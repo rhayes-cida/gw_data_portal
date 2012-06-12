@@ -41,26 +41,35 @@ public class IdentifyServlet extends HttpServlet {
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=identify");
 			System.out.println("NGWMN: " + query);
 			
+			log("query: " + query);
+			
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup(GWP_DATASOURCE);
 			connection = ds.getConnection();
 			statement = connection.createStatement();
+			
+			int ct = 0;
 
 			rset = statement.executeQuery(query);
 			//System.out.println(query);
 			while (rset.next()) {	  
 
-
+				String siteName = rset.getString("SITE_NAME");
+				String siteNo = rset.getString("SITE_NO");
+				String agencyCd = rset.getString("AGENCY_CD");
+				if (siteName == null || siteName.isEmpty() || "null".equalsIgnoreCase(siteName)) {
+					siteName = agencyCd + "-" + siteNo;
+				}
 				String jsonObj = "{" + 
-				"siteNo: '" + rset.getString("SITE_NO") + "'" + 
-				", siteName: '" + rset.getString("SITE_NAME") + "'" + 
+				"siteNo: '" + siteNo + "'" + 
+				", siteName: '" + siteName + "'" + 
 				", decLatVa: '" + rset.getString("DEC_LAT_VA") + "'" + 
 				", decLongVa: '" + rset.getString("DEC_LONG_VA") + "'" + 
 				", qwWellType: '" + rset.getString("QW_WELL_TYPE") + "'" + 
 				", wlWellType: '" + rset.getString("WL_WELL_TYPE") + "'" + 
 				", localAquiferName: '" + rset.getString("local_aquifer_name") + "'" +
 				", nationalAquiferName: '" + rset.getString("NAT_AQFR_DESC") + "'" + 
-				", agency: '" + rset.getString("AGENCY_CD") + "'" +
+				", agency: '" + agencyCd + "'" +
 				", agencyName: '" + rset.getString("AGENCY_NM") + "'" +
 				", qwSnFlag: '" + rset.getString("QW_SN_FLAG") + "'" +
 				", wlSnFlag: '" + rset.getString("WL_SN_FLAG") + "'" +
@@ -72,9 +81,11 @@ public class IdentifyServlet extends HttpServlet {
 				"},";
 
 				siteJsonOut.append(jsonObj);
+				ct++;
 
 			}
 
+			log("count of sites found: " + ct);
 			statement.close();
 			statement = null;
 			rset.close();  
@@ -82,8 +93,8 @@ public class IdentifyServlet extends HttpServlet {
 			connection.close();  
 			connection = null;
 		} catch (Exception e) {
+			log("problem in " + this.getClass().getSimpleName(), e);
 			System.out.println("gw data portal map - identify servlet - query data retrieved failed");   
-			e.printStackTrace();
 		} finally {
 			if (rset != null) {
 				try { rset.close(); } catch (SQLException e1) { ; }

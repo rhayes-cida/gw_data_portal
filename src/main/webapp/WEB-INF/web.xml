@@ -35,6 +35,25 @@
 			<servlet-name>ExportServlet</servlet-name>
 			<servlet-class>gov.usgs.ExportServlet</servlet-class>
 	</servlet>
+
+	<servlet>
+		<display-name>DataRelayServlet</display-name>
+		<servlet-name>DataRelayServlet</servlet-name>
+		<servlet-class>gov.usgs.DataRelayServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>DiagnoseServlet</display-name>
+		<servlet-name>DiagnoseServlet</servlet-name>
+		<servlet-class>gov.usgs.DiagnoseServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>SettingsServlet</display-name>
+		<servlet-name>SettingsServlet</servlet-name>
+		<servlet-class>gov.usgs.SettingsServlet</servlet-class>
+	</servlet>
 			
 	<servlet-mapping>
 			<servlet-name>MVServlet</servlet-name>
@@ -60,10 +79,29 @@
 			<servlet-name>ExportServlet</servlet-name>
   		<url-pattern>/export</url-pattern>
 	</servlet-mapping>
+ 	<servlet-mapping>
+		<servlet-name>DataRelayServlet</servlet-name>
+		<url-pattern>/data</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DiagnoseServlet</servlet-name>
+		<url-pattern>/diagnose</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SettingsServlet</servlet-name>
+		<url-pattern>/settings</url-pattern>
+	</servlet-mapping>
 	
 	<session-config>
  		<session-timeout>30</session-timeout>
  	</session-config>
+
+  	<env-entry>
+		<description>GWDP cached data server</description>
+		<env-entry-name>GWDP_Portal/cacheServer</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>http://localhost:8080/ngwmn</env-entry-value>
+	</env-entry>
  
  <!-- 
   	<env-entry>

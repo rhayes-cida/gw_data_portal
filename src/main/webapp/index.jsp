@@ -33,6 +33,7 @@
 		<script type="text/javascript" src="assets/js/DocNavHelper.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
 		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script>
+		<script type="text/javascript" src="assets/js/DownloadPopup.js"></script>
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 

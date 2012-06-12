@@ -77,6 +77,10 @@ body {
 	background-image: url(../images/layersIcongif.gif) !important;
 }
 
+.download-icon {
+	background-image: url(../images/downloadIcongif.gif) !important;
+}
+
 .map-export-icon {
 	background-image: url(../images/exportIcongif.gif) !important;
 }
