@@ -96,20 +96,23 @@
  		<session-timeout>30</session-timeout>
  	</session-config>
 
-  	<env-entry>
+<!--   	
+	<env-entry>
 		<description>GWDP cached data server</description>
 		<env-entry-name>GWDP_Portal/cacheServer</env-entry-name>
 		<env-entry-type>java.lang.String</env-entry-type>
 		<env-entry-value>http://localhost:8080/ngwmn</env-entry-value>
-	</env-entry>
- 
- <!-- 
+	</env-entry> 
+-->
+<!-- 
   	<env-entry>
 		<description>GWDP Portal server</description>
 		<env-entry-name>GWDP_Portal/baseServer</env-entry-name>
 		<env-entry-type>java.lang.String</env-entry-type>
 		<env-entry-value>http://localhost:8090</env-entry-value>
 	</env-entry>
+-->
+<!--
   	<env-entry>
 		<description>GWDP Portal mapping tile server</description>
 		<env-entry-name>GWDP_Portal/mappingServer</env-entry-name>

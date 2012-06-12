@@ -161,21 +161,25 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 			{
 					text: 'Download data',
 					handler: function() {
-						var dlUrl = "http://emeraldcity.au/data";
-						var params = [];
+						
+						myMsdlf.items.clear();
+						var hasType = false;
 						
 						// start with list of types
 						if (Ext.getCmp('dtype_wl').getValue()) {
-							params.push("type=WATERLEVEL");
+							myMsdlf.addItem('type','WATERLEVEL');
+							hasType = true;
 						}
 						if (Ext.getCmp('dtype_qw').getValue()) {
-							params.push("type=QUALITY");
+							myMsdlf.addItem('type','QUALITY');
+							hasType = true;
 						}
 						if (Ext.getCmp('dtype_const').getValue() || Ext.getCmp('dtype_lith').getValue()) {
-							params.push("type=LOG");
+							myMsdlf.addItem('type','LOG');
+							hasType = true;
 						}
 						
-						if (params.length == 0) {
+						if ( ! hasType ) {
 							alert("No data type chosen. Fail.");
 						}
 						
@@ -186,26 +190,9 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 							var wellID = siteRecord.data.agency + ":" + siteRecord.data.siteNo;
 							wellID = wellID.trim();
 							wellID = wellID.replace(/ /g, "+");
-							params.push("featureID=" + wellID);
+							myMsdlf.addItem('featureID',wellID);
 						}
 						
-						if (false) {
-							var url = dlUrl + '?' + params.join('&');
-							var displayUrl = url;
-							if (url.length > 80) {
-								displayUrl = url.substring(0,75) + '...[' + url.length + ']';
-							}
-							alert('download ' + displayUrl);
-						}
-
-						myMsdlf.items.clear();
-						var form = myMsdlf.getForm();
-						for (var k = 0; k < params.length; k++) {
-							var s = params[k];
-							var vv = s.split('=');
-							
-							myMsdlf.addItem(vv[0],vv[1]);
-						}
 						myMsdlf.formSubmitToTarget('_blank');
 						
 						// TODO Close? Or use tracking window from SiteIdentifyWindow?
