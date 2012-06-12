@@ -33,6 +33,7 @@ public class ExportServlet extends HttpServlet {
 		resp.setContentType("application/zip");
 		resp.setHeader("Content-Disposition", "attachment; filename=gwdp_"
 				+ agencyCd + "_" + siteNo + ".zip");
+		// TODO remove this, cookie is now set by filter
 		resp.addCookie(new Cookie("exportToken", downloadToken));
 
 		ServletOutputStream os = resp.getOutputStream();

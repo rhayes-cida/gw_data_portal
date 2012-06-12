@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DownloadTokenFilter implements Filter {
 
+	public static final String TOKEN_NAME = "downloadToken";
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		String token = request.getParameter("downloadToken");
+		String token = request.getParameter(TOKEN_NAME);
 		if (token != null) {
 			if (response instanceof HttpServletResponse) {
 				HttpServletResponse hresp = (HttpServletResponse) response;
-				hresp.addCookie(new Cookie("downloadToken", token));
+				hresp.addCookie(new Cookie(TOKEN_NAME, token));
 			}
 		}
 		chain.doFilter(request, response);

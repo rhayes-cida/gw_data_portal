@@ -6,7 +6,7 @@ public class HTTPParameters {
 	public static enum ExtParam{
 			AGENCY_CODE("agency_cd"),
 			SITE_NO("siteNo"),
-			DOWNLOAD_TOKEN("token"),
+			DOWNLOAD_TOKEN("downloadToken"),
 			WATER_LEVEL_FLAG("wlSnFlag"),
 			WATER_QUALITY_FLAG("qwSnFlag")
 			;

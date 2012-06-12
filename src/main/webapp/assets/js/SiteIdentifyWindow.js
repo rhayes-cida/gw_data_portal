@@ -147,13 +147,13 @@ var SITE = {
 		exportForm.agency_cd.value = ac;
 		exportForm.qwSnFlag.value = qwf;
 		exportForm.wlSnFlag.value = wlf;
-		exportForm.token.value = token;
+		exportForm.downloadToken.value = token;
 		
 		
 		var exportStatus = setInterval(function() {
-			var cookieValue = Ext.util.Cookies.get('exportToken');
+			var cookieValue = Ext.util.Cookies.get('downloadToken');
 			if (cookieValue == token) {
-				Ext.util.Cookies.clear('exportToken');
+				Ext.util.Cookies.clear('downloadToken');
 				downloadWindow.close();
 				clearInterval(exportStatus);
 			}	  

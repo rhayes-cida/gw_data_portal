@@ -343,7 +343,7 @@
 			<input type="hidden" name="agency_cd"/>
 			<input type="hidden" name="wlSnFlag"/>
 			<input type="hidden" name="qwSnFlag"/>
-			<input type="hidden" name="token"/>
+			<input type="hidden" name="downloadToken"/>
 		</form>
 		
 	</body>
