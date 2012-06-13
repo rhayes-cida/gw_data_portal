@@ -80,8 +80,9 @@ var SITE = {
 		if (siteName && siteName != 'null') return siteName;
 		return agency + '-' + siteNo;
 	},
-	hasWaterLevelData: function(siteRecord) {return siteRecord.get('wlSnFlag').toUpperCase() == '1';},
-	hasWaterQualityData: function(siteRecord) {return siteRecord.get('qwSnFlag').toUpperCase() == '1';},
+	hasLogData: function(siteRecord) {return siteRecord.get('logDataFlag') == '1';},
+	hasWaterLevelData: function(siteRecord) {return siteRecord.get('wlDataFlag') == '1' || siteRecord.get('wlSnFlag') == 1;},
+	hasWaterQualityData: function(siteRecord) {return siteRecord.get('qwDataFlag') == '1' || siteRecord.get('qwSnFlag') == 1;},
 	loadingErrorMessage: "<h1>Problem loading data, or data for site not available</h1>",
 	connectionErrorMessage: "<h1>Could not connect to data service. Try again later.</h1>",
 	noDataMessage: "<h1>No Data Found. Service may be down or unavailable</h1>",

@@ -10,6 +10,9 @@
 		agency: 'MBMG', 
 		qwSnFlag: '1', 
 		wlSnFlag: '1', 
+		logDataFlag: '1', 
+		wlDataFlag: '1', 
+		qwDataFlag: '1', 
 		wellDepth: 'null', 
 		logo: 'MontanaBMG.jpg'
 	}
