@@ -1,3 +1,4 @@
+<%@page import="gov.usgs.IdentifyServlet"%>
 <%@ page import="gov.usgs.HTMLUtil,
 				javax.naming.Context,
 				javax.naming.InitialContext,
@@ -132,7 +133,7 @@
 
 		try {
 			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
+			DataSource ds = (DataSource) ctx.lookup(IdentifyServlet.GWP_DATASOURCE);
 			connection = ds.getConnection();
 
 %>

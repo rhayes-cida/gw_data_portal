@@ -19,7 +19,7 @@ public class IdentifyDataProxy extends HttpServlet {
 		resp.setContentType("text/xml");
 
 		RequestType serviceRequest = RequestType.valueOf(req.getParameter("request"));
-		String url = serviceRequest.makeRESTUrl(AGENCY_CODE.parse(req), SITE_NO.parse(req));
+		String url = serviceRequest.makeCacheRESTUrl(AGENCY_CODE.parse(req), SITE_NO.parse(req));
 
 		System.out.println("gw_data_portal fetching " + serviceRequest + " data from get url: " + url);
 

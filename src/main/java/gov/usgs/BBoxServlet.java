@@ -38,7 +38,7 @@ public class BBoxServlet extends HttpServlet {
 			System.out.println("NGWMN: " + query);
 
 			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
+			DataSource ds = (DataSource) ctx.lookup(IdentifyServlet.GWP_DATASOURCE);
 			connection = ds.getConnection();
 
 			statement = connection.createStatement();
