@@ -44,6 +44,18 @@ var DOWNLOAD_SITES = {
 
 };
 
+//use a less common namespace than just 'log'
+function log_it(msg)
+{
+    // attempt to send a message to the console
+    try
+    {
+        console.log(msg);
+    }
+    // fail gracefully if it does not exist
+    catch(e){}
+}
+
 var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	standardSubmit: true,
 	method: 'POST',
@@ -124,15 +136,16 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 		downloadWindow.show();
 		downloadWindow.body.mask('Please wait...','x-mask-loading');
 
+		var triesLeft = 10;
 		var exportStatus = null;
 		exportStatus = setInterval(function() {
 			var cookieValue = Ext.util.Cookies.get('downloadToken');
-			if (cookieValue == token) {
+			if (cookieValue == token || (--triesLeft <= 0)) {
 				Ext.util.Cookies.clear('downloadToken');
 				downloadWindow.close();
 				clearInterval(exportStatus);
 			} else if (cookieValue) {
-				alert('funkychicken ' + cookieValue);
+				log_it('funkychicken ' + cookieValue);
 			}
 		}, 1000);
 
