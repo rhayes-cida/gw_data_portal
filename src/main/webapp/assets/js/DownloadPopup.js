@@ -51,6 +51,8 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	clientValidation: false,
 	url: '/gw_data_portal/data',
 	target: "_blank",
+	
+	// TODO Does this need to be part of the formSubmit method? What is the scope of the form instance?
 	addItem: function(n,v) {
 		var form = this.getForm();
 		
@@ -64,18 +66,76 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 
 		dom.appendChild(input);
 	},
+	
 	// Workaround as the standardSubmit config item does not seem to be getting 
 	// propagated through to the new child object, which means the EXT submit
 	// method does the wrong thing.
 	formSubmitToTarget: function(tgt) {
 		var form = this.getForm();
-		
+		var token = (new Date()).getTime();
+
 		var dom = form.el.dom;
-		dom.target = tgt;
+		if (tgt) {
+			dom.target = tgt;
+		}
 
         if(this.url && Ext.isEmpty(dom.action)){
             dom.action = this.url;
         }
+        
+        this.addItem('downloadToken', token);
+        this.addItem('bundled','true');
+        
+		//pop up a new window that displays progress of download
+        var downloadWindow = null;
+		downloadWindow = new Ext.Window({
+			height: 200,
+			width: 300,
+			resizable: false,
+			title: 'Downloading Data...',
+			modal: true,
+			layout: 'border',
+			closable: false,
+			items: [{
+				border: false,
+				region: 'center',
+				html: ''
+			}],
+			buttonAlign: 'center',
+			buttons: [{
+				text: 'Cancel',
+				handler: function() {
+					Ext.Msg.show({
+						title:'Warning',
+						msg: 'Cancel the download?',
+						buttons: Ext.Msg.YESNO,
+						fn: function(bid) {
+							if (bid == 'yes' && downloadWindow) {
+								downloadWindow.close();
+							}
+						},
+						icon: Ext.MessageBox.QUESTION
+					});
+				},
+				scope: this
+			}]
+		});
+		
+		downloadWindow.show();
+		downloadWindow.body.mask('Please wait...','x-mask-loading');
+
+		var exportStatus = null;
+		exportStatus = setInterval(function() {
+			var cookieValue = Ext.util.Cookies.get('downloadToken');
+			if (cookieValue == token) {
+				Ext.util.Cookies.clear('downloadToken');
+				downloadWindow.close();
+				clearInterval(exportStatus);
+			} else if (cookieValue) {
+				alert('funkychicken ' + cookieValue);
+			}
+		}, 1000);
+
         dom.submit();
 	}
 });
@@ -101,7 +161,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 			url: 'settings',
 			success: function(result,request) {
 				var jsonData = Ext.util.JSON.decode(result.responseText);
-                Ext.apply(this.msdlf, {
+                Ext.apply(myMsdlf, {
                 	url: jsonData.cacheBase
                 });
 			},
@@ -193,7 +253,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 							myMsdlf.addItem('featureID',wellID);
 						}
 						
-						myMsdlf.formSubmitToTarget('_blank');
+						myMsdlf.formSubmitToTarget(null);
 						
 						// TODO Close? Or use tracking window from SiteIdentifyWindow?
 					}

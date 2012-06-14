@@ -347,5 +347,9 @@
 			<input type="hidden" name="downloadToken"/>
 		</form>
 		
+		<form id="multisiteDownloadForm" style="display:none;" method="POST" action="data">
+			<!--  Used by DownloadPopup.jsp, which creates the input fields -->
+			<button name="download" type="submit"/>
+		</form>
 	</body>
 </html>

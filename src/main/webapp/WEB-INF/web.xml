@@ -5,18 +5,16 @@
 
 <display-name>NGWMN Map Client (formerly GWDP MAP){Owner: NB, JL Coder: IK}</display-name>
 <description>Client Application of the NGWMN (formerly GWDP)</description>
-<filter>
-	<description>
-	</description>
-	<display-name>DownloadTokenFilter</display-name>
-	<filter-name>DownloadTokenFilter</filter-name>
-	<filter-class>gov.usgs.DownloadTokenFilter</filter-class>
-</filter>
-<filter-mapping>
-	<filter-name>DownloadTokenFilter</filter-name>
-	<servlet-name>ExportServlet</servlet-name>
-	<dispatcher>REQUEST</dispatcher>
-</filter-mapping>
+
+	<filter>
+		<display-name>DownloadTokenFilter</display-name>
+		<filter-name>DownloadTokenFilter</filter-name>
+		<filter-class>gov.usgs.DownloadTokenFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>DownloadTokenFilter</filter-name>
+		<servlet-name>ExportServlet</servlet-name>
+	</filter-mapping>
 
 	<servlet>
 		<description>Proxy to forward requests to the Oracle MapViewer server</description>
@@ -43,58 +41,45 @@
 	</servlet>
 	
 	<servlet>
-		<description></description>
-			<servlet-name>ExportServlet</servlet-name>
-			<servlet-class>gov.usgs.ExportServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<display-name>DataRelayServlet</display-name>
-		<servlet-name>DataRelayServlet</servlet-name>
-		<servlet-class>gov.usgs.DataRelayServlet</servlet-class>
+		<servlet-name>ExportServlet</servlet-name>
+		<servlet-class>gov.usgs.ExportServlet</servlet-class>
 	</servlet>
 	
 	<servlet>
-		<display-name>DiagnoseServlet</display-name>
 		<servlet-name>DiagnoseServlet</servlet-name>
 		<servlet-class>gov.usgs.DiagnoseServlet</servlet-class>
 	</servlet>
+	
 	<servlet>
-		<description>
-		</description>
-		<display-name>SettingsServlet</display-name>
 		<servlet-name>SettingsServlet</servlet-name>
 		<servlet-class>gov.usgs.SettingsServlet</servlet-class>
 	</servlet>
 			
 	<servlet-mapping>
-			<servlet-name>MVServlet</servlet-name>
+		<servlet-name>MVServlet</servlet-name>
   		<url-pattern>/mvwms</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
-			<servlet-name>IdentifyServlet</servlet-name>
+		<servlet-name>IdentifyServlet</servlet-name>
   		<url-pattern>/identify</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
-			<servlet-name>BBoxServlet</servlet-name>
+		<servlet-name>BBoxServlet</servlet-name>
   		<url-pattern>/bbox</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
-			<servlet-name>IdentifyDataProxy</servlet-name>
+		<servlet-name>IdentifyDataProxy</servlet-name>
   		<url-pattern>/iddata</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
-			<servlet-name>ExportServlet</servlet-name>
+		<servlet-name>ExportServlet</servlet-name>
   		<url-pattern>/export</url-pattern>
 	</servlet-mapping>
- 	<servlet-mapping>
-		<servlet-name>DataRelayServlet</servlet-name>
-		<url-pattern>/data</url-pattern>
-	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>DiagnoseServlet</servlet-name>
 		<url-pattern>/diagnose</url-pattern>
