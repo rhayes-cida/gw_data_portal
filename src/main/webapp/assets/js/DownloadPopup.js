@@ -14,7 +14,12 @@ var DOWNLOAD_SITES = {
 	find: function(map,mapState) {
 
 		DOWNLOAD_SITES.loading = true;
-				
+		DOWNLOAD_SITES.store.removeAll();
+		var win = Ext.getCmp('multisite-download-window');
+		if (win) {
+			win.setTitle('Identifying sites');
+		}
+		
 		var idBBox = map.getViewportBoundingBoxString();
 		
 		var idParams = mapState;
@@ -62,7 +67,7 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	hidden: true,
 	clientValidation: false,
 	url: '/gw_data_portal/data',
-	target: "_blank",
+	// target: "_blank",
 	
 	// TODO Does this need to be part of the formSubmit method? What is the scope of the form instance?
 	addItem: function(n,v) {
@@ -184,7 +189,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 		});
 
 		Ext.apply(this, {
-			title: this.store.getCount() + ' sites were identified.',
+			title: (this.store.loading) ? 'Identifying sites' : this.store.getCount() + ' sites were identified.',
 			items: [
 			        {
 			        	id: 'sites-grid',
