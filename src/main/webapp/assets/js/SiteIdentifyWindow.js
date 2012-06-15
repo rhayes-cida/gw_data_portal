@@ -150,10 +150,11 @@ var SITE = {
 		exportForm.wlSnFlag.value = wlf;
 		exportForm.downloadToken.value = token;
 		
-		
-		var exportStatus = setInterval(function() {
+		var loopCt = 15;
+		var exportStatus = null;
+		exportStatus = setInterval(function() {
 			var cookieValue = Ext.util.Cookies.get('downloadToken');
-			if (cookieValue == token) {
+			if (cookieValue == token || (--loopCt < 0)) {
 				Ext.util.Cookies.clear('downloadToken');
 				downloadWindow.close();
 				clearInterval(exportStatus);
@@ -162,11 +163,11 @@ var SITE = {
 		
 		exportForm.submit();
 	}
-}
+};
 
 
 function removeNameSpaces(xmlStr){
-	var result = xmlStr.replace(/<[a-zA-Z0-9]+:/g,'<')
+	var result = xmlStr.replace(/<[a-zA-Z0-9]+:/g,'<');
 	result = result.replace(/<\/[a-zA-Z0-9]+:/g,'</');
 	return result;
 }

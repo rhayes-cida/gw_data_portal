@@ -5,6 +5,8 @@ import static gov.usgs.HTTPParameters.ExtParam.*;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.ZipEntry;
@@ -17,15 +19,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static gov.usgs.HTTPParameters.ExtParam.*;
-
 public class ExportServlet extends HttpServlet {
+
+	private static final long serialVersionUID = -7580708007639009664L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 
-		String downloadToken = DOWNLOAD_TOKEN.parse(req);
 		String siteNo = SITE_NO.parse(req);
 		String agencyCd = AGENCY_CODE.parse(req);
 
@@ -33,31 +34,20 @@ public class ExportServlet extends HttpServlet {
 		resp.setContentType("application/zip");
 		resp.setHeader("Content-Disposition", "attachment; filename=gwdp_"
 				+ agencyCd + "_" + siteNo + ".zip");
-		// TODO remove this, cookie is now set by filter
-		resp.addCookie(new Cookie("exportToken", downloadToken));
 
 		ServletOutputStream os = resp.getOutputStream();
-
-		ZipOutputStream zos = new ZipOutputStream(os);
 
 		// fetch files
 		// Get response data.
 		RequestType serviceRequest = RequestType.download;
-		String urlString = serviceRequest.makeRESTUrl(agencyCd, siteNo);
+		String urlString = serviceRequest.makeCacheUrl(agencyCd, siteNo);
 		System.out.println(urlString);
-		zos.putNextEntry(new ZipEntry(agencyCd + "_" + siteNo + ".xls"));
-		zipUrlContents(urlString, zos);
-		zos.flush();
-
-
-
-		zos.close();
+		
+		// copy cache output to client
+		copyUrlContents(urlString, os);
 		os.flush();
-
 	}
-
-
-
+	
 	protected void zipDoGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 
@@ -104,6 +94,7 @@ public class ExportServlet extends HttpServlet {
 		os.flush();
 
 	}
+	
 	private void zipUrlContents(String urlString, ZipOutputStream zos) {
 
 		DataInputStream input = null;
@@ -126,6 +117,38 @@ public class ExportServlet extends HttpServlet {
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void copyUrlContents(String urlString, OutputStream os) {
+
+		try {
+
+			URL url = new URL(urlString);
+			URLConnection conn = url.openConnection();
+			InputStream input = new DataInputStream(conn.getInputStream());
+			BufferedInputStream br = new BufferedInputStream(input);
+			try {
+				copy(br, os);
+			} finally {
+				br.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void copy(InputStream is, OutputStream os) 
+			throws IOException
+	{
+		byte[] buf = new byte[1024];
+		
+		while (true) {
+			int ct = is.read(buf);
+			if (ct <= 0) {
+				break;
+			}
+			os.write(buf, 0, ct);
 		}
 	}
 

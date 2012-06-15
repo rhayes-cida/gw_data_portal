@@ -27,6 +27,11 @@ public enum RequestType {
 		this.typeName = typeName;
 	}
 
+	public String makeCacheUrl(String agency, String siteId) {
+		assert(agency != null && siteId != null);
+		return serverBase + "/ngwmn/data?agencyID=" + agency + "&featureID=" + siteId;
+	}
+	
 	public String makeRESTUrl(String agency, String siteId) {
 		assert(agency != null && siteId != null);
 		return serverBase + path + agency + serviceQuery + siteId;
