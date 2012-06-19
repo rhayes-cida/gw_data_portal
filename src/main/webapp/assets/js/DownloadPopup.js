@@ -84,6 +84,16 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 		dom.appendChild(input);
 	},
 	
+	clearItems: function() {
+		var form = this.getForm();
+		
+		var dom = form.el.dom;
+		var elems = dom.elements;
+		for (var i = 0; i < elems.length; i++) {
+			dom.removeChild(elems[i]);
+		}
+	},
+	
 	// Workaround as the standardSubmit config item does not seem to be getting 
 	// propagated through to the new child object, which means the EXT submit
 	// method does the wrong thing.
@@ -155,6 +165,9 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 		}, 1000);
 
         dom.submit();
+        
+        // must reset DOM form to clear out the appended input children
+        this.clearItems();
 	}
 });
 
@@ -214,22 +227,24 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 				// layout: 'fit',
 				width: 400, 
 				fieldLabel: 'Download: ',
+				id: 'typeGroup',
 				items: [
 					{
 						boxLabel: 'Water Level',
-						name: 'wl', id: 'dtype_wl'
+						name: 'WATERLEVEL', id: 'dtype_wl'
+						
 					},          
 					{
 						boxLabel: 'Water Quality',
-						name:'qw', id: 'dtype_qw'
+						name:'QUALITY', id: 'dtype_qw'
 					},
 					{
 						boxLabel: 'Construction',
-						name: 'construction', id: 'dtype_const'
+						name: 'CONSTRUCTION', id: 'dtype_const'
 					},
 					{
 						boxLabel: 'Lithology',
-						name:'lithology', id : 'dtype_lith'
+						name:'LITHOLOGY', id : 'dtype_lith'
 					},
 				]
 			},
@@ -244,44 +259,35 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						var hasType = false;
 						
 						// start with list of types
-						if (Ext.getCmp('dtype_wl').getValue()) {
-							myMsdlf.addItem('type','WATERLEVEL');
-							hasType = true;
-						}
-						if (Ext.getCmp('dtype_qw').getValue()) {
-							myMsdlf.addItem('type','QUALITY');
-							hasType = true;
-						}
-						/*
-						if (Ext.getCmp('dtype_const').getValue() || Ext.getCmp('dtype_lith').getValue()) {
-							myMsdlf.addItem('type','LOG');
-							hasType = true;
-						}
-						*/
-						if (Ext.getCmp('dtype_const').getValue()) {
-							myMsdlf.addItem('type','CONSTRUCTION');
-							hasType = true;
-						}
-						if (Ext.getCmp('dtype_lith').getValue()) {
-							myMsdlf.addItem('type','LITHOLOGY');
-							hasType = true;
+						var cbl = Ext.getCmp('typeGroup');
+						var ccbb = cbl.getValue();
+						
+						for (var i = 0; i < ccbb.length; i++) {
+							var cb = ccbb[i];
+							if (cb.getValue()) {
+								myMsdlf.addItem('type', cb.getName());
+								hasType = true;
+							}
 						}
 						
 						if ( ! hasType ) {
 							alert("No data type chosen. Fail.");
-						}
-						
-						var sites = DOWNLOAD_SITES.store.getRange();
-						for (var j = 0; j < sites.length; j++) {
-							var siteRecord = sites[j];
+						} else {
+							var sites = DOWNLOAD_SITES.store.getRange();
+							for (var j = 0; j < sites.length; j++) {
+								var siteRecord = sites[j];
+								
+								var wellID = siteRecord.data.agency + ":" + siteRecord.data.siteNo;
+								wellID = wellID.trim();
+								wellID = wellID.replace(/ /g, "+");
+								myMsdlf.addItem('featureID',wellID);
+							}
 							
-							var wellID = siteRecord.data.agency + ":" + siteRecord.data.siteNo;
-							wellID = wellID.trim();
-							wellID = wellID.replace(/ /g, "+");
-							myMsdlf.addItem('featureID',wellID);
+							myMsdlf.formSubmitToTarget(null);
+							
+							// clear type selections
+							cbl.reset();
 						}
-						
-						myMsdlf.formSubmitToTarget(null);
 						
 						// TODO Close? Or use tracking window from SiteIdentifyWindow?
 					}
