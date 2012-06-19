@@ -252,8 +252,18 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 							myMsdlf.addItem('type','QUALITY');
 							hasType = true;
 						}
+						/*
 						if (Ext.getCmp('dtype_const').getValue() || Ext.getCmp('dtype_lith').getValue()) {
 							myMsdlf.addItem('type','LOG');
+							hasType = true;
+						}
+						*/
+						if (Ext.getCmp('dtype_const').getValue()) {
+							myMsdlf.addItem('type','CONSTRUCTION');
+							hasType = true;
+						}
+						if (Ext.getCmp('dtype_lith').getValue()) {
+							myMsdlf.addItem('type','LITHOLOGY');
 							hasType = true;
 						}
 						
