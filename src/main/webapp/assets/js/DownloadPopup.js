@@ -40,6 +40,7 @@ var DOWNLOAD_SITES = {
 					win.enable();
 					// TODO how to redisplay to get updated site names?
 					// win.unmask();
+					win.show();
 				} else {
 					alert('no download window to enable');
 				}
@@ -202,7 +203,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 		});
 
 		Ext.apply(this, {
-			title: (this.store.loading) ? 'Identifying sites' : this.store.getCount() + ' sites were identified.',
+			title: 'Identifying sites',
 			items: [
 			        {
 			        	id: 'sites-grid',
