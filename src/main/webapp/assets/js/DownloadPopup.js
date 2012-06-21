@@ -193,9 +193,9 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 			url: 'settings',
 			success: function(result,request) {
 				var jsonData = Ext.util.JSON.decode(result.responseText);
-					Ext.apply(myMsdlf, {
-						url: jsonData.cacheBase
-					});
+				Ext.apply(myMsdlf, {
+					url: jsonData.cacheBase
+				});
 			},
 			failure: function(result,request) {
 				alert("failed to get settings from server");

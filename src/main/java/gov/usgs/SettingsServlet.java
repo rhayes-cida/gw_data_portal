@@ -22,6 +22,7 @@ public class SettingsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	response.setContentType("application/json");
 		PrintWriter pw = response.getWriter();
+		log("gov.usgs.SettingsServlet.doGet sending cacheBase=" + DebugSettings.CACHE_SERVER);
 		try {
 			pw.print("{");
 			pw.printf(" %s:\"%s\"\n", "baseServer", DebugSettings.SERVER_BASE);
