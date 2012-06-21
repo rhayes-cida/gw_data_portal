@@ -147,10 +147,10 @@ Ext.onReady(function() {
 			tooltip: 'Download Data',
 			iconCls: 'download-icon',
 			handler: function() {
-				// TODO Can we start this earlier?
-				DOWNLOAD_SITES.find(map1,mapState.clone());
 				var dl = new DownloadPopup();
 				dl.show();
+				// TODO Can we start this earlier?
+				DOWNLOAD_SITES.find(map1,mapState.clone());
 			}
 		}]
 	});

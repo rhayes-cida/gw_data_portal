@@ -38,9 +38,9 @@ var DOWNLOAD_SITES = {
 				if (win) {
 					win.setTitle(DOWNLOAD_SITES.store.getCount() + ' sites were identified.');
 					win.enable();
-					// TODO how to redisplay to get updated site names?
+					// force redisplay to make sure sites are shown?
 					// win.unmask();
-					win.show();
+					win.doLayout(false, true);
 				} else {
 					alert('no download window to enable');
 				}
@@ -193,9 +193,9 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 			url: 'settings',
 			success: function(result,request) {
 				var jsonData = Ext.util.JSON.decode(result.responseText);
-                Ext.apply(myMsdlf, {
-                	url: jsonData.cacheBase
-                });
+					Ext.apply(myMsdlf, {
+						url: jsonData.cacheBase
+					});
 			},
 			failure: function(result,request) {
 				alert("failed to get settings from server");
