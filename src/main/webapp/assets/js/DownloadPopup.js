@@ -178,7 +178,6 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 				clearInterval(exportStatus);
 			} else if (cookieValue) {
 				log_it('funkychicken ' + cookieValue);
-				Ext.util.Cookies.clear('downloadToken');
 			}
 		}, 1000);
 
