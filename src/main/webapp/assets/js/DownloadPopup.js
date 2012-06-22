@@ -168,12 +168,14 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 		downloadWindow.show();
 		downloadWindow.body.mask('Please wait...','x-mask-loading');
 
+		Ext.util.Cookies.clear('downloadToken');
+
 		var triesLeft = 10;
 		var exportStatus = null;
 		exportStatus = setInterval(function() {
 			var cookieValue = Ext.util.Cookies.get('downloadToken');
 			if (cookieValue == token || (--triesLeft <= 0)) {
-				Ext.util.Cookies.clear('downloadToken');
+				// Ext.util.Cookies.clear('downloadToken');
 				downloadWindow.close();
 				clearInterval(exportStatus);
 			} else if (cookieValue) {
