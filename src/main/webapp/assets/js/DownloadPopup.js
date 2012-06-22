@@ -302,7 +302,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 							myMsdlf.formSubmitToTarget(null);
 							
 							// clear type selections
-							cbl.reset();
+							// cbl.reset();
 						}
 						
 						// TODO Close? Or use tracking window from SiteIdentifyWindow?
