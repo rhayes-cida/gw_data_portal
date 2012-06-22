@@ -62,6 +62,19 @@ function log_it(msg)
     catch(e){}
 }
 
+var settingsData = null;
+Ext.Ajax.request({
+	url: 'settings',
+	success: function(result,request) {
+		var jsonData = Ext.util.JSON.decode(result.responseText);
+		settingsData = jsonData;
+	},
+	failure: function(result,request) {
+		alert("failed to get settings from server");
+	}
+});
+
+
 var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	standardSubmit: true,
 	method: 'POST',
@@ -107,6 +120,9 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 			dom.target = tgt;
 		}
 
+		if (settingsData) {
+			this.url = settingsData.cacheBase;
+		}
         if(this.url && Ext.isEmpty(dom.action)){
             dom.action = this.url;
         }
@@ -162,6 +178,7 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 				clearInterval(exportStatus);
 			} else if (cookieValue) {
 				log_it('funkychicken ' + cookieValue);
+				Ext.util.Cookies.clear('downloadToken');
 			}
 		}, 1000);
 
@@ -189,19 +206,14 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 		
 		var myMsdlf = this.msdlf;
 
-		Ext.Ajax.request({
-			url: 'settings',
-			success: function(result,request) {
-				var jsonData = Ext.util.JSON.decode(result.responseText);
-				Ext.apply(myMsdlf, {
-					url: jsonData.cacheBase
-				});
-			},
-			failure: function(result,request) {
-				alert("failed to get settings from server");
-			}
-		});
-
+		if (settingsData) {
+			Ext.apply(myMsdlf, {
+				url: settingsData.cacheBase
+			});			
+		} else {
+			alert("No settings yet");
+		}
+		
 		Ext.apply(this, {
 			title: 'Identifying sites',
 			items: [
@@ -232,20 +244,23 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 				items: [
 					{
 						boxLabel: 'Water Level',
-						name: 'WATERLEVEL', id: 'dtype_wl'
-						
+						name: 'WATERLEVEL', id: 'dtype_wl',
+						checked: true
 					},          
 					{
 						boxLabel: 'Water Quality',
-						name:'QUALITY', id: 'dtype_qw'
+						name:'QUALITY', id: 'dtype_qw',
+						checked: true
 					},
 					{
 						boxLabel: 'Construction',
-						name: 'CONSTRUCTION', id: 'dtype_const'
+						name: 'CONSTRUCTION', id: 'dtype_const',
+						checked: true
 					},
 					{
 						boxLabel: 'Lithology',
-						name:'LITHOLOGY', id : 'dtype_lith'
+						name:'LITHOLOGY', id : 'dtype_lith',
+						checked: true
 					},
 				]
 			},

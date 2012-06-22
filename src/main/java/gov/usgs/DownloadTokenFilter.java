@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class DownloadTokenFilter implements Filter {
@@ -21,7 +22,15 @@ public class DownloadTokenFilter implements Filter {
 			if (response instanceof HttpServletResponse) {
 				HttpServletResponse hresp = (HttpServletResponse) response;
 				Cookie cookie = new Cookie(TOKEN_NAME, token);
-				cookie.setPath("/");
+				String path = "/";
+				if (request instanceof HttpServletRequest) {
+					HttpServletRequest hreq = (HttpServletRequest) request;
+					path = hreq.getContextPath();
+					if ("".equals(path)) {
+						path = "/";
+					}
+				}
+				cookie.setPath(path);
 				
 				String server = request.getServerName();
 				
