@@ -262,7 +262,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						boxLabel: 'Lithology',
 						name:'LITHOLOGY', id : 'dtype_lith',
 						checked: true
-					},
+					}
 				]
 			},
 					   
