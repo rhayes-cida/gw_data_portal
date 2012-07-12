@@ -296,7 +296,8 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 								
 								var wellID = siteRecord.data.agency + ":" + siteRecord.data.siteNo;
 								wellID = wellID.trim();
-								wellID = wellID.replace(/ /g, "+");
+								// wellID = wellID.replace(/ /g, "+");
+								wellID = wellID.replace(/ /g, "_");
 								myMsdlf.addItem('featureID',wellID);
 							}
 							
