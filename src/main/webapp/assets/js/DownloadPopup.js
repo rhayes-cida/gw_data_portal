@@ -190,6 +190,43 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	}
 });
 
+var DownloadHelpPopup = Ext.extend(Ext.Window, {
+	id: 'download-help-window',
+	height: 400,
+	width: 780,
+	modal: true,
+	closeAction: 'hide',
+	title: 'Download Help',
+	html: '<h1>Download Help</h1>'+
+		'<p>Data for one or more sites may be downloaded for analysis.</p> '+
+		'<p>The data download is available from the "Site Identification" '+
+		'tool, for download of data from one site, or from the "Multi-Site '+
+		'Download Tool", for data from multiple sites.</p> '+
+
+		'<h2>Single-Site Download</h2>'+
+		'<p>At present, data for a single site is available as an XLS '+
+		'(Microsoft &reg; Excel &reg; format) file, with three sheets: '+ 
+		'<ul><li>Well Log<li>Water Levels<li>Water Quality</ul>'+
+		'</p>'+
+
+		'<p>The Well Log sheet contains both Lithology and Construction	information.</p>'+
+
+		'<p>The format for the single-site download will soon change to be identical to that for the Multi-Site Download (q.v.).</p>'+
+
+		'<h2>Multi-Site Download</h2>'+
+
+		'<p>The multi-site download tool provides data for all the sites visible on the map, which can be controlled using the agency, '+
+		'aquifer, and network selection filters (in the left sidebar of the	map) and the drag and zoom tools.</p>' +
+
+		'<p>The download tool allows you to choose which data categories to download for the visible sites, choosing from: '+
+		'<ul><li>Water Level<li>Water Quality<li>Construction<li>Lithology</li></ul></p>'+
+
+		'<p>The data is downloaded as a zip file, containing one CSV (comma-separated values) file for each selected data category;'+
+		'the columns in each CSV file are labeled with column headers. The columns are separated by the comma character (ASCII 44), data is delimited by '+
+		'the quote character (ASCII 34), and each row of data is terminated by a linefeed character (ASCII 10).</p>'
+});
+var dlHelpWindow = new DownloadHelpPopup();
+
 var DownloadPopup = Ext.extend(Ext.Window, {
 	id: 'multisite-download-window',
 	title: 'Multi-site Download',
@@ -199,6 +236,13 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 	modal: true,
 	store: DOWNLOAD_SITES.store,
 	disabled: DOWNLOAD_SITES.loading,
+	tools: [{
+		id: 'help',
+		qtip: 'Help on Download',
+		handler: function() {
+			dlHelpWindow.show();
+		}
+	}],
 
 	//resizable: false,
 	initComponent: function() {
@@ -267,7 +311,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 			},
 					   
 			'->',
-					          
+			
 			{
 					text: 'Download data',
 					handler: function() {
