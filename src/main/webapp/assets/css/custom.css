@@ -446,7 +446,9 @@ td.long-text {
 	font-size: smaller;
 }	
 
-
+.help ul {
+	list-style: disc;
+}
 
 #id-container table {
 	border-collapse: collapse;

@@ -197,7 +197,8 @@ var DownloadHelpPopup = Ext.extend(Ext.Window, {
 	modal: true,
 	closeAction: 'hide',
 	title: 'Download Help',
-	html: '<h1>Download Help</h1>'+
+	bodyCssClass: 'help',
+	html: ''+
 		'<p>Data for one or more sites may be downloaded for analysis.</p> '+
 		'<p>The data download is available from the "Site Identification" '+
 		'tool, for download of data from one site, or from the "Multi-Site '+
