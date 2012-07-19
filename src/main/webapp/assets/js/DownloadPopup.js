@@ -224,7 +224,9 @@ var DownloadHelpPopup = Ext.extend(Ext.Window, {
 
 		'<p>The data is downloaded as a zip file, containing one CSV (comma-separated values) file for each selected data category;'+
 		'the columns in each CSV file are labeled with column headers. The columns are separated by the comma character (ASCII 44), data is delimited by '+
-		'the quote character (ASCII 34), and each row of data is terminated by a linefeed character (ASCII 10).</p>'
+		'the quote character (ASCII 34), and each row of data is terminated by a linefeed character (ASCII 10).</p>' +
+		
+		'<p>The zip file also contains a REGISTRY.csv file, giving general information about all the visible sites.</p>'
 });
 var dlHelpWindow = new DownloadHelpPopup();
 
@@ -318,6 +320,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 					handler: function() {
 						
 						myMsdlf.items.clear();
+						myMsdlf.addItem('type', 'REGISTRY');		// Always include the registry info
 						var hasType = false;
 						
 						// start with list of types
@@ -333,7 +336,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						}
 						
 						if ( ! hasType ) {
-							alert("No data type chosen. Fail.");
+							Ext.MessageBox.alert("Which data would you like?","Please select at least one data type to download.");
 						} else {
 							var sites = DOWNLOAD_SITES.store.getRange();
 							for (var j = 0; j < sites.length; j++) {
