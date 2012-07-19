@@ -447,7 +447,7 @@ td.long-text {
 }	
 
 .help ul {
-	list-style: disc;
+	list-style: square inside none;
 }
 
 #id-container table {
