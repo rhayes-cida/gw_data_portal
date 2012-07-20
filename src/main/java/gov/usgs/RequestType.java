@@ -29,7 +29,7 @@ public enum RequestType {
 
 	public String makeCacheUrl(String agency, String siteId) {
 		assert(agency != null && siteId != null);
-		return serverBase + "/ngwmn/data?agencyID=" + agency + "&featureID=" + siteId;
+		return serverBase + "/ngwmn/data?agencyID=" + agency + "&featureID=" + siteId + "&type=REGISTRY&type=LOG&type=WATERLEVEL&type=QUALITY&bundled=TRUE";
 	}
 	
 	public String makeRESTUrl(String agency, String siteId) {

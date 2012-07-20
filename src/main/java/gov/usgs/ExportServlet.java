@@ -28,9 +28,9 @@ public class ExportServlet extends HttpServlet {
 		String agencyCd = AGENCY_CODE.parse(req);
 
 
-		resp.setContentType("application/vnd.ms-excel");
+		resp.setContentType("application/zip");
 		resp.setHeader("Content-Disposition", "attachment; filename="
-				+ agencyCd + "_" + siteNo + ".xls");
+				+ agencyCd + "_" + siteNo + ".zip");
 
 		ServletOutputStream os = resp.getOutputStream();
 
