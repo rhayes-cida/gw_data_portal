@@ -206,19 +206,27 @@ var WATER_LEVEL_TAB = {
 		},
 		listeners: {
 			load: function(s,r,o) {
+				
 				var data = [];
 				for (var i = 0; i < r.length; i++) {
 					data.push([r[i].get('time'), parseFloat(r[i].get('value')).toFixed(4)]);
 				}
+				
+				/*
 				Ext.getCmp('ext-flot').setData([{label: 'Depth to water in feet', data:data}]);
 				Ext.getCmp('ext-flot').setupGrid();
 				Ext.getCmp('ext-flot').draw();
+				*/
 			},
 			exception: function(){WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);}
 		}
 	}),
 	load: function(record) {
+		// show the graph first, then get the table.
 		WATER_LEVEL_TAB.mask();
+		WATER_LEVEL_TAB.graph(record.get('agency'), record.get('siteNo'));
+		WATER_LEVEL_TAB.unmask();
+		
 		Ext.Ajax.request({
 			method: 'GET',
 			url: 'iddata?request=water_level',
@@ -239,8 +247,18 @@ var WATER_LEVEL_TAB = {
 			}
 		});
 	},
-	update: function(htmlStr) { this.get().update(htmlStr);}
-}
+	update: function(htmlStr) { this.get().update(htmlStr);},
+	graph: 	function(agencyCd, siteNo){
+		var url = settingsData.cacheBase.replace(":","%3A","g");
+		url = url.replace(":","%3A"); // some browsers do not accept g flag
+		g = new Dygraph(
+			    document.getElementById("dygraph-plot"),
+			    "retrofit/service/XML2CSV?chunk=TimeValuePair&fields=time,value&url=" + url + "/" +
+	    		agencyCd + "/" + siteNo +
+	    		"/WATERLEVEL"
+		);
+	}
+};
 
 
 
@@ -375,7 +393,8 @@ var WELL_LOG_TAB = {
 			failure: function(r, o){ WELL_LOG_TAB.update(SITE.connectionErrorMessage);}
 		});
 	}
-}
+};
+
 var WATER_QUALITY_TAB = {
 		cmpName: 'water-quality-tab',
 		get: function() {return Ext.getCmp(this.cmpName);},
@@ -419,7 +438,7 @@ var WATER_QUALITY_TAB = {
 		//ActivityStartDate, ActivityStartTime, TimeZoneCode, CharacteristicName, ActivityMediaSubdivisionName, 
 		//ResultSampleFractionTest, ResultMeasureValue, ResultDetectionConditionText, MeasureUnitCode, 
 		//ResultValueTypeName, USGSPCode
-	}
+	};
 
 var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	id: 'identify-site-window',
@@ -485,7 +504,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					activate: function(p) {
 						if (!p.isLoaded) {
 							p.isLoaded = true;
-							WATER_LEVEL_TAB.load(this.siteRecord)
+							WATER_LEVEL_TAB.load(this.siteRecord);
 						}
 					},
 					scope: this
@@ -495,7 +514,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					autoScroll: true,
 					padding: 5,
 					items: [{
-						colors: ['darkblue'],
+/*						colors: ['darkblue'],
 						title: 'Graph',
 						xtype: 'flot',
 						height: 400,
@@ -533,6 +552,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						  grid: {
 							backgroundColor: 'white'
 						}
+						*/
+						border: false,
+						height: 300,
+						html: '<div id="dygraph-plot"></div/>'
 					},{
 						border: false,
 						height: 25,
@@ -629,7 +652,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			buttons: [{
 				text: 'Download Data',
 				handler: function() {
-					SITE.downloadData(this.siteRecord)
+					SITE.downloadData(this.siteRecord);
 				},
 				scope: this
 			},{

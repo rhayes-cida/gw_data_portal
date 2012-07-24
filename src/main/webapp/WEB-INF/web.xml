@@ -54,6 +54,11 @@
 		<servlet-name>SettingsServlet</servlet-name>
 		<servlet-class>gov.usgs.SettingsServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>XML2CSVServlet</servlet-name>
+		<servlet-class>gov.usgs.cida.retrofit.XML2CSVServlet</servlet-class>
+	</servlet>
 			
 	<servlet-mapping>
 		<servlet-name>MVServlet</servlet-name>
@@ -84,9 +89,15 @@
 		<servlet-name>DiagnoseServlet</servlet-name>
 		<url-pattern>/diagnose</url-pattern>
 	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>SettingsServlet</servlet-name>
 		<url-pattern>/settings</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>XML2CSVServlet</servlet-name>
+		<url-pattern>/retrofit/service/XML2CSV</url-pattern>
 	</servlet-mapping>
 	
 	<session-config>

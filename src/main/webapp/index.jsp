@@ -5,10 +5,11 @@
 				javax.sql.DataSource,
 				java.sql.SQLException,
 				java.sql.Connection"%>
-
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>National Ground Water Monitoring Network Data Portal (BETA)</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
 		<link rel="icon" 
       		type="image/png" 
       		href="favicon.ico">
@@ -60,6 +61,12 @@
 		(function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
 		
 		</script>
+		
+		<!-- Dygraph and associated hacks for IE -->
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
+		<script type="text/javascript"
+  src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script>
+  		<script type="text/javascript" src="dygraphTimeHack.js"></script>
 	</head>
 	
 	<body>
