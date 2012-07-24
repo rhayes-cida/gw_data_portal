@@ -31,6 +31,10 @@ if ( Dygraph && Dygraph.dateParser) {
 		// combined Date Time parsing, ignoring time zone because Date.UTC() can't deal with it
 		var ISO8601DateTimeRegex = /^(\d{4})-?(\d\d)-?(\d\d)(T(\d\d)(:?(\d\d)?:?(\d\d))?)?/;
 		var m = ISO8601DateTimeRegex.exec(dateStr);
-		return Date.UTC(m[1], m[2], m[3], m[5], m[7], m[8]);	
+		d = Date.UTC(m[1], m[2], m[3], m[5], m[7], m[8]);
+		if (!d || isNaN(d)) {
+			Dygraph.error("Couldn't parse " + dateStr + " as a date");
+		}
+		return d;	
 	};
 }
