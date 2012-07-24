@@ -50,7 +50,13 @@ public class XML2CSV {
 
 	private static List<String> applyTransforms(List<String> headers,
 			List<String> data) {
-		return data;
+		// XML data needs to trim off whitespace (whitespace normalization)
+		List<String> result = new ArrayList<String>(data.size());
+		for (String item: data) {
+			item = (item == null)? null : item.trim();
+			result.add(item);
+		}
+		return result;
 	}
 
 	public void addTransforms(Transform... transform) {
