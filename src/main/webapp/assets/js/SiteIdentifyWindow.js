@@ -251,21 +251,23 @@ var WATER_LEVEL_TAB = {
 	graph: 	function(agencyCd, siteNo){
 		var url = settingsData.cacheBase.replace(":","%3A","g");
 		url = url.replace(":","%3A"); // some browsers do not accept g flag
-		g = new Dygraph(
+		var dOptions = {
+		    	xlabel: "Month/Year",
+		    	ylabel: "Depth of water level, feet below land surface",
+		    	showRangeSelector: true,
+		    	rangeSelectorHeight: 30, 
+		    	axisLabelFontSize: 10,
+		    	axisLineWidth: 1,
+		    	yLabelWidth: 15
+    		};
+		if (!Ext.isIE) dOptions.width = 700;
+		WATER_LEVEL_TAB.g = new Dygraph(
 			    document.getElementById("dygraph-plot"),
 			    "retrofit/service/XML2CSV?chunk=TimeValuePair&fields=time,value&url=" + url + "/" +
 	    			agencyCd + "/" + siteNo +
 	    			"/WATERLEVEL",
-	    		{	xlabel: "Month/Year",
-			    	ylabel: "Depth of water level, feet below land surface",
-			    	width: 700,
-			    	showRangeSelector: true,
-			    	rangeSelectorHeight: 30, 
-			    	axisLabelFontSize: 10,
-			    	axisLineWidth: 1,
-			    	yLabelWidth: 15
-			    	
-	    		}
+	    		dOptions
+
 		);
 	}
 };

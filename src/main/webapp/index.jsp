@@ -64,8 +64,7 @@
 		
 		<!-- Dygraph and associated hacks for IE -->
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
-		<script type="text/javascript"
-  src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script>
+		<script type="text/javascript" src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script>
   		<script type="text/javascript" src="dygraphTimeHack.js"></script>
 	</head>
 	
