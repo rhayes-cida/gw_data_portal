@@ -6,37 +6,6 @@ if ( Dygraph && Dygraph.dateParser) {
 	// References:
 	//		http://msdn.microsoft.com/en-us/library/ff743760%28v=vs.94%29.aspx
 	//		http://stackoverflow.com/questions/8266710/javascript-date-parse-difference-in-chrome-and-other-browsers
-
-
-	Dygraph.dateParser = function(dateStr){
-		// If the native date parsing is able to handle it, then return the result quickly
-		var d = Dygraph.dateStrToMillis(dateStr);
-		if (d && !isNaN(d)) return d;
-		
-		/* Only those browsers with poor native date parsing capabilities have to pay
-			the performance cost of more complicated ISO8601 parsing.
-			Try parsing as ISO8601 calendar date, according to http://en.wikipedia.org/wiki/ISO_8601#Calendar_dates
-			Supporting YYYYMMDD and YYYY-MM-DD, but leaving out YYYY-MM
-		*/
-		// var ISO8601DateRegex = /^(\d{4})-?(\d\d)-?(\d\d)/;
-		/*	Parsing ISO8601 time, according to http://en.wikipedia.org/wiki/ISO_8601#Times
-		 * 	Supporting hh:mm:ss, hhmmss, hh:mm, hhmm, hh
-		 */
-		// var ISO8601TimeRegex = /T(\d\d)(:?(\d\d)?:?(\d\d))?/;
-		/* Parsing ISO8601 time zones, according to http://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators
-		 * Supporting <time>Z and <time><offset>
-		 */
-		//var ISO8601TimeZoneRegEx = /Z|[+-](\d\d)(:?(\d\d)?:?(\d\d))?$/;
-		
-		// combined Date Time parsing, ignoring time zone because Date.UTC() can't deal with it
-		var ISO8601DateTimeRegex = /^(\d{4})-?(\d\d)-?(\d\d)(T(\d\d)(:?(\d\d)?:?(\d\d))?)?/;
-		var m = ISO8601DateTimeRegex.exec(dateStr);
-		d = Date.UTC(m[1], m[2], m[3]|| 1, m[5]||"00", m[7]||"00", m[8]||"00");
-		if (!d || isNaN(d)) {
-			Dygraph.error("Couldn't parse " + dateStr + " as a date");
-		}
-		return d;	
-	};
 	
 	Dygraph.ISO8601TimeZoneRegex = /Z|z|[+-]\d\d:?\d\d$/;
 	
@@ -56,8 +25,8 @@ if ( Dygraph && Dygraph.dateParser) {
 			if (!d || isNaN(d)){ // then try native
 				d = Dygraph.dateStrToMillis(dateStr);
 			}
-		}
-		
+		}	
+
 		if (!d || isNaN(d)) {
 			Dygraph.error("Couldn't parse " + dateStr + " as a date");
 		}
@@ -84,5 +53,14 @@ if ( Dygraph && Dygraph.dateParser) {
 		} else {
 			return Date.UTC(m[1], (m[2] || 1) - 1, m[3] || "1", m[5]||"00", m[7]||"00", m[8]||"00").getTime();
 		}
+	};
+	
+	Dygraph.prototype.loadedEvent_ = function(data) {
+		  this.rawData_ = this.parseCSV_(data);
+		  this.predraw_();
+		  var range = this.yAxisRange(0);
+		  this.updateOptions({
+					valueRange: [range[1], range[0]]
+		  });
 	};
 }
