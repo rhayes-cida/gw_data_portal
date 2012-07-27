@@ -80,9 +80,9 @@ if ( Dygraph && Dygraph.dateParser) {
 		var m = Dygraph.ISO8601DateTimeRegex.exec(dateStr);
 
 		if (asLocal){
-			return new Date(m[1], (m[2] || 1) - 1, m[3] || "1", m[5]||"00", m[7]||"00", m[8]||"00");
+			return (new Date(m[1], (m[2] || 1) - 1, m[3] || "1", m[5]||"00", m[7]||"00", m[8]||"00")).getTime();
 		} else {
-			return Date.UTC(m[1], (m[2] || 1) - 1, m[3] || "1", m[5]||"00", m[7]||"00", m[8]||"00");
+			return Date.UTC(m[1], (m[2] || 1) - 1, m[3] || "1", m[5]||"00", m[7]||"00", m[8]||"00").getTime();
 		}
 	};
 }

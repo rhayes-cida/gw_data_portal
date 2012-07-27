@@ -261,13 +261,12 @@ var WATER_LEVEL_TAB = {
 		    	yLabelWidth: 15
     		};
 		if (!Ext.isIE) dOptions.width = 700;
-		WATER_LEVEL_TAB.g = new Dygraph(
-			    document.getElementById("dygraph-plot"),
+		var g = new Dygraph(
+			    document.getElementById("dygraph-plot2"),
 			    "retrofit/service/XML2CSV?chunk=TimeValuePair&fields=time,value&url=" + url + "/" +
 	    			agencyCd + "/" + siteNo +
 	    			"/WATERLEVEL",
 	    		dOptions
-
 		);
 	}
 };
@@ -567,7 +566,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						*/
 						border: false,
 						height: 350,
-						html: '<div id="dygraph-plot"></div/>'
+						html: '<div id="dygraph-plot"></div/><div id="dygraph-plot2"></div/>'
 					},{
 						border: false,
 						height: 25,
@@ -677,5 +676,4 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 		SiteIdentifyWindow.superclass.initComponent.call(this);
 	}
 });
-
 
