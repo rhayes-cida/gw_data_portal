@@ -33,14 +33,14 @@ if ( Dygraph && Dygraph.dateParser) {
 		return d;
 	};
 	
-	Dygraph.ISO8601DateTimeRegex = /^(\d{4})-?(\d\d)-?(\d\d)(T(\d\d)(:?(\d\d)?:?(\d\d))?)?/;
+	Dygraph.ISO8601DateTimeRegex = /^(\d{4})-?(\d\d)-?(\d\d)(T(\d\d)(:?(\d\d):?(\d\d)?)?)?/;
 	
 	Dygraph.parseISO8601Date = function(dateStr, asLocal){
 		// var ISO8601DateRegex = /^(\d{4})-?(\d\d)-?(\d\d)/;
 		/*	Parsing ISO8601 time, according to http://en.wikipedia.org/wiki/ISO_8601#Times
 		 * 	Supporting hh:mm:ss, hhmmss, hh:mm, hhmm, hh
 		 */
-		// var ISO8601TimeRegex = /T(\d\d)(:?(\d\d)?:?(\d\d))?/;
+		// var ISO8601TimeRegex = /T(\d\d)(:?(\d\d):?(\d\d)?)?/;
 		/* Parsing ISO8601 time zones, according to http://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators
 		 * Supporting <time>Z and <time><offset>
 		 */
