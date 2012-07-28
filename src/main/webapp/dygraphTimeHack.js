@@ -57,10 +57,36 @@ if ( Dygraph && Dygraph.dateParser) {
 	
 	Dygraph.prototype.loadedEvent_ = function(data) {
 		  this.rawData_ = this.parseCSV_(data);
+		  if (this.rawData_.length == 1){
+			  this.showError("No graph displayed for a single data point");
+			  return;
+		  }
+
 		  this.predraw_();
-		  var range = this.yAxisRange(0);
-		  this.updateOptions({
-					valueRange: [range[1], range[0]]
-		  });
+		  var reverseValues = true;
+		  var hasOptions = false;
+		  var options = {};
+
+		  if (reverseValues){
+			  var yRange = this.yAxisRange(0);
+			  options.valueRange = [yRange[1], yRange[0]];
+			  hasOptions = true;
+		  }
+		  if (hasOptions){
+			  this.updateOptions(options);
+		  }
+	};
+	
+	Dygraph.prototype.showError = function(msg){
+		  var div = this.maindiv_;
+		  var exc = null;
+		  try{
+			  this.destroy();
+		  } catch(exc){
+			  Dygraph.error("Couldn't parse destroy dygraph due to " + exc );
+		  }
+		  
+		  div.innerHTML = msg;
+		  return;
 	};
 }
