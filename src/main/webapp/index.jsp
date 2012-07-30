@@ -66,6 +66,16 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
 		<script type="text/javascript" src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script>
   		<script type="text/javascript" src="dygraphTimeHack.js"></script>
+  		<style>
+  			.dygraph-legend{
+  				opacity: .70;
+  				filter:alpha(opacity=70);
+				filter: "alpha(opacity=70)";
+				top: 2px !important;
+				width: 248px !important;
+  			}
+  		
+  		</style>
 	</head>
 	
 	<body>

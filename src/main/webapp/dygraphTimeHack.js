@@ -66,6 +66,7 @@ if ( Dygraph && Dygraph.dateParser) {
 		  var reverseValues = true;
 		  var hasOptions = false;
 		  var callBack = WATER_LEVEL_TAB.unmask;
+		  var callBackObject = WATER_LEVEL_TAB;
 		  var options = {};
 
 		  if (reverseValues){
@@ -77,7 +78,7 @@ if ( Dygraph && Dygraph.dateParser) {
 			  this.updateOptions(options);
 		  }
 		  if (callBack){
-			  callBack();
+			  callBack.call(callBackObject);
 		  }
 	};
 	
