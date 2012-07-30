@@ -225,7 +225,7 @@ var WATER_LEVEL_TAB = {
 		// show the graph first, then get the table.
 		WATER_LEVEL_TAB.mask();
 		WATER_LEVEL_TAB.graph(record.get('agency'), record.get('siteNo'));
-		WATER_LEVEL_TAB.unmask();
+		//WATER_LEVEL_TAB.unmask();
 		
 		Ext.Ajax.request({
 			method: 'GET',
@@ -257,12 +257,12 @@ var WATER_LEVEL_TAB = {
 		    	showRangeSelector: true,
 		    	rangeSelectorHeight: 30, 
 		    	axisLabelFontSize: 10,
-		    	axisLineWidth: 1,
+		    	axisLineWidth: 1.5,
 		    	yLabelWidth: 15
     		};
 		if (!Ext.isIE) dOptions.width = 700;
 		var g = new Dygraph(
-			    document.getElementById("dygraph-plot2"),
+			    document.getElementById("dygraph-plot"),
 			    "retrofit/service/XML2CSV?chunk=TimeValuePair&fields=time,value&url=" + url + "/" +
 	    			agencyCd + "/" + siteNo +
 	    			"/WATERLEVEL",
@@ -566,7 +566,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						*/
 						border: false,
 						height: 350,
-						html: '<div id="dygraph-plot"></div/><div id="dygraph-plot2"></div/>'
+						html: '<div id="dygraph-plot"></div/>'
 					},{
 						border: false,
 						height: 25,
