@@ -34,6 +34,11 @@ var DOWNLOAD_SITES = {
 					siteRecord.data.siteName = SITE.createName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
 				}
 				DOWNLOAD_SITES.loading = false;
+				if (r.length == 0) {
+					alert_no_sites();					
+					return;
+				}
+				
 				var win = Ext.getCmp('multisite-download-window');
 				if (win) {
 					win.setTitle(DOWNLOAD_SITES.store.getCount() + ' sites were identified.');
@@ -49,6 +54,16 @@ var DOWNLOAD_SITES = {
 	}
 
 };
+
+function alert_no_sites() {
+	var nosites = Ext.getCmp('multisite-nosite-window');
+	
+	if (nosites) {
+		nosites.show();
+	} else {
+		alert('No sites identified. Please use map controls to display sites');
+	}
+}
 
 //use a less common namespace than just 'log'
 function log_it(msg)
@@ -204,6 +219,21 @@ var DownloadHelpPopup = Ext.extend(Ext.Window, {
 	}
 });
 var dlHelpWindow = new DownloadHelpPopup();
+
+var NoSitesPopup = Ext.extend(Ext.Window, {
+	id: 'multisite-nosite-window',
+	title: 'No Sites Identified',
+	height: 200,
+	width: 650,
+	modal: true,
+	closeAction: 'hide',
+	bodyCssClass: 'help',
+	autoLoad: {
+		url: 'DownloadNosites.html',
+		loadScripts: false
+	}
+});
+var nositesPopupWindow = new NoSitesPopup();
 
 var DownloadPopup = Ext.extend(Ext.Window, {
 	id: 'multisite-download-window',
