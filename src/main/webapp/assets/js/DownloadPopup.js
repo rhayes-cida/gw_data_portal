@@ -43,8 +43,7 @@ var DOWNLOAD_SITES = {
 				if (win) {
 					win.setTitle(DOWNLOAD_SITES.store.getCount() + ' sites were identified.');
 					win.enable();
-					// force redisplay to make sure sites are shown?
-					// win.unmask();
+					// force redisplay to make sure sites are shown
 					win.doLayout(false, true);
 				} else {
 					alert('no download window to enable');
@@ -191,6 +190,7 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 			var cookieValue = Ext.util.Cookies.get('downloadToken');
 			if (cookieValue == token || (--triesLeft <= 0)) {
 				// Ext.util.Cookies.clear('downloadToken');
+				downloadWindow.body.unmask();
 				downloadWindow.close();
 				clearInterval(exportStatus);
 			} else if (cookieValue) {
@@ -242,6 +242,8 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 	width: 650,
 	layout: 'fit',
 	modal: true,
+	closable: true,
+	closeAction: 'hide',
 	store: DOWNLOAD_SITES.store,
 	disabled: DOWNLOAD_SITES.loading,
 	tools: [{
@@ -254,7 +256,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 
 	//resizable: false,
 	initComponent: function() {
-		
+				
 		this.msdlf = new MultisiteDownloadForm();
 		
 		var myMsdlf = this.msdlf;
@@ -264,10 +266,13 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 				url: settingsData.cacheBase
 			});			
 		} else {
-			alert("No settings yet");
+			//if ( ! hidden) {
+				//alert("No settings yet");				
+			//}
 		}
 		
 		Ext.apply(this, {
+			closable: true,
 			title: 'Identifying sites',
 			items: [
 			        {
@@ -369,3 +374,14 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 		DownloadPopup.superclass.initComponent.call(this);
 	}
 });
+
+var dlPopup = new DownloadPopup();
+dlPopup.hide();
+
+function showDownload() {
+	dlPopup.show();
+}
+
+function hideDownload() {
+	dlPopup.hide();
+}

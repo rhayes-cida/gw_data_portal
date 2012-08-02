@@ -150,8 +150,7 @@ Ext.onReady(function() {
 				if ( ! mapState.hasOwnProperty('agency')) {
 						alert_no_sites();
 				} else {
-					var dl = new DownloadPopup();
-					dl.show();
+					showDownload();
 					// TODO Can we start this earlier?
 					DOWNLOAD_SITES.find(map1,mapState.clone());
 				}
