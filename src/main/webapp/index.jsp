@@ -9,7 +9,8 @@
 <html>
 	<head>
 		<title>National Ground Water Monitoring Network Data Portal (BETA)</title>
-		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
+		<!--  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">  -->
+		<meta http-equiv="X-UA-Compatible" content="IE=8" />
 		<link rel="icon" 
       		type="image/png" 
       		href="favicon.ico">
