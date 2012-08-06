@@ -9,8 +9,6 @@
 <html>
 	<head>
 		<title>National Ground Water Monitoring Network Data Portal (BETA)</title>
-		<!--  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">  -->
-		<meta http-equiv="X-UA-Compatible" content="IE=8" />
 		<link rel="icon" 
       		type="image/png" 
       		href="favicon.ico">
@@ -53,7 +51,6 @@
 		</script>
 		
 		<!-- Dygraph and associated hacks for IE -->
-		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
 		<script type="text/javascript" src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script>
   		<script type="text/javascript" src="dygraphTimeHack.js"></script>
   		<style>
