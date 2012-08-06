@@ -21,13 +21,13 @@
 		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
 	
 		<!--  extjs assets -->
-		<!--[if IE]><script language="javascript" type="text/javascript" src="ext_flot/excanvas.r60.js"></script><![endif]-->
-	    <script language="javascript" type='text/javascript' src='ext_flot/jquery-1.3.2-old-extend.js'></script>
-	    <script language="javascript" type='text/javascript' src='ext_js/adapter/jquery/ext-jquery-adapter.js'></script>
-		<script src="ext_js/adapter/ext/ext-base.js"></script>
-		<script src="ext_js/ext-all-debug.js"></script>
-		<script src="ext_js/examples/ux/BufferView.js"></script>
-		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
+		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
+	    <script language="javascript" type='text/javascript' src='jquery-1.3.2-old-extend.js'></script>
+	    <script language="javascript" type='text/javascript' src='ext-3.4.0/adapter/jquery/ext-jquery-adapter.js'></script>
+		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
+		<script src="ext-3.4.0/ext-all-debug.js"></script>
+		<script src="ext-3.4.0/examples/ux/BufferView.js"></script>
+		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
@@ -39,17 +39,6 @@
 		<script type="text/javascript" src="assets/js/DownloadPopup.js"></script>
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
-
-		<!-- more flot assets -->
-	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.0.6.js"></script>
-	
-	    <link rel='stylesheet' type='text/css' href='ext_flot/Flot.css' />
-	    <script language="javascript" type="text/javascript" src="ext_flot/Csv.js"></script>
-	    <script language="javascript" type="text/javascript" src="ext_flot/GetText.js"></script>
-	
-	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.ja.js"></script>
-	    <script language="javascript" type="text/javascript" src="ext_flot/Flot.pack.js"></script>
-	    <script language="javascript" type="text/javascript" src="ext_flot/jquery.flot.axislabels.js"></script>
 	
 		<!-- Google Analytics -->
 		<script type="text/javascript">

@@ -212,11 +212,6 @@ var WATER_LEVEL_TAB = {
 					data.push([r[i].get('time'), parseFloat(r[i].get('value')).toFixed(4)]);
 				}
 				
-				/*
-				Ext.getCmp('ext-flot').setData([{label: 'Depth to water in feet', data:data}]);
-				Ext.getCmp('ext-flot').setupGrid();
-				Ext.getCmp('ext-flot').draw();
-				*/
 			},
 			exception: function(){WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);}
 		}
@@ -525,45 +520,6 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					autoScroll: true,
 					padding: 5,
 					items: [{
-/*						colors: ['darkblue'],
-						title: 'Graph',
-						xtype: 'flot',
-						height: 400,
-						//autoWidth: true,
-						width: 600,
-						id: 'ext-flot',
-						hoverable: true,
-						lines: {
-							show: true,
-							lineWidth: 1
-						},
-						points: {
-							show: true,
-							radius: 2,
-							fillColor: 'blue'
-						},
-						legend: {
-							 show: true,
-							 labelBoxBorderColor: 'black',
-							 position: "se"
-						},
-						xaxis: {
-							mode: 'time',
-							timeformat: "%m/%d/%y",
-							minTickSize: [1, "year"],
-								axisLabel: 'Month/Year',
-								axisLabelUseCanvas: true
-						},
-						yaxis: {
-							invert: true,
-							axisLabel: 'Depth to water level, feet below land surface',
-							  axisLabelUseCanvas: true
-						},
-						series: [ {data: [[]]} ],
-						  grid: {
-							backgroundColor: 'white'
-						}
-						*/
 						border: false,
 						height: 350,
 						html: '<div id="dygraph-plot"></div/>'

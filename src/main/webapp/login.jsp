@@ -13,10 +13,10 @@
       		href="favicon.ico">
       		
 		<!--  extjs assets -->
-		<script src="ext_js/adapter/ext/ext-base.js"></script>
-		<script src="ext_js/ext-all.js"></script>
+		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
+		<script src="ext-3.4.0/ext-all.js"></script>
 		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
-		<link rel="stylesheet" href="ext_js/resources/css/ext-all.css"/>
+		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->		
 		<link rel="stylesheet" href="assets/css/custom.css"/>
