@@ -18,8 +18,11 @@
 		<script type="text/javascript" src="scrollable_map/JMap-all.js"></script>
 		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
 	
-		<!--  extjs assets -->
+		<!-- Dygraph documents this as a needed IE8 hack  -->
+	    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
 		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
+	
+		<!--  extjs assets -->
 	    <script language="javascript" type='text/javascript' src='jquery-1.3.2-old-extend.js'></script>
 	    <script language="javascript" type='text/javascript' src='ext-3.4.0/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
@@ -50,7 +53,7 @@
 		
 		</script>
 		
-		<!-- Dygraph and associated hacks for IE -->
+		<!-- Dygraph (see above for associated canvas hacks for IE) -->
 <!-- 		<script type="text/javascript" src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script> -->
 <!--   		<script type="text/javascript" src="dygraphTimeHack.js"></script> -->
 		<script type="text/javascript" src="dygraph.js"></script>
