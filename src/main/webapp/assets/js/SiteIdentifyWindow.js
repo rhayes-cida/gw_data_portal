@@ -244,10 +244,6 @@ var WATER_LEVEL_TAB = {
 	},
 	update: function(htmlStr) { this.get().update(htmlStr);},
 	graph: 	function(agencyCd, siteNo){
-		var old_url = settingsData.cacheBase.replace(":","%3A","g");
-		
-		old_url = old_url.replace(":","%3A"); // some browsers do not accept g flag
-		
 		var url = settingsData.cacheBase + "/../stats/csv/waterlevel/" + agencyCd + "/" + siteNo;
 		var dOptions = {
 		    	xlabel: "Month/Year",
