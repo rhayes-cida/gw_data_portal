@@ -51,8 +51,9 @@
 		</script>
 		
 		<!-- Dygraph and associated hacks for IE -->
-		<script type="text/javascript" src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script>
-  		<script type="text/javascript" src="dygraphTimeHack.js"></script>
+<!-- 		<script type="text/javascript" src="http://cida.usgs.gov/js/dygraphs/2012_07_21_bc2d2/dygraph-dev.js"></script> -->
+<!--   		<script type="text/javascript" src="dygraphTimeHack.js"></script> -->
+		<script type="text/javascript" src="dygraph.js"></script>
   		<style>
   			.dygraph-legend{
   				opacity: .70;
