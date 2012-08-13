@@ -27,6 +27,7 @@ var DOWNLOAD_SITES = {
 		
 		DOWNLOAD_SITES.store.load({
 			params: idParams,
+			add: false,
 			callback: function(r, o, s) {
 				// sites = r;
 				for (var j=0; j<r.length; j++){
@@ -115,10 +116,10 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	clearItems: function() {
 		var form = this.getForm();
 		
+		form.items.clear();
 		var dom = form.el.dom;
-		var elems = dom.elements;
-		for (var i = 0; i < elems.length; i++) {
-			dom.removeChild(elems[i]);
+		while (dom.hasChildNodes()) {
+			dom.removeChild(dom.lastChild);
 		}
 	},
 	
@@ -329,7 +330,8 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 					text: 'Download data',
 					handler: function() {
 						
-						myMsdlf.items.clear();
+						// myMsdlf.items.clear();
+						myMsdlf.clearItems();
 						myMsdlf.addItem('type', 'REGISTRY');		// Always include the registry info
 						var hasType = false;
 						
