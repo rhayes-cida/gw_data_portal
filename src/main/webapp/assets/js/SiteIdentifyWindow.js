@@ -253,16 +253,16 @@ var WATER_LEVEL_TAB = {
 		    	axisLabelFontSize: 10,
 		    	axisLineWidth: 1.5,
 		    	yLabelWidth: 15,
-                    axes: {
-                      y: {
-                        axisLabelFormatter: function(y) {
-                          return -y;
-                        },
-						valueFormatter: function(y) {
-							return -y;
-						}
-                      }
-                    }
+		    	axes: {
+		    		y: {
+		    			axisLabelFormatter: function(y) {
+		    				return -y;
+		    			},
+		    			valueFormatter: function(y) {
+		    				return -y;
+		    			}
+		    		}
+		    	}
     		};
 		if (!Ext.isIE) dOptions.width = 700;
 		var g = new Dygraph(
