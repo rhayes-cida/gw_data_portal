@@ -245,6 +245,7 @@ var WATER_LEVEL_TAB = {
 	update: function(htmlStr) { this.get().update(htmlStr);},
 	graph: 	function(agencyCd, siteNo){
 		var url = settingsData.cacheBase + "/../stats/csv/waterlevel/" + agencyCd + "/" + siteNo;
+		
 		var dOptions = {
 		    	xlabel: "Month/Year",
 		    	ylabel: "Depth of water level, feet below land surface",
@@ -259,9 +260,25 @@ var WATER_LEVEL_TAB = {
 		    				return -y;
 		    			},
 		    			valueFormatter: function(y) {
-		    				return -y;
+		    				return -y + " ft";
 		    			}
 		    		}
+		    	},
+		    	underlayCallback: function(canvas, area, g) {
+		    		canvas.save();
+		    		
+		    		canvas.strokeStyle = "gray";
+
+		    		canvas.beginPath();
+		    		if (Ext.isIE) canvas.lineWidth = 2;
+		    		canvas.moveTo(area.x,        area.y);
+		    		canvas.lineTo(area.x+area.w, area.y);
+		    		canvas.lineTo(area.x+area.w, area.y+area.h);
+
+		    		canvas.stroke();
+		    		canvas.beginPath();
+
+		    		canvas.restore();
 		    	}
     		};
 		if (!Ext.isIE) dOptions.width = 700;
@@ -507,8 +524,16 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 		// Conditionally add water level tab
 		if (SITE.hasWaterLevelData(this.siteRecord)) {
 
+			var labelCls = '';
+			
+			if (Ext.isIE6 || Ext.isIE7 || Ext.isIE8) {
+				// add class to activate IE label hack
+				labelCls = 'ie-dygraph-label-class';
+			}
+			
 			WATER_LEVEL_TAB.store.removeAll();
-			tabPanel.add(new Ext.Panel({
+			var waterLevelPanel = 
+			new Ext.Panel({
 				id: WATER_LEVEL_TAB.cmpName,
 				title: 'Water Levels',
 				isLoaded: false,
@@ -528,7 +553,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					padding: 5,
 					items: [{
 						border: false,
-						height: 350,
+						// height: 350,
+						// width: '100%',
+						anchor: '100% 350',
+						cls: labelCls,
 						html: '<div id="dygraph-plot"></div/>'
 					},{
 						border: false,
@@ -559,7 +587,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						 */
 					}]
 				}]
-			}));
+			});
+			
+			tabPanel.add(waterLevelPanel);
+
 		}
 			
 			
