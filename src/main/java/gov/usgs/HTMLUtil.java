@@ -7,6 +7,9 @@ import java.sql.Statement;
 
 import javax.servlet.jsp.JspWriter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Perform SQL query to populate HTML dropdowns
@@ -15,6 +18,8 @@ import javax.servlet.jsp.JspWriter;
  *
  */
 public class HTMLUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(HTMLUtil.class);
 
 	/*
 	  ORGANIZATION_ID
@@ -96,19 +101,18 @@ public class HTMLUtil {
 		try {
 			statement = connection.createStatement();
 			rset = statement.executeQuery(sql);
-			//System.out.println(sql);
+			logger.trace("run query {}",sql);
 			while (rset.next()) {
 				String option = "<option title=\"" + rset.getString("title") + "\"value=\"" + rset.getString("value") + "\">" + rset.getString("display") + "</option>";
 				out.write(option);
-				//System.out.println(option);
+				logger.trace("option {}",option);
 			}
 			rset.close();  
 			rset = null;
 			statement.close();
 			statement = null;
 		} catch (Exception e) {
-			System.out.println("gw data portal map - listbox query data retrieval failed");      
-			e.printStackTrace();
+			logger.error("runQuery data retrieval failed",e); 
 		} finally {
 	    if (rset != null) {
 	      try { rset.close(); } catch (SQLException e1) { ; }

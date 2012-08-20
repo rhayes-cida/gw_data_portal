@@ -225,7 +225,7 @@ FROM
 					<% 
 						List<String> clauses = new ArrayList<String>();
 						for (String[] pair: splitParam(qwWellParam)) {
-							System.err.println(pair[0]);
+							log(pair[0]);
 							clauses.add(" ( QW_WELL_TYPE = '" + pair[0] + "' AND QW_WELL_CHARS = '" + pair[1] + "' ) ");
 						}
 						for (int i=0; i<clauses.size(); i++) {

@@ -12,12 +12,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class URLUtil {
 
+	private static Logger logger = LoggerFactory.getLogger(URLUtil.class);
 
 	//USE THIS CALL WHEN GETTING A BASE QUERY
 	public static String getResponseAsStringFromURL(String urlString, String params) throws Exception {
@@ -38,10 +41,10 @@ public class URLUtil {
 
 			input.close();
 			returnString = page.toString();
-			System.out.println("return string: " + returnString);
+			logger.trace("getResponseAsStringFromURL return string: {}", returnString);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Url: " + urlString + "?" + params);
+			logger.error("Url: {}?{}",urlString,params);
 		}
 
 		return returnString;
@@ -61,14 +64,13 @@ public class URLUtil {
 	public static void writeBytesToOutputStream(String urlString, String params, ServletOutputStream out)
 	throws Exception {
 		URLConnection uCon = URLUtil.makeUrlPostRequest(urlString, params);
-		//System.out.println(getHeaders(uCon));
+		logger.trace("headers: {}",getHeaders(uCon));
 		DataInputStream input = null;
 		try {
 
 			input = new DataInputStream(uCon.getInputStream());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			//System.out.println(getHeaders(uCon));
+			logger.error("in writeBytesToOutputStream", e);
 		}
 		
 		// Added code to detect/log if image size is too small, indicating a possible problem
@@ -76,7 +78,7 @@ public class URLUtil {
 		if (contentLength != null) {
 			Integer cl = Integer.parseInt(contentLength);
 			if (cl != null && cl < 175) { // 175 just arbitrary. images should normally be at least 1K
-				System.out.println("WARNING: maptile request response undersized at " + cl + " bytes");
+				logger.warn("WARNING: maptile request response undersized at {} bytes", cl);
 			}
 		}
 
@@ -118,7 +120,7 @@ public class URLUtil {
 
 			return urlConn;
 		} catch (Exception e) {
-			System.out.println("Problem with URL Post request for " + urlString + " -- " + e.getMessage());
+			logger.error("Problem with URL Post request for " + urlString, e);
 			return null;
 		}
 	}

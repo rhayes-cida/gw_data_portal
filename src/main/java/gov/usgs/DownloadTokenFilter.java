@@ -11,8 +11,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DownloadTokenFilter implements Filter {
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	public static final String TOKEN_NAME = "downloadToken";
 
 	@Override
@@ -46,7 +50,7 @@ public class DownloadTokenFilter implements Filter {
 				hresp.addCookie(cookie);
 				
 			} else {
-				System.err.println("got token, but not HttpServletResponse, actual type = " + response.getClass().getName());
+				logger.warn("got token, but not HttpServletResponse, actual type = {}",response.getClass().getName());
 			}
 		}
 		chain.doFilter(request, response);

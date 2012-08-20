@@ -35,6 +35,9 @@ import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Implements <i>read-only</i> properties with ${} expansion. Override order is
  * specified by order of arguments. The earlier property sets have higher
@@ -49,6 +52,9 @@ import javax.naming.NamingException;
  * 
  */
 public class DynamicReadOnlyProperties extends Properties {
+	
+	private static Logger logger = LoggerFactory.getLogger(DynamicReadOnlyProperties.class);
+	
 	private static final long serialVersionUID = 5079727277068716415L;
 	// ==============
 	// STATIC METHODS
@@ -135,7 +141,7 @@ public class DynamicReadOnlyProperties extends Properties {
 
 		// Substitution passes
 		for (int nestingDepth = 1; nestingDepth < MAX_SUBSTITUTION_PASSES && entriesNeedingSubstitution.size() > 0; nestingDepth++) {
-			//System.out.println("Starting substitution pass #" + nestingDepth);
+			logger.trace("Starting substitution pass #{}",nestingDepth);
 			Iterator<String> iter = entriesNeedingSubstitution.iterator();
 			while (iter.hasNext()) {
 				String expKey = iter.next();
@@ -353,7 +359,7 @@ public class DynamicReadOnlyProperties extends Properties {
 			// This is be expected behavior for tomcat's jndi implementation, but it's not clear why
 			// What about other jndi implementation?
 			if (!"java:/comp".equals(fullContextName)) { 
-				System.err.println("[ERROR] unable to get bindings for " + fullContextName);
+				logger.error("[ERROR] unable to get bindings for {}",fullContextName);
 			}
 		}
 		return result;

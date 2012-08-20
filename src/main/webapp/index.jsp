@@ -183,8 +183,7 @@
 
 <%
 		} catch (Exception e) {
-			System.err.println("Error in NGWMN portal index.jsp");
-			e.printStackTrace();
+			log("Error in NGWMN portal index.jsp",e);
 %>
 			<jsp:text><![CDATA[
 			<div id="agency-div" class="x-hidden">

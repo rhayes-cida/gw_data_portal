@@ -18,8 +18,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class BBoxServlet extends HttpServlet {
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json");   
@@ -35,7 +41,7 @@ public class BBoxServlet extends HttpServlet {
 		try {
 
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=bbox");
-			System.out.println("NGWMN: " + query);
+			logger.info("query={}",query);
 
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup(IdentifyServlet.GWP_DATASOURCE);
@@ -63,8 +69,7 @@ public class BBoxServlet extends HttpServlet {
 			connection.close();  
 			connection = null;
 		} catch (Exception e) {
-			System.out.println("gw data portal map - fit bbox servlet - query data retrieved failed");   
-			e.printStackTrace();
+			logger.error("bbox servlet - query data retrieved failed", e);
 		} finally {
 	    if (rset != null) {
 	      try { rset.close(); } catch (SQLException e1) { ; }

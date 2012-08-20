@@ -7,10 +7,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static gov.usgs.HTTPParameters.ExtParam.*;
 
 
 public class IdentifyDataProxy extends HttpServlet {
+	
+	private static Logger logger = LoggerFactory.getLogger(IdentifyDataProxy.class);
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +27,7 @@ public class IdentifyDataProxy extends HttpServlet {
 		RequestType serviceRequest = RequestType.valueOf(req.getParameter("request"));
 		String url = serviceRequest.makeCacheRESTUrl(AGENCY_CODE.parse(req), SITE_NO.parse(req));
 
-		System.out.println("gw_data_portal fetching " + serviceRequest + " data from get url: " + url);
+		logger.info("gw_data_portal fetching {} data from get url: {}", serviceRequest, url);
 
 		PrintWriter writer = null;
 		try {
@@ -31,14 +37,13 @@ public class IdentifyDataProxy extends HttpServlet {
 			writer.write(content);
 			writer.flush();
 
-			if (DebugSettings.isTraceSet) System.out.println(":::" + content);
+			logger.trace("got {}",content);
 		} catch (Exception e) {
-			System.err.println("failed: " + url);
-			e.printStackTrace(System.err);
+			logger.error("failed " + url, e);
 		} finally {
 			if (writer != null) writer.close();
 		}
 
-		System.out.println("Done: " + url);
+		logger.info("Done get for {}",url);
 	}
 }

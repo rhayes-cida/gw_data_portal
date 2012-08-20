@@ -16,9 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class IdentifyServlet extends HttpServlet {
 
+	private static Logger logger = LoggerFactory.getLogger(IdentifyServlet.class);
 	public static final String GWP_DATASOURCE = "java:comp/env/jdbc/gwDataPortalUserDS";
 
 	@Override
@@ -39,7 +43,7 @@ public class IdentifyServlet extends HttpServlet {
 		try {  		
 			//fetch base query
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=identify");
-			System.out.println("NGWMN: " + query);
+			logger.info("query {}",query);
 			
 			log("query: " + query);
 			
@@ -51,7 +55,6 @@ public class IdentifyServlet extends HttpServlet {
 			int ct = 0;
 
 			rset = statement.executeQuery(query);
-			//System.out.println(query);
 			while (rset.next()) {	  
 
 				String siteName = rset.getString("SITE_NAME");
@@ -97,7 +100,7 @@ public class IdentifyServlet extends HttpServlet {
 			connection = null;
 		} catch (Exception e) {
 			log("problem in " + this.getClass().getSimpleName(), e);
-			System.out.println("gw data portal map - identify servlet - query data retrieved failed");   
+			logger.error("gw data portal map - identify servlet - query data retrieved failed", e);   
 		} finally {
 			if (rset != null) {
 				try { rset.close(); } catch (SQLException e1) { ; }

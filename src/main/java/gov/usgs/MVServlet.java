@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class MVServlet extends HttpServlet {
 
+	private static Logger logger = LoggerFactory.getLogger(MVServlet.class);
 	public static final String MAPPING_SERVER = DebugSettings.MAPPING_SERVER;
 
 	@Override
@@ -25,20 +29,15 @@ public class MVServlet extends HttpServlet {
 
 			//fetch base query
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=map");
-			System.out.println("NGWMN: " + query);
-			//System.out.println(query.replaceAll("%2526lt;", "<").replaceAll("%252B", "+").replaceAll("FROM", "FROM\n"));	
-			//fetch xml request
+			logger.debug("query={} ",query);
 			mapreq =  URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_map_request.jsp;jsessionid=" + req.getSession().getId(), params + "&query=" + query + "&requestId=map");      
-			//System.out.println(mapreq.replaceAll(">", ">\n"));	
-			if (DebugSettings.isTraceSet) {
-				System.out.println("requesting maptile[" + mapreq + "] from " + MAPPING_SERVER  );
-			}
+			logger.trace("requesting maptile[{}] from {}", mapreq, MAPPING_SERVER);
 
 			//String errorResponse = URLUtil.getResponseAsStringFromURL(MAPPING_SERVER,"");
 			//POST xml request to mapviewer server and return byte stream (image)
 			URLUtil.writeBytesToOutputStream(MAPPING_SERVER, "xml_request=" + mapreq, resp.getOutputStream());
 		} catch (Exception e) {
-			System.out.println("Error retrieving tile: " + e.getMessage()); //nothing
+			logger.error("Error retrieving tile",e);
 		}
 	}
 }
