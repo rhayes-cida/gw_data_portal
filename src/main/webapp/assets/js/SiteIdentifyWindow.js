@@ -183,7 +183,13 @@ function removeNameSpaces(xmlStr){
 }
 
 
-
+function makeWaterLevelDataTable() {
+	var dt = new google.visualization.DataTable();
+	dt.addColumn('datetime', 'time');
+	dt.addColumn('number', 'value');
+	
+	return dt;
+}
 
 var WATER_LEVEL_TAB = {
 	mask: function(){this.getBody().mask('Loading...','x-mask-loading');},
@@ -191,6 +197,13 @@ var WATER_LEVEL_TAB = {
 	cmpName: 'water-level-tab',
 	get: function() {return Ext.getCmp(this.cmpName);},
 	getBody: function() {return this.get().body;}, 
+	dt:(function() {
+		
+		var dt = makeWaterLevelDataTable();
+		// add fake data to work around dygraph bug (fails on empty DataTable)
+		dt.addRow([new Date("1999-08-31"), -42.42]);
+		return dt;}) (),
+	dygraph:null,
 	store : new Ext.data.XmlStore({						
 		id: 'water-level-store',
 		record: 'TimeValuePair',
@@ -207,19 +220,24 @@ var WATER_LEVEL_TAB = {
 		listeners: {
 			load: function(s,r,o) {
 				
-				var data = [];
+				var dt = makeWaterLevelDataTable();
+				dt.removeRows(0,dt.getNumberOfRows()-1);
 				for (var i = 0; i < r.length; i++) {
-					data.push([r[i].get('time'), parseFloat(r[i].get('value')).toFixed(4)]);
-				}
+					dt.addRow([r[i].get('time'), - parseFloat(r[i].get('value'))]);
+				}	
+				WATER_LEVEL_TAB.updateGraph(dt);
 				
 			},
-			exception: function(){WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);}
+			exception: function(){
+				WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);
+			}
 		}
 	}),
 	load: function(record) {
 		// show the graph first, then get the table.
 		WATER_LEVEL_TAB.mask();
-		WATER_LEVEL_TAB.graph(record.get('agency'), record.get('siteNo'));
+		WATER_LEVEL_TAB.initGraph();
+
 		//WATER_LEVEL_TAB.unmask();
 		
 		Ext.Ajax.request({
@@ -229,7 +247,9 @@ var WATER_LEVEL_TAB = {
 				siteNo: record.get('siteNo'),
 				agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
 			},
-			failure: function(r,o){ WATER_LEVEL_TAB.update(SITE.connectionErrorMessage);},
+			failure: function(r,o){ 
+				WATER_LEVEL_TAB.update(SITE.connectionErrorMessage);
+			},
 			success: function(r, o) {
 				try{
 					var rs = removeNameSpaces(r.responseText);
@@ -243,8 +263,8 @@ var WATER_LEVEL_TAB = {
 		});
 	},
 	update: function(htmlStr) { this.get().update(htmlStr);},
-	graph: 	function(agencyCd, siteNo){
-		var url = settingsData.cacheBase + "/../stats/csv/waterlevel/" + agencyCd + "/" + siteNo;
+	initGraph: function() {
+		var data = WATER_LEVEL_TAB.dt;
 		
 		var dOptions = {
 		    	xlabel: "Month/Year",
@@ -284,9 +304,15 @@ var WATER_LEVEL_TAB = {
 		if (!Ext.isIE) dOptions.width = 700;
 		var g = new Dygraph(
 			    document.getElementById("dygraph-plot"),
-			    url,
+			    data,
 	    		dOptions
 		);
+		
+		WATER_LEVEL_TAB.dygraph = g;
+	},
+	updateGraph: function(dataTable) {
+		WATER_LEVEL_TAB.dt = dataTable;
+		WATER_LEVEL_TAB.dygraph.updateOptions({file: dataTable});
 	}
 };
 

@@ -35,6 +35,10 @@
 		<script type="text/javascript" src="assets/js/ui.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdSelectorPopup.js"></script>
 		<script type="text/javascript" src="assets/js/DocNavHelper.js"></script>
+		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+		<script type="text/javascript">
+			google.load("visualization", "1");
+		</script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
 		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script>
 		<script type="text/javascript" src="assets/js/DownloadPopup.js"></script>
