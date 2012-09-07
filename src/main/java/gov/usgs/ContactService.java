@@ -143,7 +143,10 @@ public class ContactService extends HttpServlet {
 			boolean debug = true; //"127.0.0.1".equals(cue.getRemoteAddr());
 			if (debug) {
 				props.put("mail.smtp.host", "gsvaresh01.er.usgs.gov");
-				addressTo = new InternetAddress[] {new InternetAddress("rhayes@usgs.gov")};
+				addressTo = new InternetAddress[] {
+						new InternetAddress("rhayes@usgs.gov"),
+						new InternetAddress("jlucido@usgs.gov")
+						};
 			} else {
 				/**
 				 * This is changed because of our node in Denver.
