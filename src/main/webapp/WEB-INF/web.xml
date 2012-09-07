@@ -54,6 +54,13 @@
 		<servlet-name>SettingsServlet</servlet-name>
 		<servlet-class>gov.usgs.SettingsServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ContactService</display-name>
+		<servlet-name>ContactService</servlet-name>
+		<servlet-class>gov.usgs.ContactService</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>MVServlet</servlet-name>
@@ -88,6 +95,10 @@
 	<servlet-mapping>
 		<servlet-name>SettingsServlet</servlet-name>
 		<url-pattern>/settings</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ContactService</servlet-name>
+		<url-pattern>/feedback/submit</url-pattern>
 	</servlet-mapping>
 		
 	<session-config>
