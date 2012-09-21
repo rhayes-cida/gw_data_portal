@@ -298,7 +298,7 @@
 					<li><a title="USGS Freedom of Information Act information" href="http://www.usgs.gov/foia/">FOIA</a></li>
 					<li><a title="USGS privacy policies" href="http://www.usgs.gov/privacy.html">Privacy</a></li>
 					<li><a title="USGS web policies and notices" href="http://www.usgs.gov/policies_notices.html">Policies and Notices</a></li>
-					<li class="right"><a title="Send feedback" onclick="hendrix()" >Questions and Comments</a></li>
+					<li class="right" style="text-decoration: underline; "><a title="Send feedback" href="#" onclick="hendrix()" >Questions and Comments</a></li>
 				</ul>
 			</div><!-- end usgs-policy-links -->
    
