@@ -23,8 +23,8 @@
 		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
 	
 		<!--  extjs assets -->
-	    <script language="javascript" type='text/javascript' src='jquery-1.3.2-old-extend.js'></script>
-	    <script language="javascript" type='text/javascript' src='ext-3.4.0/adapter/jquery/ext-jquery-adapter.js'></script>
+	    <script type='text/javascript' src='jquery-1.3.2-old-extend.js'></script>
+	    <script type='text/javascript' src='ext-3.4.0/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script src="ext-3.4.0/ext-all-debug.js"></script>
 		<script src="ext-3.4.0/examples/ux/BufferView.js"></script>
@@ -298,6 +298,7 @@
 					<li><a title="USGS Freedom of Information Act information" href="http://www.usgs.gov/foia/">FOIA</a></li>
 					<li><a title="USGS privacy policies" href="http://www.usgs.gov/privacy.html">Privacy</a></li>
 					<li><a title="USGS web policies and notices" href="http://www.usgs.gov/policies_notices.html">Policies and Notices</a></li>
+					<li class="right"><a title="Send feedback" onclick="hendrix()" >Questions and Comments</a></li>
 				</ul>
 			</div><!-- end usgs-policy-links -->
    

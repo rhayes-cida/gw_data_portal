@@ -161,8 +161,27 @@ Ext.onReady(function() {
 	loadMapLayers();	
 });
 
+var FeedbackFormPopup = Ext.extend(Ext.Window, {
+	id: 'feedback-form-window',
+	height: 400,
+	width: 780,
+	modal: true,
+	closeAction: 'hide',
+	title: 'Send Feedback',
+	bodyCssClass: 'help',
+	bodyCfg: {
+		tag: 'iframe',
+		src: 'FeedbackView.jsp'
+	}
+});
 
 
+function hendrix() {
+	var feedbackFormWindow = new FeedbackFormPopup();
+	feedbackFormWindow.show();
+	
+	return false;
+}
 
 function getUrlParamStringFromPicklist(id, isString) {
 	var s = '';

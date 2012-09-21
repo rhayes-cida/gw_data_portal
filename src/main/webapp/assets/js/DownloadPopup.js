@@ -221,6 +221,7 @@ var DownloadHelpPopup = Ext.extend(Ext.Window, {
 });
 var dlHelpWindow = new DownloadHelpPopup();
 
+
 var NoSitesPopup = Ext.extend(Ext.Window, {
 	id: 'multisite-nosite-window',
 	title: 'No Sites Identified',
