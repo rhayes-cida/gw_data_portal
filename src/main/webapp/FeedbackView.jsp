@@ -41,12 +41,8 @@
                     };
 		
                     this.closeEmailPanel = function() {
-                        new Ext.ux.Notify({
-                            msgWidth: 200,
-                            hideDelay: 2000,
-                            title: 'Notification Window',
-                            msg: 'Feedback submitted. Thank you for participating.'
-                        }).show(document);
+                        Ext.MessageBox.alert('Feedback Sent', 'Thank you!');
+                        // TODO Close feedback panel?
                     };
 		
                     // If user pressed the enter key, we do not want the form submitted
@@ -109,6 +105,8 @@
                                  success: function(responseObject) {
                                      if (responseObject.responseText.indexOf("success") >= 0){
                                          commentInput.value = '';
+                                         commentError.innerHTML = 'Feedback submitted -- thanks';
+                                         commentError.style.color = "#000000";		
                                          FEEDBACK.closeEmailPanel();
                                      } else { // failed
                                          Ext.Msg.alert('Feedback', "Sorry, submission failed. Please retype security text and try again. " + serverErrorMessage);
