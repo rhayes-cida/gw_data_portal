@@ -29,7 +29,7 @@ public class MVServlet extends HttpServlet {
 
 			//fetch base query
 			String query = URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_query.jsp;jsessionid=" + req.getSession().getId(), params + "&queryId=map");
-			logger.debug("query={} ",query);
+			logger.trace("query={} ",query);
 			mapreq =  URLUtil.getResponseAsStringFromURL(baseUrl.toExternalForm() + "/base_map_request.jsp;jsessionid=" + req.getSession().getId(), params + "&query=" + query + "&requestId=map");      
 			logger.trace("requesting maptile[{}] from {}", mapreq, MAPPING_SERVER);
 
