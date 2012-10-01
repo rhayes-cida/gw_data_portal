@@ -26,6 +26,18 @@ Ext.onReady(function() {
 	
 	addOverviewLayers();
 		
+	var showHelp = function(event, toolEl, panel,tc) {
+		var myWin = Ext.create({
+			title: 'NGWMN Help',
+			xtype: 'window',
+			modal: true,
+			html: '<iframe src="https://my.usgs.gov/confluence/display/ngwmn/NGWMN+Data+Portal+Help" width="100%" height="100%" ></iframe>',
+			width: 970,
+			height: 600
+		});
+		myWin.show();
+    };
+    
 	//create the EXTJS layout
 	new Ext.Panel({
 		id: 'ext-content-panel',
@@ -45,21 +57,18 @@ Ext.onReady(function() {
 				id: 'cmp-map-area',
 				region: 'center',
 				contentEl: 'map-area',
-				tools: [{
-					id: 'help',
-			        qtip: 'Get Help',
-			        handler: function(event, toolEl, panel,tc) {
-						var myWin = Ext.create({
-							title: 'NGWMN Help',
-							xtype: 'window',
-							modal: true,
-							html: '<iframe src="https://my.usgs.gov/confluence/display/ngwmn/NGWMN+Data+Portal+Help" width="100%" height="100%" ></iframe>',
-							width: 970,
-							height: 600
-						});
-						myWin.show();
-			        }
-				}],
+				tools: [
+						{
+							id: 'refresh',
+							qtip: 'Refresh',
+					        handler: addDataLayer
+						},
+						{
+							id: 'help',
+							qtip: 'Get Help',
+							handler: showHelp
+						}
+					],
 				listeners: {
 					resize: function(p) {
 						if (map1) map1.resize(p.body.getWidth(),p.getInnerHeight());
@@ -78,6 +87,19 @@ Ext.onReady(function() {
 				text: 'Map',
 				handler: addDataLayer
 			}],
+			tools: [
+					{
+						id: 'refresh',
+						qtip: 'Refresh',
+				        handler: addDataLayer
+					},
+			{
+				id: 'help',
+		        qtip: 'Get Help',
+		        handler: showHelp
+			}
+			],
+
 			items: [{
 				xtype: 'fieldset',
 				title: 'Agency Contributing Data',
