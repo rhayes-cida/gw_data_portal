@@ -106,7 +106,9 @@
                                      if (responseObject.responseText.indexOf("success") >= 0){
                                          commentInput.value = '';
                                          commentError.innerHTML = 'Feedback submitted -- thanks';
-                                         commentError.style.color = "#000000";		
+                                         commentError.style.color = "#000000";	
+                                         submitButton.disabled 	= true;
+
                                          FEEDBACK.closeEmailPanel();
                                      } else { // failed
                                          Ext.Msg.alert('Feedback', "Sorry, submission failed. Please retype security text and try again. " + serverErrorMessage);

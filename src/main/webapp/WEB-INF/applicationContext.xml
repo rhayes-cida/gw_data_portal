@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans              http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/jee                http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+           http://www.springframework.org/schema/context            http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           ">
+
+	<context:property-placeholder 
+		location="file:${HOME}/ngwmn.properties"
+		ignore-resource-not-found="true" />
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${ngwmn_smtp_host:localhost}" />
+	</bean>
+
+	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="gwdp_help@usgs.gov" />
+		<property name="to" value="${ngwmn_remedy_destination:servicedesk@usgs.gov}"/>
+		<property name="subject" value="NGWMN Data Portal" />
+	</bean>
+
+	<bean id="remedySender" class="gov.usgs.RemedySender">
+		<property name="mailSender" ref="mailSender" />
+		<property name="templateMessage" ref="templateMessage" />
+	</bean>
+           
+
+</beans>
