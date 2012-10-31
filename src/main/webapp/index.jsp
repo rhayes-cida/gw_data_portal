@@ -298,7 +298,6 @@
 					<li><a title="USGS Freedom of Information Act information" href="http://www.usgs.gov/foia/">FOIA</a></li>
 					<li><a title="USGS privacy policies" href="http://www.usgs.gov/privacy.html">Privacy</a></li>
 					<li><a title="USGS web policies and notices" href="http://www.usgs.gov/policies_notices.html">Policies and Notices</a></li>
-					<li class="right" style="text-decoration: underline; "><a title="Send feedback" href="#" onclick="hendrix()" >Questions and Comments</a></li>
 				</ul>
 			</div><!-- end usgs-policy-links -->
    
@@ -326,11 +325,9 @@
 							</span>
 						</span><!-- vcard -->
       				</p>
-   					<p id="footer-page-url">URL: http://cida.usgs.gov/gw_data_portal/</p>
-					<p id="footer-contact-info">
-						  Page Contact Information:
-						<a href="mailto:gwdp_help@usgs.gov" title="Contact Email">webmaster</a>
-					</p>
+   					<p id="footer-page-url">URL: <a href="http://cida.usgs.gov/gw_data_portal/">http://cida.usgs.gov/gw_data_portal/</a></p>
+   					<p id=footer-feedback-form">Contact the NGWMN Data Portal Team by <a title="Contact the team" href="#" onclick="hendrix()" >webform</a> or <a href="mailto:gwdp_help@usgs.gov">email</a></p>
+					
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->
 				<div id="gov-buttons">
