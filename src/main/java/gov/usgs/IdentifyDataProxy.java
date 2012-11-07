@@ -1,7 +1,11 @@
 package gov.usgs;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +35,22 @@ public class IdentifyDataProxy extends HttpServlet {
 
 		PrintWriter writer = null;
 		try {
-			String content = URLUtil.getStringFromURLGET(url).toString();
-			//resp.setCharacterEncoding("UTF-8"); seems default setting solves this problem of encoding mismatch
-			writer = resp.getWriter();
-			writer.write(content);
-			writer.flush();
+			URL urlObject = new URL(url);
+			URLConnection conn = urlObject.openConnection();
 
-			logger.trace("got {}",content);
+			InputStream is = conn.getInputStream();
+			try {
+				OutputStream os = resp.getOutputStream();
+				try {
+					long ct = copy(is, os);
+					logger.info("copied {} bytes", ct);
+				} finally {
+					os.close();
+				}
+			} finally {
+				is.close();
+			}
+
 		} catch (Exception e) {
 			logger.error("failed " + url, e);
 		} finally {
@@ -46,4 +59,22 @@ public class IdentifyDataProxy extends HttpServlet {
 
 		logger.info("Done get for {}",url);
 	}
+
+	private long copy(InputStream is, OutputStream os) throws IOException {
+		// TODO buffer both streams
+		// TODO or use nio
+		long ct = 0;
+		
+		while (true) {
+			int c = is.read();
+			if (c < 0) {
+				break;
+			}
+			ct++;
+			os.write(c);
+		}
+		return ct;
+	}
+	
+	
 }
