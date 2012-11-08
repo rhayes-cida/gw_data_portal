@@ -1,4 +1,7 @@
 // Define and compile templates
+if ( ! window.console ) console = { log: function(m){} };
+
+
 var siteIdTpl = new Ext.XTemplate(
 	'<tpl for=".">',
 		'<div id="id-container">',
@@ -95,6 +98,7 @@ var SITE = {
 	loadingErrorMessage: "<h1>Problem loading data, or data for site not available</h1>",
 	connectionErrorMessage: "<h1>Could not connect to data service. Try again later.</h1>",
 	noDataMessage: "<h1>No Data Found. Service may be down or unavailable</h1>",
+	noDataAvailableMessage: "<h1>No data available.</h1>",
 	formatWellDepth: function(value){
 		if (value == null || value == 'null') return '';
 		return value + ' ft';
@@ -210,6 +214,7 @@ var WATER_LEVEL_TAB = {
 	store : new Ext.data.XmlStore({						
 		id: 'water-level-store',
 		record: 'TimeValuePair',
+		successProperty: 'ObservationCollection',
 		fields: [
 		 		{ name: 'time', mapping: 'time', type: 'date', dateFormat: 'c'},
 				{ name: 'value', mapping: 'value > Quantity > value'},
@@ -222,14 +227,17 @@ var WATER_LEVEL_TAB = {
 		},
 		listeners: {
 			load: function(s,r,o) {
-				
-				var dt = makeWaterLevelDataTable();
-				dt.removeRows(0,dt.getNumberOfRows()-1);
-				for (var i = 0; i < r.length; i++) {
-					dt.addRow([r[i].get('time'), - parseFloat(r[i].get('value'))]);
-				}	
-				WATER_LEVEL_TAB.updateGraph(dt);
-				
+				console.log("data loaded in WATER_LEVEL_TAB.store, r.length=" + r.length);
+				if (r.length == 0) {
+					WATER_LEVEL_TAB.update(SITE.noDataAvailableMessage);						
+				} else {
+					var dt = makeWaterLevelDataTable();
+					dt.removeRows(0,dt.getNumberOfRows()-1);
+					for (var i = 0; i < r.length; i++) {
+						dt.addRow([r[i].get('time'), - parseFloat(r[i].get('value'))]);
+					}	
+					WATER_LEVEL_TAB.updateGraph(dt);
+				}
 			},
 			exception: function(){
 				WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);
@@ -256,8 +264,12 @@ var WATER_LEVEL_TAB = {
 			success: function(r, o) {
 				try{
 					var rs = removeNameSpaces(r.responseText);
-					WATER_LEVEL_TAB.store.loadData(DNH.createXmlDocFromString(rs));
+					console.log("name spaces removed from wl data, size =" + rs.length);
 					
+					var wldoc = DNH.createXmlDocFromString(rs);
+					console.log("created wldoc, length=" + (wldoc?(wldoc.childNodes.length):-1));
+					WATER_LEVEL_TAB.store.loadData(wldoc);
+					console.log("WL data loaded");
 				} catch (err){
 					WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);
 				}

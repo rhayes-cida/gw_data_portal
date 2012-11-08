@@ -61,8 +61,7 @@ public class IdentifyDataProxy extends HttpServlet {
 	}
 
 	private long copy(InputStream is, OutputStream os) throws IOException {
-		// TODO buffer both streams
-		// TODO or use nio
+		// Don't need to buffer; both streams are already buffered.
 		long ct = 0;
 		
 		while (true) {
