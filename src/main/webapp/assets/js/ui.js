@@ -261,6 +261,18 @@ function addDataLayer() {
 			return c;
 		}
 	};
+	
+	//log each agency map request
+	var p = document.getElementById('agency');
+	var agencySelected = false;
+	for (var i = 0; i < p.options.length; i++) {
+		if (p.options[i].selected) {
+			GoogleAnalyticsUtils.logMap(p.options[i].value);
+		}
+	}
+	if(!agencySelected) {
+		GoogleAnalyticsUtils.logMap("All Agencies");
+	}
 
 	
 	

@@ -106,10 +106,9 @@ var SITE = {
 	formatLink: function(link, desc){
 		if (link == null || link == 'null') return '';
 		if (desc == null || desc == 'null') desc = "link";
-		return '<a href="' + link + '" target="_blank">' + desc + '</a>';
+		return '<a href="' + link + '" target="_blank" onclick="GoogleAnalyticsUtils.logLinkClick(\''+link+'\')">' + desc + '</a>';
 	},
 	downloadData: function(siteRecord) {
-
 		var exportForm = document.getElementById('exportForm');
 		
 		//pop up a new window that displays progress of download
@@ -174,6 +173,8 @@ var SITE = {
 			}	  
 		}, 1000);
 		
+
+		GoogleAnalyticsUtils.logDownloadSite(ac + ":" + sn);
 		
 		exportForm.submit();
 	}
@@ -518,6 +519,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	modal: true,
 	layout: 'fit',
 	initComponent: function() {
+
+		var sn = this.siteRecord.get('siteNo');
+		var ac = MEDIATOR.cleanAgencyCode(this.siteRecord.get('agency'));
+		GoogleAnalyticsUtils.logIdentify(ac + ":" + sn);
 	
 		var tabPanel = new Ext.TabPanel({
 			id: 'ext-id-tabpanel',

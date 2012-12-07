@@ -67,6 +67,7 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 	modal: true,
 	//resizable: false,
 	initComponent: function() {
+		GoogleAnalyticsUtils.logIdentifySet(this.store.getTotalCount());
 		Ext.apply(this, {
 			title: this.store.getTotalCount() + ' sites were identified nearby. Select one...',
 			items: {

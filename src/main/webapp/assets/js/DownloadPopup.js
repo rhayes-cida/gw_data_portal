@@ -340,18 +340,21 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						var cbl = Ext.getCmp('typeGroup');
 						var ccbb = cbl.getValue();
 						
+						//list of sites
+						var sites = DOWNLOAD_SITES.store.getRange();
+						
 						for (var i = 0; i < ccbb.length; i++) {
 							var cb = ccbb[i];
 							if (cb.getValue()) {
 								myMsdlf.addItem('type', cb.getName());
 								hasType = true;
+								GoogleAnalyticsUtils.logDownloadSiteSet(cb.getName(), sites.length);
 							}
 						}
 						
 						if ( ! hasType ) {
 							Ext.MessageBox.alert("Which data would you like?","Please select at least one data type to download.");
 						} else {
-							var sites = DOWNLOAD_SITES.store.getRange();
 							for (var j = 0; j < sites.length; j++) {
 								var siteRecord = sites[j];
 								
