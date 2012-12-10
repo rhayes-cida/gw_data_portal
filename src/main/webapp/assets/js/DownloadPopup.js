@@ -334,7 +334,6 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						// myMsdlf.items.clear();
 						myMsdlf.clearItems();
 						myMsdlf.addItem('type', 'REGISTRY');		// Always include the registry info
-						var hasType = false;
 						
 						// start with list of types
 						var cbl = Ext.getCmp('typeGroup');
@@ -343,18 +342,25 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						//list of sites
 						var sites = DOWNLOAD_SITES.store.getRange();
 						
+						var numberOfTypesSelected = 0;
 						for (var i = 0; i < ccbb.length; i++) {
 							var cb = ccbb[i];
 							if (cb.getValue()) {
 								myMsdlf.addItem('type', cb.getName());
-								hasType = true;
-								GoogleAnalyticsUtils.logDownloadSiteSet(cb.getName(), sites.length);
+								numberOfTypesSelected++;
+								GoogleAnalyticsUtils.logDownloadSiteSetByType(cb.getName(), sites.length);
 							}
 						}
 						
-						if ( ! hasType ) {
+
+						
+						if ( numberOfTypesSelected <= 0 ) {
 							Ext.MessageBox.alert("Which data would you like?","Please select at least one data type to download.");
 						} else {
+							GoogleAnalyticsUtils.logDownloadSiteSetTotal(numberOfTypesSelected); //log total times download button was clicked
+							
+							var countByAgencyObject = {}; //object used to get more analytics about how much agency data is collected
+							
 							for (var j = 0; j < sites.length; j++) {
 								var siteRecord = sites[j];
 								
@@ -363,6 +369,17 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 								// wellID = wellID.replace(/ /g, "+");
 								wellID = wellID.replace(/ /g, "_");
 								myMsdlf.addItem('featureID',wellID);
+								
+								//analytics aggregation
+								if(!countByAgencyObject[siteRecord.data.agency]) {
+									countByAgencyObject[siteRecord.data.agency] = 1; //initialize count to 1 for first time seen
+								} else {
+									countByAgencyObject[siteRecord.data.agency]++; //increment count
+								}
+							}
+							
+							for(var agency in countByAgencyObject) {
+								GoogleAnalyticsUtils.logDownloadSiteSetByAgency(agency, countByAgencyObject[agency]); //number of sites for each agency in this download
 							}
 							
 							myMsdlf.formSubmitToTarget(null);

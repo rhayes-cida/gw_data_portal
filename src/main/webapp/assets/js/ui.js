@@ -266,13 +266,11 @@ function addDataLayer() {
 	var p = document.getElementById('agency');
 	var agencySelected = false;
 	for (var i = 0; i < p.options.length; i++) {
-		if (p.options[i].selected) {
-			GoogleAnalyticsUtils.logMap(p.options[i].value);
+		if (p.options[i].selected && p.options[i].value) {
+			GoogleAnalyticsUtils.logMapByAgency(p.options[i].value); //log how many times an agency's data was explicitly requested on the map
 		}
 	}
-	if(!agencySelected) {
-		GoogleAnalyticsUtils.logMap("All Agencies");
-	}
+	GoogleAnalyticsUtils.logMap(); //logs how many times a map was requested
 
 	
 	

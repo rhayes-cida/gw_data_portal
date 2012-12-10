@@ -44,6 +44,8 @@ var IDENTIFY = {
 					// we don't want null sitenames
 					siteRecord.data.siteName = SITE.createName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
 					//open ID dialog with site record
+					GoogleAnalyticsUtils.logSiteIdentifyUsed();
+					GoogleAnalyticsUtils.logSiteIdentifyByStation(siteRecord.data.agency + ":" + siteRecord.data.siteNo);
 					(new SiteIdentifyWindow({siteRecord: siteRecord})).show();
 				} else {
 					for (var j=0; j<r.length; j++){
@@ -51,6 +53,8 @@ var IDENTIFY = {
 						siteRecord.data.siteName = SITE.createName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
 					}
 					//open site selection window
+					GoogleAnalyticsUtils.logSiteIdentifyUsed();
+					GoogleAnalyticsUtils.logSiteIdentifySet(IDENTIFY.store.getTotalCount());
 					(new SiteIdSelectorPopup({store: IDENTIFY.store})).show();
 				}
 			}
@@ -67,7 +71,6 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 	modal: true,
 	//resizable: false,
 	initComponent: function() {
-		GoogleAnalyticsUtils.logIdentifySet(this.store.getTotalCount());
 		Ext.apply(this, {
 			title: this.store.getTotalCount() + ' sites were identified nearby. Select one...',
 			items: {
@@ -91,6 +94,7 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 					var siteRecord = grid.getSelectionModel().getSelected();
 					//open ID window
 					if (siteRecord) {
+						GoogleAnalyticsUtils.logSiteIdentifyByStation(siteRecord.data.agency + ":" + siteRecord.data.siteNo);
 						(new SiteIdentifyWindow({siteRecord: siteRecord})).show();
 					} else {
 						Ext.Msg.show({

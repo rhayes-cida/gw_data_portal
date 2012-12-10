@@ -1,6 +1,6 @@
 GoogleAnalyticsUtils = function(){
-	var eventDebug = false;
-	var eventDebugVerbose = false;
+	var eventDebug = true;
+	var eventDebugVerbose = true;
 
 	return {
 		logEvent : function(category, action, label, value) {
@@ -10,52 +10,84 @@ GoogleAnalyticsUtils = function(){
 			_gaq.push(['_trackEvent', category, action, label, value]);
 		},
 		
-		//log single site download
+		//log total number of times a single site downloaded
 		logDownloadSite : function(stationNumber) {
 			if (eventDebug && console && console.log) {
 				console.log('logging site download: ' + stationNumber);
 			}
-			GoogleAnalyticsUtils.logEvent('Download', 'Site', stationNumber);
+			GoogleAnalyticsUtils.logEvent('Download', 'Single Site', stationNumber);
 		},
 		
-		//log multi-site download
-		logDownloadSiteSet : function(downloadType, numberOfSites) {
+		//log total times multi-site download was clicked
+		logDownloadSiteSetTotal : function(numberOfTypes) {
 			if (eventDebug && console && console.log) {
-				console.log('logging set of sites download: ' + numberOfSites + " " + downloadType + ' sites');
+				console.log('logging multisite download request: ' + numberOfTypes + ' download types selected');
 			}
-			GoogleAnalyticsUtils.logEvent('Download', 'Site', downloadType + " Set", numberOfSites);
+			GoogleAnalyticsUtils.logEvent('Download', 'Multiple Site', "Requested", numberOfTypes);
 		},
 		
-		//log single site identify
-		logIdentify : function(stationNumber) {
+		//log multi-site downloads by type
+		logDownloadSiteSetByType : function(downloadType, numberOfSites) {
 			if (eventDebug && console && console.log) {
-				console.log('logging identify: ' + stationNumber);
+				console.log('logging multisite download by type: ' + numberOfSites + " " + downloadType + ' sites');
 			}
-			GoogleAnalyticsUtils.logEvent('Identify', 'Site', stationNumber);
+			GoogleAnalyticsUtils.logEvent('Download', 'Multiple Site By Type', downloadType, numberOfSites);
 		},
 		
-		//log single site identify
-		logIdentifySet : function(numberOfSites) {
+		//log multi-site downloads by agency
+		logDownloadSiteSetByAgency : function(agency, numberOfSites) {
+			if (eventDebug && console && console.log) {
+				console.log('logging multisite download by agency: ' + numberOfSites + " " + agency + ' sites');
+			}
+			GoogleAnalyticsUtils.logEvent('Download', 'Multiple Site By Agency', agency, numberOfSites);
+		},
+		
+		//log total number of times the identify tool was used successfully (either single or site list)
+		logSiteIdentifyUsed : function() {
+			if (eventDebug && console && console.log) {
+				console.log('logging identify');
+			}
+			GoogleAnalyticsUtils.logEvent('Identify', 'Site', 'Any');
+		},
+		
+		//log total number of times a single site was identified
+		logSiteIdentifyByStation : function(agencyAndStationNumber) {
+			if (eventDebug && console && console.log) {
+				console.log('logging single identify by agency:site: ' + agencyAndStationNumber);
+			}
+			GoogleAnalyticsUtils.logEvent('Identify', 'Site', agencyAndStationNumber);
+		},
+		
+		//log total number of times multiple sites were returned by an identify
+		logSiteIdentifySet : function(numberOfSites) {
 			if (eventDebug && console && console.log) {
 				console.log('logging identify set: ' + numberOfSites + " sites");
 			}
 			GoogleAnalyticsUtils.logEvent('Identify', 'Site', "Set", numberOfSites);
 		},
 		
-		//log single site identify
-		logMap : function(agency) {
+		//log how many times an agency was explicitly requested in a map
+		logMapByAgency : function(agency) {
 			if (eventDebug && console && console.log) {
 				console.log('logging map of agency: ' + agency);
 			}
-			GoogleAnalyticsUtils.logEvent('Map', agency);
+			GoogleAnalyticsUtils.logEvent('Map', 'By Agency', agency);
+		},
+		
+		//log total times any map was requested
+		logMap : function() {
+			if (eventDebug && console && console.log) {
+				console.log('logging the request of a map');
+			}
+			GoogleAnalyticsUtils.logEvent('Map', 'Any', 'Requested');
 		},
 		
 		//log single site identify
-		logLinkClick : function(url) {
+		logSiteLinkClick : function(url) {
 			if (eventDebug && console && console.log) {
 				console.log('logging external link click: ' + url);
 			}
-			GoogleAnalyticsUtils.logEvent('ExternalLink', url);
+			GoogleAnalyticsUtils.logEvent('ExternalLink', 'Identified Site', url);
 		}
 	};
 }();
