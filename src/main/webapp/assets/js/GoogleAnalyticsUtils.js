@@ -1,6 +1,6 @@
 GoogleAnalyticsUtils = function(){
 	var eventDebug = true;
-	var eventDebugVerbose = true;
+	var eventDebugVerbose = false;
 
 	return {
 		logEvent : function(category, action, label, value) {
