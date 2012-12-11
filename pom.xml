@@ -150,7 +150,14 @@
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency> 
-        
+		
+	    <dependency>
+            <groupId>gov.usgs.cida.jslibs</groupId>
+            <artifactId>openlayers</artifactId>
+            <version>2.12-2</version>
+            <type>war</type>
+        </dependency>
+       
 		<!-- Testing dependencies -->
 		<dependency>
 			<groupId>junit</groupId>

@@ -1,3 +1,4 @@
+//TODO JRHMAP-RETIRE delete this entire file
 BaseLayersWindow = Ext.extend(Ext.Window, {
 	title: 'Base Map Layers',
 	width: 600,
