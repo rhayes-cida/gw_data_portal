@@ -579,3 +579,22 @@ td.long-text {
 	margin-left: 5em;	
 	font-size: 70%;
 }
+
+#map-area .scale-white{
+    color: white;
+}
+#map-area .scale-white .olControlScaleLineTop{
+    border: solid 2px white;
+    border-top: none;
+}
+#map-area .scale-white .olControlScaleLineBottom {
+    border: solid 2px white;
+    border-bottom: none;
+}
+#map-area .position-white {
+    color: white;
+}
+
+.olControlOverviewMapElement {
+    margin-bottom: 15px;
+}
