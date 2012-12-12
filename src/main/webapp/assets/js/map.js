@@ -40,7 +40,8 @@ GWDP.ui.initMap = function() {
         ]
     });
 	
-	GWDP.ui.addBaseLayers();
+	GWDP.ui.addBaseLayers();	
+	GWDP.ui.addNetworkLayers();
 	GWDP.ui.map.mainMap.zoomTo(4);
 }
 
@@ -62,6 +63,41 @@ GWDP.ui.addBaseLayers = function(){
 				}
 	        );
 		GWDP.ui.map.mainMap.addLayer(baseLayer);
+	}
+};
+
+GWDP.ui.addNetworkLayers = function(){
+ 	// First sort static, habitat and network layers by drawingOrder
+	var layersToAdd = GWDP.ui.map.networkLayers;
+    layersToAdd.sort(function(a,b){
+		if (a.drawingOrder < b.drawingOrder) {
+			return -1;
+		}
+		else if (a.drawingOrder > b.drawingOrder) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	});
+
+	// Add the sorted layers.
+	for (var j = 0; j < layersToAdd.length; j++){
+		var thisLayer = layersToAdd[j];
+		var wmsLayer = new thisLayer.type(
+				thisLayer.name,
+				thisLayer.url,
+				{
+					layers: thisLayer.layers,
+					transparent: true
+				},
+				{
+					displayInLayerSwitcher: false,
+					singleTile: true,
+					visibility: thisLayer.initialOn,
+					opacity: thisLayer.opacity
+				});
+		GWDP.ui.map.mainMap.addLayer(wmsLayer);
 	}
 };
 

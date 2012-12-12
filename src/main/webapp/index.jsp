@@ -24,6 +24,8 @@
       	%> 
       	</script>
       	
+
+      	
       	<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
             <jsp:param name="debug-qualifier" value="false" />
@@ -48,7 +50,7 @@
 		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->
-		<script type="text/javascript" src="assets/js/config.js"></script>
+		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
 		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
 		<script type="text/javascript" src="assets/js/GoogleAnalyticsUtils.js"></script>
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
@@ -63,6 +65,9 @@
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
 		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script><!-- //TODO JRHMAP-RETIRE: remove script import -->
 		<script type="text/javascript" src="assets/js/DownloadPopup.js"></script>
+		
+		
+		
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 	
