@@ -11,13 +11,15 @@ GWDP.ui.pointsCount = new Ext.Toolbar.TextItem('0 Points Mapped');
 
 GWDP.ui.initMap = function() {
 	var initCenter = new OpenLayers.LonLat(-95, 40);
+	var extent = (new OpenLayers.Bounds(-110, 30, -75, 50)).transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection);
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
         center: initCenter.transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection),
         units: 'm',
         // Set the maxResolutions and maxExtent as indicated in http://docs.openlayers.org/library/spherical_mercator.html
-        maxResolution: 156543.0339,
+//        maxResolution: 156543.0339,
         numZoomLevels: 12,
-        maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34,20037508.34, 20037508.34),
+        maxExtent: extent,
+        restrictedExtent: extent,
         controls: [
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.ArgParser(),
