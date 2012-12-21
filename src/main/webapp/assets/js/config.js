@@ -43,26 +43,26 @@ GWDP.ui.map.baseLayers = [
         type: OpenLayers.Layer.XYZ
     }
   ,
-  // aquifers go here with opacity < 1
+  // aquifers go here with opacity < 1, transparent: true; OpenLayers infers that the layer is an overlay.
   {
-	  // http://igsarm-cida-javadev1.er.usgs.gov:8081/geoserver/ngwmn/wms?service=WMS&version=1.1.0&request=GetMap&layers=ngwmn:aquifrp025&styles=&bbox=-160.2360533326389,17.674692621715167,-64.56616224353957,49.385619651248135&width=995&height=330&srs=EPSG:4269&format=application/openlayers
 	 	name: 'National aquifers',
 	 	url: GWDP.ui.map.baseWMSServiceUrl,
 	 	type: OpenLayers.Layer.WMS,
 	 	layers: 'ngwmn:aquifrp025',
-	 	legend: [  // from phragmites
+	 	
+	 	// data for CIDA hook, from phragmites
+	 	helpContext: 'national_aquifer',
+	 	legend: [  
 	 	         {
 	 	        	 name: 'National aquifers',
 	 	        	 imgHtml: '<img src=images/legends/national_aquifers.jpg />',
 	 	        	 helpContext: 'national_aquifer'
 	 	         }
 	 	],
-	 	// drawingOrder: 4,
-	 	initialOn: true,
-	 	opacity: 0.5,
-	 	transparent:true,
 	 	
-	 	helpContext: 'national_aquifer'
+	 	initialOn: true,
+	 	opacity: 0.7,
+	 	transparent:true	 	
      }
   ];
 
