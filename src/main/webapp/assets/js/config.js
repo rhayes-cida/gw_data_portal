@@ -25,7 +25,8 @@ GWDP.ui.map.baseLayers = [
     	name: "World Topo Map",
         url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
         type: OpenLayers.Layer.XYZ
-    },{
+    },
+    {
 	  name: 'World Imagery',
 	  url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/' + GWDP.ui.map.XYZ_URL_POSTFIX,
 	  type: OpenLayers.Layer.XYZ,
@@ -41,6 +42,28 @@ GWDP.ui.map.baseLayers = [
         url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
         type: OpenLayers.Layer.XYZ
     }
+  ,
+  // aquifers go here with opacity < 1
+  {
+	  // http://igsarm-cida-javadev1.er.usgs.gov:8081/geoserver/ngwmn/wms?service=WMS&version=1.1.0&request=GetMap&layers=ngwmn:aquifrp025&styles=&bbox=-160.2360533326389,17.674692621715167,-64.56616224353957,49.385619651248135&width=995&height=330&srs=EPSG:4269&format=application/openlayers
+	 	name: 'National aquifers',
+	 	url: GWDP.ui.map.baseWMSServiceUrl,
+	 	type: OpenLayers.Layer.WMS,
+	 	layers: 'ngwmn:aquifrp025',
+	 	legend: [  // from phragmites
+	 	         {
+	 	        	 name: 'National aquifers',
+	 	        	 imgHtml: '<img src=images/legends/national_aquifers.jpg />',
+	 	        	 helpContext: 'national_aquifer'
+	 	         }
+	 	],
+	 	// drawingOrder: 4,
+	 	initialOn: true,
+	 	opacity: 0.5,
+	 	transparent:true,
+	 	
+	 	helpContext: 'national_aquifer'
+     }
   ];
 
 
@@ -51,6 +74,7 @@ GWDP.ui.map.networkLayers = [{
   	 	layers: 'ngwmn:VW_GWDP_GEOSERVER',
   	 	legend: [
   	 	         {
+  	 	        	 // TODO Fix
   	 	        	 name: 'Contour-based 1 m reduction',
   	 	        	 imgHtml: '<img src=images/legends/corridor_networks.jpg />',
   	 	        	 divId: 'legend-contour-layer',

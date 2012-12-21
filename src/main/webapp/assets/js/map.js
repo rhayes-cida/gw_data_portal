@@ -44,23 +44,27 @@ GWDP.ui.initMap = function() {
 	GWDP.ui.addBaseLayers();	
 	GWDP.ui.addNetworkLayers();
 	GWDP.ui.map.mainMap.zoomTo(4);
-}
+};
 
 GWDP.ui.addBaseLayers = function(){
 	// Add base layers to map. Set the projection to the mercator projection in the data layers.
 	for (var i = 0; i < GWDP.ui.map.baseLayers.length; i++){
+		var thisLayer = GWDP.ui.map.baseLayers[i];
 		var baseLayer = new GWDP.ui.map.baseLayers[i].type(
-				GWDP.ui.map.baseLayers[i].name,
-				GWDP.ui.map.baseLayers[i].url,
+				thisLayer.name,
+				thisLayer.url,
 	            {
  					isBaseLayer: true,
 			        sphericalMercator : true,
 			        projection: "EPSG:102113",
 			        units: "m",
-					layers: GWDP.ui.map.baseLayers[i].layers
+			        transparent: (thisLayer.transparent == null) ? false : thisLayer.transparent,
+					layers: thisLayer.layers
 				},
 				{
-					singleTile: true
+					singleTile: true,
+					// visibility: baseLayer.initialOn,
+					opacity: (thisLayer.opacity == null) ? 1.0 : thisLayer.opacity
 				}
 	        );
 		GWDP.ui.map.mainMap.addLayer(baseLayer);
