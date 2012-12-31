@@ -55,7 +55,7 @@ GWDP.ui.map.baseLayers = [
 	 	legend: [  
 	 	         {
 	 	        	 name: 'National aquifers',
-	 	        	 imgHtml: '<img src=images/legends/national_aquifers.jpg />',
+	 	        	 imgHtml: "<img src='images/legends/national_aquifers.jpg' />",
 	 	        	 helpContext: 'national_aquifer'
 	 	         }
 	 	],
