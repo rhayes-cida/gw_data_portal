@@ -32,7 +32,8 @@ GWDP.ui.initMap = function() {
             	// Defined formatOutput because the displayProjection was not working.
             	formatOutput: function(lonLat){
             		lonLat.transform(GWDP.ui.map.mercatorProjection, GWDP.ui.map.wgs84Projection);
-           			return lonLat.toShortString();
+           			// return lonLat.toShortString();
+            		return lonLat.lon.toFixed(5) + ", " + lonLat.lat.toFixed(5);
            		}
            	}),
             new OpenLayers.Control.ScaleLine({
