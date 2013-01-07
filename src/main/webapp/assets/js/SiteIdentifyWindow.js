@@ -248,6 +248,10 @@ var WATER_LEVEL_TAB = {
 	load: function(record) {
 		// show the graph first, then get the table.
 		WATER_LEVEL_TAB.mask();
+
+		WATER_LEVEL_TAB.siteNo = record.get('siteNo');
+		WATER_LEVEL_TAB.agency_cd = MEDIATOR.cleanAgencyCode(record.get('agency'));
+		
 		WATER_LEVEL_TAB.initGraph();
 
 		//WATER_LEVEL_TAB.unmask();
@@ -318,9 +322,11 @@ var WATER_LEVEL_TAB = {
 		    	}
     		};
 		if (!Ext.isIE) dOptions.width = 700;
+		
+		var csvUrl = settingsData.cacheBase + "/../direct/csv/" + WATER_LEVEL_TAB.agency_cd + "/" + WATER_LEVEL_TAB.siteNo;
 		var g = new Dygraph(
 			    document.getElementById("dygraph-plot"),
-			    data,
+			    csvUrl,
 	    		dOptions
 		);
 		
@@ -328,7 +334,7 @@ var WATER_LEVEL_TAB = {
 	},
 	updateGraph: function(dataTable) {
 		WATER_LEVEL_TAB.dt = dataTable;
-		WATER_LEVEL_TAB.dygraph.updateOptions({file: dataTable});
+		// WATER_LEVEL_TAB.dygraph.updateOptions({file: dataTable});
 	}
 };
 
