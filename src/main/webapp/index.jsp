@@ -359,8 +359,7 @@
 						</span><!-- vcard -->
       				</p>
    					<p id="footer-page-url">URL: <a href="http://cida.usgs.gov/gw_data_portal/">http://cida.usgs.gov/gw_data_portal/</a></p>
-   					<p id=footer-feedback-form">Contact the NGWMN Data Portal Team by <a title="Contact the team" href="#" onclick="hendrix()" >webform</a> or <a href="mailto:gwdp_help@usgs.gov">email</a></p>
-					
+   					<p id=footer-feedback-form">Page Contact Information: <a title="Contact the team" href="#" onclick="hendrix()" >NGWMN Data Portal Team</a></p>
        				<p id="footer-page-modified-info">Page Last modified: <script type="text/javascript">document.write(document.lastModified);</script></p>
 				</div><!-- /page-info -->
 				<div id="gov-buttons">
