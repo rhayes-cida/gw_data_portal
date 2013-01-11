@@ -29,11 +29,12 @@ GWDP.ui.initMap = function() {
             }),
             new OpenLayers.Control.MousePosition({
                 id: 'map-area-mouse-position',
+                numDigits: 6,
             	// Defined formatOutput because the displayProjection was not working.
             	formatOutput: function(lonLat){
             		lonLat.transform(GWDP.ui.map.mercatorProjection, GWDP.ui.map.wgs84Projection);
            			// return lonLat.toShortString();
-            		return lonLat.lon.toFixed(5) + ", " + lonLat.lat.toFixed(5);
+            		return lonLat.lon.toFixed(this.numDigits) + ", " + lonLat.lat.toFixed(this.numDigits);
            		}
            	}),
             new OpenLayers.Control.ScaleLine({
