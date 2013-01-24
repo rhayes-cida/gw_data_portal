@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenLayers Example</title>
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+    </head>
+    <body>
+    <h1>Play Map</h1>
+      <div style="width:512px; height:300px" id="map">
+      </div>
+      <p>Scale: <span id="scale_id">unknown</span> Zoom: <span id="zoom_id">unknown</span></p>
+      
+      <script  type='text/javascript'>
+      
+      var mercatorProjection = new OpenLayers.Projection("EPSG:900913"); // web mercator
+      var wgs84Projection = new OpenLayers.Projection("EPSG:4326"); // WGS84
+
+      var initExtent = (new OpenLayers.Bounds(-180, 15, -50, 70)).transform(wgs84Projection, mercatorProjection);
+      
+      XYZ_URL_POSTFIX = '${z}/${y}/${x}';
+
+    	    
+    		var baseLayer = new OpenLayers.Layer.XYZ(
+    				"World Topo Map",
+    				"http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/"+XYZ_URL_POSTFIX,
+    	            {
+     					isBaseLayer: true,
+    			        sphericalMercator : true,
+    			        projection: "EPSG:102113",
+    			        // units: "m",
+    			        //transparent: (thisLayer.transparent == null) ? false : thisLayer.transparent,
+    					//layers: thisLayer.layers,
+    				}
+    				/*
+    				,{
+    					singleTile: true,
+    					// visibility: baseLayer.initialOn,
+    					opacity: (thisLayer.opacity == null) ? 1.0 : thisLayer.opacity,
+    				}
+    				*/
+    	        );
+    		
+
+    	      // init scale is 110936068.18546416 for 512x300 viewport 
+    	      var map = new OpenLayers.Map("map", {
+    	    	  projection: mercatorProjection,
+    	    	  displayProjection: wgs84Projection,
+    	    	  restrictedExtent: initExtent,
+    	    	  maxExtent: initExtent,
+    	    	  layers: [ baseLayer ],
+    	    	  // maxScale: 120000000.00,
+    	    	  // numZoomLevels: 8, 
+    	    	});
+
+    		// map.addLayer(baseLayer);
+    		map.addControl(new OpenLayers.Control.MousePosition());
+
+    		map.events.on({"zoomend": showZoom});
+    		function showZoom() {
+        		var scale = map.getScale();
+        		
+	    		document.getElementById("scale_id").innerHTML = scale;
+	    		
+	    		var z = map.getZoom();
+	    		document.getElementById("zoom_id").innerHTML = z;
+
+	    		if (scale >  220000000) {
+	    			// map.zoomIn();
+	    		}
+    		}
+
+    		map.zoomToMaxExtent();
+    		
+      </script>
+    </body>
+</html>
