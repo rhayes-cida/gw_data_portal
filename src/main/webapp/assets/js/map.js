@@ -1,33 +1,45 @@
 GWDP.ui.map.mainMap; //global reference to map, don't know if I like it but I don't care right now
 
-GWDP.ui.map.mercatorProjection = new OpenLayers.Projection("EPSG:900913"); // Use this projection for transformations
-GWDP.ui.map.wgs84Projection = new OpenLayers.Projection("EPSG:4326"); // Use this projection for transformations
+GWDP.ui.map.mercatorProjection = new OpenLayers.Projection("EPSG:900913"); // web mercator
+GWDP.ui.map.wgs84Projection = new OpenLayers.Projection("EPSG:4326"); // WGS84
 
 GWDP.ui.map.setHTML = function (response) {
     alert(response.responseText);
 };
 
 GWDP.ui.pointsCount = new Ext.Toolbar.TextItem('0 Points Mapped');
+GWDP.ui.initExtent = (new OpenLayers.Bounds(-180, 15, -50, 70)).transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection);
+
+var cida = new OpenLayers.LonLat(-89.532523, 43.092565);
+
+function dumpExtent(tag, extent, force) {
+	console.log("Extent[" + tag +"]: " + extent);
+}
 
 GWDP.ui.initMap = function() {
-	var initCenter = new OpenLayers.LonLat(-95, 40);
-	var extent = (new OpenLayers.Bounds(-145, 20, -45, 60)).transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection);
+	var initCenter = new OpenLayers.LonLat(-89.5042, 43.0973);
+	var extent = GWDP.ui.initExtent;
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
-        center: initCenter.transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection),
+  	  projection: GWDP.ui.map.mercatorProjection,
+	  displayProjection: GWDP.ui.map.wgs84Projection,
+
+        // center: initCenter.transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection),
         units: 'm',
         // Set the maxResolutions and maxExtent as indicated in http://docs.openlayers.org/library/spherical_mercator.html
-        numZoomLevels: 8,
+        // numZoomLevels: 8,
         maxExtent: extent,
         restrictedExtent: extent,
+        
         controls: [
             new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.ArgParser(),
+            // new OpenLayers.Control.ArgParser(),
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.LayerSwitcher(),
             new OpenLayers.Control.PanZoom(),
             new OpenLayers.Control.OverviewMap({
             }),
-            new OpenLayers.Control.MousePosition({
+/*            
+  			new OpenLayers.Control.MousePosition({
                 id: 'map-area-mouse-position',
                 numDigits: 6,
             	// Defined formatOutput because the displayProjection was not working.
@@ -37,6 +49,7 @@ GWDP.ui.initMap = function() {
             		return lonLat.lon.toFixed(this.numDigits) + ", " + lonLat.lat.toFixed(this.numDigits);
            		}
            	}),
+*/            
             new OpenLayers.Control.ScaleLine({
                 id: 'map-area-scale-line'
             })
@@ -45,7 +58,14 @@ GWDP.ui.initMap = function() {
 	
 	GWDP.ui.addBaseLayers();	
 	GWDP.ui.addNetworkLayers();
-	GWDP.ui.map.mainMap.zoomTo(4);
+	
+	// GWDP.ui.map.mainMap.zoomTo(4);
+	// GWDP.ui.map.mainMap.zoomToMaxExtent();
+
+	// console.log("!! at end of initMap");
+	
+	GWDP.ui.map.mainMap.zoomToMaxExtent();
+
 };
 
 GWDP.ui.addBaseLayers = function(){
@@ -61,7 +81,8 @@ GWDP.ui.addBaseLayers = function(){
 			        projection: "EPSG:102113",
 			        units: "m",
 			        transparent: (thisLayer.transparent == null) ? false : thisLayer.transparent,
-					layers: thisLayer.layers
+					layers: thisLayer.layers,
+					wrapDateLine: true
 				},
 				{
 					singleTile: true,
@@ -74,7 +95,7 @@ GWDP.ui.addBaseLayers = function(){
 };
 
 GWDP.ui.addNetworkLayers = function(){
- 	// First sort static, habitat and network layers by drawingOrder
+ 	// First sort network layers by drawingOrder
 	var layersToAdd = GWDP.ui.map.networkLayers;
     layersToAdd.sort(function(a,b){
 		if (a.drawingOrder < b.drawingOrder) {

@@ -46,7 +46,7 @@
 	    <script type='text/javascript' src='ext-3.4.0/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script src="ext-3.4.0/ext-all-debug.js"></script>
-		<script src="ext-3.4.0/examples/ux/BufferView.js"></script>
+<!-- 		<script src="ext-3.4.0/examples/ux/BufferView.js"></script> -->
 		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
 		<!-- application assets -->
