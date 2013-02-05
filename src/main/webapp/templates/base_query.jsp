@@ -1,5 +1,7 @@
 <%@page import="java.util.*"%>
-
+<% 
+//TODO I am not a fan of using JSP as a SQL builder, consider replacing this (mybatis or other homegrown solution) - PT
+%>
 <%!
 	// Splits into pairs using , as pair delimiter, - as within-pair delimiter
 	public List<String[]> splitParam(String param){

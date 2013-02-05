@@ -13,30 +13,11 @@
       		type="image/png" 
       		href="favicon.ico">
       	
-      	<script type="text/javascript">
-      		var useOpenlayers = false;
-      	<% 
-      	//TODO JRHMAP-RETIRE: remove this entire scriplet when JRHMap is retired, and the surrounding script tag
-      	String useOpenlayers = request.getParameter("useOpenlayers");
-      	if(useOpenlayers != null && ((String) useOpenlayers).equals("true")) {
-      		%>useOpenlayers = true;<%
-      	}
-      	%> 
-      	</script>
-      	
-
-      	
       	<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
             <jsp:param name="debug-qualifier" value="false" />
         </jsp:include>
       	
-		<!-- scrollable map assets -->
-		<script type="text/javascript" src="scrollable_map/JMap-header.js"></script>
-		<script type="text/javascript" src="scrollable_map/JMap-base.js"></script>
-		<script type="text/javascript" src="scrollable_map/JMap-all.js"></script>
-		<link rel="stylesheet" href="scrollable_map/css/scrollable_map.css"/>
-	
 		<!-- Dygraph documents this as a needed IE8 hack  -->
 	    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
 		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
@@ -54,7 +35,6 @@
 		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
 		<script type="text/javascript" src="assets/js/GoogleAnalyticsUtils.js"></script>
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
-		<script type="text/javascript" src="assets/js/oldUi.js"></script> <!-- //TODO JRHMAP-RETIRE: remove script import -->
 		<script type="text/javascript" src="assets/js/map.js"></script>
 		<script type="text/javascript" src="assets/js/ui.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdSelectorPopup.js"></script>
@@ -63,7 +43,6 @@
 			google.load("visualization", "1");
 		</script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
-		<script type="text/javascript" src="assets/js/BaseLayersWindow.js"></script><!-- //TODO JRHMAP-RETIRE: remove script import -->
 		<script type="text/javascript" src="assets/js/DownloadPopup.js"></script>
 		
 		
@@ -159,15 +138,6 @@
 		
 		<!-- render map to this div -->
 		<div id="map-area" class="x-hidden" style="width: 100%; height: 100%; max-width: 1350px;">
-			<% 
-      	//TODO JRHMAP-RETIRE: remove this entire scriplet when JRHMap is retired, and the surrounding script tag
-      	if(useOpenlayers == null || !((String) useOpenlayers).equals("true")) {
-      		%>
-      		<div id="map-tools" class="map-tools"></div>
-			<div id="legend-div"></div>
-      		<%
-      	}
-      	%> 
 		</div>
 		
 		

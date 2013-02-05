@@ -106,11 +106,4 @@ GWDP.ui.initApp = function() {
 	//loadMapLayers(); //TODO load geoserver layers	
 };
 
-
-
-//TODO JRHMAP-RETIRE remove if-else clause, leaving the code in the else clause
-if(!useOpenlayers) {
-	Ext.onReady(jrhMapInit); //this is the old version of the UI
-} else {
-	Ext.onReady(GWDP.ui.initApp);
-}
+Ext.onReady(GWDP.ui.initApp);

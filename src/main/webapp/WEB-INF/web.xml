@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
 	version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
 
-<display-name>NGWMN Map Client (formerly GWDP MAP){Owner: NB, JL Coder: IK}</display-name>
+<display-name>NGWMN Map Client (formerly GWDP MAP){Owner: NB, JL Coder: IK, RH, PT}</display-name>
 <description>Client Application of the NGWMN (formerly GWDP)</description>
 
 	<filter>
@@ -15,12 +15,6 @@
 		<filter-name>DownloadTokenFilter</filter-name>
 		<servlet-name>ExportServlet</servlet-name>
 	</filter-mapping>
-
-	<servlet>
-		<description>Proxy to forward requests to the Oracle MapViewer server</description>
-		<servlet-name>MVServlet</servlet-name>
-		<servlet-class>gov.usgs.MVServlet</servlet-class>
-	</servlet>
 
 	<servlet>
 		<description>Process IDENTIFY map click spatially</description>
@@ -61,11 +55,6 @@
 		<servlet-name>ContactService</servlet-name>
 		<servlet-class>gov.usgs.ContactService</servlet-class>
 	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>MVServlet</servlet-name>
-  		<url-pattern>/mvwms</url-pattern>
-	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>IdentifyServlet</servlet-name>
