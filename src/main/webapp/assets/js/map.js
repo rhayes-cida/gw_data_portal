@@ -58,6 +58,8 @@ GWDP.ui.initMap = function() {
 	
 	GWDP.ui.map.mainMap.zoomToMaxExtent();
 
+	//get features
+	GWDP.ui.updateFeatureCount(null, null);
 };
 
 GWDP.ui.addBaseLayers = function(){
@@ -214,4 +216,13 @@ GWDP.ui.toggleLegend = function(name, layers, on) {
 		divEl.innerHTML = '';
 	}
 	return;
+};
+
+GWDP.ui.updateFeatureCount = function(filters) {
+	//TODO not super performant and still needs to update dynamically
+	GWDP.ui.pointsCount.update("Calculating Points Mapped...");
+	var updateCount = function(records) {
+		GWDP.ui.pointsCount.update(records.length + " Points Mapped");
+	};
+	GWDP.domain.Well.getWells('-36547362.895099,-856265.44974875,10943880.016211,13614181.24696', null, updateCount)
 };

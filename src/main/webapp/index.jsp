@@ -30,10 +30,16 @@
 <!-- 		<script src="ext-3.4.0/examples/ux/BufferView.js"></script> -->
 		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
-		<!-- application assets -->
-		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
+		<!-- GA -->
 		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
 		<script type="text/javascript" src="assets/js/GoogleAnalyticsUtils.js"></script>
+		
+		<!-- application assets -->
+		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
+
+		<!-- Data domain objects -->		
+		<script type="text/javascript" src="assets/js/domain/WellDomain.js"></script>
+		
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
 		<script type="text/javascript" src="assets/js/map.js"></script>
 		<script type="text/javascript" src="assets/js/ui.js"></script>
