@@ -1,97 +1,6 @@
 GWDP.ui.initApp = function() {
-		
-	var showHelp = function(event, toolEl, panel,tc) {
-		var myWin = Ext.create({
-			title: 'NGWMN Help',
-			xtype: 'window',
-			modal: true,
-			html: '<iframe src="https://my.usgs.gov/confluence/display/ngwmn/NGWMN+Data+Portal+Help" width="100%" height="100%" ></iframe>',
-			width: 970,
-			height: 600
-		});
-		myWin.show();
-    };
-    
-	//create the EXTJS layout
-	var content = new Ext.Panel({
-		id: 'content',
-		region: 'center',
-		layout: 'border',
-		plain: true,
-		style: 'text-align: left',
-		border: false,
-		items: [{
-				title: 'Click and drag map',
-				region: 'center',
-				border: true,
-				id: 'cmp-map-area',
-				contentEl: 'map-area',
-				tools: [
-						{
-							id: 'refresh',
-							qtip: 'Refresh',
-					        handler: function() {alert("not yet implemented");}
-						},
-						{
-							id: 'help',
-							qtip: 'Get Help',
-							handler: showHelp
-						}
-					],
-				listeners: {
-					afterrender: GWDP.ui.initMap,
-					resize: function(p,w,h) {
-						if(GWDP.ui.map.mainMap) {
-							GWDP.ui.map.mainMap.updateSize();
-						}
-					}
-				},
-				bbar: [GWDP.ui.pointsCount]
-		    },{
-				region: 'west',
-				width: 300,
-				title: 'Filter Map Data',
-				bodyStyle: 'padding: 5px',
-				autoScroll: true,
-				buttonAlign: 'center',
-				border: true,
-				buttons: [{
-					text: 'Map',
-					handler: function() {alert("not yet implemented");}
-				}],
-				tools: [
-						{
-							id: 'refresh',
-							qtip: 'Refresh',
-					        handler: function() {alert("not yet implemented");}
-						},
-				{
-					id: 'help',
-			        qtip: 'Get Help',
-			        handler: showHelp
-				}
-				],
 	
-				items: [{
-					xtype: 'fieldset',
-					title: 'Agency Contributing Data',
-					contentEl: 'agency-div'
-				},{
-					xtype: 'fieldset',
-					title: 'U.S. Principal Aquifer Name',
-					contentEl: 'ntlAquifer-div'
-				},{
-					xtype: 'fieldset',
-					title: '<input id="wl-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Level Network',
-					contentEl: 'wl-well-type-div'
-				},{
-					xtype: 'fieldset',
-					title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
-					contentEl: 'qw-well-type-div'
-				}]
-		    }]
-	});
-	
+	//header and footer panels
 	var header = new Ext.Panel({ //header
 		region: 'north',
 		border: false,
@@ -118,6 +27,103 @@ GWDP.ui.initApp = function() {
 		collapsibleSplitTip: 'Click here to hide the bottom panel.',
 		height: 125,
 		minSize: 110
+	});
+		
+	var showHelp = function(event, toolEl, panel,tc) {
+		var myWin = Ext.create({
+			title: 'NGWMN Help',
+			xtype: 'window',
+			modal: true,
+			html: '<iframe src="https://my.usgs.gov/confluence/display/ngwmn/NGWMN+Data+Portal+Help" width="100%" height="100%" ></iframe>',
+			width: 970,
+			height: 600
+		});
+		myWin.show();
+    };
+    
+    var minimize = function() {
+    	header.expand(false);
+    	footer.expand(false);
+    };
+    
+    var maximize = function() {
+    	header.collapse(true);
+    	footer.collapse(true);
+    };
+    
+	//create the EXTJS layout
+	var content = new Ext.Panel({
+		id: 'content',
+		region: 'center',
+		layout: 'border',
+		plain: true,
+		style: 'text-align: left',
+		border: false,
+		items: [{
+				title: 'Click and drag map',
+				region: 'center',
+				border: true,
+				id: 'cmp-map-area',
+				contentEl: 'map-area',
+				tools: [
+						{
+							id: 'refresh',
+							qtip: 'Refresh',
+					        handler: function() {alert("not yet implemented");}
+						},
+						{
+							id: 'help',
+							qtip: 'Get Help',
+							handler: showHelp
+						},{
+							id: 'minimize',
+							qtip: 'Minimize',
+					        handler: minimize
+						},{
+							id: 'maximize',
+							qtip: 'Maximize',
+					        handler: maximize
+						}
+					],
+				listeners: {
+					afterrender: GWDP.ui.initMap,
+					resize: function(p,w,h) {
+						if(GWDP.ui.map.mainMap) {
+							GWDP.ui.map.mainMap.updateSize();
+						}
+					}
+				},
+				bbar: [GWDP.ui.pointsCount]
+		    },{
+				region: 'west',
+				width: 300,
+				title: 'Filter Map Data',
+				bodyStyle: 'padding: 5px',
+				autoScroll: true,
+				buttonAlign: 'center',
+				border: true,
+				buttons: [{
+					text: 'Map',
+					handler: function() {alert("not yet implemented");}
+				}],
+				items: [{
+					xtype: 'fieldset',
+					title: 'Agency Contributing Data',
+					contentEl: 'agency-div'
+				},{
+					xtype: 'fieldset',
+					title: 'U.S. Principal Aquifer Name',
+					contentEl: 'ntlAquifer-div'
+				},{
+					xtype: 'fieldset',
+					title: '<input id="wl-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Level Network',
+					contentEl: 'wl-well-type-div'
+				},{
+					xtype: 'fieldset',
+					title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
+					contentEl: 'qw-well-type-div'
+				}]
+		    }]
 	});
 	
 	//put together the viewport
