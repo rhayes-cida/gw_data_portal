@@ -206,32 +206,27 @@
     		map.addControl(s2);
 
     		// sample URL http://localhost:8080/gw_data_portal/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ngwmn:VW_GWDP_GEOSERVER&maxFeatures=50
-    		var wfs = new OpenLayers.Protocol.WFS({
-    		    version: "1.1.0",
-    		    featureType: "VW_GWDP_GEOSERVER",
-    		    featurePrefix: 'ngwmn',
-    		    featureNS: "gov.usgs.cida.ngwmn",
-    		    // geometryName: "the_geom"
-    		    url:  "/gw_data_portal/geoserver/wfs"
-    		});
-    		var s3 = new OpenLayers.Control.GetFeature({
-    			protocol: wfs,
-    			multiple: true,
-    			autoActivate: true
-    		});
     		
+    		var control = new OpenLayers.Control.GetFeature({
+                protocol: OpenLayers.Protocol.WFS.fromWMSLayer(networkLayer),
+                box: true,
+                hover: false,
+                multipleKey: "shiftKey",
+                toggleKey: "ctrlKey"
+            });
     		var wfs_callback = function(answer) {
     			console.log('got WFS answer');
     		}
-    		s2.events.register('beforefeatureselected', null, wfs_callback);
-    		s2.events.register('featureselected', null, wfs_callback);
-    		s2.events.register('beforefeaturesselected', null, wfs_callback);
-    		s2.events.register('featuresselected', null, wfs_callback);
-    		s2.events.register('featureunselected', null, wfs_callback);
-    		s2.events.register('clickout', null, wfs_callback);
-    		s2.events.register('hoverfeature', null, wfs_callback);
-    		s2.events.register('outfeature', null, wfs_callback);
-    		map.addControl(s3);
+    		control.events.register('beforefeatureselected', null, wfs_callback);
+    		control.events.register('featureselected', null, wfs_callback);
+    		control.events.register('beforefeaturesselected', null, wfs_callback);
+    		control.events.register('featuresselected', null, wfs_callback);
+    		control.events.register('featureunselected', null, wfs_callback);
+    		control.events.register('clickout', null, wfs_callback);
+    		control.events.register('hoverfeature', null, wfs_callback);
+    		control.events.register('outfeature', null, wfs_callback);
+    		map.addControl(control);
+    		control.activate();
 
     		map.events.on({"zoomend": showZoom});
     		function showZoom() {
