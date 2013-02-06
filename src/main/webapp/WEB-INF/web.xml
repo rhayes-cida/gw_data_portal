@@ -56,6 +56,20 @@
 		<servlet-class>gov.usgs.ContactService</servlet-class>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>geoproxy</servlet-name>
+		<servlet-class>gov.usgs.cida.proxy.AlternateProxyServlet</servlet-class>
+		<init-param>
+			<param-name>forward-url</param-name>
+			<param-value>http://igsarm-cida-javadev1.er.usgs.gov:8081/geoserver/ngwmn</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>geoproxy</servlet-name>
+		<url-pattern>/geoserver/*</url-pattern>
+	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>IdentifyServlet</servlet-name>
   		<url-pattern>/identify</url-pattern>

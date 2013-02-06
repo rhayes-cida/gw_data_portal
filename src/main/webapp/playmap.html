@@ -49,7 +49,9 @@
     		                            }
     		                          ];
         		
-    		var baseMapServerUrl = 'http://igsarm-cida-javadev1.er.usgs.gov:8081/geoserver/ngwmn'; // from '<%=DebugSettings.GEOSERVER%>';
+    		// var baseMapServerUrl = 'http://igsarm-cida-javadev1.er.usgs.gov:8081/geoserver/ngwmn'; // from '<%=DebugSettings.GEOSERVER%>';
+    		var baseMapServerUrl = '/gw_data_portal/geoserver'; // from '<%=DebugSettings.GEOSERVER%>';
+
     		//define urls for map server services
     		var baseWMSServiceUrl = baseMapServerUrl + '/wms?request=GetMap';
 
@@ -165,6 +167,26 @@
     		map.addLayer(aquiferLayer);
     		map.addLayer(networkLayer);
     		// map.addControl(new OpenLayers.Control.MousePosition());
+    		
+    		var selector = new OpenLayers.Control.WMSGetFeatureInfo({
+    			// options 
+    			hover: true,
+    			drillDown: true,
+    			autoActivate: true,
+    			layers: [networkLayer]
+    		});
+    		selector.events.register('getfeatureinfo', null, function(answer) {
+    			console.log('got feature info for ' + answer.features.length + " features");
+    		});
+    		selector.events.register('beforegetfeatureinfo', null, function(answer) {
+    			console.log('requesting feature info ');
+    		});
+    		selector.events.register('nogetfeatureinfo', null, function(answer) {
+    			console.log('did not got feature info');
+    		});
+    		
+    		map.addControl(selector);
+    		// selector.activate();
 
     		map.events.on({"zoomend": showZoom});
     		function showZoom() {
