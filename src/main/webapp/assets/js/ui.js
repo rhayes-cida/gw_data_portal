@@ -13,24 +13,19 @@ GWDP.ui.initApp = function() {
     };
     
 	//create the EXTJS layout
-	new Ext.Panel({
-		id: 'ext-content-panel',
-		renderTo: 'content',
+	var content = new Ext.Panel({
+		id: 'content',
+		region: 'center',
 		layout: 'border',
-		height: 640,
-		width: 1350,
 		plain: true,
 		style: 'text-align: left',
+		border: false,
 		items: [{
-			border: true,
-			region: 'center',
-			layout: 'fit',
-		    items: [{
 				title: 'Click and drag map',
-				border: false,
-				id: 'ext-map-area',
+				region: 'center',
+				border: true,
+				id: 'cmp-map-area',
 				contentEl: 'map-area',
-				layout: 'fit',
 				tools: [
 						{
 							id: 'refresh',
@@ -42,68 +37,101 @@ GWDP.ui.initApp = function() {
 							qtip: 'Get Help',
 							handler: showHelp
 						}
-					]
-				,listeners: {
+					],
+				listeners: {
 					afterrender: GWDP.ui.initMap,
 					resize: function(p,w,h) {
 						if(GWDP.ui.map.mainMap) {
 							GWDP.ui.map.mainMap.updateSize();
 						}
 					}
-//					,resize: function(p) {
-//						if (map1) map1.resize(p.body.getWidth(),p.getInnerHeight());
-//					}
+				},
+				bbar: [GWDP.ui.pointsCount]
+		    },{
+				region: 'west',
+				width: 300,
+				title: 'Filter Map Data',
+				bodyStyle: 'padding: 5px',
+				autoScroll: true,
+				buttonAlign: 'center',
+				border: true,
+				buttons: [{
+					text: 'Map',
+					handler: function() {alert("not yet implemented");}
+				}],
+				tools: [
+						{
+							id: 'refresh',
+							qtip: 'Refresh',
+					        handler: function() {alert("not yet implemented");}
+						},
+				{
+					id: 'help',
+			        qtip: 'Get Help',
+			        handler: showHelp
 				}
-		    
-		    }],
-			bbar: [GWDP.ui.pointsCount]
-		},{
-			region: 'west',
-			width: 300,
-			title: 'Filter Map Data',
-			bodyStyle: 'padding: 5px',
-			autoScroll: true,
-			buttonAlign: 'center',
-			buttons: [{
-				text: 'Map',
-				handler: function() {alert("not yet implemented");}
-			}],
-			tools: [
-					{
-						id: 'refresh',
-						qtip: 'Refresh',
-				        handler: function() {alert("not yet implemented");}
-					},
-			{
-				id: 'help',
-		        qtip: 'Get Help',
-		        handler: showHelp
-			}
-			],
-
-			items: [{
-				xtype: 'fieldset',
-				title: 'Agency Contributing Data',
-				contentEl: 'agency-div'
-			},{
-				xtype: 'fieldset',
-				title: 'U.S. Principal Aquifer Name',
-				contentEl: 'ntlAquifer-div'
-			},{
-				xtype: 'fieldset',
-				title: '<input id="wl-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Level Network',
-				contentEl: 'wl-well-type-div'
-			},{
-				xtype: 'fieldset',
-				title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
-				contentEl: 'qw-well-type-div'
-			}]
-		}]
+				],
+	
+				items: [{
+					xtype: 'fieldset',
+					title: 'Agency Contributing Data',
+					contentEl: 'agency-div'
+				},{
+					xtype: 'fieldset',
+					title: 'U.S. Principal Aquifer Name',
+					contentEl: 'ntlAquifer-div'
+				},{
+					xtype: 'fieldset',
+					title: '<input id="wl-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Level Network',
+					contentEl: 'wl-well-type-div'
+				},{
+					xtype: 'fieldset',
+					title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
+					contentEl: 'qw-well-type-div'
+				}]
+		    }]
+	});
+	
+	var header = new Ext.Panel({ //header
+		region: 'north',
+		border: false,
+		contentEl: 'header',
+		height: 103,
+		collapsible: true,
+		collapseMode: 'mini',
+		split: true,
+		hideCollapseTool: true,
+		useSplitTips: true,
+		collapsibleSplitTip: 'Click here to hide the top panel.'
+	});
+	
+	var footer = new Ext.Panel({ //footer
+		region: 'south',
+		contentEl: 'footer',
+		layout: 'fit',
+		border: false,
+		collapsible: true,
+		collapseMode: 'mini',
+		split: true,
+		hideCollapseTool: true,
+		useSplitTips: true,
+		collapsibleSplitTip: 'Click here to hide the bottom panel.',
+		height: 125,
+		minSize: 110
+	});
+	
+	//put together the viewport
+	new Ext.Viewport({
+		id: 'gwdp-viewport',
+		layout: 'border',
+		items: [header, content, footer]
 	});
 	
 	//TODO get some controls on the map
 	
 	//loadMapLayers(); //TODO load geoserver layers	
+	
+	
 };
 
 Ext.onReady(GWDP.ui.initApp);

@@ -78,7 +78,6 @@
 	</head>
 	
 	<body>
-		<div id="placeholder"></div>
 		<div id="header">
 			<div id="banner-area">
 			     
@@ -132,17 +131,13 @@
 		
 		
 		
-		<div id="wrapper" style="width:100%" align="center">
-			<div id="content"></div>
-		</div>
-		
-		<!-- render map to this div -->
-		<div id="map-area" class="x-hidden" style="width: 100%; height: 100%; max-width: 1350px;">
+		<div id="map-area" class="x-hidden" style="width: 100%; height: 100%;">
 		</div>
 		
 		
 		
 <%
+		//TODO not a fan of directly building HTML with JDBC directly in the JSPs
 		Connection connection = null;
 
 		try {
