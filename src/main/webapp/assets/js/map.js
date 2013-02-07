@@ -7,7 +7,7 @@ GWDP.ui.map.setHTML = function (response) {
     alert(response.responseText);
 };
 
-GWDP.ui.pointsCount = new Ext.Toolbar.TextItem('0 Points Mapped');
+GWDP.ui.pointsCount = new Ext.Toolbar.TextItem('Calculating Points Mapped...');
 GWDP.ui.initExtent = (new OpenLayers.Bounds(-180, 15, -50, 70)).transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection);
 
 var cida = new OpenLayers.LonLat(-89.532523, 43.092565);
@@ -51,15 +51,19 @@ GWDP.ui.initMap = function() {
 	GWDP.ui.addBaseLayers();	
 	GWDP.ui.addNetworkLayers();
 	
-	// GWDP.ui.map.mainMap.zoomTo(4);
-	// GWDP.ui.map.mainMap.zoomToMaxExtent();
-
-	// console.log("!! at end of initMap");
-	
 	GWDP.ui.map.mainMap.zoomToMaxExtent();
-
-	//get features
-	GWDP.ui.updateFeatureCount(null, null);
+	
+	//attach point counter update event
+	GWDP.ui.map.mainMap.events.register(
+		'moveend',
+		GWDP.ui.map.mainMap,
+		function() {
+			GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap);
+		}
+	);
+	GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap);
+	
+	// console.log("!! at end of initMap");
 };
 
 GWDP.ui.addBaseLayers = function(){
@@ -216,13 +220,4 @@ GWDP.ui.toggleLegend = function(name, layers, on) {
 		divEl.innerHTML = '';
 	}
 	return;
-};
-
-GWDP.ui.updateFeatureCount = function(filters) {
-	//TODO not super performant and still needs to update dynamically
-	GWDP.ui.pointsCount.update("Calculating Points Mapped...");
-	var updateCount = function(records) {
-		GWDP.ui.pointsCount.update(records.length + " Points Mapped");
-	};
-	GWDP.domain.Well.getWells('-36547362.895099,-856265.44974875,10943880.016211,13614181.24696', null, updateCount)
 };
