@@ -16,8 +16,28 @@ function dumpExtent(tag, extent, force) {
 	console.log("Extent[" + tag +"]: " + extent);
 }
 
+GWDP.ui.ClickControl = OpenLayers.Class(OpenLayers.Control, {            
+    initialize: function(options) {
+        OpenLayers.Control.prototype.initialize.apply(
+            this, arguments
+        );
+        
+        this.map = options.map;
+        this.clickHandler = options.clickHandler;
+        
+        this.handler = new OpenLayers.Handler.Click(
+            this, {
+                'click': this.clickHandler
+            }, {
+                'single': true
+            }
+        );
+    }
+});
+
 GWDP.ui.initMap = function() {
 	var initCenter = new OpenLayers.LonLat(-89.5042, 43.0973);
+    
 	var extent = GWDP.ui.initExtent;
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
   	  projection: GWDP.ui.map.mercatorProjection,
@@ -48,6 +68,7 @@ GWDP.ui.initMap = function() {
         ]
     });
 	
+	
 	GWDP.ui.addBaseLayers();	
 	GWDP.ui.addNetworkLayers();
 	
@@ -63,6 +84,16 @@ GWDP.ui.initMap = function() {
 	);
 	GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap);
 	
+	//attach click handler for identify function
+    var click = new GWDP.ui.ClickControl({
+    	map: GWDP.ui.map.mainMap,
+    	clickHandler: function(e) {
+    		IDENTIFY.identifyLatLon(GWDP.ui.map.mainMap, e);
+    	}
+    });
+    GWDP.ui.map.mainMap.addControl(click);
+    click.activate();
+    
 	// console.log("!! at end of initMap");
 };
 

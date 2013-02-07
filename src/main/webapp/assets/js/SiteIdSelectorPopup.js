@@ -10,19 +10,25 @@ var IDENTIFY = {
 	    fields: ['siteNo','siteName','decLatVa','decLongVa','qwWellType','wlWellType','wellDepth','localAquiferName','nationalAquiferName','agency','agencyName','wlSnFlag','qwSnFlag','logo','link','linkDesc',
 	             'wlDataFlag','qwDataFlag','logDataFlag']
 	}),
-	find: function(event, map) {
-
+	
+	identifyLatLon: function(map, e) {
 		Ext.getCmp('cmp-map-area').body.mask('Finding nearby point(s).  Please wait...', 'x-mask-loading');
-		//Ext.getCmp('ext-content-panel').body.mask();
-
-		var c = JMap.util.getRelativeCoords(event, map.pane);
-		var mapCoords = map.getMapCoordsInPixelSpace();
 		
-		var clickLLMax = map.getLatLonFromPixel(mapCoords.x + c.x + 10, mapCoords.y + (map.viewportHeight - c.y) + 10);
-		var clickLLMin = map.getLatLonFromPixel(mapCoords.x + c.x - 10, mapCoords.y + (map.viewportHeight - c.y) - 10);
+		var pixelClicked = e.xy;
+		
+		var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+		var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 		var idBBox = clickLLMin.lon + "," + clickLLMin.lat + "," + clickLLMax.lon + "," + clickLLMax.lat;
 		
-		var idParams = mapState;
+		var idParams = { //TODO actually filter!
+				agency: '',
+				ntlAquiferName: '',	
+				qwSnFlag:	'1',
+				qwWellType: '',	
+				wlSnFlag:	'1',
+				wlWellType: ''	
+				}; //filters
+		
 		idParams.idBBox = idBBox;
 		
 		IDENTIFY.store.load({
