@@ -1,4 +1,3 @@
-<%@page import="gov.usgs.IdentifyServlet"%>
 <%@ page import="gov.usgs.HTMLUtil,
 				javax.naming.Context,
 				javax.naming.InitialContext,
@@ -15,7 +14,7 @@
       	
       	<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
-            <jsp:param name="debug-qualifier" value="false" />
+            <jsp:param name="debug-qualifier" value="true" />
         </jsp:include>
       	
 		<!-- Dygraph documents this as a needed IE8 hack  -->
@@ -148,7 +147,7 @@
 
 		try {
 			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup(IdentifyServlet.GWP_DATASOURCE);
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/gwDataPortalUserDS");
 			connection = ds.getConnection();
 
 %>
