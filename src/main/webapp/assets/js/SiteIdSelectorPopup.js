@@ -1,39 +1,52 @@
-var IDENTIFY = {
-	store : new Ext.data.JsonStore({
-		proxy: new Ext.data.HttpProxy({
-			method: 'GET',
-		    url: 'identify'		
-		}),
-	    autoDestroy: false,
-	    storeId: 'myStore',
-	    root: 'sites',
-	    fields: ['siteNo','siteName','decLatVa','decLongVa','qwWellType','wlWellType','wellDepth','localAquiferName','nationalAquiferName','agency','agencyName','wlSnFlag','qwSnFlag','logo','link','linkDesc',
-	             'wlDataFlag','qwDataFlag','logDataFlag']
-	}),
+var IDENTIFY = function (){
+	var _fieldsArray = ['SITE_NO','SITE_NAME','DEC_LAT_VA','DEC_LONG_VA','QW_WELL_TYPE','QW_WELL_CHARS','WL_WELL_TYPE','WL_WELL_CHARS','WELL_DEPTH','LOCAL_AQUIFER_NAME','NAT_AQFR_DESC','AGENCY_CD','AGENCY_NM','WL_SN_FLAG','QW_SN_FLAG','LINK',
+			             'WL_DATA_FLAG','QW_DATA_FLAG','LOG_DATA_FLAG','STATE_CD'];
 	
-	identifyLatLon: function(map, e) {
-		Ext.getCmp('cmp-map-area').body.mask('Finding nearby point(s).  Please wait...', 'x-mask-loading');
+	return {
+		fieldsArray : _fieldsArray,
+			             
+		store : new Ext.data.ArrayStore({
+			proxy: new Ext.data.HttpProxy({
+				method: 'GET',
+			    url: 'identify'		
+			}),
+		    autoDestroy: false,
+		    storeId: 'myStore',
+		    fields: _fieldsArray
+		}),
 		
-		var pixelClicked = e.xy;
+		loadOpenlayersRecordIntoStore : function(records) {
+			var recordsArray = [];
+			for(var i = 0; i < records.length; i++) {
+				var record = [];
+				for(var j = 0; j < _fieldsArray.length; j++){
+					record.push(records[i].data[_fieldsArray[j]])
+				}
+				recordsArray.push(record);
+			}
+			IDENTIFY.store.loadData(recordsArray);
+		},
 		
-		var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
-		var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
-		var idBBox = clickLLMin.lon + "," + clickLLMin.lat + "," + clickLLMax.lon + "," + clickLLMax.lat;
-		
-		var idParams = { //TODO actually filter!
-				agency: '',
-				ntlAquiferName: '',	
-				qwSnFlag:	'1',
-				qwWellType: '',	
-				wlSnFlag:	'1',
-				wlWellType: ''	
-				}; //filters
-		
-		idParams.idBBox = idBBox;
-		
-		IDENTIFY.store.load({
-			params: idParams,
-			callback: function(r, o, s) {
+		identifyLatLon: function(map, e) {
+			Ext.getCmp('cmp-map-area').body.mask('Finding nearby point(s).  Please wait...', 'x-mask-loading');
+			
+			var pixelClicked = e.xy;
+			
+			var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+			var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+			
+			var filters = { //TODO actually filter!
+					AGENCY_CD: '',
+					ntlAquiferName: '',	
+					qwSnFlag:	'1',
+					qwWellType: '',	
+					wlSnFlag:	'1',
+					wlWellType: ''	
+					}; //filters
+			
+			var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
+			
+			GWDP.domain.Well.getWells(bbox, filters, function(r){
 				Ext.getCmp('cmp-map-area').body.unmask();
 				//Ext.getCmp('ext-content-panel').body.unmask();
 				if (r.length == 0) {
@@ -45,29 +58,28 @@ var IDENTIFY = {
 					   icon: Ext.MessageBox.WARNING
 					});
 				} else if (r.length == 1) {
-					//auto id the one site
-					var siteRecord = r[0];
+					IDENTIFY.loadOpenlayersRecordIntoStore(r);
+					var siteRecord = IDENTIFY.store.getAt(0);
 					// we don't want null sitenames
-					siteRecord.data.siteName = SITE.createName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
+					siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
 					//open ID dialog with site record
 					GoogleAnalyticsUtils.logSiteIdentifyUsed();
-					GoogleAnalyticsUtils.logSiteIdentifyByStation(siteRecord.data.agency + ":" + siteRecord.data.siteNo);
+					GoogleAnalyticsUtils.logSiteIdentifyByStation(siteRecord.data.AGENCY_CD + ":" + siteRecord.data.SITE_NO);
 					(new SiteIdentifyWindow({siteRecord: siteRecord})).show();
 				} else {
 					for (var j=0; j<r.length; j++){
 						var siteRecord = r[j];
-						siteRecord.data.siteName = SITE.createName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
+						siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
 					}
-					//open site selection window
+					IDENTIFY.loadOpenlayersRecordIntoStore(r);
 					GoogleAnalyticsUtils.logSiteIdentifyUsed();
 					GoogleAnalyticsUtils.logSiteIdentifySet(IDENTIFY.store.getTotalCount());
 					(new SiteIdSelectorPopup({store: IDENTIFY.store})).show();
 				}
-			}
-		});
+			});
+		}
 	}
-
-}
+}();
 
 var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 	id: 'select-site-window',
@@ -88,9 +100,9 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 				viewConfig: {forceFit: true},
 			    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 			    colModel: new Ext.grid.ColumnModel([
-					{ header: "Site Name", width: 250, dataIndex: 'siteName'},
-					{ header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'nationalAquiferName'},
-					{ header: "Agency", width: 100, sortable: true, dataIndex: 'agency'}	                
+					{ header: "Site Name", width: 250, dataIndex: 'SITE_NAME'},
+					{ header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
+					{ header: "Agency", width: 100, sortable: true, dataIndex: 'AGENCY_CD'}	                
 	            ])
 			},
 			buttons: [{
@@ -100,7 +112,7 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 					var siteRecord = grid.getSelectionModel().getSelected();
 					//open ID window
 					if (siteRecord) {
-						GoogleAnalyticsUtils.logSiteIdentifyByStation(siteRecord.data.agency + ":" + siteRecord.data.siteNo);
+						GoogleAnalyticsUtils.logSiteIdentifyByStation(siteRecord.data.AGENCY_CD + ":" + siteRecord.data.SITE_NO);
 						(new SiteIdentifyWindow({siteRecord: siteRecord})).show();
 					} else {
 						Ext.Msg.show({

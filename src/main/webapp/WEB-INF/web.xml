@@ -17,18 +17,6 @@
 	</filter-mapping>
 
 	<servlet>
-		<description>Process IDENTIFY map click spatially</description>
-		<servlet-name>IdentifyServlet</servlet-name>
-		<servlet-class>gov.usgs.IdentifyServlet</servlet-class>
-	</servlet>
-	
-	<servlet>
-		<description>Process BOUNDING BOX action on map</description>
-			<servlet-name>BBoxServlet</servlet-name>
-			<servlet-class>gov.usgs.BBoxServlet</servlet-class>
-	</servlet>
-	
-	<servlet>
 		<description>Retrieve site summary data</description>
 			<servlet-name>IdentifyDataProxy</servlet-name>
 			<servlet-class>gov.usgs.IdentifyDataProxy</servlet-class>
@@ -61,23 +49,13 @@
 		<servlet-class>gov.usgs.cida.proxy.AlternateProxyServlet</servlet-class>
 		<init-param>
 			<param-name>forward-url</param-name>
-			<param-value>http://igsarm-cida-javadev1.er.usgs.gov:8081/geoserver/ngwmn</param-value>
+			<param-value>http://cida-wiwsc-ngwmndev.er.usgs.gov:8081/ngwmn-geoserver/ngwmn</param-value>
 		</init-param>
 	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>geoproxy</servlet-name>
 		<url-pattern>/geoserver/*</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>IdentifyServlet</servlet-name>
-  		<url-pattern>/identify</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>BBoxServlet</servlet-name>
-  		<url-pattern>/bbox</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

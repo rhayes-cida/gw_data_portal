@@ -58,3 +58,15 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
 	};
 	deferredCall.defer(GWDP.domain.Well.updateWellCountBuffer + 5, this);//wait just long enough to pass the buffered time.
 };
+
+GWDP.domain.Well.getWells = function(bbox, filters, callback) {
+	//TODO do something with filters
+	Ext.Ajax.request({
+		url: GWDP.ui.map.baseWFSServiceUrl,
+		method: 'GET',
+		params: GWDP.domain.Well.WFSAjaxParams(bbox),
+		success: function(response, options) {
+			callback(GWDP.domain.Well.WFSProtocol.parseResponse(response));
+		}
+	})
+};

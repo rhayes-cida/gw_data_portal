@@ -6,20 +6,20 @@ var siteIdTpl = new Ext.XTemplate(
 	'<tpl for=".">',
 		'<div id="id-container">',
 			'<table border="0"><tr><td width="20%" valign="top">',
-			'<img src="assets/images/logos/{logo}" width="150"/>',
+			'<img src="assets/images/logos/{[SITE.getLogo(values.AGENCY_CD, values.STATE_CD)]}" width="150"/>',
 			'</td><td width="80%">',
 			'<table id="id-table" width="100%" border="1">',
-				'<tr><th>Agency</th><td>{agencyName}</td></tr>',
-				//'<tr><th>Agency Code</th><td>{agency}</td></tr>',
-				'<tr><th>Site Name</th><td>{[SITE.createName(values.siteName, values.agency, values.siteNo)]}</td></tr>',
-				'<tr><th>Site #</th><td>{siteNo}</td></tr>',
-				'<tr><th>Lat/Long(WGS84)</th><td>{[parseFloat(values.decLatVa).toFixed(4)]},{[parseFloat(values.decLongVa).toFixed(4)]}</td></tr>',
-				'<tr><th>Well Depth</th><td>{[SITE.formatWellDepth(values.wellDepth)]}</td></tr>',
-				'<tr><th>Local Aquifer Name</th><td>{localAquiferName}</td></tr>',
-				'<tr><th>National Aquifer Name</th><td>{nationalAquiferName}</td></tr>',
-				'<tr><th>Water Level Network</th><td>{wlWellType}</td></tr>',
-				'<tr><th>Water Quality Network</th><td>{qwWellType}</td></tr>',
-				'<tr><th>Additional info</th><td>{[SITE.formatLink(values.link, values.linkDesc)]}</tr>',
+				'<tr><th>Agency</th><td>{AGENCY_NM}</td></tr>',
+				//'<tr><th>Agency Code</th><td>{AGENCY_CD}</td></tr>',
+				'<tr><th>Site Name</th><td>{[SITE.createName(values.SITE_NAME, values.AGENCY_CD, values.SITE_NO)]}</td></tr>',
+				'<tr><th>Site #</th><td>{SITE_NO}</td></tr>',
+				'<tr><th>Lat/Long(WGS84)</th><td>{[parseFloat(values.DEC_LAT_VA).toFixed(4)]},{[parseFloat(values.DEC_LONG_VA).toFixed(4)]}</td></tr>',
+				'<tr><th>Well Depth</th><td>{[SITE.formatWellDepth(values.WELL_DEPTH)]}</td></tr>',
+				'<tr><th>Local Aquifer Name</th><td>{LOCAL_AQUIFER_NAME}</td></tr>',
+				'<tr><th>National Aquifer Name</th><td>{NAT_AQFR_DESC}</td></tr>',
+				'<tr><th>Water Level Network</th><td>{[SITE.renderTypeAndChars(values.WL_WELL_TYPE, values.WL_WELL_CHARS)]}</td></tr>',
+				'<tr><th>Water Quality Network</th><td>{[SITE.renderTypeAndChars(values.QW_WELL_TYPE, values.QW_WELL_CHARS)]}</td></tr>',
+				'<tr><th>Additional info</th><td>{[SITE.formatLink(values.LINK, values.AGENCY_CD)]}</tr>',
 			'</table>',
 			'</td></tr></table>',
 		'</div>',
@@ -79,21 +79,21 @@ var wellLogTemplate = new Ext.XTemplate(
 	);
 
 var SITE = {
-	createName: function(siteName, agency, siteNo){
-		if (siteName && siteName != 'null') return siteName;
-		return agency + '-' + siteNo;
+	createName: function(SITE_NAME, AGENCY_CD, SITE_NO){
+		if (SITE_NAME && SITE_NAME != 'null') return SITE_NAME;
+		return AGENCY_CD + '-' + SITE_NO;
 	},
-	hasLogData: function(siteRecord) {return siteRecord.get('logDataFlag') == '1';},
+	hasLogData: function(siteRecord) {return siteRecord.get('LOG_DATA_FLAG') == '1';},
 
-	// hasWaterLevelData: function(siteRecord) {return siteRecord.get('wlDataFlag') == '1' || siteRecord.get('wlSnFlag') == 1;},
-	// hasWaterQualityData: function(siteRecord) {return siteRecord.get('qwDataFlag') == '1' || siteRecord.get('qwSnFlag') == 1;},
+	// hasWaterLevelData: function(siteRecord) {return siteRecord.get('WL_DATA_FLAG') == '1' || siteRecord.get('WL_SN_FLAG') == 1;},
+	// hasWaterQualityData: function(siteRecord) {return siteRecord.get('QW_DATA_FLAG') == '1' || siteRecord.get('QW_SN_FLAG') == 1;},
 	
 	hasWaterLevelData: function(siteRecord) {
-		var wlDataFlag = siteRecord.get('wlDataFlag');
+		var wlDataFlag = siteRecord.get('WL_DATA_FLAG');
 		return wlDataFlag == '1';
 	},
 	hasWaterQualityData: function(siteRecord) {
-		return siteRecord.get('qwDataFlag') == '1';
+		return siteRecord.get('QW_DATA_FLAG') == '1';
 	},
 	loadingErrorMessage: "<h1>Problem loading data, or data for site not available</h1>",
 	connectionErrorMessage: "<h1>Could not connect to data service. Try again later.</h1>",
@@ -103,10 +103,63 @@ var SITE = {
 		if (value == null || value == 'null') return '';
 		return value + ' ft';
 	},
-	formatLink: function(link, desc){
+	formatLink: function(link, agency){
 		if (link == null || link == 'null') return '';
-		if (desc == null || desc == 'null') desc = "link";
+		var desc = "link";
+		if(agency=='MBMG') desc = "login required";
 		return '<a href="' + link + '" target="_blank" onclick="GoogleAnalyticsUtils.logSiteLinkClick(\''+link+'\')">' + desc + '</a>';
+	},
+	getLogo: function(agency, state_cd) {
+		if (agency == 'IL EPA') { 
+			return 'iepa_logo.jpg'; 
+		} else if (agency == 'IN DNR') { 
+			return 'indnrtitle.gif'; 
+		} else if (agency == 'ISWS') { 
+			return 'ilstatewatersurvey.gif'; 
+		} else if (agency == 'MBMG') { 
+			return 'MontanaBMG.jpg';
+		} else if (agency == 'MN DNR') { 
+			return 'mn_dnr_logo.gif'; 
+		} else if (agency == 'MPCA') { 
+			return 'mpca7000.gif'; 
+		} else if (agency == 'TWDB') { 
+			return 'twdb.gif'; 
+		} else if (agency == 'USGS'){ 
+			if(state_cd == '34') {
+				return 'njgslogo.gif'; 
+			} else if(state_cd == '17') {
+				return 'ilstatewatersurvey.gif';
+			} else if(state_cd == '18') { 
+				return 'indnrtitle.gif'; 
+			} else {
+				return 'USGS_logo.png';
+			}
+		}
+	},
+	renderTypeAndChars: function(type, chars) {
+		var typeVal = "";
+		if(type=='1') {
+			typeVal = "Surveillance";
+		} else if(type=='2') {
+			typeVal = "Trend";
+		} else if(type=='3') {
+			typeVal = "Special";
+		} else if(type=='999') {
+			typeVal = "Unknown";
+		} 
+		
+		var charsVal = "";
+		if(chars=='1') {
+			charsVal = "Background";
+		} else if(chars=='2') {
+			charsVal = "Suspected / Anticipated Changes";
+		} else if(chars=='3') {
+			charsVal = "Known Changes";
+		} else if(chars=='999') {
+			charsVal = "Unknown";
+		} 
+		
+		return typeVal + " - " + charsVal;
 	},
 	downloadData: function(siteRecord) {
 		var exportForm = document.getElementById('exportForm');
@@ -150,10 +203,10 @@ var SITE = {
 		
 		
 		//set src of downloadIframe to begin download...
-		var sn = siteRecord.get('siteNo');
-		var ac = MEDIATOR.cleanAgencyCode(siteRecord.get('agency'));
-		var qwf = siteRecord.get('qwSnFlag');
-		var wlf = siteRecord.get('wlSnFlag');
+		var sn = siteRecord.get('SITE_NO');
+		var ac = MEDIATOR.cleanAgencyCode(siteRecord.get('AGENCY_CD'));
+		var qwf = siteRecord.get('QW_SN_FLAG');
+		var wlf = siteRecord.get('WL_SN_FLAG');
 		var token = (new Date()).getTime();
 		
 		exportForm.siteNo.value = sn;
@@ -249,8 +302,8 @@ var WATER_LEVEL_TAB = {
 		// show the graph first, then get the table.
 		WATER_LEVEL_TAB.mask();
 
-		WATER_LEVEL_TAB.siteNo = record.get('siteNo');
-		WATER_LEVEL_TAB.agency_cd = MEDIATOR.cleanAgencyCode(record.get('agency'));
+		WATER_LEVEL_TAB.SITE_NO = record.get('SITE_NO');
+		WATER_LEVEL_TAB.AGENCY_CD_cd = MEDIATOR.cleanAgencyCode(record.get('AGENCY_CD'));
 		
 		WATER_LEVEL_TAB.initGraph();
 
@@ -260,8 +313,8 @@ var WATER_LEVEL_TAB = {
 			method: 'GET',
 			url: 'iddata?request=water_level',
 			params: {
-				siteNo: record.get('siteNo'),
-				agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
+				siteNo: record.get('SITE_NO'),
+				agency_cd: MEDIATOR.cleanAgencyCode(record.get('AGENCY_CD'))
 			},
 			failure: function(r,o){ 
 				WATER_LEVEL_TAB.update(SITE.connectionErrorMessage);
@@ -334,7 +387,7 @@ var WATER_LEVEL_TAB = {
 	},
 	updateGraph: function(dataTable) {
 		WATER_LEVEL_TAB.dt = dataTable;
-		// WATER_LEVEL_TAB.dygraph.updateOptions({file: dataTable});
+		WATER_LEVEL_TAB.dygraph.updateOptions({file: dataTable});
 	}
 };
 
@@ -464,8 +517,8 @@ var WELL_LOG_TAB = {
 			method: 'GET',		
 			url: 'iddata?request=well_log',
 			params: {
-					siteNo: record.get('siteNo'), //siteNo: 425856089320601
-					agency_cd: MEDIATOR.cleanAgencyCode(record.get('agency'))
+					siteNo: record.get('SITE_NO'), //SITE_NO: 425856089320601
+					agency_cd: MEDIATOR.cleanAgencyCode(record.get('AGENCY_CD'))
 				},
 			success: WELL_LOG_TAB.onSuccess,
 			failure: function(r, o){ WELL_LOG_TAB.update(SITE.connectionErrorMessage);}
@@ -479,7 +532,7 @@ var WATER_QUALITY_TAB = {
 		getBody: function() {return this.get().body;},
 		update: function(htmlStr) { this.get().update(htmlStr);},
 		store: new Ext.data.XmlStore({
-			//url: 'iddata?request=water_quality&siteNo=' + this.siteRecord.get('siteNo'),
+			//url: 'iddata?request=water_quality&SITE_NO=' + this.siteRecord.get('SITE_NO'),
 			proxy: new Ext.data.HttpProxy({
 				method: 'GET',
 				url: 'iddata'
@@ -525,9 +578,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	modal: true,
 	layout: 'fit',
 	initComponent: function() {
-
-		var sn = this.siteRecord.get('siteNo');
-		var ac = MEDIATOR.cleanAgencyCode(this.siteRecord.get('agency'));
+		var sn = this.siteRecord.get('SITE_NO');
+		var ac = MEDIATOR.cleanAgencyCode(this.siteRecord.get('AGENCY_CD'));
 	
 		var tabPanel = new Ext.TabPanel({
 			id: 'ext-id-tabpanel',
@@ -660,8 +712,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 							p.isLoaded = true;
 							WATER_QUALITY_TAB.store.removeAll();
 							WATER_QUALITY_TAB.store.load({
-								params:{siteNo: this.siteRecord.get('siteNo'),
-										agency_cd: MEDIATOR.cleanAgencyCode(this.siteRecord.get('agency'))
+								params:{siteNo: this.siteRecord.get('SITE_NO'),
+										agency_cd: MEDIATOR.cleanAgencyCode(this.siteRecord.get('AGENCY_CD'))
 								}
 							});
 						}
@@ -703,7 +755,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 
 	
 		Ext.apply(this, {
-			title: this.siteRecord.get('siteName'),
+			title: this.siteRecord.get('SITE_NAME'),
 			items: [tabPanel],
 			buttons: [{
 				text: 'Download Data',
