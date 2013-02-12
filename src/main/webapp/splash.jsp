@@ -87,6 +87,8 @@
 					<a href="index.jsp"><div id="ngwmn-explore-container">
 						<div id="ngwmn-explore-header">EXPLORE the Network</div>
 						<div class='ngwmn-img-container'>
+							<img src="assets/images/us--125.5-25--65.5-49.5.png" alt="Base image of the US"/>
+							<img src="geoserver/wms?request=GetMap&LAYERS=ngwmn%3AVW_GWDP_GEOSERVER&TRANSPARENT=TRUE&SERVICE=WMS&VERSION=1.1.1&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A4326&BBOX=-125.5,25,-65.5,49.5&WIDTH=350&HEIGHT=170" alt="Well network points"/>
 						</div>
 						<div id="ngwmn-explore-footer">The NGWMN Data Portal</div>
 					</div></a>
