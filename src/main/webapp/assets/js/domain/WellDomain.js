@@ -30,10 +30,12 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
 	};
 	
 	var bbox = bounds.transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
-	var WFSbbox = bbox.toBBOX(); 
+	var bboxArray = bbox.toArray();
+	var WFSbbox = bboxArray[1] + ',' + bboxArray[0] + ',' + bboxArray[3] + ',' + bboxArray[2];  //wfs v1.1.0 uses a y,x coordinate format
 	
 	var requestParams = GWDP.domain.Well.WFSAjaxParams(WFSbbox);
-	//requestParams.resultType=hits; TODO enable this when we get a primary key on VW_GWDP_GEOSERVER, it is broken right now
+	requestParams.resultType="hits"; 
+	requestParams.VERSION="1.1.0"; //to enable resultType=hits
 	
 	GWDP.domain.Well.updateWellCountLastCall = new Date();
 	
@@ -49,9 +51,8 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
 				method: 'GET',
 				params: requestParams, 
 				success: function(response, options) {
-					//TODO instead of parsing entire result set, use the FeatureCollection@numberOfFeatures for the count when resultType=hits
-					var records = GWDP.domain.Well.WFSProtocol.parseResponse(response);
-					GWDP.ui.pointsCount.update(records.length + " Points Mapped");
+					var numOfRecs = response.responseXML.lastChild.attributes.getNamedItem('numberOfFeatures').value;
+					GWDP.ui.pointsCount.update(numOfRecs + " Points Mapped");
 				}
 			});
 		}
