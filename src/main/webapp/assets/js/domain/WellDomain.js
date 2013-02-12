@@ -2,14 +2,17 @@ GWDP.domain.Well.typeName = "VW_GWDP_GEOSERVER";
 GWDP.domain.Well.featurePrefix = "ngwmn";
 
 GWDP.domain.Well.WFSAjaxParams = function(bbox) {
-	return {
+	var params = {
 		SERVICE: 'WFS',
 		VERSION: "1.0.0",
 		srsName: "EPSG:4326",
 		outputFormat: 'GML2',
-		BBOX: bbox,
 		typeName: GWDP.domain.Well.featurePrefix + ':' + GWDP.domain.Well.typeName
+	};
+	if(bbox) {
+		params.bbox = bbox;
 	}
+	return params;
 };
 
 GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
@@ -73,10 +76,10 @@ GWDP.domain.Well.getWells = function(bbox, filters, callback) {
  * @param callback function that takes numOfRecs as single parameter
  */
 GWDP.domain.Well.getWellCount = function(bbox, filters, callback) {
-	var requestParams = GWDP.domain.Well.WFSAjaxParams(bbox);
+	var requestParams = GWDP.domain.Well.WFSAjaxParams();
 	requestParams.resultType="hits"; 
 	requestParams.VERSION="1.1.0"; //to enable resultType=hits
-	requestParams.FILTER=GWDP.domain.getFilterCQL(filters);
+	requestParams.CQL_FILTER=GWDP.domain.getFilterCQL(filters);
 	
 	Ext.Ajax.request({
 		url: GWDP.ui.map.baseWFSServiceUrl,
