@@ -1,6 +1,7 @@
 #content {
 	background-image: url('../images/litho_background.png');
 	background-repeat: repeat;
+	font-family: calibri,tahoma,arial,verdana,sans-serif;
 }
 
 #ngwmn-content-strip {
@@ -104,9 +105,13 @@
 #ngwmn-explore-footer {
 	padding: 10px;
 	height: 20px;
-	font-weight: bold;
-	text-align: center;
+	text-align: left;
 	text-decoration: none !important;
+	font-size: 1em;
+}
+
+#ngwmn-explore-footer {
+	text-align: center;
 }
 
 .ngwmn-img-container {
