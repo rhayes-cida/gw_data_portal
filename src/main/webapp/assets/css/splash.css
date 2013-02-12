@@ -1,3 +1,12 @@
+#banner-area {
+	background-image: none !important;
+    background-color: white !important;
+}
+
+#site-title {
+	margin: 0px !important;
+}
+
 #content {
 	background-image: url('../images/litho_background.png');
 	background-repeat: repeat;
