@@ -46,10 +46,10 @@
 					<div id="ngwmn-description-container">
 						<div id='ngwmn-description-section'>
 							<p>
-								The <span class="ngwmn-highlight">National Groundwater Monitoring Network</span> 
-								(NGWMN)  is a compilation of selected groundwater monitoring wells from Federal, 
+								The <span class="ngwmn-highlight">National Groundwater Monitoring Network 
+								(NGWMN)</span> is a compilation of selected groundwater monitoring wells from Federal, 
 								State, and local groundwater monitoring networks across the nation.<br/><br/>
-								The NGWMN is a product of the <a href="http://acwi.gov/sogw/index.html">Subcomittee on Groundwater</a> 
+								The <span class="ngwmn-highlight">NGWMN</span> is a product of the <a href="http://acwi.gov/sogw/index.html">Subcomittee on Groundwater</a> 
 								of the federal Advisory Committee on Water Information (<a href="http://acwi.gov/">ACWI</a>).
 							</p><br/>
 							<p>
@@ -96,7 +96,7 @@
 					<div id="ngwmn-join-section">
 						<span class="title">JOIN THE NETWORK - include your data in the Portal!</span><br/><br/>
 						<p>The network is made up of selected wells from existing monitoring networks across the 
-						nation. Data from your network can be added the the NGWMN. The Portal accesses and translates 
+						nation. Data from your network can be added the the <span class="ngwmn-highlight">NGWMN</span>. The Portal accesses and translates 
 						you data from it's native format into a single standard on the fly, you keep control of your 
 						data. <a href="learnmore.jsp">Click here to learn more</a>.</p>
 					</div>
