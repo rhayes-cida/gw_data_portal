@@ -7,7 +7,18 @@
 		<!--  extjs assets -->
 		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script src="ext-3.4.0/ext-all.js"></script>
-		<script type="text/javascript" src="assets/js/js_custom/custom.js"></script>
+		
+		<!-- openlayers from war overlay -->
+  		<jsp:include page="js/openlayers/openlayers.jsp">
+            <jsp:param name="debug-qualifier" value="true" />
+        </jsp:include>
+        
+		<!-- application assets -->
+		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
+
+		<!-- Data domain objects -->		
+		<script type="text/javascript" src="assets/js/domain/WellDomain.js"></script>
+		<script type="text/javascript" src="assets/js/splash.js"></script>
 		
 		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
