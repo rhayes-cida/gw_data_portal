@@ -48,31 +48,25 @@
 					    <div class="ngwmn-tabs-container">
 						    <div class="ngwmn-tab" id="aboutNetwork">
 						    	<div class="ngwmn-tab-content">
-							    	<p class="ngwmn-tab-title">About the Network</p>
+							    	<div class="ngwmn-tab-title">About the Network</div>
 							    	<hr/>
-							    	<p>
-							    	Content pending...
-							    	</p>
+							    	<div><jsp:include page="learn/aboutTheNetwork.jsp"></jsp:include></div>
 						    	</div>
 						    </div>
 						    
 						    <div class="ngwmn-tab" id="dataPortal">
 						    	<div class="ngwmn-tab-content">
-							    	<p class="ngwmn-tab-title">The Data Portal</p>
+							    	<div class="ngwmn-tab-title">The Data Portal</div>
 							    	<hr/>
-							    	<p>
-							    	Content pending...
-							    	</p>
+							    	<div><jsp:include page="learn/theDataPortal.jsp"></jsp:include></div>
 						    	</div>
 						    </div>
 						    
 						    <div class="ngwmn-tab" id="partners">
 						    	<div class="ngwmn-tab-content">
-							    	<p class="ngwmn-tab-title">Partners</p>
+							    	<div class="ngwmn-tab-title">Partners</div>
 							    	<hr/>
-							    	<p>
-							    	Content pending...
-							    	</p>
+							    	<div><jsp:include page="learn/partners.jsp"></jsp:include></div>
 						    	</div>
 						    </div>
 					    </div>

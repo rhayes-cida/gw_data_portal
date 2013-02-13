@@ -110,7 +110,37 @@ ul.ngwmn-tab-layout a.active {
 	font-weight: bold;
 }
 
-.ngwmn-tab-content p {
+.ngwmn-tab-content div {
 	padding-left: 25px;
 	padding-right: 25px;
+}
+
+.ngwmn-tab-content {
+	padding: 25px;
+}
+
+.ngwmn-section-title {
+	color: black;
+	font-weight: bold;
+}
+
+.ngwmn-sub-section-title {
+	color: gray;
+	font-weight: bold;
+}
+
+.ngwmn-tab-content ul {
+	list-style-type: none;
+}
+
+.ngwmn-tab-content ul li span {
+	text-decoration: underline;
+}
+
+.ngwmn-tab-content ul li p {
+	margin-left: 2em;
+}
+
+.ngwmn-tab-content img {
+	width: 700px
 }
