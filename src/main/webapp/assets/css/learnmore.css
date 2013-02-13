@@ -1,0 +1,116 @@
+#banner-area {
+	background-image: none !important;
+    background-color: white !important;
+}
+
+#site-title {
+	margin: 0px !important;
+}
+
+#content {
+	background-image: url('../images/litho_background.png');
+	background-repeat: repeat;
+	font-family: calibri,tahoma,arial,verdana,sans-serif !important;
+}
+
+#ngwmn-content-strip {
+	background-color: #c2d6f0;
+	width: 800px;
+}
+
+#ngwmn-content-strip tr td {
+	padding: 25px;
+}
+
+#ngwmn-title-container {
+	padding-bottom: 10px;
+	border-bottom: solid #baada8 1px;	
+}
+
+.ngwmn-title {
+	font-size: xx-large;
+	color: #233f8f;
+}
+
+.ngwmn-highlight {
+	color: #d1544a !important;
+}
+
+#ngwmn-description-container {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	width: 100%;
+	height: 7em;
+}
+
+.ngwmn-spacer {
+	height: 10em;
+}
+
+.ngwmn-tab-content hr {
+	background-color: #f9765d;
+	color: #f9765d;
+	height: 1px;
+	width: 95%;
+}
+
+
+/*TABBING START*/
+div.ngwmn-tab-layout {
+	width: 100%;
+	margin: 0 0 20px;
+	background: #e0dede;
+	border: 1px solid black;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+ul.ngwmn-tab-layout {
+	list-style-type: none;
+	width: 100%;
+	float: left;
+	padding: 0;
+	margin: 0;
+	background: #99887e;
+	border-bottom: solid black 1px;
+}
+
+ul.ngwmn-tab-layout li {
+	float: left;
+}
+
+ul.ngwmn-tab-layout a {
+	float: left;
+	display: block;
+	padding: 4px 8px;
+	color: #cee56a;
+	background: #99887e;
+	text-decoration: none;
+	font-weight: bold;
+	border-right: solid black 1px;
+	width: 12em;
+	text-align: center;
+}
+
+ul.ngwmn-tab-layout a.active {
+	background: #cee56a;
+	padding-bottom: 5px;
+	cursor: default;
+	color: #99887e;
+}
+
+.ngwmn-tabs-container {
+	clear: left;
+	border-top: 1px solid black;
+}
+/*TABBING END*/
+
+.ngwmn-tab-title {
+	font-size: large;
+	color: #233f8f;
+	font-weight: bold;
+}
+
+.ngwmn-tab-content p {
+	padding-left: 25px;
+	padding-right: 25px;
+}
