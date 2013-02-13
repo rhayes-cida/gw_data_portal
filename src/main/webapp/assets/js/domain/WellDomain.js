@@ -47,7 +47,7 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
 		//console.log('Should we call at ' + actualCallTime + '? ' + elapsedTime + ' has elapsed;');
 		if(elapsedTime > GWDP.domain.Well.updateWellCountBuffer){
 			GWDP.ui.pointsCount.update("Calculating Points Mapped...");
-			GWDP.domain.Well.getWellCount(WFSbbox, filters, _updateCount);
+			GWDP.domain.Well.getWellCount(WFSbbox, null, _updateCount);
 		}
 	};
 	deferredCall.defer(GWDP.domain.Well.updateWellCountBuffer + 5, this);//wait just long enough to pass the buffered time.
@@ -79,8 +79,11 @@ GWDP.domain.Well.getWellCount = function(bbox, filters, callback) {
 	var requestParams = GWDP.domain.Well.WFSAjaxParams();
 	requestParams.resultType="hits"; 
 	requestParams.VERSION="1.1.0"; //to enable resultType=hits
-	requestParams.CQL_FILTER=GWDP.domain.getFilterCQL(filters);
-	
+	if(!filters) {
+		requestParams.BBOX=bbox;
+	} else {
+		requestParams.CQL_FILTER=GWDP.domain.getFilterCQL(filters);
+	}
 	Ext.Ajax.request({
 		url: GWDP.ui.map.baseWFSServiceUrl,
 		method: 'GET',
