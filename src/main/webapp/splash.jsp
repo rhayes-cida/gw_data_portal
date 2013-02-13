@@ -82,7 +82,7 @@
 							<tr><td colspan=2><hr/></td></tr>
 							<tr><th>30</th><td>contributing agencies</td></tr>
 							<tr><th>26</th><td>states</td></tr>
-							<tr><th>14</th><td>principal</td></tr>
+							<tr><th>14</th><td>principal aquifers</td></tr>
 							</table>
 						</div>
 					</div>
