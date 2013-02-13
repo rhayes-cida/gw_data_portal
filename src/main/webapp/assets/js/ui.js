@@ -1,3 +1,34 @@
+GWDP.ui.SKIP_TIPS_COOKIENAME = "cida-ngwmn-skip-tips";
+
+GWDP.ui.showHelpTips = function(){
+	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+	if(Ext.state.Manager.get(GWDP.ui.SKIP_TIPS_COOKIENAME, "false")!="true") {
+		var tips = Ext.create({
+			title: 'Welcome to the NGWMN Data Portal!',
+			xtype: 'window',
+			modal: true,
+			html: 'Some help tips here',
+			bbar: [{
+				xtype: 'checkbox',
+				boxLabel: "Don't show me this again",
+				listeners:{
+					check: function(cb, checked) {
+						if(checked) {
+							Ext.state.Manager.set(GWDP.ui.SKIP_TIPS_COOKIENAME, "true");
+						} else {
+							Ext.state.Manager.clear(GWDP.ui.SKIP_TIPS_COOKIENAME);
+						}
+					}
+				}
+			}],
+			width: 400,
+			height: 300
+		});
+		tips.show();
+	}
+};
+
+
 GWDP.ui.initApp = function() {
 	
 	//header and footer panels
@@ -136,8 +167,8 @@ GWDP.ui.initApp = function() {
 	//TODO get some controls on the map
 	
 	//loadMapLayers(); //TODO load geoserver layers	
-	
-	
+	GWDP.ui.showHelpTips();
 };
+
 
 Ext.onReady(GWDP.ui.initApp);
