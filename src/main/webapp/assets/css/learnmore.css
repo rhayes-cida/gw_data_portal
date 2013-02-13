@@ -71,7 +71,6 @@ ul.ngwmn-tab-layout {
 	padding: 0;
 	margin: 0;
 	background: #99887e;
-	border-bottom: solid black 1px;
 }
 
 ul.ngwmn-tab-layout li {
@@ -82,6 +81,7 @@ ul.ngwmn-tab-layout a {
 	float: left;
 	display: block;
 	padding: 4px 8px;
+	padding-bottom: 5px;
 	color: #cee56a;
 	background: #99887e;
 	text-decoration: none;
