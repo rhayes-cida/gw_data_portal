@@ -1,19 +1,5 @@
-GWDP.domain.Well.typeName = "VW_GWDP_GEOSERVER";
 GWDP.domain.Well.featurePrefix = "ngwmn";
-
-GWDP.domain.Well.WFSAjaxParams = function(bbox) {
-	var params = {
-		SERVICE: 'WFS',
-		VERSION: "1.0.0",
-		srsName: "EPSG:4326",
-		outputFormat: 'GML2',
-		typeName: GWDP.domain.Well.featurePrefix + ':' + GWDP.domain.Well.typeName
-	};
-	if(bbox) {
-		params.bbox = bbox;
-	}
-	return params;
-};
+GWDP.domain.Well.typeName = GWDP.domain.Well.featurePrefix + ":VW_GWDP_GEOSERVER";
 
 GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 	outputFormat: 'GML2',
@@ -54,43 +40,6 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
 };
 
 
-//TODO move to base domain if method is reused often
-GWDP.domain.getFilterCQL = function(filters) {
-	var filterArray = [];
-	for(var k in filters) {
-		filterArray.push(new OpenLayers.Filter.Comparison({
-          type: OpenLayers.Filter.Comparison.EQUAL_TO,
-          property: k,
-          value: filters[k]
-      }));
-	}
-	
-	var olFilter = new OpenLayers.Filter.Logical({
-      type: OpenLayers.Filter.Logical.AND,
-      filters: filterArray
-  });
-	
-	return olFilter.toString();
-};
-
-GWDP.domain.Well.constructParams = function(bbox, filters, forHits) {
-	var requestParams = GWDP.domain.Well.WFSAjaxParams();
-	
-	if(forHits) {
-		requestParams.resultType="hits"; 
-		requestParams.VERSION="1.1.0"; //to enable resultType=hits
-	}
-	
-	if(!filters) {
-		requestParams.BBOX=bbox;
-	} else {
-		//TODO include bbox inside of filtering mechanism
-		requestParams.CQL_FILTER=GWDP.domain.getFilterCQL(filters);
-	}
-	
-	return requestParams;
-};
-
 /**
  * @param bbox bbox must be in format x,y,x,y
  * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
@@ -100,7 +49,7 @@ GWDP.domain.Well.getWells = function(bbox, filters, callback) {
 	Ext.Ajax.request({
 		url: GWDP.ui.map.baseWFSServiceUrl,
 		method: 'GET',
-		params: GWDP.domain.Well.constructParams(bbox, filters, false),
+		params: GWDP.domain.constructParams(GWDP.domain.Well.typeName, bbox, filters, false),
 		success: function(response, options) {
 			callback(GWDP.domain.Well.WFSProtocol.parseResponse(response));
 		}
@@ -116,10 +65,10 @@ GWDP.domain.Well.getWellCount = function(bbox, filters, callback) {
 	Ext.Ajax.request({
 		url: GWDP.ui.map.baseWFSServiceUrl,
 		method: 'GET',
-		params: GWDP.domain.Well.constructParams(bbox, filters, true),
+		params: GWDP.domain.constructParams(GWDP.domain.Well.typeName, bbox, filters, true),
 		success: function(response, options) {
 			var numOfRecs = response.responseXML.lastChild.attributes.getNamedItem('numberOfFeatures').value;
 			callback(numOfRecs);
 		}
-	})
+	});
 };

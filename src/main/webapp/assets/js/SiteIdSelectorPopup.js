@@ -15,18 +15,6 @@ var IDENTIFY = function (){
 		    fields: _fieldsArray
 		}),
 		
-		loadOpenlayersRecordIntoStore : function(records) {
-			var recordsArray = [];
-			for(var i = 0; i < records.length; i++) {
-				var record = [];
-				for(var j = 0; j < _fieldsArray.length; j++){
-					record.push(records[i].data[_fieldsArray[j]])
-				}
-				recordsArray.push(record);
-			}
-			IDENTIFY.store.loadData(recordsArray);
-		},
-		
 		identifyLatLon: function(map, e) {
 			Ext.getCmp('cmp-map-area').body.mask('Finding nearby point(s).  Please wait...', 'x-mask-loading');
 			
@@ -35,7 +23,7 @@ var IDENTIFY = function (){
 			var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			
-			var filters = null; //TODO actually filter!
+			var filters = GWDP.ui.getCurrentFilters(); 
 			
 			var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
 			
@@ -51,7 +39,7 @@ var IDENTIFY = function (){
 					   icon: Ext.MessageBox.WARNING
 					});
 				} else if (r.length == 1) {
-					IDENTIFY.loadOpenlayersRecordIntoStore(r);
+					GWDP.domain.loadOpenlayersRecordIntoArrayStore(r, IDENTIFY.store);
 					var siteRecord = IDENTIFY.store.getAt(0);
 					// we don't want null sitenames
 					siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
@@ -64,7 +52,7 @@ var IDENTIFY = function (){
 						var siteRecord = r[j];
 						siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
 					}
-					IDENTIFY.loadOpenlayersRecordIntoStore(r);
+					GWDP.domain.loadOpenlayersRecordIntoArrayStore(r, IDENTIFY.store);
 					GoogleAnalyticsUtils.logSiteIdentifyUsed();
 					GoogleAnalyticsUtils.logSiteIdentifySet(IDENTIFY.store.getTotalCount());
 					(new SiteIdSelectorPopup({store: IDENTIFY.store})).show();

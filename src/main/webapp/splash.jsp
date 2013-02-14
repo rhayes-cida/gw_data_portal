@@ -17,6 +17,7 @@
 		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
 
 		<!-- Data domain objects -->		
+		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
 		<script type="text/javascript" src="assets/js/domain/WellDomain.js"></script>
 		<script type="text/javascript" src="assets/js/splash.js"></script>
 		

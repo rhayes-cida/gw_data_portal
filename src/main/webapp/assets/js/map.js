@@ -79,7 +79,7 @@ GWDP.ui.initMap = function() {
 		'moveend',
 		GWDP.ui.map.mainMap,
 		function() {
-			GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap);
+			GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap, GWDP.ui.getCurrentFilters());
 		}
 	);
 	GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap);
@@ -251,4 +251,9 @@ GWDP.ui.toggleLegend = function(name, layers, on) {
 		divEl.innerHTML = '';
 	}
 	return;
+};
+
+
+GWDP.ui.getCurrentFilters = function() {
+	return null; //TODO actually construct JSON object of filters
 };
