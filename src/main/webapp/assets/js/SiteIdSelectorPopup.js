@@ -35,14 +35,7 @@ var IDENTIFY = function (){
 			var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			
-			var filters = { //TODO actually filter!
-					AGENCY_CD: '',
-					ntlAquiferName: '',	
-					qwSnFlag:	'1',
-					qwWellType: '',	
-					wlSnFlag:	'1',
-					wlWellType: ''	
-					}; //filters
+			var filters = null; //TODO actually filter!
 			
 			var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
 			
