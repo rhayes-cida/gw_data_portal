@@ -1,3 +1,6 @@
+Ext.ns("GWDP");
+Ext.ns("GWDP.ui");
+
 GWDP.ui.learnMoreTabs;
 
 Ext.onReady(function(){
