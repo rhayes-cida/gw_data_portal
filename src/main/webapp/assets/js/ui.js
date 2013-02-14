@@ -1,5 +1,16 @@
 GWDP.ui.SKIP_TIPS_COOKIENAME = "cida-ngwmn-skip-tips";
 
+GWDP.ui.helpTipHtml = "<div class='ngwmn-description-container'><p class='ngwmn-title'>Welcome to the National Groundwater<br/>Monitoring Network (NGWMN) " +
+	"<span class='ngwmn-highlight'>Data Portal</span></p>" +
+	"<p>The <span class='ngwmn-highlight'>National Groundwater Monitoring Network (NGWMN)</span> is a compilation of selected " +
+	"groundwater monitoring wells from Federal, State, and local groundwater monitoring networks across the nation.</p>"+
+	"<p>The NGWMN is a product of the Subcomittee on Groundwater of the federal Advisory Committee on Water Information (<a href='http://acwi.gov'>ACWI</a>).</p>"+
+	"<p>The <span class='ngwmn-highlight'>NGWMN Data Portal</span> provides access to groundwater data from multiple, " +
+	"dispersed databases in a web-based mapping application. The portal contains current and historical data including " +
+	"water levels, water quality, lithology, and well construction.</p>" +
+	"<p>To learn more about the network and data portal click <a target='_blank' href='learnmore.jsp'>here</a>.</p></div>";
+
+
 GWDP.ui.showHelpTips = function(){
 	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 	if(Ext.state.Manager.get(GWDP.ui.SKIP_TIPS_COOKIENAME, "false")!="true") {
@@ -7,7 +18,8 @@ GWDP.ui.showHelpTips = function(){
 			title: 'Welcome to the NGWMN Data Portal!',
 			xtype: 'window',
 			modal: true,
-			html: 'Some help tips here',
+			html: GWDP.ui.helpTipHtml,
+			padding: 20,
 			bbar: [{
 				xtype: 'checkbox',
 				boxLabel: "Don't show me this again",
@@ -21,8 +33,8 @@ GWDP.ui.showHelpTips = function(){
 					}
 				}
 			}],
-			width: 400,
-			height: 300
+			width: 600,
+			height: 400
 		});
 		tips.show();
 	}

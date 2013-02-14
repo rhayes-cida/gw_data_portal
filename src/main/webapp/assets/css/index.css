@@ -1,0 +1,27 @@
+#banner-area {
+	background-image: none !important;
+    background-color: white !important;
+}
+
+#site-title {
+	margin: 0px !important;
+}
+
+.ngwmn-title {
+	text-align: center;
+	font-size: x-large;
+	color: #233f8f;
+}
+
+.ngwmn-highlight {
+	color: #d1544a !important;
+}
+
+.ngwmn-description-container {
+	width: 100%;
+}
+
+.ngwmn-description-container p {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
