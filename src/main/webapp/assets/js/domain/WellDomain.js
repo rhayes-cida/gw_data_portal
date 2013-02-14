@@ -46,14 +46,7 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
  * @param callback function that takes an array of json objects which represents a feature
  */
 GWDP.domain.Well.getWells = function(bbox, filters, callback) {	
-	Ext.Ajax.request({
-		url: GWDP.ui.map.baseWFSServiceUrl,
-		method: 'GET',
-		params: GWDP.domain.constructParams(GWDP.domain.Well.typeName, bbox, filters, false),
-		success: function(response, options) {
-			callback(GWDP.domain.Well.WFSProtocol.parseResponse(response));
-		}
-	});
+	GWDP.domain.getDomainObjects(GWDP.domain.Well.WFSProtocol, GWDP.domain.Well.typeName, bbox, filters, callback);
 };
 
 /**
@@ -62,13 +55,5 @@ GWDP.domain.Well.getWells = function(bbox, filters, callback) {
  * @param callback function that takes numOfRecs as single parameter
  */
 GWDP.domain.Well.getWellCount = function(bbox, filters, callback) {
-	Ext.Ajax.request({
-		url: GWDP.ui.map.baseWFSServiceUrl,
-		method: 'GET',
-		params: GWDP.domain.constructParams(GWDP.domain.Well.typeName, bbox, filters, true),
-		success: function(response, options) {
-			var numOfRecs = response.responseXML.lastChild.attributes.getNamedItem('numberOfFeatures').value;
-			callback(numOfRecs);
-		}
-	});
+	GWDP.domain.getDomainObjectsCount(GWDP.domain.Well.typeName, bbox, filters, callback);
 };

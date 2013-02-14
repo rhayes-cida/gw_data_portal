@@ -58,3 +58,38 @@ GWDP.domain.loadOpenlayersRecordIntoArrayStore = function(records, store) {
 	}
 	store.loadData(recordsArray);
 };
+
+
+
+/**
+ * @param bbox bbox must be in format x,y,x,y
+ * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param callback function that takes an array of json objects which represents a feature
+ */
+GWDP.domain.getDomainObjects = function(protocol, typeName, bbox, filters, callback) {	
+	Ext.Ajax.request({
+		url: GWDP.ui.map.baseWFSServiceUrl,
+		method: 'GET',
+		params: GWDP.domain.constructParams(typeName, bbox, filters, false),
+		success: function(response, options) {
+			callback(protocol.parseResponse(response));
+		}
+	});
+};
+
+/**
+ * @param bbox bbox must be in format y,x,y,x
+ * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param callback function that takes numOfRecs as single parameter
+ */
+GWDP.domain.getDomainObjectsCount = function(typeName, bbox, filters, callback) {
+	Ext.Ajax.request({
+		url: GWDP.ui.map.baseWFSServiceUrl,
+		method: 'GET',
+		params: GWDP.domain.constructParams(typeName, bbox, filters, true),
+		success: function(response, options) {
+			var numOfRecs = response.responseXML.lastChild.attributes.getNamedItem('numberOfFeatures').value;
+			callback(numOfRecs);
+		}
+	});
+};
