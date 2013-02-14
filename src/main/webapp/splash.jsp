@@ -74,7 +74,6 @@
 						<div id='ngwmn-current-net-section'>
 							<table>
 							<tr><td colspan=2 class='ngwmn-table-title'>CURRENT NETWORK:</td></tr>
-							<tr><th><div id="ngwmnGWWellCount">x</div></th><td>ground-water wells</td></tr>
 							<tr><th><div id="ngwmnWLWellCount">x</div></th><td>water-level wells</td></tr>
 							<tr><th><div id="ngwmnQWWellCount">x</div></th><td>water-quality wells</td></tr>
 							<tr><td colspan=2><hr/></td></tr>
