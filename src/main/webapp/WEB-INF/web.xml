@@ -52,8 +52,8 @@
 		<servlet-name>geoproxy</servlet-name>
 		<servlet-class>gov.usgs.cida.proxy.AlternateProxyServlet</servlet-class>
 		<init-param>
-			<param-name>forward-url</param-name>
-			<param-value>http://cida-wiwsc-ngwmndev.er.usgs.gov:8081/ngwmn-geoserver/ngwmn</param-value>
+			<param-name>forward-url-param</param-name>
+			<param-value>GWDP_Portal/geoserver-proxy-forward-url</param-value>
 		</init-param>
 	</servlet>
 	
