@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MetadataController {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	private DataSource dataSource;
+	private JdbcTemplate template;
 	
 	@RequestMapping("/aquifers")
 	@ResponseBody
 	public List<Map<String,Object>> aquifers() {
-		
-		JdbcTemplate template = new JdbcTemplate(dataSource);
-		
+				
 		List<Map<String,Object>> result = template.queryForList(
 				"select nat_aquifer_cd aquifer, count(*) count\n" + 
 				"from gw_data_portal.well_registry\n" + 
@@ -37,12 +35,11 @@ public class MetadataController {
 	@RequestMapping("/agencies")
 	@ResponseBody
 	public List<Map<String,Object>> agencies() {
-		JdbcTemplate template = new JdbcTemplate(dataSource);
 		
 		List<Map<String,Object>> result = template.queryForList(
-				"select agency_cd, count(*) count\n" + 
+				"select agency_cd, agency_nm, count(*) count\n" + 
 				"from gw_data_portal.well_registry\n" + 
-				"group by agency_cd");
+				"group by agency_cd, agency_nm");
 		
 		logger.debug("Found {} agencies", result.size());
 
@@ -52,12 +49,11 @@ public class MetadataController {
 	@RequestMapping("/states")
 	@ResponseBody
 	public List<Map<String,Object>> states() {
-		JdbcTemplate template = new JdbcTemplate(dataSource);
 		
 		List<Map<String,Object>> result = template.queryForList(
-				"select state_cd, count(*) count\n" + 
+				"select state_cd, state_nm, count(*) count\n" + 
 				"from gw_data_portal.well_registry\n" + 
-				"group by state_cd");
+				"group by state_cd, state_nm");
 		
 		logger.debug("Found {} states", result.size());
 
@@ -65,7 +61,7 @@ public class MetadataController {
 	}
 	
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+		template = new JdbcTemplate(dataSource);
 	}
 
 }
