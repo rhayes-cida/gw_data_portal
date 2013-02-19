@@ -57,6 +57,17 @@
 		</init-param>
 	</servlet>
 	
+	<servlet>
+        <servlet-name>metadata</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>metadata</servlet-name>
+        <url-pattern>/metadata/*</url-pattern>
+    </servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>geoproxy</servlet-name>
 		<url-pattern>/geoserver/*</url-pattern>
