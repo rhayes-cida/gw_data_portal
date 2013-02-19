@@ -1,17 +1,14 @@
 package gov.usgs;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,56 +16,56 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MetadataController {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	
-	public static class NameCountPair {
-		public String name;
-		public int count = 0;
-		
-		NameCountPair(String n, int c) {
-			name = n;
-			count = c;
-		}
-	}
+	private DataSource dataSource;
 	
 	@RequestMapping("/aquifers")
 	@ResponseBody
-	public List<NameCountPair> aquifers() {
+	public List<Map<String,Object>> aquifers() {
 		
-		ArrayList<NameCountPair> value = new ArrayList<NameCountPair>(4);
+		JdbcTemplate template = new JdbcTemplate(dataSource);
 		
-		value.add(new NameCountPair("Alpha", 1));
-		value.add(new NameCountPair("Beta", 2));
-		value.add(new NameCountPair("Gamma", 3));
-		value.add(new NameCountPair("Delta", 4));
+		List<Map<String,Object>> result = template.queryForList(
+				"select nat_aquifer_cd aquifer, count(*) count\n" + 
+				"from gw_data_portal.well_registry\n" + 
+				"group by nat_aquifer_cd");
 		
-		return value;
+		logger.debug("Found {} aquifers", result.size());
+		
+		return result;
 	}
 	
 	@RequestMapping("/agencies")
 	@ResponseBody
-	public List<NameCountPair> agencies() {
+	public List<Map<String,Object>> agencies() {
+		JdbcTemplate template = new JdbcTemplate(dataSource);
 		
-		ArrayList<NameCountPair> value = new ArrayList<NameCountPair>();
+		List<Map<String,Object>> result = template.queryForList(
+				"select agency_cd, count(*) count\n" + 
+				"from gw_data_portal.well_registry\n" + 
+				"group by agency_cd");
 		
-		value.add(new NameCountPair("USGS", 1000000));
-		value.add(new NameCountPair("MBMG", 200));
-		value.add(new NameCountPair("TWDB", 425));
-		
-		return value;
+		logger.debug("Found {} agencies", result.size());
+
+		return result;
 	}
 
 	@RequestMapping("/states")
 	@ResponseBody
-	public List<NameCountPair> states() {
+	public List<Map<String,Object>> states() {
+		JdbcTemplate template = new JdbcTemplate(dataSource);
 		
-		ArrayList<NameCountPair> value = new ArrayList<NameCountPair>();
+		List<Map<String,Object>> result = template.queryForList(
+				"select state_cd, count(*) count\n" + 
+				"from gw_data_portal.well_registry\n" + 
+				"group by state_cd");
 		
-		value.add(new NameCountPair("NJ", 500));
-		value.add(new NameCountPair("TX", 400));
-		value.add(new NameCountPair("WI", 2));
-		value.add(new NameCountPair("NV", 0));
-		
-		return value;
+		logger.debug("Found {} states", result.size());
+
+		return result;
+	}
+	
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 
 }
