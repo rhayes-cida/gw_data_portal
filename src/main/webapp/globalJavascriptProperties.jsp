@@ -8,6 +8,9 @@ Ext.ns("GWDP.ui.map");
 
 Ext.ns("GWDP.domain"); //data domain namespace
 Ext.ns("GWDP.domain.Well"); //data domain namespace for well objects
+Ext.ns("GWDP.domain.Agency"); //data domain namespace for well objects
+Ext.ns("GWDP.domain.State"); //data domain namespace for well objects
+Ext.ns("GWDP.domain.Aquifer"); //data domain namespace for well objects
 
 GWDP.ui.map.baseMapServerUrl = '<%=DebugSettings.GEOSERVER%>';
 //define urls for map server services

@@ -4,10 +4,21 @@
 		<link rel="icon" 
       		type="image/png" 
       		href="favicon.ico">
-      		
+      	
+      	<!-- openlayers from war overlay -->
+  		<jsp:include page="js/openlayers/openlayers.jsp">
+            <jsp:param name="debug-qualifier" value="false" />
+        </jsp:include>
+        
       	<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script src="ext-3.4.0/ext-all.js"></script>
 
+		<!-- application assets -->
+		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
+
+		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
+		<script type="text/javascript" src="assets/js/domain/AgencyDomain.js"></script>
+		
 		<!-- application assets -->		
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 		<link rel="stylesheet" href="assets/css/custom.css"/>
@@ -25,8 +36,8 @@
 				<table id="ngwmn-content-strip"><tr><td> <!-- START LEARN CONTENT -->
 					<div id="ngwmn-title-container">
 						<p class="ngwmn-title">
-							National Groundwater<br/>
-							Monitoring Network <span class="ngwmn-highlight">Data Portal</span>
+							<a href="splash.jsp">National Groundwater<br/>
+							Monitoring Network <span class="ngwmn-highlight">Data Portal</span></a>
 						</p>
 					</div>
 					<div id="ngwmn-description-container">

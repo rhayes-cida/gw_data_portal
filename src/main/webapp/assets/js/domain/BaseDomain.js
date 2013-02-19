@@ -45,6 +45,18 @@ GWDP.domain.getFilterCQL = function(filters) {
 	return olFilter.toString();
 };
 
+GWDP.domain.getArrayStore = function(fieldsArray){
+	return new Ext.data.ArrayStore({
+		proxy: new Ext.data.HttpProxy({
+			method: 'GET',
+		    url: 'identify'		
+		}),
+	    autoDestroy: false,
+	    storeId: 'myStore',
+	    fields: fieldsArray
+	})
+};
+
 GWDP.domain.loadOpenlayersRecordIntoArrayStore = function(records, store) {
 	var recordsArray = [];
 	var fieldsArray = store.fields.items;
@@ -58,7 +70,6 @@ GWDP.domain.loadOpenlayersRecordIntoArrayStore = function(records, store) {
 	}
 	store.loadData(recordsArray);
 };
-
 
 
 /**
@@ -93,3 +104,32 @@ GWDP.domain.getDomainObjectsCount = function(typeName, bbox, filters, callback) 
 		}
 	});
 };
+
+GWDP.domain.getAgencyLogo = function(agencyCd, stateCd) {
+	if (agencyCd == 'IL EPA') { 
+		return 'iepa_logo.jpg'; 
+	} else if (agencyCd == 'IN DNR') { 
+		return 'indnrtitle.gif'; 
+	} else if (agencyCd == 'ISWS') { 
+		return 'ilstatewatersurvey.gif'; 
+	} else if (agencyCd == 'MBMG') { 
+		return 'MontanaBMG.jpg';
+	} else if (agencyCd == 'MN DNR') { 
+		return 'mn_dnr_logo.gif'; 
+	} else if (agencyCd == 'MPCA') { 
+		return 'mpca7000.gif'; 
+	} else if (agencyCd == 'TWDB') { 
+		return 'twdb.gif'; 
+	} else if (agencyCd == 'USGS'){ 
+		if(stateCd == '34') {
+			return 'njgslogo.gif'; 
+		} else if(stateCd == '17') {
+			return 'ilstatewatersurvey.gif';
+		} else if(stateCd == '18') { 
+			return 'indnrtitle.gif'; 
+		} else {
+			return 'USGS_logo.png';
+		}
+	}
+};
+

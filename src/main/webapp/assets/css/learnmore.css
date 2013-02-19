@@ -29,6 +29,11 @@
 
 .ngwmn-title {
 	font-size: xx-large;
+	
+}
+
+.ngwmn-title a {
+	text-decoration: none;
 	color: #233f8f;
 }
 
@@ -143,4 +148,17 @@ ul.ngwmn-tab-layout a.active {
 
 .ngwmn-tab-content img {
 	width: 100%;
+}
+
+.ngwmn-partner-container {
+	padding-bottom: 20px;
+}
+
+.ngwmn-partner-logo {
+	width: 120px !important;
+}
+
+.ngwmn-partner-name {
+	position: absolute;
+	margin-left: 10px;
 }

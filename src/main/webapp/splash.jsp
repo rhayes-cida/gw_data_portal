@@ -10,7 +10,7 @@
 		
 		<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
-            <jsp:param name="debug-qualifier" value="true" />
+            <jsp:param name="debug-qualifier" value="false" />
         </jsp:include>
         
 		<!-- application assets -->
@@ -19,6 +19,10 @@
 		<!-- Data domain objects -->		
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
 		<script type="text/javascript" src="assets/js/domain/WellDomain.js"></script>
+		<script type="text/javascript" src="assets/js/domain/AgencyDomain.js"></script>
+		<script type="text/javascript" src="assets/js/domain/StateDomain.js"></script>
+		<script type="text/javascript" src="assets/js/domain/AquiferDomain.js"></script>
+		
 		<script type="text/javascript" src="assets/js/splash.js"></script>
 		
 		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
@@ -80,9 +84,9 @@
 							<tr><td colspan=2><hr/></td></tr>
 							<tr><th>10</th><td>subnetworks</td></tr>
 							<tr><td colspan=2><hr/></td></tr>
-							<tr><th>30</th><td>contributing agencies</td></tr>
-							<tr><th>26</th><td>states</td></tr>
-							<tr><th>14</th><td>principal aquifers</td></tr>
+							<tr><th><div id="agencyCount">30</div></th><td>contributing agencies</td></tr> <!-- TODO remove hardcoded numbers when services are put in place -->
+							<tr><th><div id="stateCount">26</div></th><td>states</td></tr>
+							<tr><th><div id="aquiferCount">14</div></th><td>principal aquifers</td></tr>
 							</table>
 						</div>
 					</div>

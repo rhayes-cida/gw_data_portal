@@ -1,19 +1,10 @@
 var IDENTIFY = function (){
-	var _fieldsArray = ['SITE_NO','SITE_NAME','DEC_LAT_VA','DEC_LONG_VA','QW_WELL_TYPE','QW_WELL_CHARS','WL_WELL_TYPE','WL_WELL_CHARS','WELL_DEPTH','LOCAL_AQUIFER_NAME','NAT_AQFR_DESC','AGENCY_CD','AGENCY_NM','WL_SN_FLAG','QW_SN_FLAG','LINK',
-			             'WL_DATA_FLAG','QW_DATA_FLAG','LOG_DATA_FLAG','STATE_CD'];
+	var _fieldsArray = GWDP.domain.Well.fields; //identifying wells
 	
 	return {
 		fieldsArray : _fieldsArray,
 			             
-		store : new Ext.data.ArrayStore({
-			proxy: new Ext.data.HttpProxy({
-				method: 'GET',
-			    url: 'identify'		
-			}),
-		    autoDestroy: false,
-		    storeId: 'myStore',
-		    fields: _fieldsArray
-		}),
+		store : GWDP.domain.getArrayStore(_fieldsArray),
 		
 		identifyLatLon: function(map, e) {
 			Ext.getCmp('cmp-map-area').body.mask('Finding nearby point(s).  Please wait...', 'x-mask-loading');

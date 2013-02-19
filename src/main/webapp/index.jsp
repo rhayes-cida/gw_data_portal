@@ -14,7 +14,7 @@
       	
       	<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
-            <jsp:param name="debug-qualifier" value="true" />
+            <jsp:param name="debug-qualifier" value="false" />
         </jsp:include>
       	
 		<!-- Dygraph documents this as a needed IE8 hack  -->
@@ -39,6 +39,9 @@
 		<!-- Data domain objects -->		
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
 		<script type="text/javascript" src="assets/js/domain/WellDomain.js"></script>
+		<script type="text/javascript" src="assets/js/domain/AgencyDomain.js"></script>
+		<script type="text/javascript" src="assets/js/domain/StateDomain.js"></script>
+		<script type="text/javascript" src="assets/js/domain/AquiferDomain.js"></script>
 		
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
 		<script type="text/javascript" src="assets/js/map.js"></script>

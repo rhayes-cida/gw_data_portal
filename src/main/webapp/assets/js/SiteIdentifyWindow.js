@@ -6,7 +6,7 @@ var siteIdTpl = new Ext.XTemplate(
 	'<tpl for=".">',
 		'<div id="id-container">',
 			'<table border="0"><tr><td width="20%" valign="top">',
-			'<img src="assets/images/logos/{[SITE.getLogo(values.AGENCY_CD, values.STATE_CD)]}" width="150"/>',
+			'<img src="assets/images/logos/{[GWDP.domain.getAgencyLogo(values.AGENCY_CD, values.STATE_CD)]}" width="150"/>',
 			'</td><td width="80%">',
 			'<table id="id-table" width="100%" border="1">',
 				'<tr><th>Agency</th><td>{AGENCY_NM}</td></tr>',
@@ -108,33 +108,6 @@ var SITE = {
 		var desc = "link";
 		if(agency=='MBMG') desc = "login required";
 		return '<a href="' + link + '" target="_blank" onclick="GoogleAnalyticsUtils.logSiteLinkClick(\''+link+'\')">' + desc + '</a>';
-	},
-	getLogo: function(agency, state_cd) {
-		if (agency == 'IL EPA') { 
-			return 'iepa_logo.jpg'; 
-		} else if (agency == 'IN DNR') { 
-			return 'indnrtitle.gif'; 
-		} else if (agency == 'ISWS') { 
-			return 'ilstatewatersurvey.gif'; 
-		} else if (agency == 'MBMG') { 
-			return 'MontanaBMG.jpg';
-		} else if (agency == 'MN DNR') { 
-			return 'mn_dnr_logo.gif'; 
-		} else if (agency == 'MPCA') { 
-			return 'mpca7000.gif'; 
-		} else if (agency == 'TWDB') { 
-			return 'twdb.gif'; 
-		} else if (agency == 'USGS'){ 
-			if(state_cd == '34') {
-				return 'njgslogo.gif'; 
-			} else if(state_cd == '17') {
-				return 'ilstatewatersurvey.gif';
-			} else if(state_cd == '18') { 
-				return 'indnrtitle.gif'; 
-			} else {
-				return 'USGS_logo.png';
-			}
-		}
 	},
 	renderTypeAndChars: function(type, chars) {
 		var typeVal = "";

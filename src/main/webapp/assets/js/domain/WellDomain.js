@@ -1,6 +1,9 @@
 GWDP.domain.Well.featurePrefix = "ngwmn";
 GWDP.domain.Well.typeName = GWDP.domain.Well.featurePrefix + ":VW_GWDP_GEOSERVER";
 
+GWDP.domain.Well.fields = ['SITE_NO','SITE_NAME','DEC_LAT_VA','DEC_LONG_VA','QW_WELL_TYPE','QW_WELL_CHARS','WL_WELL_TYPE','WL_WELL_CHARS','WELL_DEPTH','LOCAL_AQUIFER_NAME','NAT_AQFR_DESC','AGENCY_CD','AGENCY_NM','WL_SN_FLAG','QW_SN_FLAG','LINK',
+  			             'WL_DATA_FLAG','QW_DATA_FLAG','LOG_DATA_FLAG','STATE_CD'];
+
 GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 	outputFormat: 'GML2',
 	geometryName: 'GEOM',
