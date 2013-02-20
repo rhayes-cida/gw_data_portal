@@ -84,9 +84,9 @@
 							<tr><td colspan=2><hr/></td></tr>
 							<tr><th>10</th><td>subnetworks</td></tr>
 							<tr><td colspan=2><hr/></td></tr>
-							<tr><th><div id="agencyCount">30</div></th><td>contributing agencies</td></tr> <!-- TODO remove hardcoded numbers when services are put in place -->
-							<tr><th><div id="stateCount">26</div></th><td>states</td></tr>
-							<tr><th><div id="aquiferCount">14</div></th><td>principal aquifers</td></tr>
+							<tr><th><div id="agencyCount">x</div></th><td>contributing agencies</td></tr>
+							<tr><th><div id="stateCount">x</div></th><td>states</td></tr>
+							<tr><th><div id="aquiferCount">x</div></th><td>principal aquifers</td></tr>
 							</table>
 						</div>
 					</div>

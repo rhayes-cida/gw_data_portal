@@ -25,3 +25,20 @@ GWDP.domain.Aquifer.getAquifers = function(bbox, filters, callback) {
 GWDP.domain.Aquifer.getAquiferCount = function(bbox, filters, callback) {
 	GWDP.domain.getDomainObjectsCount(GWDP.domain.Aquifer.typeName, bbox, filters, callback);
 };
+
+
+/**
+ * @param params json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param callback function that takes numOfRecs as single parameter
+ */
+GWDP.domain.Aquifer.getAquiferMetadata = function(params, callback) {
+	Ext.Ajax.request({
+		url: 'metadata/aquifers',
+		method: 'GET',
+		params: params, 
+		success: function(response, options) {
+			var responseObject = {data: Ext.util.JSON.decode(response.responseText) };
+			callback(responseObject);
+		}
+	});
+};

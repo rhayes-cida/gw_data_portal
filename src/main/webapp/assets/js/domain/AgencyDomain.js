@@ -17,7 +17,6 @@ GWDP.domain.Agency.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
  * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
  * @param callback function that takes an array of json objects which represents a feature
  */
-//TODO, this is using the WFS base domain, will probably just need to go to regular AJAX call to our own WS
 GWDP.domain.Agency.getAgencies = function(bbox, filters, callback) {	
 	GWDP.domain.getDomainObjects(GWDP.domain.Agency.WFSProtocol, GWDP.domain.Agency.typeName, bbox, filters, callback);
 };
@@ -27,7 +26,22 @@ GWDP.domain.Agency.getAgencies = function(bbox, filters, callback) {
  * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
  * @param callback function that takes numOfRecs as single parameter
  */
-//TODO, this is using the WFS base domain, will probably just need to go to regular AJAX call to our own WS
 GWDP.domain.Agency.getAgencyCount = function(bbox, filters, callback) {
 	GWDP.domain.getDomainObjectsCount(GWDP.domain.Agency.typeName, bbox, filters, callback);
+};
+
+/**
+ * @param params json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param callback function that takes numOfRecs as single parameter
+ */
+GWDP.domain.Agency.getAgencyMetadata = function(params, callback) {
+	Ext.Ajax.request({
+		url: 'metadata/agencies',
+		method: 'GET',
+		params: params, 
+		success: function(response, options) {
+			var responseObject = {data: Ext.util.JSON.decode(response.responseText) };
+			callback(responseObject);
+		}
+	});
 };

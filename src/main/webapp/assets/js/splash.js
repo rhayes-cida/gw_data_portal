@@ -17,27 +17,21 @@ Ext.onReady(function(){
 			document.getElementById('ngwmnQWWellCount').innerHTML = r;
 		});
 	
-	//TODO reenable when we get WFS service in place, this one MIGHT change to custom portal WS
-//	GWDP.domain.Agency.getAgencyCount(
-//		fullWFSExtent, 
-//		null, 
-//		function(r){
-//			document.getElementById('agencyCount').innerHTML = r;
-//		});
+	GWDP.domain.Agency.getAgencyMetadata(
+		{},
+		function(r){
+			document.getElementById('agencyCount').innerHTML = r.data.length;
+		});
 	
-	//TODO reenable when we get WFS service in place
-//	GWDP.domain.State.getStateCount(
-//		fullWFSExtent, 
-//		null, 
-//		function(r){
-//			document.getElementById('stateCount').innerHTML = r;
-//		});
+	GWDP.domain.State.getStateMetadata(
+			{},
+			function(r){
+				document.getElementById('stateCount').innerHTML = r.data.length;
+			});
 	
-	//TODO reenable when we get WFS service in place
-//	GWDP.domain.Aquifer.getAquiferCount(
-//		fullWFSExtent, 
-//		null, 
-//		function(r){
-//			document.getElementById('aquiferCount').innerHTML = r;
-//		});
+	GWDP.domain.Aquifer.getAquiferMetadata(
+			{},
+			function(r){
+				document.getElementById('aquiferCount').innerHTML = r.data.length;
+			});
 });

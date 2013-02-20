@@ -25,3 +25,19 @@ GWDP.domain.State.getStates = function(bbox, filters, callback) {
 GWDP.domain.State.getStateCount = function(bbox, filters, callback) {
 	GWDP.domain.getDomainObjectsCount(GWDP.domain.State.typeName, bbox, filters, callback);
 };
+
+/**
+ * @param params json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param callback function that takes numOfRecs as single parameter
+ */
+GWDP.domain.State.getStateMetadata = function(params, callback) {
+	Ext.Ajax.request({
+		url: 'metadata/states',
+		method: 'GET',
+		params: params, 
+		success: function(response, options) {
+			var responseObject = {data: Ext.util.JSON.decode(response.responseText) };
+			callback(responseObject);
+		}
+	});
+};
