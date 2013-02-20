@@ -10,21 +10,22 @@ Ext.onReady(function(){
 		});
 	GWDP.ui.learnMoreTabs = contentTabs;
 	
-	//Populate partners content
-	var fullWFSExtent = '-50,-180,85,-50';
-	//TODO, this is stubbed in as a WFS call, will most likely
-	GWDP.domain.Agency.getAgencies(
-		fullWFSExtent, 
-		null, 
-		function(records){
-			var target = document.getElementById('ngwmn-partners');
+	GWDP.domain.Agency.getAgencyMetadata(
+		{},
+		function(response){
+			var records = response.data;
+			
+			var content = "";
+			
 			for(var i = 0; i < records.length; i++) {
-				var agencyCd = records[i].data['AGENCY_CD'];  //TODO get correct data field
-				var agencyName = records[i].data['AGENCY_NAME']; //TODO get correct data field
-				target += "<div class='ngwmn-partner-container'>" +
+				var agencyCd = records[i]['AGENCY_CD'];  
+				var agencyName = records[i]['AGENCY_NM'];
+				content += "<div class='ngwmn-partner-container'>" +
 					"<img class='ngwmn-partner-logo' src='assets/images/logos/" + GWDP.domain.getAgencyLogo(agencyCd) + "'>" +
 					"<span class='ngwmn-partner-name'>" + agencyName + "</span>" +
 				"</div>";
  			}
+			
+			document.getElementById('ngwmn-partners').innerHTML = content;
 		});
 });

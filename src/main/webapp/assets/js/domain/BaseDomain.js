@@ -54,7 +54,7 @@ GWDP.domain.getArrayStore = function(fieldsArray){
 	    autoDestroy: false,
 	    storeId: 'myStore',
 	    fields: fieldsArray
-	})
+	});
 };
 
 GWDP.domain.loadOpenlayersRecordIntoArrayStore = function(records, store) {
@@ -120,6 +120,8 @@ GWDP.domain.getAgencyLogo = function(agencyCd, stateCd) {
 		return 'mpca7000.gif'; 
 	} else if (agencyCd == 'TWDB') { 
 		return 'twdb.gif'; 
+	} else if (agencyCd == 'NJGS') { 
+		return 'njgslogo.gif'; 
 	} else if (agencyCd == 'USGS'){ 
 		if(stateCd == '34') {
 			return 'njgslogo.gif'; 
