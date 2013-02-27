@@ -42,6 +42,7 @@
 		<script type="text/javascript" src="assets/js/domain/AquiferDomain.js"></script>
 		
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
+		<script type="text/javascript" src="assets/js/help.js"></script>
 		<script type="text/javascript" src="assets/js/map.js"></script>
 		<script type="text/javascript" src="assets/js/ui.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdSelectorPopup.js"></script>
@@ -102,7 +103,7 @@
 			<input type="hidden" name="featureId" id="wl-siteid"/>
 			<input type="hidden" name="request" value="GetObservation"/>
 		</form>
-		
+		<jsp:include page="helpcontent.jsp"></jsp:include>
 		<jsp:include page="footer.jsp"></jsp:include>
 		
 		<form id="exportForm" style="display:none" method="GET" action="export">

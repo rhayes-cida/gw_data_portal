@@ -1,45 +1,5 @@
 GWDP.ui.SKIP_TIPS_COOKIENAME = "cida-ngwmn-skip-tips";
 
-GWDP.ui.helpTipHtml = "<div class='ngwmn-description-container'><p class='ngwmn-title'>Welcome to the National Groundwater<br/>Monitoring Network (NGWMN) " +
-	"<span class='ngwmn-highlight'>Data Portal</span></p>" +
-	"<p>The <span class='ngwmn-highlight'>National Groundwater Monitoring Network (NGWMN)</span> is a compilation of selected " +
-	"groundwater monitoring wells from Federal, State, and local groundwater monitoring networks across the nation.</p>"+
-	"<p>The NGWMN is a product of the Subcomittee on Groundwater of the federal Advisory Committee on Water Information (<a href='http://acwi.gov'>ACWI</a>).</p>"+
-	"<p>The <span class='ngwmn-highlight'>NGWMN Data Portal</span> provides access to groundwater data from multiple, " +
-	"dispersed databases in a web-based mapping application. The portal contains current and historical data including " +
-	"water levels, water quality, lithology, and well construction.</p>" +
-	"<p>To learn more about the network and data portal click <a target='_blank' href='learnmore.jsp'>here</a>.</p></div>";
-
-
-GWDP.ui.showHelpTips = function(){
-	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
-	if(Ext.state.Manager.get(GWDP.ui.SKIP_TIPS_COOKIENAME, "false")!="true") {
-		var tips = Ext.create({
-			title: 'Welcome to the NGWMN Data Portal!',
-			xtype: 'window',
-			modal: true,
-			html: GWDP.ui.helpTipHtml,
-			padding: 20,
-			bbar: [{
-				xtype: 'checkbox',
-				boxLabel: "Don't show me this again",
-				listeners:{
-					check: function(cb, checked) {
-						if(checked) {
-							Ext.state.Manager.set(GWDP.ui.SKIP_TIPS_COOKIENAME, "true");
-						} else {
-							Ext.state.Manager.clear(GWDP.ui.SKIP_TIPS_COOKIENAME);
-						}
-					}
-				}
-			}],
-			width: 600,
-			height: 400
-		});
-		tips.show();
-	}
-};
-
 GWDP.ui.pointsCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
 GWDP.ui.waterLevelCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
 GWDP.ui.waterQualityCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
@@ -121,6 +81,7 @@ GWDP.ui.initApp = function() {
 									fieldLabel: "<b>Water level</b>",
 									value: '1',
 									name: "WL_SN_FLAG",
+									id: "WL_SN_FLAG",
 									checked: true,
 					            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
 								},{
@@ -170,6 +131,7 @@ GWDP.ui.initApp = function() {
 									fieldLabel: "<b>Water quality</b>",
 									value: '1',
 									name: "QW_SN_FLAG",
+									id: "QW_SN_FLAG",
 									checked: true,
 					            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
 								},{
@@ -215,6 +177,8 @@ GWDP.ui.initApp = function() {
 				},{
 					title: 'Principle Aquifer',
 					xtype: "panel",
+					layout: 'form',
+					labelWidth: 1, //required
 					padding: 5,
 					items: [{
 						xtype: 'container',
@@ -254,13 +218,14 @@ GWDP.ui.initApp = function() {
 				},{
 					title: 'Contributing Agency',
 					xtype: "panel",
+					layout: 'form',
 					padding: 5,
+					labelWidth: 1,//required
 					items: [{
-						xtype: 'container',
-						html: '*Data from any agency is shown if no selection is made'
+						xtype: 'label',
+						text: '*Data from any agency is shown if no selection is made'
 					},{
 			            xtype: 'multiselect',
-			            fieldLabel: 'Multiselect<br />(Required)',
 			            id: 'contributingAgencies',
 			            name: 'contributingAgencies',
 			            width: 250,
@@ -373,7 +338,7 @@ GWDP.ui.initApp = function() {
 		}
 	});
 	
-	GWDP.ui.showHelpTips();
+	GWDP.ui.help.initHelpTips();
 };
 
 GWDP.ui.getFilterFormValues = function() {
