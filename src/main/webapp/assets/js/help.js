@@ -62,7 +62,7 @@ GWDP.ui.help.initHelpTips = function(){
     });
     
     new GWDP.ui.GwdpHelpTip({        
-        title: 'Principle Aquifer', 
+        title: 'Principal Aquifer', 
         target: 'principleAquifer',
         anchor: 'right',
         width: 415,
@@ -128,12 +128,6 @@ GWDP.ui.GwdpHelpTip = Ext.extend(Ext.ToolTip,{
 			this.target = div.id = target+"_tooltip";
 			t.dom.parentNode.appendChild(div);
 			var helpEl = new Ext.Element(div);
-			
-				console.log("INFO FOR " + target);
-				console.log(t);
-				console.log(Ext.getCmp(target));
-				console.log(t.dom.offsetWidth);
-				console.log(Ext.getCmp(target).width);
 			
 			if(this.target){
 				var tg = Ext.get(this.target);

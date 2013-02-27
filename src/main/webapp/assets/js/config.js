@@ -45,7 +45,7 @@ GWDP.ui.map.baseLayers = [
   ,
   // aquifers go here with opacity < 1, transparent: true; OpenLayers infers that the layer is an overlay.
   {
-	 	name: 'Principle aquifers',
+	 	name: 'Principal aquifers',
 	 	url: GWDP.ui.map.baseWMSServiceUrl,
 	 	type: OpenLayers.Layer.WMS,
 	 	layers: 'ngwmn:aquifrp025',
@@ -54,7 +54,7 @@ GWDP.ui.map.baseLayers = [
 	 	helpContext: 'national_aquifer',
 	 	legend: [  
 	 	         {
-	 	        	 name: 'Principle aquifers',
+	 	        	 name: 'Principal aquifers',
 	 	        	 imgHtml: "<img src='images/legends/national_aquifers.jpg' />",
 	 	        	 helpContext: 'national_aquifer'
 	 	         }

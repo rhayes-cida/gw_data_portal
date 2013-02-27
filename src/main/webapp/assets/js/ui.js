@@ -90,12 +90,12 @@ GWDP.ui.initApp = function() {
 						            id: 'WL_WELL_CHARS',
 						            name: 'WL_WELL_CHARS',
 						            width: 150,
-						            height: 85,
+						            height: 'auto',
 						            value: 'All',
 						            store: [
 											['All','All'],
 						                    ['1','Surveillance'],
-						                    ['2','Suspected / Anticipated Changes'],
+						                    ['2','Suspected Changes'],
 						                    ['3','Known Changes']
 								            ],
 						            ddReorder: true,
@@ -108,7 +108,7 @@ GWDP.ui.initApp = function() {
 						            id: 'WL_WELL_TYPE',
 						            name: 'WL_WELL_TYPE',
 						            width: 150,
-						            height: 85,
+						            height: 'auto',
 						            value: 'All',
 						            store: [
 											['All','All'],
@@ -140,12 +140,12 @@ GWDP.ui.initApp = function() {
 						            id: 'QW_WELL_CHARS',
 						            name: 'QW_WELL_CHARS',
 						            width: 150,
-						            height: 85,
+						            height: 'auto',
 						            value: 'All',
 						            store: [
 											['All','All'],
 						                    ['1','Surveillance'],
-						                    ['2','Suspected / Anticipated Changes'],
+						                    ['2','Suspected Changes'],
 						                    ['3','Known Changes']
 								            ],
 						            ddReorder: true,
@@ -158,7 +158,7 @@ GWDP.ui.initApp = function() {
 						            id: 'QW_WELL_TYPE',
 						            name: 'QW_WELL_TYPE',
 						            width: 150,
-						            height: 85,
+						            height: 'auto',
 						            value: 'All',
 						            store: [
 											['All','All'],
@@ -175,39 +175,36 @@ GWDP.ui.initApp = function() {
 						}
 					]
 				},{
-					title: 'Principle Aquifer',
+					title: 'Principal Aquifer',
 					xtype: "panel",
 					layout: 'form',
 					labelWidth: 1, //required
 					padding: 5,
+					autoScroll: true,
 					items: [{
-						xtype: 'container',
-						html: '*Data from any aquifer is shown if no selection is made'
-					},{
 			            xtype: 'multiselect',
 			            id: 'principleAquifer',
 			            name: 'principleAquifer',
-			            width: 250,
-			            height: 200,
+			            width: 240,
+			            height: 'auto',
 			            allowBlank:true,
 			            displayField: 'AQUIFER',
 			            valueField: 'AQUIFERCODE',
+			            value: "All",
 			            store: GWDP.domain.Aquifer.getAquiferStore(),
-			            tbar:[{
-			                text: 'clear',
-			                handler: function(){
-				                Ext.getCmp('principleAquifer').reset();
-				                GWDP.ui.getUpdateMap();
-				            }
-			            }],
 			            ddReorder: true,
 			            listeners: {
 			            	added: function(c) {
 			            		GWDP.domain.Aquifer.getAquiferMetadata(
 			            			{},
 			            			function(r){
-			            				c.store.loadData(r.data); 
+			            				var allOption = {}
+			            				for(var key in r.data[0]) {
+			            					allOption[key] = "All";
+			            				}
+			            				c.store.loadData([allOption].concat(r.data)); 
 			            				var _c = c;
+			            				c.setValue("All");
 			            			}
 			            		);
 			            		c.ownerCt.setHeight(275);
@@ -220,35 +217,32 @@ GWDP.ui.initApp = function() {
 					xtype: "panel",
 					layout: 'form',
 					padding: 5,
+					autoScroll: true,
 					labelWidth: 1,//required
 					items: [{
-						xtype: 'label',
-						text: '*Data from any agency is shown if no selection is made'
-					},{
 			            xtype: 'multiselect',
 			            id: 'contributingAgencies',
 			            name: 'contributingAgencies',
-			            width: 250,
-			            height: 200,
+			            width: 240,
+			            height: 'auto',
 			            allowBlank:true,
 			            displayField: 'AGENCY_NM',
 			            valueField: 'AGENCY_CD',
+			            value: "All",
 			            store: GWDP.domain.Agency.getAgencyStore(),
-			            tbar:[{
-			                text: 'clear',
-			                handler: function(){
-				                Ext.getCmp('contributingAgencies').reset();
-				                GWDP.ui.getUpdateMap();
-				            }
-			            }],
 			            ddReorder: true,
 			            listeners: {
 			            	added: function(c) {
 			            		GWDP.domain.Agency.getAgencyMetadata(
 			            			{},
 			            			function(r){
-			            				c.store.loadData(r.data); 
+			            				var allOption = {}
+			            				for(var key in r.data[0]) {
+			            					allOption[key] = "All";
+			            				}
+			            				c.store.loadData([allOption].concat(r.data)); 
 			            				var _c = c;
+			            				c.setValue("All");
 			            			}
 			            		);
 			            		c.ownerCt.setHeight(275);
@@ -464,11 +458,19 @@ GWDP.ui.constructNetworkFilters = function(filterVals) {
 
 GWDP.ui.constructAquiferFilters = function(filterVals) { 
 	var aquiferFilter = filterVals['principleAquifer'];
-	if(!aquiferFilter) {
-		return null;
+	if(!aquiferFilter) { //nothing selected, show NO points
+		return new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "NAT_AQUIFER_CD",
+			value: "POINTS_GO_OFF"
+		});
 	}
 	
 	var aquifers = aquiferFilter.split(',');
+
+	if(aquifers.length > 0 && aquifers[0].toLowerCase() == 'all') { //all being selected means we do NOT filter on this
+		return null;
+	}
 	
 	if(aquifers.length==1) {
 		return new OpenLayers.Filter.Comparison({
@@ -499,11 +501,20 @@ GWDP.ui.constructAquiferFilters = function(filterVals) {
 
 GWDP.ui.constructAgencyFilters = function(filterVals) { 
 	var agencyFilter = filterVals['contributingAgencies'];
-	if(!agencyFilter) {
-		return null;
+	if(!agencyFilter) { //nothing selected, no points to show
+		return new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "AGENCY_CD",
+			value: "POINTS_GO_OFF"
+		});
 	}
 	
 	var agencys = agencyFilter.split(',');
+	
+	
+	if(agencys.length > 0 && agencys[0].toLowerCase() == 'all') { //all being selected means we do NOT filter on this
+		return null;
+	}
 	
 	if(agencys.length==1) {
 		return new OpenLayers.Filter.Comparison({

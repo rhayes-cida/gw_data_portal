@@ -45,5 +45,8 @@ GWDP.domain.Agency.getAgencyMetadata = function(params, callback) {
 };
 
 GWDP.domain.Agency.getAgencyStore = function(params) {
-	return GWDP.domain.getJsonStore(['AGENCY_CD','AGENCY_NM','COUNT'], "metadata/agencies");
+	var str = GWDP.domain.getJsonStore(['AGENCY_CD','AGENCY_NM','COUNT'], "metadata/agencies");
+	//include All field
+	str.loadData([{AGENCY_CD: 'All', AGENCY_NM: 'All',COUNT:'All'}]);
+	return str;
 };

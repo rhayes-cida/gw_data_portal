@@ -44,5 +44,8 @@ GWDP.domain.Aquifer.getAquiferMetadata = function(params, callback) {
 };
 
 GWDP.domain.Aquifer.getAquiferStore = function(params) {
-	return GWDP.domain.getJsonStore(['AQUIFER','AQUIFERCODE','COUNT'], "metadata/aquifers");
+	var str = GWDP.domain.getJsonStore(['AQUIFER','AQUIFERCODE','COUNT'], "metadata/aquifers");
+	//include All field
+	str.loadData([{AQUIFER: 'All', AQUIFERCODE: 'All',COUNT:'All'}]);
+	return str;
 };
