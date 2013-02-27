@@ -159,16 +159,16 @@ GWDP.ui.initApp = function() {
 								},{
 						            xtype: 'multiselect',
 						            fieldLabel: 'Subnetwork',
-						            id: 'WL_WELL_TYPE',
-						            name: 'WL_WELL_TYPE',
+						            id: 'WL_WELL_CHARS',
+						            name: 'WL_WELL_CHARS',
 						            width: 150,
-						            height: 120,
+						            height: 85,
 						            value: 'All',
 						            store: [
 											['All','All'],
 						                    ['1','Surveillance'],
-						                    ['2','Trend'],
-						                    ['3','Special']
+						                    ['2','Suspected / Anticipated Changes'],
+						                    ['3','Known Changes']
 								            ],
 						            ddReorder: true,
 						            listeners: {
@@ -177,16 +177,16 @@ GWDP.ui.initApp = function() {
 						        },{
 						            xtype: 'multiselect',
 						            fieldLabel: 'Monitoring Category',
-						            id: 'WL_WELL_CHARS',
-						            name: 'WL_WELL_CHARS',
+						            id: 'WL_WELL_TYPE',
+						            name: 'WL_WELL_TYPE',
 						            width: 150,
-						            height: 120,
+						            height: 85,
 						            value: 'All',
 						            store: [
 											['All','All'],
 						                    ['1','Surveillance'],
-						                    ['2','Suspected / Anticipated Changes'],
-						                    ['3','Known Changes']
+						                    ['2','Trend'],
+						                    ['3','Special']
 								            ],
 						            ddReorder: true,
 						            listeners: {
@@ -208,16 +208,16 @@ GWDP.ui.initApp = function() {
 								},{
 						            xtype: 'multiselect',
 						            fieldLabel: 'Subnetwork',
-						            id: 'QW_WELL_TYPE',
-						            name: 'QW_WELL_TYPE',
+						            id: 'QW_WELL_CHARS',
+						            name: 'QW_WELL_CHARS',
 						            width: 150,
-						            height: 120,
+						            height: 85,
 						            value: 'All',
 						            store: [
 											['All','All'],
 						                    ['1','Surveillance'],
-						                    ['2','Trend'],
-						                    ['3','Special']
+						                    ['2','Suspected / Anticipated Changes'],
+						                    ['3','Known Changes']
 								            ],
 						            ddReorder: true,
 						            listeners: {
@@ -226,16 +226,16 @@ GWDP.ui.initApp = function() {
 						        },{
 						            xtype: 'multiselect',
 						            fieldLabel: 'Monitoring Category',
-						            id: 'QW_WELL_CHARS',
-						            name: 'QW_WELL_CHARS',
+						            id: 'QW_WELL_TYPE',
+						            name: 'QW_WELL_TYPE',
 						            width: 150,
-						            height: 120,
+						            height: 85,
 						            value: 'All',
 						            store: [
 											['All','All'],
 						                    ['1','Surveillance'],
-						                    ['2','Suspected / Anticipated Changes'],
-						                    ['3','Known Changes']
+						                    ['2','Trend'],
+						                    ['3','Special']
 								            ],
 						            ddReorder: true,
 						            listeners: {
