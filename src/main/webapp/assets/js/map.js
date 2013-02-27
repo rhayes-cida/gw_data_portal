@@ -7,7 +7,6 @@ GWDP.ui.map.setHTML = function (response) {
     alert(response.responseText);
 };
 
-GWDP.ui.pointsCount = new Ext.Toolbar.TextItem('Calculating Points Mapped...');
 GWDP.ui.initExtent = (new OpenLayers.Bounds(-180, 15, -50, 70)).transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection);
 
 var cida = new OpenLayers.LonLat(-89.532523, 43.092565);

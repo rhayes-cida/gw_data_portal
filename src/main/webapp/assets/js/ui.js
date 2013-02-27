@@ -40,6 +40,9 @@ GWDP.ui.showHelpTips = function(){
 	}
 };
 
+GWDP.ui.pointsCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
+GWDP.ui.waterLevelCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
+GWDP.ui.waterQualityCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
 
 GWDP.ui.initApp = function() {
 	
@@ -129,203 +132,223 @@ GWDP.ui.initApp = function() {
 							GWDP.ui.map.mainMap.updateSize();
 						}
 					}
-				},
-				bbar: [GWDP.ui.pointsCount]
-		    },{
-		    	xtype: 'form',
-		    	id: 'gwdpFilters',
-				region: 'west',
-				width: 300,
-				title: 'Filter Sites',
-				autoScroll: true,
-				buttonAlign: 'center',
-				border: true,
-				layout: 'accordion',
-				animate: true,
-				items: [{
-					title: 'NGWMN Networks',
-					padding: 5,
-					items: [{ //water level sub container
-							xtype: "panel",
-							layout: 'form',
-							border: false,
-							items: [{
-									xtype: 'checkbox',
-									fieldLabel: "<b>Water level</b>",
-									value: '1',
-									name: "WL_SN_FLAG",
-									checked: true,
-					            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-								},{
-						            xtype: 'multiselect',
-						            fieldLabel: 'Subnetwork',
-						            id: 'WL_WELL_CHARS',
-						            name: 'WL_WELL_CHARS',
-						            width: 150,
-						            height: 85,
-						            value: 'All',
-						            store: [
-											['All','All'],
-						                    ['1','Surveillance'],
-						                    ['2','Suspected / Anticipated Changes'],
-						                    ['3','Known Changes']
-								            ],
-						            ddReorder: true,
-						            listeners: {
-						            	change: function() { GWDP.ui.getUpdateMap(); }
-						            }
-						        },{
-						            xtype: 'multiselect',
-						            fieldLabel: 'Monitoring Category',
-						            id: 'WL_WELL_TYPE',
-						            name: 'WL_WELL_TYPE',
-						            width: 150,
-						            height: 85,
-						            value: 'All',
-						            store: [
-											['All','All'],
-						                    ['1','Surveillance'],
-						                    ['2','Trend'],
-						                    ['3','Special']
-								            ],
-						            ddReorder: true,
-						            listeners: {
-						            	change: function() { GWDP.ui.getUpdateMap(); }
-						            }
-						        }
-							]
-						}, { //water quality sub container
-							xtype: "panel",
-							layout: 'form',
-							border: false,
-							items: [{
-									xtype: 'checkbox',
-									fieldLabel: "<b>Water quality</b>",
-									value: '1',
-									name: "QW_SN_FLAG",
-									checked: true,
-					            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-								},{
-						            xtype: 'multiselect',
-						            fieldLabel: 'Subnetwork',
-						            id: 'QW_WELL_CHARS',
-						            name: 'QW_WELL_CHARS',
-						            width: 150,
-						            height: 85,
-						            value: 'All',
-						            store: [
-											['All','All'],
-						                    ['1','Surveillance'],
-						                    ['2','Suspected / Anticipated Changes'],
-						                    ['3','Known Changes']
-								            ],
-						            ddReorder: true,
-						            listeners: {
-						            	change: function() { GWDP.ui.getUpdateMap(); }
-						            }
-						        },{
-						            xtype: 'multiselect',
-						            fieldLabel: 'Monitoring Category',
-						            id: 'QW_WELL_TYPE',
-						            name: 'QW_WELL_TYPE',
-						            width: 150,
-						            height: 85,
-						            value: 'All',
-						            store: [
-											['All','All'],
-						                    ['1','Surveillance'],
-						                    ['2','Trend'],
-						                    ['3','Special']
-								            ],
-						            ddReorder: true,
-						            listeners: {
-						            	change: function() { GWDP.ui.getUpdateMap(); }
-						            }
-						        }
-							]
-						}
-					]
-				},{
-					title: 'Principle Aquifer',
-					xtype: "panel",
-					padding: 5,
-					items: [{
-						xtype: 'container',
-						html: '*Data from any aquifer is shown if no selection is made'
-					},{
-			            xtype: 'multiselect',
-			            id: 'principleAquifer',
-			            name: 'principleAquifer',
-			            width: 250,
-			            height: 200,
-			            allowBlank:true,
-			            displayField: 'AQUIFER',
-			            valueField: 'AQUIFERCODE',
-			            store: GWDP.domain.Aquifer.getAquiferStore(),
-			            tbar:[{
-			                text: 'clear',
-			                handler: function(){
-				                Ext.getCmp('principleAquifer').reset();
-				                GWDP.ui.getUpdateMap();
-				            }
-			            }],
-			            ddReorder: true,
-			            listeners: {
-			            	added: function(c) {
-			            		GWDP.domain.Aquifer.getAquiferMetadata(
-			            			{},
-			            			function(r){
-			            				c.store.loadData(r.data); 
-			            				var _c = c;
-			            			}
-			            		);
-			            		c.ownerCt.setHeight(275);
-			            	},
-			            	change: function() { GWDP.ui.getUpdateMap(); }
-			            }
-			        }]
-				},{
-					title: 'Contributing Agency',
-					xtype: "panel",
-					padding: 5,
-					items: [{
-						xtype: 'container',
-						html: '*Data from any agency is shown if no selection is made'
-					},{
-			            xtype: 'multiselect',
-			            fieldLabel: 'Multiselect<br />(Required)',
-			            id: 'contributingAgencies',
-			            name: 'contributingAgencies',
-			            width: 250,
-			            height: 200,
-			            allowBlank:true,
-			            displayField: 'AGENCY_NM',
-			            valueField: 'AGENCY_CD',
-			            store: GWDP.domain.Agency.getAgencyStore(),
-			            tbar:[{
-			                text: 'clear',
-			                handler: function(){
-				                Ext.getCmp('contributingAgencies').reset();
-				                GWDP.ui.getUpdateMap();
-				            }
-			            }],
-			            ddReorder: true,
-			            listeners: {
-			            	added: function(c) {
-			            		GWDP.domain.Agency.getAgencyMetadata(
-			            			{},
-			            			function(r){
-			            				c.store.loadData(r.data); 
-			            				var _c = c;
-			            			}
-			            		);
-			            		c.ownerCt.setHeight(275);
-			            	},
-			            	change: function() { GWDP.ui.getUpdateMap(); }
-			            }
-			        }]
 				}
-				]
+		    },{ //container panel
+		    	xtype: 'panel',
+		    	layout: 'border',
+		    	region: 'west',
+		    	border: false,
+		    	width: 300,
+		    	items: [
+					{
+						xtype: 'form',
+						id: 'gwdpFilters',
+						region: 'center',
+						title: 'Filter Sites',
+						autoScroll: true,
+						buttonAlign: 'center',
+						border: true,
+						layout: 'accordion',
+						animate: true,
+						items: [{
+							title: 'NGWMN Networks',
+							padding: 5,
+							items: [{ //water level sub container
+									xtype: "panel",
+									layout: 'form',
+									border: false,
+									items: [{
+											xtype: 'checkbox',
+											fieldLabel: "<b>Water level</b>",
+											value: '1',
+											name: "WL_SN_FLAG",
+											checked: true,
+							            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+										},{
+								            xtype: 'multiselect',
+								            fieldLabel: 'Subnetwork',
+								            id: 'WL_WELL_CHARS',
+								            name: 'WL_WELL_CHARS',
+								            width: 150,
+								            height: 85,
+								            value: 'All',
+								            store: [
+													['All','All'],
+								                    ['1','Surveillance'],
+								                    ['2','Suspected / Anticipated Changes'],
+								                    ['3','Known Changes']
+										            ],
+								            ddReorder: true,
+								            listeners: {
+								            	change: function() { GWDP.ui.getUpdateMap(); }
+								            }
+								        },{
+								            xtype: 'multiselect',
+								            fieldLabel: 'Monitoring Category',
+								            id: 'WL_WELL_TYPE',
+								            name: 'WL_WELL_TYPE',
+								            width: 150,
+								            height: 85,
+								            value: 'All',
+								            store: [
+													['All','All'],
+								                    ['1','Surveillance'],
+								                    ['2','Trend'],
+								                    ['3','Special']
+										            ],
+								            ddReorder: true,
+								            listeners: {
+								            	change: function() { GWDP.ui.getUpdateMap(); }
+								            }
+								        }
+									]
+								}, { //water quality sub container
+									xtype: "panel",
+									layout: 'form',
+									border: false,
+									items: [{
+											xtype: 'checkbox',
+											fieldLabel: "<b>Water quality</b>",
+											value: '1',
+											name: "QW_SN_FLAG",
+											checked: true,
+							            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+										},{
+								            xtype: 'multiselect',
+								            fieldLabel: 'Subnetwork',
+								            id: 'QW_WELL_CHARS',
+								            name: 'QW_WELL_CHARS',
+								            width: 150,
+								            height: 85,
+								            value: 'All',
+								            store: [
+													['All','All'],
+								                    ['1','Surveillance'],
+								                    ['2','Suspected / Anticipated Changes'],
+								                    ['3','Known Changes']
+										            ],
+								            ddReorder: true,
+								            listeners: {
+								            	change: function() { GWDP.ui.getUpdateMap(); }
+								            }
+								        },{
+								            xtype: 'multiselect',
+								            fieldLabel: 'Monitoring Category',
+								            id: 'QW_WELL_TYPE',
+								            name: 'QW_WELL_TYPE',
+								            width: 150,
+								            height: 85,
+								            value: 'All',
+								            store: [
+													['All','All'],
+								                    ['1','Surveillance'],
+								                    ['2','Trend'],
+								                    ['3','Special']
+										            ],
+								            ddReorder: true,
+								            listeners: {
+								            	change: function() { GWDP.ui.getUpdateMap(); }
+								            }
+								        }
+									]
+								}
+							]
+						},{
+							title: 'Principle Aquifer',
+							xtype: "panel",
+							padding: 5,
+							items: [{
+								xtype: 'container',
+								html: '*Data from any aquifer is shown if no selection is made'
+							},{
+					            xtype: 'multiselect',
+					            id: 'principleAquifer',
+					            name: 'principleAquifer',
+					            width: 250,
+					            height: 200,
+					            allowBlank:true,
+					            displayField: 'AQUIFER',
+					            valueField: 'AQUIFERCODE',
+					            store: GWDP.domain.Aquifer.getAquiferStore(),
+					            tbar:[{
+					                text: 'clear',
+					                handler: function(){
+						                Ext.getCmp('principleAquifer').reset();
+						                GWDP.ui.getUpdateMap();
+						            }
+					            }],
+					            ddReorder: true,
+					            listeners: {
+					            	added: function(c) {
+					            		GWDP.domain.Aquifer.getAquiferMetadata(
+					            			{},
+					            			function(r){
+					            				c.store.loadData(r.data); 
+					            				var _c = c;
+					            			}
+					            		);
+					            		c.ownerCt.setHeight(275);
+					            	},
+					            	change: function() { GWDP.ui.getUpdateMap(); }
+					            }
+					        }]
+						},{
+							title: 'Contributing Agency',
+							xtype: "panel",
+							padding: 5,
+							items: [{
+								xtype: 'container',
+								html: '*Data from any agency is shown if no selection is made'
+							},{
+					            xtype: 'multiselect',
+					            fieldLabel: 'Multiselect<br />(Required)',
+					            id: 'contributingAgencies',
+					            name: 'contributingAgencies',
+					            width: 250,
+					            height: 200,
+					            allowBlank:true,
+					            displayField: 'AGENCY_NM',
+					            valueField: 'AGENCY_CD',
+					            store: GWDP.domain.Agency.getAgencyStore(),
+					            tbar:[{
+					                text: 'clear',
+					                handler: function(){
+						                Ext.getCmp('contributingAgencies').reset();
+						                GWDP.ui.getUpdateMap();
+						            }
+					            }],
+					            ddReorder: true,
+					            listeners: {
+					            	added: function(c) {
+					            		GWDP.domain.Agency.getAgencyMetadata(
+					            			{},
+					            			function(r){
+					            				c.store.loadData(r.data); 
+					            				var _c = c;
+					            			}
+					            		);
+					            		c.ownerCt.setHeight(275);
+					            	},
+					            	change: function() { GWDP.ui.getUpdateMap(); }
+					            }
+					        }]
+						}
+						]
+					},{ //panel for stats
+						xtype: 'panel',
+						region: 'south',
+						border: false,
+						height: 75,
+						padding: 5,
+						bodyStyle: "background-color: transparent",
+						defaults: {
+							bodyStyle: "background-color: transparent; text-align: center; font-size: small;",
+							border: false,
+						},
+						items: [GWDP.ui.pointsCount,GWDP.ui.waterLevelCount,GWDP.ui.waterQualityCount
+						]
+					}        
+		    	]
 		    }]
 	});
 	
@@ -561,7 +584,7 @@ GWDP.ui.getCurrentFilterCQL = function() {
 GWDP.ui.getCurrentFilterCQLAsString = function() {
 	var filter = GWDP.ui.getCurrentFilterCQL();
 	if(filter) {
-		console.log(filter.toString());
+//		console.log(filter.toString());
 		return filter.toString();
 	} else {
 		return '';

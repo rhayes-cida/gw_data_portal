@@ -17,6 +17,8 @@ GWDP.domain.Well.updateWellCountBuffer = 1000;
 GWDP.domain.Well.updateWellCountLastCall = new Date(); //timestamp of the last time this function was called
 GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
 	GWDP.ui.pointsCount.update("Calculating Points Mapped...");
+	GWDP.ui.waterLevelCount.update("");
+	GWDP.ui.waterQualityCount.update("");
 	
 	
 	//convert bbox from x,y,x,y to y,x,y,x
@@ -27,8 +29,16 @@ GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
 	
 	GWDP.domain.Well.updateWellCountLastCall = new Date();
 	
-	var _updateCount = function(numOfRecs) {
+	var _updateTotalCount = function(numOfRecs) {
 		GWDP.ui.pointsCount.update(numOfRecs + " Points Mapped");
+	};
+	
+	var _updateWLCount = function(numOfRecs) {
+		GWDP.ui.waterLevelCount.update(numOfRecs + " water-level network wells");
+	};
+	
+	var _updateQWCount = function(numOfRecs) {
+		GWDP.ui.waterQualityCount.update(numOfRecs + " water-quality network wells");
 	};
 	
 	//console.log(GWDP.domain.Well.updateWellCountLastCall);
@@ -37,7 +47,14 @@ GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
 		var elapsedTime = actualCallTime - GWDP.domain.Well.updateWellCountLastCall;
 		//console.log('Should we call at ' + actualCallTime + '? ' + elapsedTime + ' has elapsed;');
 		if(elapsedTime > GWDP.domain.Well.updateWellCountBuffer){
-			GWDP.domain.Well.getWellCount(WFSbbox, cql_filter, _updateCount);
+			GWDP.domain.Well.getWellCount(WFSbbox, cql_filter, _updateTotalCount);
+			if(cql_filter) {
+				GWDP.domain.Well.getWellCount(WFSbbox, "(WL_SN_FLAG = '1') AND (" + cql_filter + ")", _updateWLCount);
+				GWDP.domain.Well.getWellCount(WFSbbox, "(QW_SN_FLAG = '1') AND (" + cql_filter + ")", _updateQWCount);
+			} else {
+				GWDP.domain.Well.getWellCount(WFSbbox, "(WL_SN_FLAG = '1')", _updateWLCount);
+				GWDP.domain.Well.getWellCount(WFSbbox, "(QW_SN_FLAG = '1')", _updateQWCount);
+			}
 		}
 	};
 	deferredCall.defer(GWDP.domain.Well.updateWellCountBuffer + 5, this);//wait just long enough to pass the buffered time.
