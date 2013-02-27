@@ -4,7 +4,7 @@ var IDENTIFY = function (){
 	return {
 		fieldsArray : _fieldsArray,
 			             
-		store : GWDP.domain.getArrayStore(_fieldsArray),
+		store : GWDP.domain.getArrayStore(_fieldsArray, 'identify'),
 		
 		identifyLatLon: function(map, e) {
 			Ext.getCmp('cmp-map-area').body.mask('Finding nearby point(s).  Please wait...', 'x-mask-loading');
@@ -14,11 +14,11 @@ var IDENTIFY = function (){
 			var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			
-			var filters = GWDP.ui.getCurrentFilters(); 
+			var cql_filters = GWDP.ui.getCurrentFilterCQLAsString(); 
 			
 			var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
 			
-			GWDP.domain.Well.getWells(bbox, filters, function(r){
+			GWDP.domain.Well.getWells(bbox, cql_filters, function(r){
 				Ext.getCmp('cmp-map-area').body.unmask();
 				//Ext.getCmp('ext-content-panel').body.unmask();
 				if (r.length == 0) {

@@ -1,9 +1,4 @@
-<%@ page import="gov.usgs.HTMLUtil,
-				javax.naming.Context,
-				javax.naming.InitialContext,
-				javax.sql.DataSource,
-				java.sql.SQLException,
-				java.sql.Connection"%>
+<%@ page import=""%>
 
 <html>
 	<head>

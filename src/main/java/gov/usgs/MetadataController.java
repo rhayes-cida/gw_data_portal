@@ -23,9 +23,9 @@ public class MetadataController {
 	public List<Map<String,Object>> aquifers() {
 				
 		List<Map<String,Object>> result = template.queryForList(
-				"select nat_aquifer_cd aquifer, count(*) count\n" + 
+				"select nat_aquifer_cd aquiferCode, nat_aqfr_desc aquifer, count(*) count\n" + 
 				"from gw_data_portal.well_registry\n" + 
-				"group by nat_aquifer_cd");
+				"group by nat_aquifer_cd, nat_aqfr_desc order by nat_aqfr_desc");
 		
 		logger.debug("Found {} aquifers", result.size());
 		

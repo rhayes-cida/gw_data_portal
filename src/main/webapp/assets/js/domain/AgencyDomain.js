@@ -1,7 +1,3 @@
-/**
- * TODO this whol domain can be changed to use straight ExtJS stores and AJAX if we are not using WFS
- */
-
 GWDP.domain.Agency.featurePrefix = "ngwmn";
 GWDP.domain.Agency.typeName = GWDP.domain.Agency.featurePrefix + ":VW_GWDP_AGENCY"; //TODO get real layer name
 
@@ -11,6 +7,8 @@ GWDP.domain.Agency.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 	featurePrefix: GWDP.domain.Agency.featurePrefix,
 	featureType: GWDP.domain.Agency.typeName
 });
+
+GWDP.domain.Agency.fields = [];
 
 /**
  * @param bbox bbox must be in format x,y,x,y
@@ -44,4 +42,8 @@ GWDP.domain.Agency.getAgencyMetadata = function(params, callback) {
 			callback(responseObject);
 		}
 	});
+};
+
+GWDP.domain.Agency.getAgencyStore = function(params) {
+	return GWDP.domain.getJsonStore(['AGENCY_CD','AGENCY_NM','COUNT'], "metadata/agencies");
 };

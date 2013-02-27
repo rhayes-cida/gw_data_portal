@@ -9,7 +9,7 @@ GWDP.domain.WFSAjaxParams = function(typeName) {
 	return params;
 };
 
-GWDP.domain.constructParams = function(typeName, bbox, filters, forHits) {
+GWDP.domain.constructParams = function(typeName, bbox, cql_filter, forHits) {
 	var requestParams = GWDP.domain.WFSAjaxParams(typeName);
 	
 	if(forHits) {
@@ -17,42 +17,33 @@ GWDP.domain.constructParams = function(typeName, bbox, filters, forHits) {
 		requestParams.VERSION="1.1.0"; //to enable resultType=hits
 	}
 	
-	if(!filters) {
+	if(!cql_filter) {
 		requestParams.BBOX=bbox;
 	} else {
-		//TODO include bbox inside of filtering mechanism
-		requestParams.CQL_FILTER=GWDP.domain.getFilterCQL(filters);
+		requestParams.CQL_FILTER=cql_filter + " AND " + GWDP.domain.getBBOXCql(bbox);
 	}
 	
 	return requestParams;
 };
 
-GWDP.domain.getFilterCQL = function(filters) {
-	var filterArray = [];
-	for(var k in filters) {
-		filterArray.push(new OpenLayers.Filter.Comparison({
-          type: OpenLayers.Filter.Comparison.EQUAL_TO,
-          property: k,
-          value: filters[k]
-      }));
-	}
-	
-	var olFilter = new OpenLayers.Filter.Logical({
-      type: OpenLayers.Filter.Logical.AND,
-      filters: filterArray
-  });
-	
-	return olFilter.toString();
-};
-
-GWDP.domain.getArrayStore = function(fieldsArray){
+GWDP.domain.getArrayStore = function(fieldsArray, url){
 	return new Ext.data.ArrayStore({
 		proxy: new Ext.data.HttpProxy({
 			method: 'GET',
-		    url: 'identify'		
+		    url: url	
 		}),
 	    autoDestroy: false,
-	    storeId: 'myStore',
+	    fields: fieldsArray
+	});
+};
+
+GWDP.domain.getJsonStore = function(fieldsArray, url){
+	return new Ext.data.JsonStore({
+		proxy: new Ext.data.HttpProxy({
+			method: 'GET',
+		    url: url	
+		}),
+	    autoDestroy: false,
 	    fields: fieldsArray
 	});
 };
@@ -74,14 +65,14 @@ GWDP.domain.loadOpenlayersRecordIntoArrayStore = function(records, store) {
 
 /**
  * @param bbox bbox must be in format x,y,x,y
- * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param cql_filter string representation of the filters.
  * @param callback function that takes an array of json objects which represents a feature
  */
-GWDP.domain.getDomainObjects = function(protocol, typeName, bbox, filters, callback) {	
+GWDP.domain.getDomainObjects = function(protocol, typeName, bbox, cql_filter, callback) {	
 	Ext.Ajax.request({
 		url: GWDP.ui.map.baseWFSServiceUrl,
 		method: 'GET',
-		params: GWDP.domain.constructParams(typeName, bbox, filters, false),
+		params: GWDP.domain.constructParams(typeName, bbox, cql_filter, false),
 		success: function(response, options) {
 			callback(protocol.parseResponse(response));
 		}
@@ -90,14 +81,14 @@ GWDP.domain.getDomainObjects = function(protocol, typeName, bbox, filters, callb
 
 /**
  * @param bbox bbox must be in format y,x,y,x
- * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param cql_filter string representation of the filters.
  * @param callback function that takes numOfRecs as single parameter
  */
-GWDP.domain.getDomainObjectsCount = function(typeName, bbox, filters, callback) {
+GWDP.domain.getDomainObjectsCount = function(typeName, bbox, cql_filter, callback) {
 	Ext.Ajax.request({
 		url: GWDP.ui.map.baseWFSServiceUrl,
 		method: 'GET',
-		params: GWDP.domain.constructParams(typeName, bbox, filters, true),
+		params: GWDP.domain.constructParams(typeName, bbox, cql_filter, true),
 		success: function(response, options) {
 			var numOfRecs = response.responseXML.lastChild.attributes.getNamedItem('numberOfFeatures').value;
 			callback(numOfRecs);
@@ -135,3 +126,11 @@ GWDP.domain.getAgencyLogo = function(agencyCd, stateCd) {
 	}
 };
 
+
+GWDP.domain.convertXyToYx = function(bboxArray) {
+	return bboxArray[1] + ',' + bboxArray[0] + ',' + bboxArray[3] + ',' + bboxArray[2];  //wfs v1.1.0 uses a y,x coordinate format
+};
+
+GWDP.domain.getBBOXCql = function(bboxString) {
+	return '(BBOX(GEOM,' + bboxString + '))';
+};

@@ -68,7 +68,8 @@ GWDP.ui.map.baseLayers = [
 
 
 GWDP.ui.map.networkLayers = [{
-  	 	name: 'Contour-based 1 m reduction',
+		id: "VW_GWDP_GEOSERVER",
+  	 	name: 'VW_GWDP_GEOSERVER',
   	 	url: GWDP.ui.map.baseWMSServiceUrl,
   	 	type: OpenLayers.Layer.WMS,
   	 	layers: 'ngwmn:VW_GWDP_GEOSERVER',

@@ -79,7 +79,7 @@ GWDP.ui.initMap = function() {
 		'moveend',
 		GWDP.ui.map.mainMap,
 		function() {
-			GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap, GWDP.ui.getCurrentFilters());
+			GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap, GWDP.ui.getCurrentFilterCQLAsString());
 		}
 	);
 	GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap);
@@ -107,7 +107,7 @@ GWDP.ui.addBaseLayers = function(){
 	            {
  					isBaseLayer: true,
 			        sphericalMercator : true,
-			        projection: "EPSG:102113",
+			        projection: GWDP.ui.map.mercatorProjection.getCode(),
 			        units: "m",
 			        transparent: (thisLayer.transparent == null) ? false : thisLayer.transparent,
 					layers: thisLayer.layers,
@@ -154,6 +154,7 @@ GWDP.ui.addNetworkLayers = function(){
 					visibility: thisLayer.initialOn,
 					opacity: thisLayer.opacity
 				});
+		wmsLayer.params['CQL_FILTER'] = GWDP.ui.getCurrentFilterCQLAsString();
 		GWDP.ui.map.mainMap.addLayer(wmsLayer);
 	}
 };
@@ -254,6 +255,15 @@ GWDP.ui.toggleLegend = function(name, layers, on) {
 };
 
 
-GWDP.ui.getCurrentFilters = function() {
-	return null; //TODO actually construct JSON object of filters
+GWDP.ui.getUpdateMap = function() {
+	var networkLayer = GWDP.ui.map.mainMap.getLayersByName('VW_GWDP_GEOSERVER')[0];
+	var filterCQL = GWDP.ui.getCurrentFilterCQLAsString();
+	if(filterCQL) {
+		networkLayer.params['CQL_FILTER'] = filterCQL;
+	} else {
+		delete networkLayer.params['CQL_FILTER'];
+	}
+	networkLayer.redraw();
+	GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap, filterCQL);
 };
+

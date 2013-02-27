@@ -110,11 +110,6 @@ GWDP.ui.initApp = function() {
 				contentEl: 'map-area',
 				tools: [
 						{
-							id: 'refresh',
-							qtip: 'Refresh',
-					        handler: function() {alert("not yet implemented");}
-						},
-						{
 							id: 'help',
 							qtip: 'Get Help',
 							handler: showHelp
@@ -129,7 +124,6 @@ GWDP.ui.initApp = function() {
 						}
 					],
 				listeners: {
-					afterrender: GWDP.ui.initMap,
 					resize: function(p,w,h) {
 						if(GWDP.ui.map.mainMap) {
 							GWDP.ui.map.mainMap.updateSize();
@@ -138,49 +132,440 @@ GWDP.ui.initApp = function() {
 				},
 				bbar: [GWDP.ui.pointsCount]
 		    },{
+		    	xtype: 'form',
+		    	id: 'gwdpFilters',
 				region: 'west',
 				width: 300,
-				title: 'Filter Map Data',
-				bodyStyle: 'padding: 5px',
+				title: 'Filter Sites',
 				autoScroll: true,
 				buttonAlign: 'center',
 				border: true,
-				buttons: [{
-					text: 'Map',
-					handler: function() {alert("not yet implemented");}
-				}],
+				layout: 'accordion',
+				animate: true,
 				items: [{
-					xtype: 'fieldset',
-					title: 'Agency Contributing Data',
-					contentEl: 'agency-div'
+					title: 'NGWMN Networks',
+					padding: 5,
+					items: [{ //water level sub container
+							xtype: "panel",
+							layout: 'form',
+							border: false,
+							items: [{
+									xtype: 'checkbox',
+									fieldLabel: "<b>Water level</b>",
+									value: '1',
+									name: "WL_SN_FLAG",
+									checked: true,
+					            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+								},{
+						            xtype: 'multiselect',
+						            fieldLabel: 'Subnetwork',
+						            id: 'WL_WELL_TYPE',
+						            name: 'WL_WELL_TYPE',
+						            width: 150,
+						            height: 120,
+						            value: 'All',
+						            store: [
+											['All','All'],
+						                    ['1','Surveillance'],
+						                    ['2','Trend'],
+						                    ['3','Special']
+								            ],
+						            ddReorder: true,
+						            listeners: {
+						            	change: function() { GWDP.ui.getUpdateMap(); }
+						            }
+						        },{
+						            xtype: 'multiselect',
+						            fieldLabel: 'Monitoring Category',
+						            id: 'WL_WELL_CHARS',
+						            name: 'WL_WELL_CHARS',
+						            width: 150,
+						            height: 120,
+						            value: 'All',
+						            store: [
+											['All','All'],
+						                    ['1','Surveillance'],
+						                    ['2','Suspected / Anticipated Changes'],
+						                    ['3','Known Changes']
+								            ],
+						            ddReorder: true,
+						            listeners: {
+						            	change: function() { GWDP.ui.getUpdateMap(); }
+						            }
+						        }
+							]
+						}, { //water quality sub container
+							xtype: "panel",
+							layout: 'form',
+							border: false,
+							items: [{
+									xtype: 'checkbox',
+									fieldLabel: "<b>Water quality</b>",
+									value: '1',
+									name: "QW_SN_FLAG",
+									checked: true,
+					            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+								},{
+						            xtype: 'multiselect',
+						            fieldLabel: 'Subnetwork',
+						            id: 'QW_WELL_TYPE',
+						            name: 'QW_WELL_TYPE',
+						            width: 150,
+						            height: 120,
+						            value: 'All',
+						            store: [
+											['All','All'],
+						                    ['1','Surveillance'],
+						                    ['2','Trend'],
+						                    ['3','Special']
+								            ],
+						            ddReorder: true,
+						            listeners: {
+						            	change: function() { GWDP.ui.getUpdateMap(); }
+						            }
+						        },{
+						            xtype: 'multiselect',
+						            fieldLabel: 'Monitoring Category',
+						            id: 'QW_WELL_CHARS',
+						            name: 'QW_WELL_CHARS',
+						            width: 150,
+						            height: 120,
+						            value: 'All',
+						            store: [
+											['All','All'],
+						                    ['1','Surveillance'],
+						                    ['2','Suspected / Anticipated Changes'],
+						                    ['3','Known Changes']
+								            ],
+						            ddReorder: true,
+						            listeners: {
+						            	change: function() { GWDP.ui.getUpdateMap(); }
+						            }
+						        }
+							]
+						}
+					]
 				},{
-					xtype: 'fieldset',
-					title: 'U.S. Principal Aquifer Name',
-					contentEl: 'ntlAquifer-div'
+					title: 'Principle Aquifer',
+					xtype: "panel",
+					padding: 5,
+					items: [{
+						xtype: 'container',
+						html: '*Data from any aquifer is shown if no selection is made'
+					},{
+			            xtype: 'multiselect',
+			            id: 'principleAquifer',
+			            name: 'principleAquifer',
+			            width: 250,
+			            height: 200,
+			            allowBlank:true,
+			            displayField: 'AQUIFER',
+			            valueField: 'AQUIFERCODE',
+			            store: GWDP.domain.Aquifer.getAquiferStore(),
+			            tbar:[{
+			                text: 'clear',
+			                handler: function(){
+				                Ext.getCmp('principleAquifer').reset();
+				                GWDP.ui.getUpdateMap();
+				            }
+			            }],
+			            ddReorder: true,
+			            listeners: {
+			            	added: function(c) {
+			            		GWDP.domain.Aquifer.getAquiferMetadata(
+			            			{},
+			            			function(r){
+			            				c.store.loadData(r.data); 
+			            				var _c = c;
+			            			}
+			            		);
+			            		c.ownerCt.setHeight(275);
+			            	},
+			            	change: function() { GWDP.ui.getUpdateMap(); }
+			            }
+			        }]
 				},{
-					xtype: 'fieldset',
-					title: '<input id="wl-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Level Network',
-					contentEl: 'wl-well-type-div'
-				},{
-					xtype: 'fieldset',
-					title: '<input id="qw-sn-flag" type="checkbox" checked="checked" value="Yes"/> Water Quality Network',
-					contentEl: 'qw-well-type-div'
-				}]
+					title: 'Contributing Agency',
+					xtype: "panel",
+					padding: 5,
+					items: [{
+						xtype: 'container',
+						html: '*Data from any agency is shown if no selection is made'
+					},{
+			            xtype: 'multiselect',
+			            fieldLabel: 'Multiselect<br />(Required)',
+			            id: 'contributingAgencies',
+			            name: 'contributingAgencies',
+			            width: 250,
+			            height: 200,
+			            allowBlank:true,
+			            displayField: 'AGENCY_NM',
+			            valueField: 'AGENCY_CD',
+			            store: GWDP.domain.Agency.getAgencyStore(),
+			            tbar:[{
+			                text: 'clear',
+			                handler: function(){
+				                Ext.getCmp('contributingAgencies').reset();
+				                GWDP.ui.getUpdateMap();
+				            }
+			            }],
+			            ddReorder: true,
+			            listeners: {
+			            	added: function(c) {
+			            		GWDP.domain.Agency.getAgencyMetadata(
+			            			{},
+			            			function(r){
+			            				c.store.loadData(r.data); 
+			            				var _c = c;
+			            			}
+			            		);
+			            		c.ownerCt.setHeight(275);
+			            	},
+			            	change: function() { GWDP.ui.getUpdateMap(); }
+			            }
+			        }]
+				}
+				]
 		    }]
 	});
+	
 	
 	//put together the viewport
 	new Ext.Viewport({
 		id: 'gwdp-viewport',
 		layout: 'border',
-		items: [header, content, footer]
+		items: [header, content, footer],
+		listeners: {
+			afterrender: GWDP.ui.initMap
+		}
 	});
 	
-	//TODO get some controls on the map
-	
-	//loadMapLayers(); //TODO load geoserver layers	
 	GWDP.ui.showHelpTips();
 };
 
+GWDP.ui.getFilterFormValues = function() {
+	return Ext.getCmp('gwdpFilters').getForm().getValues();
+};
+
+GWDP.ui.constructWLorQWFilters = function(filterVals, WLorQWPrefix) {
+	var typeParam = WLorQWPrefix + "_WELL_TYPE";
+	var charsParam = WLorQWPrefix + "_WELL_CHARS";
+	var flagParam = WLorQWPrefix + "_SN_FLAG";
+	
+	var typeFilters = []; //this should remain empty if ALL is selected
+	var types = filterVals[typeParam].split(',');
+	if(types[0] && types[0].toLowerCase() != 'all') { //if selections that don't include all are made, build an array of filters
+		for(var i = 0; i < types.length; i++) {
+			typeFilters.push(new OpenLayers.Filter.Comparison({
+				type: OpenLayers.Filter.Comparison.EQUAL_TO,
+				property: typeParam,
+				value: types[i]
+			}));
+		}
+	} if(!types || !types[0]) { //when nothing is selected, turn OFF
+		typeFilters.push(new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: typeParam,
+			value: "POINTS_OFF"
+		}));
+	}
+	
+	var charsFilters = [];
+	var chars = filterVals[charsParam].split(',');
+	if(chars[0] && chars[0].toLowerCase() != 'all') {
+		for(var i = 0; i < chars.length; i++) {
+			charsFilters.push(new OpenLayers.Filter.Comparison({
+				type: OpenLayers.Filter.Comparison.EQUAL_TO,
+				property: charsParam,
+				value: chars[i]
+			}));
+		}
+	} if(!chars || !chars[0]) { //when nothing is selected, turn OFF
+		charsFilters.push(new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: charsParam,
+			value: "POINTS_OFF"
+		}));
+	}
+	
+	var flagLevelFilter = new OpenLayers.Filter.Comparison({
+		type: OpenLayers.Filter.Comparison.EQUAL_TO,
+		property: flagParam,
+		value: "1"
+	});
+	
+	if(charsFilters.length == 0 && typeFilters.length==0) { //showing all categories and subetworks by not filtering on them
+		return flagLevelFilter;
+	} else {
+		var andFilter = [flagLevelFilter];
+		
+		if(typeFilters.length > 1) {
+			andFilter.push(new OpenLayers.Filter.Logical({
+				type: OpenLayers.Filter.Logical.OR,
+				filters: typeFilters
+			}));
+		} else if(typeFilters.length == 1){
+			andFilter.push(typeFilters[0]);
+		}
+		
+		if(charsFilters.length > 1) {
+			andFilter.push(new OpenLayers.Filter.Logical({
+				type: OpenLayers.Filter.Logical.OR,
+				filters: charsFilters
+			}));
+		} else if(charsFilters.length == 1) {
+			andFilter.push(charsFilters[0]);
+		}
+		
+		return new OpenLayers.Filter.Logical({
+			type: OpenLayers.Filter.Logical.AND,
+			filters: andFilter
+		});
+	}
+};
+
+GWDP.ui.constructWLFilters = function(filterVals) {
+	return GWDP.ui.constructWLorQWFilters(filterVals, 'WL');
+};
+
+GWDP.ui.constructQWFilters = function(filterVals) {
+	return GWDP.ui.constructWLorQWFilters(filterVals, 'QW');
+};
+
+GWDP.ui.constructNetworkFilters = function(filterVals) { 
+	var wlFlag = filterVals['WL_SN_FLAG'] == 'on';
+	var qwFlag = filterVals['QW_SN_FLAG'] == 'on';
+	
+	var wlFilter;
+	if(wlFlag) {
+		wlFilter = GWDP.ui.constructWLFilters(filterVals);
+	}
+	
+	var qwFilter;
+	if(qwFlag) {
+		qwFilter = GWDP.ui.constructQWFilters(filterVals);
+	}
+	
+	if(qwFilter && wlFilter) { //if both filters exist, OR them
+		return new OpenLayers.Filter.Logical({
+			type: OpenLayers.Filter.Logical.OR,
+			filters: [qwFilter, wlFilter]
+		});
+	} else if (qwFilter){ //if just one of the filters, return it
+		return qwFilter;
+ 	} else if (wlFilter){
+		return wlFilter;
+ 	}  else { //if everything in the network filters is unchecked, we show nothing
+		return new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "QW_SN_FLAG",
+			value: "POINTS_OFF" //this string must be an actual invalid value to be off
+		});
+	}
+};
+
+GWDP.ui.constructAquiferFilters = function(filterVals) { 
+	var aquiferFilter = filterVals['principleAquifer'];
+	if(!aquiferFilter) {
+		return null;
+	}
+	
+	var aquifers = aquiferFilter.split(',');
+	
+	if(aquifers.length==1) {
+		return new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "NAT_AQUIFER_CD",
+			value: aquifers[0]
+		});
+	}
+	
+	var olAquiferFilters = [];
+	for(var i = 0; i < aquifers.length; i++) {
+		olAquiferFilters.push(new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "NAT_AQUIFER_CD",
+			value: aquifers[i]
+		}));
+	}
+	
+	if(olAquiferFilters.length > 0) {
+		return new OpenLayers.Filter.Logical({
+			type: OpenLayers.Filter.Logical.OR,
+			filters: olAquiferFilters
+		});
+	} else {
+		return null;
+	}
+};
+
+GWDP.ui.constructAgencyFilters = function(filterVals) { 
+	var agencyFilter = filterVals['contributingAgencies'];
+	if(!agencyFilter) {
+		return null;
+	}
+	
+	var agencys = agencyFilter.split(',');
+	
+	if(agencys.length==1) {
+		return new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "AGENCY_CD",
+			value: agencys[0]
+		});
+	}
+	
+	var olAgencyFilters = [];
+	for(var i = 0; i < agencys.length; i++) {
+		olAgencyFilters.push(new OpenLayers.Filter.Comparison({
+			type: OpenLayers.Filter.Comparison.EQUAL_TO,
+			property: "AGENCY_CD",
+			value: agencys[i]
+		}));
+	}
+	
+	if(olAgencyFilters.length > 0) {
+		return new OpenLayers.Filter.Logical({
+			type: OpenLayers.Filter.Logical.OR,
+			filters: olAgencyFilters
+		});
+	} else {
+		return null;
+	}
+};
+
+GWDP.ui.getCurrentFilterCQL = function() {
+	var filterVals = GWDP.ui.getFilterFormValues();
+	
+	var topLevelAndArray = [];
+	
+	var networkFilter = GWDP.ui.constructNetworkFilters(filterVals);
+	if(networkFilter) topLevelAndArray.push(networkFilter);
+
+	var aquiferFilter = GWDP.ui.constructAquiferFilters(filterVals);
+	if(aquiferFilter) topLevelAndArray.push(aquiferFilter);
+	
+	var agencyFilter = GWDP.ui.constructAgencyFilters(filterVals);
+	if(agencyFilter) topLevelAndArray.push(agencyFilter);
+	
+	if(topLevelAndArray.length > 0) {
+		return new OpenLayers.Filter.Logical({
+			type: OpenLayers.Filter.Logical.AND,
+			filters: topLevelAndArray
+		});
+	} else {
+		return null;
+	}
+};
+
+GWDP.ui.getCurrentFilterCQLAsString = function() {
+	var filter = GWDP.ui.getCurrentFilterCQL();
+	if(filter) {
+		console.log(filter.toString());
+		return filter.toString();
+	} else {
+		return '';
+	}
+};
 
 Ext.onReady(GWDP.ui.initApp);

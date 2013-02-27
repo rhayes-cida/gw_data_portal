@@ -15,13 +15,15 @@ GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 //call after the event has settled for this time period
 GWDP.domain.Well.updateWellCountBuffer = 1000; 
 GWDP.domain.Well.updateWellCountLastCall = new Date(); //timestamp of the last time this function was called
-GWDP.domain.Well.updateWellCount = function(map, filters) {
-	var bounds = map.getExtent();
+GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
+	GWDP.ui.pointsCount.update("Calculating Points Mapped...");
+	
 	
 	//convert bbox from x,y,x,y to y,x,y,x
+	var bounds = map.getExtent();
 	var bbox = bounds.transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 	var bboxArray = bbox.toArray();
-	var WFSbbox = bboxArray[1] + ',' + bboxArray[0] + ',' + bboxArray[3] + ',' + bboxArray[2];  //wfs v1.1.0 uses a y,x coordinate format
+	var WFSbbox = GWDP.domain.convertXyToYx(bboxArray); 
 	
 	GWDP.domain.Well.updateWellCountLastCall = new Date();
 	
@@ -35,8 +37,7 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
 		var elapsedTime = actualCallTime - GWDP.domain.Well.updateWellCountLastCall;
 		//console.log('Should we call at ' + actualCallTime + '? ' + elapsedTime + ' has elapsed;');
 		if(elapsedTime > GWDP.domain.Well.updateWellCountBuffer){
-			GWDP.ui.pointsCount.update("Calculating Points Mapped...");
-			GWDP.domain.Well.getWellCount(WFSbbox, null, _updateCount);
+			GWDP.domain.Well.getWellCount(WFSbbox, cql_filter, _updateCount);
 		}
 	};
 	deferredCall.defer(GWDP.domain.Well.updateWellCountBuffer + 5, this);//wait just long enough to pass the buffered time.
@@ -45,18 +46,18 @@ GWDP.domain.Well.updateWellCount = function(map, filters) {
 
 /**
  * @param bbox bbox must be in format x,y,x,y
- * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param cql_filter string representation of the filters.
  * @param callback function that takes an array of json objects which represents a feature
  */
-GWDP.domain.Well.getWells = function(bbox, filters, callback) {	
-	GWDP.domain.getDomainObjects(GWDP.domain.Well.WFSProtocol, GWDP.domain.Well.typeName, bbox, filters, callback);
+GWDP.domain.Well.getWells = function(bbox, cql_filter, callback) {	
+	GWDP.domain.getDomainObjects(GWDP.domain.Well.WFSProtocol, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
 };
 
 /**
  * @param bbox bbox must be in format y,x,y,x
- * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
+ * @param cql_filter string representation of the filters.
  * @param callback function that takes numOfRecs as single parameter
  */
-GWDP.domain.Well.getWellCount = function(bbox, filters, callback) {
-	GWDP.domain.getDomainObjectsCount(GWDP.domain.Well.typeName, bbox, filters, callback);
+GWDP.domain.Well.getWellCount = function(bbox, cql_filter, callback) {
+	GWDP.domain.getDomainObjectsCount(GWDP.domain.Well.typeName, bbox, cql_filter, callback);
 };

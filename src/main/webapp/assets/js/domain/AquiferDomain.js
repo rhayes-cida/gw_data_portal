@@ -42,3 +42,7 @@ GWDP.domain.Aquifer.getAquiferMetadata = function(params, callback) {
 		}
 	});
 };
+
+GWDP.domain.Aquifer.getAquiferStore = function(params) {
+	return GWDP.domain.getJsonStore(['AQUIFER','AQUIFERCODE','COUNT'], "metadata/aquifers");
+};

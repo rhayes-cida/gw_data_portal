@@ -425,7 +425,8 @@ td.long-text {
 }
 
 .caption {
-	background-color: #eee;
+	background-color: #7f7e7f;
+	color: #FFFFFF;
 	font-size: smaller;
 	padding: 2px;
 	margin-bottom: 3px;
@@ -434,6 +435,10 @@ td.long-text {
 
 .x-fieldset {
 	padding: 5px !important;
+}
+
+.ux-form-multiselect .x-fieldset {
+	padding: 0px !important;
 }
 
 .graph-options {
