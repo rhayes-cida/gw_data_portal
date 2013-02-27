@@ -13,6 +13,7 @@ GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 
 //time in ms to buffer calls, this prevents chatty ajax calls and will only 
 //call after the event has settled for this time period
+//TODO refactor this out to be reusable OR find any extjs/OL equivilant function
 GWDP.domain.Well.updateWellCountBuffer = 1000; 
 GWDP.domain.Well.updateWellCountLastCall = new Date(); //timestamp of the last time this function was called
 GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
