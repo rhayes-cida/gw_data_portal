@@ -27,6 +27,25 @@
 	border-bottom: solid #baada8 1px;	
 }
 
+.ngwmn-quicklink-nav {
+	padding-left: 0px !important;
+    padding-right: 0px !important;
+    width: 100%;
+}
+
+.ngwmn-quicklink-nav tr,
+.ngwmn-quicklink-nav td {
+	padding: 0 !important;
+    text-align: center;
+}
+
+.ngwmn-quicklink-nav a {
+	text-decoration: underline;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}
+
 .ngwmn-title {
 	font-size: xx-large;
 	

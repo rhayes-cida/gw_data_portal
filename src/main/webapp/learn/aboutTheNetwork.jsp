@@ -1,4 +1,10 @@
-<p class="ngwmn-section-title">Background</p>
+<table class="ngwmn-quicklink-nav"><tr>
+	<td><a href="#background">BACKGROUND</a></td>
+	<td><a href="#design">NETWORK DESIGN</a></td>
+	<td><a href="#status">NETWORK STATUS</a></td>
+</tr></table>
+
+<p id="background" class="ngwmn-section-title">Background</p>
 
 <p>
 The NGWMN network is sponsored by the Advisory Committee on Water Information's (<a href="http://acwi.gov">ACWI</a>) 
@@ -13,7 +19,7 @@ was developed to provide guidance to ensure that the data are comparable and can
 The framework design focuses on providing information needed to assess the quantity of ground-water reserves as constrained by quality. 
 The scale of the network will focus on Principal and Major Aquifers of the United States.</p>
 
-<p class="ngwmn-section-title">Network Design</p>
+<p id="design" class="ngwmn-section-title">Network Design</p>
 
 <p>
 The network is composed of selected wells from existing Federal, multistate, State, Tribal, and local ground-water 
@@ -101,7 +107,7 @@ suggested monitoring frequencies.
 </ul>
 <img src="assets/images/network_diagram.png" alt="Diagram of the well network"/>
 
-<p class="ngwmn-section-title">
+<p ID="status" class="ngwmn-section-title">
 Network Status
 </p>
 
