@@ -44,6 +44,7 @@
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
 		<script type="text/javascript" src="assets/js/help.js"></script>
 		<script type="text/javascript" src="assets/js/map.js"></script>
+		<script type="text/javascript" src="assets/js/filter.js"></script>
 		<script type="text/javascript" src="assets/js/ui.js"></script>
 		<script type="text/javascript" src="assets/js/SiteIdSelectorPopup.js"></script>
 		<script type="text/javascript" src="assets/js/DocNavHelper.js"></script>
