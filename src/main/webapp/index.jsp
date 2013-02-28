@@ -28,7 +28,12 @@
 		<script type="text/javascript" src="assets/js/GoogleAnalyticsUtils.js"></script>
 		
 		<!-- application assets -->
-		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
+		<script type="text/javascript" src="assets/js/namespace.js"></script>
+		
+		<jsp:include page="server_js_props.jsp"></jsp:include>
+		
+		<script type="text/javascript" src="assets/js/config.js"></script>
+		
 
 		<!-- Extensions -->
 	   	<script type="text/javascript" src='assets/ux/MultiSelect/MultiSelect.js'></script>

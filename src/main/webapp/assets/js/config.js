@@ -1,4 +1,7 @@
+if(!GWDP.ui.map.baseMapServerUrl) GWDP.ui.map.baseMapServerUrl = 'http://localhost:8080/gw_data_portal/geoserver'; //this is a default, this property should be set prior to loading this JS file
 
+GWDP.ui.map.baseWMSServiceUrl = GWDP.ui.map.baseMapServerUrl + '/wms?request=GetMap';
+GWDP.ui.map.baseWFSServiceUrl = GWDP.ui.map.baseMapServerUrl + '/wfs?request=GetFeature';
 
 //When using an XYZ layer with OpenLayers, this needs to be appended to the
 //base URL.
