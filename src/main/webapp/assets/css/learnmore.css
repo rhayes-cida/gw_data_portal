@@ -30,7 +30,7 @@
 .ngwmn-quicklink-nav {
 	padding-left: 0px !important;
     padding-right: 0px !important;
-    width: 100%;
+    width: 800px;
 }
 
 .ngwmn-quicklink-nav tr,
@@ -111,7 +111,7 @@ ul.ngwmn-tab-layout a {
 	text-decoration: none;
 	font-weight: bold;
 	border-right: solid black 1px;
-	width: 12em;
+	width: 10em;
 	text-align: center;
 }
 

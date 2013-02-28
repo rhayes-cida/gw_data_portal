@@ -36,8 +36,8 @@
 				<table id="ngwmn-content-strip"><tr><td> <!-- START LEARN CONTENT -->
 					<div id="ngwmn-title-container">
 						<p class="ngwmn-title">
-							<a href="splash.jsp">National Groundwater<br/>
-							Monitoring Network <span class="ngwmn-highlight">Data Portal</span></a>
+							<a href="splash.jsp">National <span class="ngwmn-highlight">Groundwater</span>
+							Monitoring Network</a>
 						</p>
 					</div>
 					<div id="ngwmn-description-container">
@@ -53,7 +53,8 @@
 						<ul id="ngwmn-learn-tab-container-nav"  class='ngwmn-tab-layout'>
 					    	<li><a href="#aboutNetwork">ABOUT THE NETWORK</a></li>
 					    	<li><a href="#dataPortal">THE DATA PORTAL</a></li>
-					    	<li><a href="#partners">PARTNERS</a></li>
+					    	<li><a href="#dataProviders">DATA PROVIDERS</a></li>
+					    	<li><a href="#getInvloved">GET INVOLVED</a></li>
 					    </ul>
 					    
 					    <div class="ngwmn-tabs-container">
@@ -73,11 +74,19 @@
 						    	</div>
 						    </div>
 						    
-						    <div class="ngwmn-tab" id="partners">
+						    <div class="ngwmn-tab" id=""dataProviders"">
 						    	<div class="ngwmn-tab-content">
-							    	<div class="ngwmn-tab-title">Partners</div>
+							    	<div class="ngwmn-tab-title">Data Providers</div>
 							    	<hr/>
 							    	<div><jsp:include page="learn/partners.jsp"></jsp:include></div>
+						    	</div>
+						    </div>
+						    
+						    <div class="ngwmn-tab" id="getInvloved">
+						    	<div class="ngwmn-tab-content">
+							    	<div class="ngwmn-tab-title">Get Involved</div>
+							    	<hr/>
+							    	<div><jsp:include page="learn/getInvolved.jsp"></jsp:include></div>
 						    	</div>
 						    </div>
 					    </div>
