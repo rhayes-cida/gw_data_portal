@@ -107,6 +107,11 @@
     box-shadow: 10px 10px 5px #888888;
 }
 
+.ngwmn-container-hover {
+    border: solid black 2px !important;
+    cursor: pointer !important;
+}
+
 #ngwmn-learn-container {
 	background-color: #cee56a;
 }

@@ -54,8 +54,8 @@
 				<table id="ngwmn-content-strip"><tr><td> <!-- START SPLASH CONTENT -->
 					<div id="ngwmn-title-container">
 						<p class="ngwmn-title">
-							National Groundwater<br/>
-							Monitoring Network <span class="ngwmn-highlight">Data Portal</span>
+							National <span class="ngwmn-highlight">Groundwater</span>
+							Monitoring Network
 						</p>
 					</div>
 					
@@ -92,21 +92,21 @@
 					</div>
 					
 					<div id="ngwmn-link-box-container">
-					<a href="learnmore.jsp"><div id="ngwmn-learn-container">
+					<div id="ngwmn-learn-container"  onclick="window.location='learnmore.jsp'" onmouseover="GWDP.ui.ieHoverOver(this)" onmouseout="GWDP.ui.ieHoverOut(this)">
 						<div id="ngwmn-learn-header"><b>LEARN</b> about the Network</div>
 						<div class='ngwmn-img-container'>
 							<img src="assets/images/learn_fig.png" alt="Learn more figure. Link to learn more page"/>
 						</div>
 						<div id="ngwmn-learn-footer"></div>
-					</div></a>
-					<a href="index.jsp"><div id="ngwmn-explore-container">
+					</div>
+					<div id="ngwmn-explore-container" onclick="window.location='index.jsp'" onmouseover="GWDP.ui.ieHoverOver(this)" onmouseout="GWDP.ui.ieHoverOut(this)">
 						<div id="ngwmn-explore-header"><b>EXPLORE</b> the Network</div>
 						<div class='ngwmn-img-container'>
 							<img src="assets/images/us--125.5-25--65.5-49.5.png" alt="Base image of the US"/>
 							<img src="geoserver/wms?request=GetMap&LAYERS=ngwmn%3AVW_GWDP_GEOSERVER&TRANSPARENT=TRUE&SERVICE=WMS&VERSION=1.1.1&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A4326&BBOX=-125.5,25,-65.5,49.5&WIDTH=350&HEIGHT=170" alt="Well network points"/>
 						</div>
-						<div id="ngwmn-explore-footer"><b>The NGWMN Data Portal</b></div>
-					</div></a>
+						<div id="ngwmn-explore-footer"></div>
+					</div>
 					</div>
 					<div id="ngwmn-join-section">
 						<span class="title">JOIN THE NETWORK - include your data in the Portal!</span><br/><br/>

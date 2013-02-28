@@ -35,3 +35,12 @@ Ext.onReady(function(){
 				document.getElementById('aquiferCount').innerHTML = r.data.length;
 			});
 });
+
+GWDP.ui.ieHoverOver = function(div) {
+	div.className += " ngwmn-container-hover";
+};
+
+
+GWDP.ui.ieHoverOut = function(div) {
+	div.className = div.className.replace(/ ngwmn-container-hover/g, "");
+};
