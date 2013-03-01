@@ -12,20 +12,22 @@
         
       	<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script src="ext-3.4.0/ext-all.js"></script>
+		
+		<script type="text/javascript" src="yetii/yetii.js"></script>
 
 		<!-- application assets -->
-		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
+		<script type="text/javascript" src="assets/js/namespace.js"></script>
+		<jsp:include page="server_js_props.jsp"></jsp:include>
+		<script type="text/javascript" src="assets/js/config.js"></script>
 
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
 		<script type="text/javascript" src="assets/js/domain/AgencyDomain.js"></script>
 		
-		<!-- application assets -->		
+		<script type="text/javascript" src="assets/js/learnmore.js"></script>
+				
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/learnmore.css"/>
-		
-		<script type="text/javascript" src="yetii/yetii.js"></script>
-		<script type="text/javascript" src="assets/js/learnmore.js"></script>
 	</head>
 	
 	<body>

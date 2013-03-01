@@ -7,14 +7,24 @@
 		<!--  extjs assets -->
 		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script src="ext-3.4.0/ext-all.js"></script>
+		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
 		<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
             <jsp:param name="debug-qualifier" value="false" />
         </jsp:include>
         
+        <!-- GA -->
+		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+		<script type="text/javascript">
+			google.load("visualization", "1");
+		</script>
+		<script type="text/javascript" src="assets/js/GoogleAnalyticsUtils.js"></script>
+        
 		<!-- application assets -->
-		<jsp:include page="globalJavascriptProperties.jsp"></jsp:include>
+		<script type="text/javascript" src="assets/js/namespace.js"></script>
+		<jsp:include page="server_js_props.jsp"></jsp:include>
+		<script type="text/javascript" src="assets/js/config.js"></script>
 
 		<!-- Data domain objects -->		
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
@@ -25,10 +35,6 @@
 		
 		<script type="text/javascript" src="assets/js/splash.js"></script>
 		
-		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
-		
-		
-		<!-- application assets -->		
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/splash.css"/>

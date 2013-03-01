@@ -20,24 +20,23 @@
 	    <script type='text/javascript' src='ext-3.4.0/adapter/jquery/ext-jquery-adapter.js'></script>
 		<script src="ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script src="ext-3.4.0/ext-all-debug.js"></script>
-<!-- 		<script src="ext-3.4.0/examples/ux/BufferView.js"></script> -->
 		<link rel="stylesheet" href="ext-3.4.0/resources/css/ext-all.css"/>
 		
 		<!-- GA -->
 		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+		<script type="text/javascript">
+			google.load("visualization", "1");
+		</script>
 		<script type="text/javascript" src="assets/js/GoogleAnalyticsUtils.js"></script>
 		
-		<!-- application assets -->
-		<script type="text/javascript" src="assets/js/namespace.js"></script>
-		
-		<jsp:include page="server_js_props.jsp"></jsp:include>
-		
-		<script type="text/javascript" src="assets/js/config.js"></script>
-		
-
 		<!-- Extensions -->
 	   	<script type="text/javascript" src='assets/ux/MultiSelect/MultiSelect.js'></script>
-		<link rel="stylesheet" href="assets/ux/MultiSelect/MultiSelect.css"/>	
+		<link rel="stylesheet" href="assets/ux/MultiSelect/MultiSelect.css"/>
+		
+		<!-- APPLICATION CODE IMPORTS -->
+		<script type="text/javascript" src="assets/js/namespace.js"></script>
+		<jsp:include page="server_js_props.jsp"></jsp:include>
+		<script type="text/javascript" src="assets/js/config.js"></script>
 	
 		<!-- Data domain objects -->		
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
@@ -50,21 +49,19 @@
 		<script type="text/javascript" src="assets/js/help.js"></script>
 		<script type="text/javascript" src="assets/js/map.js"></script>
 		<script type="text/javascript" src="assets/js/filter.js"></script>
-		<script type="text/javascript" src="assets/js/ui.js"></script>
+		
 		<script type="text/javascript" src="assets/js/SiteIdSelectorPopup.js"></script>
 		<script type="text/javascript" src="assets/js/DocNavHelper.js"></script>
-		<script type="text/javascript">
-			google.load("visualization", "1");
-		</script>
 		<script type="text/javascript" src="assets/js/SiteIdentifyWindow.js"></script>
 		<script type="text/javascript" src="assets/js/DownloadPopup.js"></script>
+		
+		<script type="text/javascript" src="assets/js/ui.js"></script>
+
 		
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 		<link rel="stylesheet" href="assets/css/custom.css"/>
 		<link rel="stylesheet" href="assets/css/index.css"/>
     	
-    	<!-- Ext skin -->
-    	<!-- link rel="stylesheet" type="text/css" href="assets/gwdp_ext/xtheme-gwdp.css" /-->
 	
 		<!-- Google Analytics -->
 		<script type="text/javascript">
