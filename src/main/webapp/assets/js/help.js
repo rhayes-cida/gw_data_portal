@@ -1,7 +1,7 @@
 GWDP.ui.help.initHelpTips = function(){
 	GWDP.ui.help.showWelcome();
 	
-    new GWDP.ui.GwdpHelpTip({        
+    var wlFlag = new GWDP.ui.GwdpHelpTip({        
         title: 'Water level',
         target: 'WL_SN_FLAG',
         anchor: 'right',
@@ -11,7 +11,7 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-water-level-tip'
     });
     
-    new GWDP.ui.GwdpHelpTip({        
+    var wlSub = new GWDP.ui.GwdpHelpTip({        
         title: 'Water level - Subnetwork', 
         target: 'WL_WELL_CHARS',
         anchor: 'right',
@@ -21,7 +21,7 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-water-level-subnetwork-tip'
     });
     
-    new GWDP.ui.GwdpHelpTip({        
+    var wlMon = new GWDP.ui.GwdpHelpTip({        
         title: 'Water level - Monitoring Category',
         target: 'WL_WELL_TYPE',
         anchor: 'right',
@@ -31,7 +31,7 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-water-level-category-tip'
     });
     
-    new GWDP.ui.GwdpHelpTip({        
+    var qwFlag = new GWDP.ui.GwdpHelpTip({        
         title: 'Water quality',
         target: 'QW_SN_FLAG',
         anchor: 'right',
@@ -41,7 +41,7 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-water-quality-tip'
     });
     
-    new GWDP.ui.GwdpHelpTip({        
+    var qwSub = new GWDP.ui.GwdpHelpTip({        
         title: 'Water quality - Subnetwork', 
         target: 'QW_WELL_CHARS',
         anchor: 'right',
@@ -51,7 +51,7 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-water-quality-subnetwork-tip'
     });
     
-    new GWDP.ui.GwdpHelpTip({        
+    var qwMon = new GWDP.ui.GwdpHelpTip({        
         title: 'Water quality - Monitoring Category',
         target: 'QW_WELL_TYPE',
         anchor: 'right',
@@ -61,7 +61,7 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-water-quality-category-tip'
     });
     
-    new GWDP.ui.GwdpHelpTip({        
+    var aquifer = new GWDP.ui.GwdpHelpTip({        
         title: 'Principal Aquifer', 
         target: 'principalAquifer',
         anchor: 'right',
@@ -71,7 +71,7 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-aquifer-tip'
     });
     
-    new GWDP.ui.GwdpHelpTip({        
+    var agency = new GWDP.ui.GwdpHelpTip({        
         title: 'Contributing Agency',
         target: 'contributingAgencies',
         anchor: 'right',
@@ -79,6 +79,17 @@ GWDP.ui.help.initHelpTips = function(){
         autoHide: false,
         closable: true,
         contentEl: 'ngwmn-agency-tip'
+    });
+    
+    Ext.getCmp('gwdpFilters').on('afterlayout', function(){
+    	wlFlag.hide();
+    	wlSub.hide();
+    	wlMon.hide();
+    	qwFlag.hide();
+    	qwSub.hide();
+    	qwMon.hide();
+    	aquifer.hide();
+    	agency.hide();
     });
 };
 
