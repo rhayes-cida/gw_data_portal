@@ -63,7 +63,7 @@ GWDP.ui.help.initHelpTips = function(){
     
     new GWDP.ui.GwdpHelpTip({        
         title: 'Principal Aquifer', 
-        target: 'principleAquifer',
+        target: 'principalAquifer',
         anchor: 'right',
         width: 415,
         autoHide: false,

@@ -183,8 +183,8 @@ GWDP.ui.initApp = function() {
 					autoScroll: true,
 					items: [{
 			            xtype: 'multiselect',
-			            id: 'principleAquifer',
-			            name: 'principleAquifer',
+			            id: 'principalAquifer',
+			            name: 'principalAquifer',
 			            width: 240,
 			            height: 'auto',
 			            allowBlank:true,

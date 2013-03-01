@@ -1,3 +1,5 @@
+GWDP.NO_POINTS_VALUE = "POINTS_OFF";
+
 GWDP.OR = function(expressions) {
 	return new OpenLayers.Filter.Logical({
 		type: OpenLayers.Filter.Logical.OR,
@@ -32,7 +34,7 @@ GWDP.ui.constructWLorQWFilters = function(filterVals, WLorQWPrefix) {
 			typeFilters.push(GWDP.EQUALS(typeParam, types[i]));
 		}
 	} if(!types || !types[0]) { //when nothing is selected, turn OFF
-		typeFilters.push(GWDP.EQUALS(typeParam, "POINTS_OFF"));
+		typeFilters.push(GWDP.EQUALS(typeParam, GWDP.NO_POINTS_VALUE));
 	}
 	
 	var charsFilters = [];
@@ -42,7 +44,7 @@ GWDP.ui.constructWLorQWFilters = function(filterVals, WLorQWPrefix) {
 			charsFilters.push(GWDP.EQUALS(charsParam, chars[i]));
 		}
 	} if(!chars || !chars[0]) { //when nothing is selected, turn OFF
-		charsFilters.push(GWDP.EQUALS(charsParam, "POINTS_OFF"));
+		charsFilters.push(GWDP.EQUALS(charsParam, GWDP.NO_POINTS_VALUE));
 	}
 	
 	var flagLevelFilter = GWDP.EQUALS(flagParam, "1");
@@ -97,14 +99,14 @@ GWDP.ui.constructNetworkFilters = function(filterVals) {
  	} else if (wlFilter){
 		return wlFilter;
  	}  else { //if everything in the network filters is unchecked, we show nothing
-		return GWDP.EQUALS("QW_SN_FLAG", "POINTS_OFF");
+		return GWDP.EQUALS("QW_SN_FLAG", GWDP.NO_POINTS_VALUE);
 	}
 };
 
 GWDP.ui.constructAquiferFilters = function(filterVals) { 
-	var aquiferFilter = filterVals['principleAquifer'];
+	var aquiferFilter = filterVals['principalAquifer'];
 	if(!aquiferFilter) { //nothing selected, show NO points
-		return GWDP.EQUALS("NAT_AQUIFER_CD", "POINTS_GO_OFF");
+		return GWDP.EQUALS("NAT_AQUIFER_CD", GWDP.NO_POINTS_VALUE);
 	}
 	
 	var aquifers = aquiferFilter.split(',');
@@ -132,7 +134,7 @@ GWDP.ui.constructAquiferFilters = function(filterVals) {
 GWDP.ui.constructAgencyFilters = function(filterVals) { 
 	var agencyFilter = filterVals['contributingAgencies'];
 	if(!agencyFilter) { //nothing selected, no points to show
-		return GWDP.EQUALS("AGENCY_CD", "POINTS_GO_OFF");
+		return GWDP.EQUALS("AGENCY_CD", GWDP.NO_POINTS_VALUE);
 	}
 	
 	var agencys = agencyFilter.split(',');
