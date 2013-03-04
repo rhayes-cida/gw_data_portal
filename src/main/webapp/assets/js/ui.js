@@ -242,13 +242,11 @@ GWDP.ui.initApp = function() {
     var minimize = function() {
     	header.expand(false);
     	footer.expand(false);
-    	filterPanel.expand(false);
     };
     
     var maximize = function() {
     	header.collapse(true);
     	footer.collapse(true);
-    	filterPanel.collapse(true);
     };
     
 	//create the EXTJS layout
