@@ -12,14 +12,12 @@ Ext.onReady(function(){
 	
 	GWDP.domain.Agency.getAgencyMetadata(
 		{},
-		function(response){
-			var records = response.data;
-			
-			var content = "";
-			
+		function(store){
+			var records = store.data.items;
+			var content = '';
 			for(var i = 0; i < records.length; i++) {
-				var agencyCd = records[i]['AGENCY_CD'];  
-				var agencyName = records[i]['AGENCY_NM'];
+				var agencyCd = records[i].data['AGENCY_CD'];  
+				var agencyName = records[i].data['AGENCY_NM'];
 				content += "<div class='ngwmn-partner-container'>" +
 					"<img class='ngwmn-partner-logo' src='assets/images/logos/" + GWDP.domain.getAgencyLogo(agencyCd) + "'>" +
 					"<span class='ngwmn-partner-name'>" + agencyName + "</span>" +

@@ -191,24 +191,9 @@ GWDP.ui.initApp = function() {
 			            displayField: 'AQUIFER',
 			            valueField: 'AQUIFERCODE',
 			            value: "All",
-			            store: GWDP.domain.Aquifer.getAquiferStore(),
+			            store: GWDP.domain.Aquifer.getAquiferMetadata({}, function() { Ext.getCmp('principalAquifer').setValue('All'); }, "All"),
 			            ddReorder: true,
 			            listeners: {
-			            	added: function(c) {
-			            		GWDP.domain.Aquifer.getAquiferMetadata(
-			            			{},
-			            			function(r){
-			            				var allOption = {}
-			            				for(var key in r.data[0]) {
-			            					allOption[key] = "All";
-			            				}
-			            				c.store.loadData([allOption].concat(r.data)); 
-			            				var _c = c;
-			            				c.setValue("All");
-			            			}
-			            		);
-			            		c.ownerCt.setHeight(275);
-			            	},
 			            	change: function() { GWDP.ui.getUpdateMap(); }
 			            }
 			        }]
@@ -229,24 +214,9 @@ GWDP.ui.initApp = function() {
 			            displayField: 'AGENCY_NM',
 			            valueField: 'AGENCY_CD',
 			            value: "All",
-			            store: GWDP.domain.Agency.getAgencyStore(),
+			            store: GWDP.domain.Agency.getAgencyMetadata({}, function() { Ext.getCmp('contributingAgencies').setValue('All'); }, 'All'),
 			            ddReorder: true,
 			            listeners: {
-			            	added: function(c) {
-			            		GWDP.domain.Agency.getAgencyMetadata(
-			            			{},
-			            			function(r){
-			            				var allOption = {}
-			            				for(var key in r.data[0]) {
-			            					allOption[key] = "All";
-			            				}
-			            				c.store.loadData([allOption].concat(r.data)); 
-			            				var _c = c;
-			            				c.setValue("All");
-			            			}
-			            		);
-			            		c.ownerCt.setHeight(275);
-			            	},
 			            	change: function() { GWDP.ui.getUpdateMap(); }
 			            }
 			        }]

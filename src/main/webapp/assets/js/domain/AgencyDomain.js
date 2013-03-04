@@ -1,52 +1,35 @@
-GWDP.domain.Agency.featurePrefix = "ngwmn";
-GWDP.domain.Agency.typeName = GWDP.domain.Agency.featurePrefix + ":VW_GWDP_AGENCY"; //TODO get real layer name
-
-GWDP.domain.Agency.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
-	outputFormat: 'GML2',
-	geometryName: 'GEOM',
-	featurePrefix: GWDP.domain.Agency.featurePrefix,
-	featureType: GWDP.domain.Agency.typeName
-});
-
-GWDP.domain.Agency.fields = [];
-
-/**
- * @param bbox bbox must be in format x,y,x,y
- * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
- * @param callback function that takes an array of json objects which represents a feature
- */
-GWDP.domain.Agency.getAgencies = function(bbox, filters, callback) {	
-	GWDP.domain.getDomainObjects(GWDP.domain.Agency.WFSProtocol, GWDP.domain.Agency.typeName, bbox, filters, callback);
-};
-
-/**
- * @param bbox bbox must be in format y,x,y,x
- * @param filters json object describing filters, method will convert to CQL. Only supports AND filtering.
- * @param callback function that takes numOfRecs as single parameter
- */
-GWDP.domain.Agency.getAgencyCount = function(bbox, filters, callback) {
-	GWDP.domain.getDomainObjectsCount(GWDP.domain.Agency.typeName, bbox, filters, callback);
+GWDP.domain.Agency.getAgencyStore = function(params) {
+	var str = GWDP.domain.getJsonStore(['AGENCY_CD','AGENCY_NM','COUNT'], "metadata/agencies");
+	if(params.defaultOption) {
+		str.loadData([{
+			AGENCY_CD: params.defaultOption, 
+			AGENCY_NM: params.defaultOption,
+			COUNT:params.defaultOption}]);
+	}
+	return str;
 };
 
 /**
  * @param params json object describing filters, method will convert to CQL. Only supports AND filtering.
- * @param callback function that takes numOfRecs as single parameter
+ * @param callback function that takes loaded store as single parameter
+ * @param defaultOption the string value of a record that will be inserted at position 0.
+ * 
+ * @return a json store, that will be in the process of loading. callback is called when loaded. 
  */
-GWDP.domain.Agency.getAgencyMetadata = function(params, callback) {
+GWDP.domain.Agency.getAgencyMetadata = function(params, callback, defaultOption) {
+	var _store = GWDP.domain.Agency.getAgencyStore({defaultOption: defaultOption});
 	Ext.Ajax.request({
 		url: 'metadata/agencies',
 		method: 'GET',
 		params: params, 
 		success: function(response, options) {
-			var responseObject = {data: Ext.util.JSON.decode(response.responseText) };
-			callback(responseObject);
+			_store = GWDP.domain.loadJsonIntoStore(
+					response.responseText, 
+					_store,
+					defaultOption
+			);
+			if(callback) callback(_store);
 		}
 	});
-};
-
-GWDP.domain.Agency.getAgencyStore = function(params) {
-	var str = GWDP.domain.getJsonStore(['AGENCY_CD','AGENCY_NM','COUNT'], "metadata/agencies");
-	//include All field
-	str.loadData([{AGENCY_CD: 'All', AGENCY_NM: 'All',COUNT:'All'}]);
-	return str;
+	return _store;
 };

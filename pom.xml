@@ -277,7 +277,9 @@
                         <include>**/ext-3.4.0/adapter/ext/ext-base.js</include>
                         <include>**/ext-3.4.0/ext-all-debug.js</include>
                         <include>**/assets/js/namespace.js</include>
-                        <include>**/assets/js/filter.js</include>
+                        <include>**/assets/js/config.js"></include>
+                        <include>**/assets/js/domain/BaseDomain.js</include>		
+                        <include>**/assets/js/filter.js</include>		
                     </sourceIncludes>
                 </configuration>
             </plugin>
