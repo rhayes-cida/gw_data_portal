@@ -17,7 +17,7 @@ GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 GWDP.domain.Well.updateWellCountBuffer = 1000; 
 GWDP.domain.Well.updateWellCountLastCall = new Date(); //timestamp of the last time this function was called
 GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
-	GWDP.ui.pointsCount.update("Calculating Points Mapped...");
+	GWDP.ui.pointsCount.update("Calculating Sites Mapped...");
 	GWDP.ui.waterLevelCount.update("");
 	GWDP.ui.waterQualityCount.update("");
 	
@@ -31,7 +31,7 @@ GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
 	GWDP.domain.Well.updateWellCountLastCall = new Date();
 	
 	var _updateTotalCount = function(numOfRecs) {
-		GWDP.ui.pointsCount.update(numOfRecs + " Points Mapped");
+		GWDP.ui.pointsCount.update(numOfRecs + " Sites Mapped");
 	};
 	
 	var _updateWLCount = function(numOfRecs) {

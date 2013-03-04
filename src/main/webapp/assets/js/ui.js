@@ -1,8 +1,8 @@
 GWDP.ui.SKIP_TIPS_COOKIENAME = "cida-ngwmn-skip-tips";
 
-GWDP.ui.pointsCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
-GWDP.ui.waterLevelCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
-GWDP.ui.waterQualityCount = new Ext.Panel({ html: 'Calculating Points Mapped...'});
+GWDP.ui.pointsCount = new Ext.Panel({ html: 'Calculating Sites Mapped...'});
+GWDP.ui.waterLevelCount = new Ext.Panel({ html: 'Calculating Sites Mapped...'});
+GWDP.ui.waterQualityCount = new Ext.Panel({ html: 'Calculating Sites Mapped...'});
 
 GWDP.ui.initApp = function() {
 	
