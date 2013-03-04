@@ -33,7 +33,7 @@ Well Classification Subnetworks:
 </p>
 
 <p>
-Well in the NGWMN will be designated as being in one of three subnetworks. These are 1) the Background subnetwork, 
+Wells in the NGWMN will be designated as being in one of three subnetworks. These are 1) the Background subnetwork, 
 2) the Suspected Changes subnetwork, and 3) the Documented Changes subnetwork.
 </p>
 
