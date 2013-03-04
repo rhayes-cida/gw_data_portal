@@ -94,7 +94,7 @@ GWDP.ui.initApp = function() {
 						            value: 'All',
 						            store: [
 											['All','All'],
-						                    ['1','Surveillance'],
+						                    ['1','Background'],
 						                    ['2','Suspected Changes'],
 						                    ['3','Known Changes']
 								            ],
@@ -144,7 +144,7 @@ GWDP.ui.initApp = function() {
 						            value: 'All',
 						            store: [
 											['All','All'],
-						                    ['1','Surveillance'],
+						                    ['1','Background'],
 						                    ['2','Suspected Changes'],
 						                    ['3','Known Changes']
 								            ],
