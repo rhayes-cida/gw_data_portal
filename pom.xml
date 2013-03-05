@@ -262,6 +262,7 @@
                 <extensions>true</extensions>
                 <executions>
                     <execution>
+                    	<phase>package</phase>
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
