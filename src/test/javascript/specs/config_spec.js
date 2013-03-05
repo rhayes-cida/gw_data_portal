@@ -1,15 +1,20 @@
-describe("Library Checking test.", function() {
-    it("verified that ExtJS gets loaded", function() {
+describe("Javascript importing", function() {
+	//this is only imported during and required for testing
+    it("loads sinon library for testing support", function() { 
+        expect(sinon).toBeDefined();
+    });
+    
+    it("loads Extjs library", function() {
         expect(Ext).toBeDefined();
     });
    
-    it("verified that OpenLayers gets loaded", function() {
+    it("loads OpenLayers library", function() {
         expect(OpenLayers).toBeDefined();
     });
 });
 
-describe("Required GWDP namespace generation test.", function() {
-    it("verified that GWDP namespaces get defined", function() {
+describe("GWDP namespace generation", function() {
+    it("defines all major namespaces of the GWDP codebase", function() {
         expect(GWDP).toBeDefined();
         
         expect(GWDP.ui).toBeDefined();

@@ -1,20 +1,12 @@
-describe("OGC and OpenLayers filter generation test.", function() {
-	//The GWDP.ui.getFilterFormValues function is defined in ui.js and 
-	//is dependent on the Extjs UI/DOM.
-	//The function itself returns the form.getForm().getValues() output.
-	//All tests must mock it for filtering functions works
-	
-    it("verified reqiured filter functions are defined", function() {
-    	GWDP.ui.getFilterFormValues = function() {
-			return {//MOCK test data
-			}; 
-		};
+describe("filter.js", function() {
+    it("defines some core API functions", function() {
         expect(GWDP.ui.getCurrentFilterCQLAsString).toBeDefined();
         expect(GWDP.ui.getCurrentFilterCQL).toBeDefined();
-        expect(GWDP.ui.getFilterFormValues).toBeDefined();
     });
-    
-    it("verified reqiured CQL building is correct (empty filter set)", function() {
+});
+	
+describe("GWDP.ui.getCurrentFilterCQLAsString", function() {    
+    it("builds the correct CQL string, when given an empty filter set", function() {
     	GWDP.ui.getFilterFormValues = function() {
 			return {//MOCK test data
 			}; 
@@ -23,7 +15,7 @@ describe("OGC and OpenLayers filter generation test.", function() {
     	expect(CQL).toBe("(QW_SN_FLAG = '" + GWDP.NO_POINTS_VALUE + "') AND (NAT_AQUIFER_CD = '" + GWDP.NO_POINTS_VALUE + "') AND (AGENCY_CD = '" + GWDP.NO_POINTS_VALUE + "')");
     });
     
-    it("verified reqiured CQL building is correct (default filter set), any 'All' filters turn off the filter completely.", function() {
+    it("builds the correct CQL string, when given a default filter set, any 'All' filters turn off the filter completely.", function() {
     	GWDP.ui.getFilterFormValues = function() {
     		return {//MOCK test data
     			QW_SN_FLAG :    "on",
@@ -40,7 +32,7 @@ describe("OGC and OpenLayers filter generation test.", function() {
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1'))");
     });
     
-    it("verified reqiured CQL building is correct (well types off)", function() {
+    it("builds the correct CQL string, when given well types are off", function() {
     	GWDP.ui.getFilterFormValues = function() {
     		return {//MOCK test data
     			QW_SN_FLAG :    "off",
@@ -87,7 +79,7 @@ describe("OGC and OpenLayers filter generation test.", function() {
     	expect(CQL).toBe("(QW_SN_FLAG = '" + GWDP.NO_POINTS_VALUE + "')");
     });
     
-    it("verified reqiured CQL building is correct (contributing agencies)", function() {
+    it("builds the correct CQL string, when given contributing agencies", function() {
     	GWDP.ui.getFilterFormValues = function() {
     		return {//MOCK test data
     			QW_SN_FLAG :    "on",
@@ -134,7 +126,7 @@ describe("OGC and OpenLayers filter generation test.", function() {
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (AGENCY_CD = '" + GWDP.NO_POINTS_VALUE + "')");
     });
     
-    it("verified reqiured CQL building is correct (principal aquifers)", function() {
+    it("builds the correct CQL string, when given principal aquifers", function() {
     	GWDP.ui.getFilterFormValues = function() {
     		return {//MOCK test data
     			QW_SN_FLAG :    "on",
@@ -182,8 +174,8 @@ describe("OGC and OpenLayers filter generation test.", function() {
     });
 });
 
-describe("GWDP logical operators test", function() {
-	it("verified GWDP.EQUALS, GWDP.OR, and GWDP.AND operators", function() {
+describe("GWDP logical operators", function() {
+	it("builds the correct OpenLayers filter objects for GWDP.EQUALS, GWDP.OR, and GWDP.AND operators", function() {
 		var op1 = GWDP.EQUALS("PROP1", "value1");
 		var op2 = GWDP.EQUALS("PROP2", "value2");
 		
