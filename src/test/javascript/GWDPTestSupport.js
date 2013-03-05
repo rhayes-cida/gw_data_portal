@@ -17,6 +17,17 @@ TestSupport = function() {
 	var oldSetInterval = setInterval;
 	var callbacks = [];
 	var overrideSetInterval = function() {
+		//This has to be overridden as a side affect of this above hack.
+		Ext.apply(Array.prototype, {
+		    remove : function(o){
+		    	if(!this.indexOf) return; //this fixes the problem and is the only change
+		        var index = this.indexOf(o);
+		        if(index != -1){
+		            this.splice(index, 1);
+		        }
+		        return this;
+		    }
+		});
 		setInterval = function (callback, delay) {
 		    callbacks.push(callback);
 		};
@@ -27,17 +38,6 @@ TestSupport = function() {
 		    callbacks[i].call();
 		}
 	};
-	//This has to be overridden as a side affect of the above hack.
-	Ext.apply(Array.prototype, {
-	    remove : function(o){
-	    	if(!this.indexOf) return; //this fixes the problem and is the only change
-	        var index = this.indexOf(o);
-	        if(index != -1){
-	            this.splice(index, 1);
-	        }
-	        return this;
-	    }
-	});
 	
 return {
 	stubExtAjaxRequest: function() {
