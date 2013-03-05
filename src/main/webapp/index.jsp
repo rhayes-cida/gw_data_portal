@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>National Groundwater Monitoring Network Data Portal (BETA)</title>
+		<title>National Groundwater Monitoring Network Data Portal</title>
 		<link rel="icon" 
       		type="image/png" 
       		href="favicon.ico">
@@ -91,7 +91,7 @@
 	</head>
 	
 	<body>
-		<jsp:include page="header.jsp"><jsp:param value="National Groundwater Monitoring Network Data Portal (BETA)" name="pageTitle"/></jsp:include>
+		<jsp:include page="header.jsp"><jsp:param value="National Groundwater Monitoring Network" name="pageTitle"/></jsp:include>
 		
 		<div id="map-area" class="x-hidden" style="width: 100%; height: 100%;">
 		</div>

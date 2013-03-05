@@ -1,6 +1,6 @@
 <div id="ngwmn-description" class='x-hidden ngwmn-description-container'>
 	<p class='ngwmn-title'>
-		Welcome to the National <span class='ngwmn-highlight'>Groundwater</span><br />Monitoring Network(NGWMN) 
+		Welcome to the National <span class='ngwmn-highlight'>Groundwater</span><br />Monitoring Network (NGWMN) 
 	</p>
 	<p>
 		The <span class='ngwmn-highlight'>National Groundwater
