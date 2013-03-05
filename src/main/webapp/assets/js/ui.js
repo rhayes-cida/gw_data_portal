@@ -231,7 +231,7 @@ GWDP.ui.initApp = function() {
 				bodyStyle: "background-color: transparent",
 				defaults: {
 					bodyStyle: "background-color: transparent; text-align: center; font-size: small;",
-					border: false,
+					border: false
 				},
 				items: [GWDP.ui.pointsCount,GWDP.ui.waterLevelCount,GWDP.ui.waterQualityCount
 				]

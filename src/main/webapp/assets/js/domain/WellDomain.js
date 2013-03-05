@@ -16,7 +16,7 @@ GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 //TODO refactor this out to be reusable OR find any extjs/OL equivilant function
 GWDP.domain.Well.updateWellCountBuffer = 1000; 
 GWDP.domain.Well.updateWellCountLastCall = new Date(); //timestamp of the last time this function was called
-GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
+GWDP.domain.Well.updateWellCount = function(url, map, cql_filter) {
 	GWDP.ui.pointsCount.update("Calculating Sites Mapped...");
 	GWDP.ui.waterLevelCount.update("");
 	GWDP.ui.waterQualityCount.update("");
@@ -48,13 +48,13 @@ GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
 		var elapsedTime = actualCallTime - GWDP.domain.Well.updateWellCountLastCall;
 		//console.log('Should we call at ' + actualCallTime + '? ' + elapsedTime + ' has elapsed;');
 		if(elapsedTime > GWDP.domain.Well.updateWellCountBuffer){
-			GWDP.domain.Well.getWellCount(WFSbbox, cql_filter, _updateTotalCount);
+			GWDP.domain.Well.getWellCount(url, WFSbbox, cql_filter, _updateTotalCount);
 			if(cql_filter) {
-				GWDP.domain.Well.getWellCount(WFSbbox, "(WL_SN_FLAG = '1') AND (" + cql_filter + ")", _updateWLCount);
-				GWDP.domain.Well.getWellCount(WFSbbox, "(QW_SN_FLAG = '1') AND (" + cql_filter + ")", _updateQWCount);
+				GWDP.domain.Well.getWellCount(url, WFSbbox, "(WL_SN_FLAG = '1') AND (" + cql_filter + ")", _updateWLCount);
+				GWDP.domain.Well.getWellCount(url, WFSbbox, "(QW_SN_FLAG = '1') AND (" + cql_filter + ")", _updateQWCount);
 			} else {
-				GWDP.domain.Well.getWellCount(WFSbbox, "(WL_SN_FLAG = '1')", _updateWLCount);
-				GWDP.domain.Well.getWellCount(WFSbbox, "(QW_SN_FLAG = '1')", _updateQWCount);
+				GWDP.domain.Well.getWellCount(url, WFSbbox, "(WL_SN_FLAG = '1')", _updateWLCount);
+				GWDP.domain.Well.getWellCount(url, WFSbbox, "(QW_SN_FLAG = '1')", _updateQWCount);
 			}
 		}
 	};
@@ -67,8 +67,8 @@ GWDP.domain.Well.updateWellCount = function(map, cql_filter) {
  * @param cql_filter string representation of the filters.
  * @param callback function that takes an array of json objects which represents a feature
  */
-GWDP.domain.Well.getWells = function(bbox, cql_filter, callback) {	
-	GWDP.domain.getDomainObjects(GWDP.domain.Well.WFSProtocol, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
+GWDP.domain.Well.getWells = function(url, bbox, cql_filter, callback) {	
+	GWDP.domain.getDomainObjects(url, GWDP.domain.Well.WFSProtocol, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
 };
 
 /**
@@ -76,6 +76,6 @@ GWDP.domain.Well.getWells = function(bbox, cql_filter, callback) {
  * @param cql_filter string representation of the filters.
  * @param callback function that takes numOfRecs as single parameter
  */
-GWDP.domain.Well.getWellCount = function(bbox, cql_filter, callback) {
-	GWDP.domain.getDomainObjectsCount(GWDP.domain.Well.typeName, bbox, cql_filter, callback);
+GWDP.domain.Well.getWellCount = function(url, bbox, cql_filter, callback) {
+	GWDP.domain.getDomainObjectsCount(url, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
 };

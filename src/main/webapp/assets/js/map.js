@@ -78,10 +78,10 @@ GWDP.ui.initMap = function() {
 		'moveend',
 		GWDP.ui.map.mainMap,
 		function() {
-			GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap, GWDP.ui.getCurrentFilterCQLAsString());
+			GWDP.domain.Well.updateWellCount(GWDP.ui.map.baseWFSServiceUrl, GWDP.ui.map.mainMap, GWDP.ui.getCurrentFilterCQLAsString());
 		}
 	);
-	GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap);
+	GWDP.domain.Well.updateWellCount(GWDP.ui.map.baseWFSServiceUrl, GWDP.ui.map.mainMap);
 	
 	//attach click handler for identify function
     var click = new GWDP.ui.ClickControl({
@@ -263,6 +263,6 @@ GWDP.ui.getUpdateMap = function() {
 		delete networkLayer.params['CQL_FILTER'];
 	}
 	networkLayer.redraw();
-	GWDP.domain.Well.updateWellCount(GWDP.ui.map.mainMap, filterCQL);
+	GWDP.domain.Well.updateWellCount(GWDP.ui.map.baseWFSServiceUrl, GWDP.ui.map.mainMap, filterCQL);
 };
 

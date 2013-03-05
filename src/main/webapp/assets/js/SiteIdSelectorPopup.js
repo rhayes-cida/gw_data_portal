@@ -18,7 +18,7 @@ var IDENTIFY = function (){
 			
 			var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
 			
-			GWDP.domain.Well.getWells(bbox, cql_filters, function(r){
+			GWDP.domain.Well.getWells(GWDP.ui.map.baseWFSServiceUrl, bbox, cql_filters, function(r){
 				Ext.getCmp('cmp-map-area').body.unmask();
 				//Ext.getCmp('ext-content-panel').body.unmask();
 				if (r.length == 0) {

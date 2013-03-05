@@ -123,9 +123,9 @@ GWDP.domain.loadJsonIntoStore = function(jsonText, store, defaultOption) {
  * @param cql_filter string representation of the filters.
  * @param callback function that takes an array of json objects which represents a feature
  */
-GWDP.domain.getDomainObjects = function(protocol, typeName, bbox, cql_filter, callback) {	
+GWDP.domain.getDomainObjects = function(url, protocol, typeName, bbox, cql_filter, callback) {	
 	Ext.Ajax.request({
-		url: GWDP.ui.map.baseWFSServiceUrl,
+		url: url,
 		method: 'GET',
 		params: GWDP.domain.constructParams(typeName, bbox, cql_filter, false),
 		success: function(response, options) {
@@ -139,9 +139,9 @@ GWDP.domain.getDomainObjects = function(protocol, typeName, bbox, cql_filter, ca
  * @param cql_filter string representation of the filters.
  * @param callback function that takes numOfRecs as single parameter
  */
-GWDP.domain.getDomainObjectsCount = function(typeName, bbox, cql_filter, callback) {
+GWDP.domain.getDomainObjectsCount = function(url, typeName, bbox, cql_filter, callback) {
 	Ext.Ajax.request({
-		url: GWDP.ui.map.baseWFSServiceUrl,
+		url: url,
 		method: 'GET',
 		params: GWDP.domain.constructParams(typeName, bbox, cql_filter, true),
 		success: function(response, options) {

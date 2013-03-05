@@ -1,3 +1,43 @@
+
+var ResultTypeHitsResponse = "<wfs:FeatureCollection " +
+		"numberOfFeatures=\"2\" " +
+		"timeStamp=\"2013-03-05T22:21:04.327Z\" " +
+		"xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" " +
+		"xmlns:ns=\"gov.usgs.cida.ngwmn\" " +
+		"xmlns:ogc=\"http://www.opengis.net/ogc\" " +
+		"xmlns:gml=\"http://www.opengis.net/gml\" " +
+		"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+		"xmlns:xlink=\"http://www.w3.org/1999/xlink\" " +
+		"xmlns:ows=\"http://www.opengis.net/ows\" " +
+		"xmlns:wfs=\"http://www.opengis.net/wfs\"/>";
+
+var GML2Response = "<wfs:FeatureCollection " +
+	"timeStamp=\"2013-03-05T22:21:04.327Z\" " +
+	"xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd\" " +
+	"xmlns:ns=\"gov.usgs.cida.ngwmn\" " +
+	"xmlns:ogc=\"http://www.opengis.net/ogc\" " +
+	"xmlns:gml=\"http://www.opengis.net/gml\" " +
+	"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+	"xmlns:xlink=\"http://www.w3.org/1999/xlink\" " +
+	"xmlns:ows=\"http://www.opengis.net/ows\" " +
+	"xmlns:wfs=\"http://www.opengis.net/wfs\">" +
+	"<gml:boundedBy>" +
+	"	<gml:null>unknown</gml:null>" +
+	"</gml:boundedBy>" +
+	"<gml:featureMember>" +
+	"	<ns:layerName fid=\"layerName.fid-2\">" +
+	"		<ns:att1>record1-att1</ns:att1>" +
+	"		<ns:att2>record1-att2</ns:att2>" +
+	"	</ns:layerName>" +
+	"</gml:featureMember>" +
+	"<gml:featureMember>" +
+	"	<ns:layerName fid=\"layerName.fid-2\">" +
+	"		<ns:att1>record2-att1</ns:att1>" +
+	"		<ns:att2>record2-att2</ns:att2>" +
+	"	</ns:layerName>" +
+	"</gml:featureMember>" +
+	"</wfs:FeatureCollection>";
+
 describe("BaseDomain.js", function() {
 	it("defines some core API functions and properties", function() {
         expect(GWDP.domain.constructParams).toBeDefined();
@@ -96,28 +136,132 @@ describe("GWDP.domain.getJsonStore", function() {
 });
 	
 describe("GWDP.domain.getDomainObjectsCount", function() {
-	
 	it("performs an Ext.Ajax.request with the correct parameters", function() {
 		TestSupport.stubExtAjaxRequest();
 		
+		var url = "http://testing/test/url";
 		//do the call
-		var callback = sinon.spy(); //use a spy to record what the function does
+		var callback = null; //callback will never happen anyway
 		GWDP.domain.getDomainObjectsCount(
-			new OpenLayers.Protocol.WFS.v1_1_0({
-				outputFormat: 'GML2',
-				geometryName: 'GEOM',
-				featurePrefix: "ns",
-				featureType: "ns:layerName"
-			}), 
+			url,
 			"ns:layerName", 
 			"1,2,3,4", 
 			"(SOME_PARAM=1)", 
 			callback
 		);
 		
+		//verify ajax params
 		expect(Ext.Ajax.request.calledWithMatch({ method: "GET" })).toBe(true);
-		expect(Ext.Ajax.request.calledWithMatch({ url: GWDP.ui.map.baseWFSServiceUrl })).toBe(true);
+		expect(Ext.Ajax.request.calledWithMatch({ url: url })).toBe(true);
+		
+		var params = Ext.Ajax.request.getCall(0).args[0].params;
+		expect(params).toBeDefined();
+		expect(params.CQL_FILTER).toBe("(SOME_PARAM=1) AND (BBOX(GEOM,1,2,3,4))");
+		expect(params.resultType).toBeDefined();
+		expect(params.resultType).toBe("hits");
+		expect(params.VERSION).toBe("1.1.0");
+		expect(params.typeName).toBe("ns:layerName");
 		
 		TestSupport.restoreExtAjaxRequest();
+	});
+	
+	
+	it("returns the correct number of features, and passes that to the callback, when given a valid GML2 response for resultType=hits requests", function() {
+		TestSupport.initServer();
+		
+		var url = "http://testing.com/test/url/hits";
+		
+		//set the response for this URL
+		TestSupport.setServerXmlResponse(url, ResultTypeHitsResponse);
+
+		//do the call
+		var callback = sinon.spy();
+		GWDP.domain.getDomainObjectsCount(
+			url,
+			"ns:layerName", 
+			"1,2,3,4", 
+			"(SOME_PARAM=1)", 
+			callback
+		);
+		
+		TestSupport.doServerRespond();
+		
+		expect(callback.called).toBe(true);
+		expect(callback.getCall(0).args[0]).toBe('2');
+		
+		TestSupport.restoreServer();
+	});
+});
+
+describe("GWDP.domain.getDomainObjects", function() {
+	it("performs an Ext.Ajax.request with the correct parameters", function() {
+		TestSupport.stubExtAjaxRequest();
+
+		var url = "http://testing/test/url/gml2";
+		//do the call
+		var callback = null; //callback will never happen anyway
+		GWDP.domain.getDomainObjects(
+			url,
+			new OpenLayers.Protocol.WFS.v1_1_0({
+				outputFormat: 'GML2',
+				geometryName: 'GEOM',
+				featurePrefix: "ns",
+				featureType: "ns:layerName"
+			}),
+			"ns:layerName", 
+			"1,2,3,4", 
+			"(SOME_PARAM=1)", 
+			callback
+		);
+		
+		//verify ajax params
+		expect(Ext.Ajax.request.calledWithMatch({ method: "GET" })).toBe(true);
+		expect(Ext.Ajax.request.calledWithMatch({ url: url })).toBe(true);
+		
+		var params = Ext.Ajax.request.getCall(0).args[0].params;
+		expect(params).toBeDefined();
+		expect(params.CQL_FILTER).toBe("(SOME_PARAM=1) AND (BBOX(GEOM,1,2,3,4))");
+		expect(params.resultType).toBeUndefined();
+		expect(params.VERSION).toBe("1.0.0");
+		expect(params.typeName).toBe("ns:layerName");
+		
+		TestSupport.restoreExtAjaxRequest();
+	});
+	
+	it("correctly parses a GML2 response into an array of records, and passes that to the callback, when given a valid GML2 response", function() {
+		TestSupport.initServer();
+		
+		var url = "http://testing/test/url/gml2";
+		
+		//set the response for this URL
+		TestSupport.setServerXmlResponse(url, GML2Response);
+		
+		//do the call
+		var callback = sinon.spy();
+		GWDP.domain.getDomainObjects(
+			url,
+			new OpenLayers.Protocol.WFS.v1_1_0({
+				outputFormat: 'GML2',
+				geometryName: 'GEOM',
+				featurePrefix: "ns",
+				featureType: "ns:layerName"
+			}),
+			"ns:layerName", 
+			"1,2,3,4", 
+			"(SOME_PARAM=1)", 
+			callback
+		);
+		
+		TestSupport.doServerRespond();
+		
+		expect(callback.called).toBe(true);
+		var results = callback.getCall(0).args[0];
+		expect(results.length).toBe(2);
+		expect(results[0].data['att1']).toBe('record1-att1');
+		expect(results[0].data['att2']).toBe('record1-att2');
+		expect(results[1].data['att1']).toBe('record2-att1');
+		expect(results[1].data['att2']).toBe('record2-att2');
+		
+		TestSupport.restoreServer();
 	});
 });

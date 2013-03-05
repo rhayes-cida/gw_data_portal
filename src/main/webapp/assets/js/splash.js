@@ -3,6 +3,7 @@ Ext.onReady(function(){
 	
 	//get WL wells and update HTML
 	GWDP.domain.Well.getWellCount(
+		GWDP.ui.map.baseWFSServiceUrl,
 		fullWFSExtent, 
 		'WL_SN_FLAG=1', //only wells with WL flag
 		function(r){
@@ -11,6 +12,7 @@ Ext.onReady(function(){
 	
 	//get QW wells and update HTML
 	GWDP.domain.Well.getWellCount(
+		GWDP.ui.map.baseWFSServiceUrl,
 		fullWFSExtent, 
 		"QW_SN_FLAG=1", //only wells with QW flag
 		function(r){
