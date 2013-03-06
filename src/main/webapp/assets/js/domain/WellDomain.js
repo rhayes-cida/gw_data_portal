@@ -16,45 +16,22 @@ GWDP.domain.Well.WFSProtocol = new OpenLayers.Protocol.WFS.v1_1_0({
 //TODO refactor this out to be reusable OR find any extjs/OL equivilant function
 GWDP.domain.Well.updateWellCountBuffer = 1000; 
 GWDP.domain.Well.updateWellCountLastCall = new Date(); //timestamp of the last time this function was called
-GWDP.domain.Well.updateWellCount = function(url, map, cql_filter) {
-	GWDP.ui.pointsCount.update("Calculating Sites Mapped...");
-	GWDP.ui.waterLevelCount.update("");
-	GWDP.ui.waterQualityCount.update("");
-	
-	
-	//convert bbox from x,y,x,y to y,x,y,x
-	var bounds = map.getExtent();
-	var bbox = bounds.transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
-	var bboxArray = bbox.toArray();
-	var WFSbbox = GWDP.domain.convertXyToYx(bboxArray); 
+GWDP.domain.Well.updateWellCount = function(url, bbox, cql_filter, updateHandlers) {
 	
 	GWDP.domain.Well.updateWellCountLastCall = new Date();
 	
-	var _updateTotalCount = function(numOfRecs) {
-		GWDP.ui.pointsCount.update(numOfRecs + " Sites Mapped");
-	};
-	
-	var _updateWLCount = function(numOfRecs) {
-		GWDP.ui.waterLevelCount.update(numOfRecs + " water-level network wells");
-	};
-	
-	var _updateQWCount = function(numOfRecs) {
-		GWDP.ui.waterQualityCount.update(numOfRecs + " water-quality network wells");
-	};
-	
-	//console.log(GWDP.domain.Well.updateWellCountLastCall);
 	var deferredCall = function() {
 		var actualCallTime = new Date();
 		var elapsedTime = actualCallTime - GWDP.domain.Well.updateWellCountLastCall;
 		//console.log('Should we call at ' + actualCallTime + '? ' + elapsedTime + ' has elapsed;');
 		if(elapsedTime > GWDP.domain.Well.updateWellCountBuffer){
-			GWDP.domain.Well.getWellCount(url, WFSbbox, cql_filter, _updateTotalCount);
+			GWDP.domain.Well.getWellCount(url, bbox, cql_filter, updateHandlers.totalCount);
 			if(cql_filter) {
-				GWDP.domain.Well.getWellCount(url, WFSbbox, "(WL_SN_FLAG = '1') AND (" + cql_filter + ")", _updateWLCount);
-				GWDP.domain.Well.getWellCount(url, WFSbbox, "(QW_SN_FLAG = '1') AND (" + cql_filter + ")", _updateQWCount);
+				GWDP.domain.Well.getWellCount(url, bbox, "(WL_SN_FLAG = '1') AND (" + cql_filter + ")", updateHandlers.waterLevelCount);
+				GWDP.domain.Well.getWellCount(url, bbox, "(QW_SN_FLAG = '1') AND (" + cql_filter + ")", updateHandlers.waterQualityCount);
 			} else {
-				GWDP.domain.Well.getWellCount(url, WFSbbox, "(WL_SN_FLAG = '1')", _updateWLCount);
-				GWDP.domain.Well.getWellCount(url, WFSbbox, "(QW_SN_FLAG = '1')", _updateQWCount);
+				GWDP.domain.Well.getWellCount(url, bbox, "(WL_SN_FLAG = '1')", updateHandlers.waterLevelCount);
+				GWDP.domain.Well.getWellCount(url, bbox, "(QW_SN_FLAG = '1')", updateHandlers.waterQualityCount);
 			}
 		}
 	};
@@ -71,11 +48,29 @@ GWDP.domain.Well.getWells = function(url, bbox, cql_filter, callback) {
 	GWDP.domain.getDomainObjects(url, GWDP.domain.Well.WFSProtocol, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
 };
 
-/**
+/**s
  * @param bbox bbox must be in format y,x,y,x
  * @param cql_filter string representation of the filters.
  * @param callback function that takes numOfRecs as single parameter
  */
 GWDP.domain.Well.getWellCount = function(url, bbox, cql_filter, callback) {
 	GWDP.domain.getDomainObjectsCount(url, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
+};
+
+/**
+ * @param bbox bbox must be in format y,x,y,x
+ * @param cql_filter string representation of the filters.
+ * @param callback function that takes numOfRecs as single parameter
+ */
+GWDP.domain.Well.getQWWellCount = function(url, bbox, cql_filter, callback) {
+	GWDP.domain.Well.getWellCount(url, bbox, "(QW_SN_FLAG = '1') AND (" + cql_filter + ")", callback);
+};
+
+/**
+ * @param bbox bbox must be in format y,x,y,x
+ * @param cql_filter string representation of the filters.
+ * @param callback function that takes numOfRecs as single parameter
+ */
+GWDP.domain.Well.getWLWellCount = function(url, bbox, cql_filter, callback) {
+	GWDP.domain.Well.getWellCount(url, bbox, "(WL_SN_FLAG = '1') AND (" + cql_filter + ")", callback);
 };

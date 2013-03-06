@@ -78,10 +78,24 @@ GWDP.ui.initMap = function() {
 		'moveend',
 		GWDP.ui.map.mainMap,
 		function() {
-			GWDP.domain.Well.updateWellCount(GWDP.ui.map.baseWFSServiceUrl, GWDP.ui.map.mainMap, GWDP.ui.getCurrentFilterCQLAsString());
+			GWDP.ui.setLoadingMasksForUpdateMap();
+			GWDP.domain.Well.updateWellCount(
+					GWDP.ui.map.baseWFSServiceUrl, 
+					GWDP.ui.getCurrentExtentAsString(), 
+					GWDP.ui.getCurrentFilterCQLAsString(),
+					GWDP.ui.getUpdateMapHandlers()
+			);
 		}
 	);
-	GWDP.domain.Well.updateWellCount(GWDP.ui.map.baseWFSServiceUrl, GWDP.ui.map.mainMap);
+	
+	GWDP.ui.setLoadingMasksForUpdateMap();
+	
+	GWDP.domain.Well.updateWellCount(
+			GWDP.ui.map.baseWFSServiceUrl, 
+			GWDP.ui.getCurrentExtentAsString(), 
+			null,
+			GWDP.ui.getUpdateMapHandlers()
+	);
 	
 	//attach click handler for identify function
     var click = new GWDP.ui.ClickControl({
@@ -253,6 +267,33 @@ GWDP.ui.toggleLegend = function(name, layers, on) {
 	return;
 };
 
+GWDP.ui.setLoadingMasksForUpdateMap = function () {
+	GWDP.ui.pointsCount.update("Calculating Sites Mapped...");
+	GWDP.ui.waterLevelCount.update("");
+	GWDP.ui.waterQualityCount.update("");
+};
+
+GWDP.ui.getUpdateMapHandlers = function() {
+	return {
+		totalCount : function(numOfRecs) {
+			GWDP.ui.pointsCount.update(numOfRecs + " Sites Mapped");
+		},
+		waterLevelCount : function(numOfRecs) {
+			GWDP.ui.waterLevelCount.update(numOfRecs + " water-level network wells");
+		},
+		waterQualityCount : function(numOfRecs) {
+			GWDP.ui.waterQualityCount.update(numOfRecs + " water-quality network wells");
+		}
+	};
+};
+
+GWDP.ui.getCurrentExtentAsString = function() {
+	var bounds = GWDP.ui.map.mainMap.getExtent();
+	var bbox = bounds.transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+	var bboxArray = bbox.toArray();
+	var WFSbbox = GWDP.domain.convertXyToYx(bboxArray); 
+	return WFSbbox;
+};
 
 GWDP.ui.getUpdateMap = function() {
 	var networkLayer = GWDP.ui.map.mainMap.getLayersByName('VW_GWDP_GEOSERVER')[0];
@@ -263,6 +304,14 @@ GWDP.ui.getUpdateMap = function() {
 		delete networkLayer.params['CQL_FILTER'];
 	}
 	networkLayer.redraw();
-	GWDP.domain.Well.updateWellCount(GWDP.ui.map.baseWFSServiceUrl, GWDP.ui.map.mainMap, filterCQL);
+	
+	GWDP.ui.setLoadingMasksForUpdateMap();
+	
+	GWDP.domain.Well.updateWellCount(
+			GWDP.ui.map.baseWFSServiceUrl, 
+			GWDP.ui.getCurrentExtentAsString(), 
+			filterCQL,
+			GWDP.ui.getUpdateMapHandlers()
+	);
 };
 

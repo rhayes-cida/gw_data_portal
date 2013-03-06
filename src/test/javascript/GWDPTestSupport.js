@@ -57,7 +57,7 @@ return {
 		_server.restore();
 	},
 	
-	setServerXmlResponse: function(url, xml) {
+	setServerXmlResponse: function(xml) {
 		_server.respondWith([
 	            200,
 	            { "Content-Type": "application/xml" },
@@ -65,16 +65,17 @@ return {
 	        ]);
 	},
 	
-	setServerJsonResponse: function(url, json) {
-		_server.respondWith(url, [
+	setServerJsonResponse: function(json) {
+		_server.respondWith([
  	            200,
  	            { "Content-Type": "application/json" },
- 	           JSON.stringify(json)
+ 	           json
  	        ]);
 	},
 	
 	doServerRespond: function() {
 		_server.respond();
 		restoreSetInterval();
+		TestSupport.restoreServer();
 	}
 };}();

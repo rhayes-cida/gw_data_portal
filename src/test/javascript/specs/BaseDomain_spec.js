@@ -172,7 +172,7 @@ describe("GWDP.domain.getDomainObjectsCount", function() {
 		var url = "http://testing.com/test/url/hits";
 		
 		//set the response for this URL
-		TestSupport.setServerXmlResponse(url, ResultTypeHitsResponse);
+		TestSupport.setServerXmlResponse(ResultTypeHitsResponse);
 
 		//do the call
 		var callback = sinon.spy();
@@ -234,7 +234,7 @@ describe("GWDP.domain.getDomainObjects", function() {
 		var url = "http://testing/test/url/gml2";
 		
 		//set the response for this URL
-		TestSupport.setServerXmlResponse(url, GML2Response);
+		TestSupport.setServerXmlResponse(GML2Response);
 		
 		//do the call
 		var callback = sinon.spy();
