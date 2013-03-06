@@ -287,6 +287,7 @@
                         <include>**/target/**/assets/js/domain/AgencyDomain.js</include>	
                         <include>**/target/**/assets/js/domain/AquiferDomain.js</include>
                         <include>**/target/**/assets/js/domain/WellDomain.js</include>				
+                        <include>**/target/**/assets/js/DocNavHelper.js</include>					
                         <include>**/target/**/assets/js/filter.js</include>		
                     </sourceIncludes>
                 </configuration>
