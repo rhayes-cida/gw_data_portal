@@ -160,9 +160,7 @@ GWDP.ui.constructAgencyFilters = function(filterVals) {
 	}
 };
 
-GWDP.ui.getCurrentFilterCQL = function() {
-	var filterVals = GWDP.ui.getFilterFormValues();
-	
+GWDP.ui.getCurrentFilterCQL = function(filterVals) {
 	var topLevelAndArray = [];
 	
 	var networkFilter = GWDP.ui.constructNetworkFilters(filterVals);
@@ -181,8 +179,8 @@ GWDP.ui.getCurrentFilterCQL = function() {
 	}
 };
 
-GWDP.ui.getCurrentFilterCQLAsString = function() {
-	var filter = GWDP.ui.getCurrentFilterCQL();
+GWDP.ui.getCurrentFilterCQLAsString = function(filterVals) {
+	var filter = GWDP.ui.getCurrentFilterCQL(filterVals);
 	if(filter) {
 //		console.log(filter.toString());
 		return filter.toString();

@@ -82,7 +82,7 @@ GWDP.ui.initMap = function() {
 			GWDP.domain.Well.updateWellCount(
 					GWDP.ui.map.baseWFSServiceUrl, 
 					GWDP.ui.getCurrentExtentAsString(), 
-					GWDP.ui.getCurrentFilterCQLAsString(),
+					GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues()),
 					GWDP.ui.getUpdateMapHandlers()
 			);
 		}
@@ -167,7 +167,7 @@ GWDP.ui.addNetworkLayers = function(){
 					visibility: thisLayer.initialOn,
 					opacity: thisLayer.opacity
 				});
-		wmsLayer.params['CQL_FILTER'] = GWDP.ui.getCurrentFilterCQLAsString();
+		wmsLayer.params['CQL_FILTER'] = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues());
 		GWDP.ui.map.mainMap.addLayer(wmsLayer);
 	}
 };
@@ -297,7 +297,7 @@ GWDP.ui.getCurrentExtentAsString = function() {
 
 GWDP.ui.getUpdateMap = function() {
 	var networkLayer = GWDP.ui.map.mainMap.getLayersByName('VW_GWDP_GEOSERVER')[0];
-	var filterCQL = GWDP.ui.getCurrentFilterCQLAsString();
+	var filterCQL = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues());
 	if(filterCQL) {
 		networkLayer.params['CQL_FILTER'] = filterCQL;
 	} else {

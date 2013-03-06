@@ -14,7 +14,7 @@ var IDENTIFY = function (){
 			var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 			
-			var cql_filters = GWDP.ui.getCurrentFilterCQLAsString(); 
+			var cql_filters = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues()); 
 			
 			var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
 			
