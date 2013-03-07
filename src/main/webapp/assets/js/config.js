@@ -23,7 +23,11 @@ GWDP.ui.getLegendHTML = function(url, layers/* string containing comma separated
 /* Define an object containing all base layers used in the application.
  * The use_white property is used to style controls when that base layer is visible */
 GWDP.ui.map.baseLayers = [
-  
+	{
+		name: "World Light Gray Base",
+	    url: "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
+	    type: OpenLayers.Layer.XYZ
+	},
   {
     	name: "World Topo Map",
         url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
@@ -43,6 +47,11 @@ GWDP.ui.map.baseLayers = [
     {
     	name: "World Relief Map",
         url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
+        type: OpenLayers.Layer.XYZ
+    },
+    {
+    	name: "World Hydro Reference",
+        url: "http://184.72.212.114:6080/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
         type: OpenLayers.Layer.XYZ
     }
   ,
