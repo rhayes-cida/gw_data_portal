@@ -52,17 +52,18 @@ GWDP.ui.map.baseLayers = [
     {
     	name: "World Hydro Reference",
         url: "http://184.72.212.114:6080/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
-        type: OpenLayers.Layer.XYZ
+        type: OpenLayers.Layer.XYZ,
+	 	initialOn: false,
+	 	opacity: 0.5,
+	 	transparent:true,	 
+	 	isBaseLayer: false
     }
   ,
-  // aquifers go here with opacity < 1, transparent: true; OpenLayers infers that the layer is an overlay.
   {
 	 	name: 'Principal aquifers',
 	 	url: GWDP.ui.map.baseWMSServiceUrl,
 	 	type: OpenLayers.Layer.WMS,
 	 	layers: 'ngwmn:aquifrp025',
-	 	
-	 	// data for CIDA hook, from phragmites
 	 	helpContext: 'national_aquifer',
 	 	legend: [  
 	 	         {
@@ -71,9 +72,9 @@ GWDP.ui.map.baseLayers = [
 	 	        	 helpContext: 'national_aquifer'
 	 	         }
 	 	],
-	 	
+	 	isBaseLayer: false,
 	 	initialOn: true,
-	 	opacity: 0.7,
+	 	opacity: 0.6,
 	 	transparent:true	 	
      }
   ];

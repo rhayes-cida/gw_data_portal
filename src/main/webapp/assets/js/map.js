@@ -118,13 +118,14 @@ GWDP.ui.addBaseLayers = function(){
 				thisLayer.name,
 				thisLayer.url,
 	            {
- 					isBaseLayer: true,
+ 					isBaseLayer: (thisLayer.isBaseLayer == null) ? true : thisLayer.isBaseLayer,
 			        sphericalMercator : true,
 			        projection: GWDP.ui.map.mercatorProjection.getCode(),
 			        units: "m",
 			        transparent: (thisLayer.transparent == null) ? false : thisLayer.transparent,
 					layers: thisLayer.layers,
-					wrapDateLine: true
+					wrapDateLine: true,
+					visibility: (thisLayer.initialOn == null) ? true : thisLayer.initialOn
 				},
 				{
 					singleTile: true,
