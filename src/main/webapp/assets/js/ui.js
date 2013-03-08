@@ -198,6 +198,102 @@ GWDP.ui.initApp = function() {
 			            }
 			        }]
 				},{
+					title: 'State and County',
+					xtype: "panel",
+					layout: 'form',
+					padding: 5,
+					autoScroll: true,
+		            labelAlign: 'top',
+		            labelWidth: 150,
+					items: [{
+						xtype: 'radio',
+						boxLabel: "Multiple states",
+						name: 'stateOrCountyRadio',
+						checked: true
+					},{
+						xtype: 'radio',
+						boxLabel: "One state, multiple counties",
+						name: 'stateOrCountyRadio',
+						checked: false,
+						listeners: {
+							check: function(r, checked) {
+								GWDP.ui.toggleCountiesFilter(checked);
+							}
+						}
+					},{
+						xtype: "panel",
+						border: false, 
+						html: '<br/>'
+					},{
+			            xtype: 'multiselect',
+			            fieldLabel: 'States',
+			            id: 'states',
+			            name: 'states',
+			            width: 240,
+			            height: 'auto',
+			            allowBlank:true,
+			            displayField: 'STATE_NM',
+			            valueField: 'STATE_CD',
+			            disabled: false,
+			            value: "All",
+			            store: GWDP.domain.State.getStateMetadata({}, function() { Ext.getCmp('states').setValue('All'); }, 'All'),
+			            ddReorder: true,
+			            listeners: {
+			            	change: function() { GWDP.ui.getUpdateMap(); }
+			            }
+			        },{
+			            xtpe: 'container',
+			            id: 'countiesContainer',
+			            layout: 'form',
+			            border: false,
+			            hidden: true,
+			            labelAlign: 'top',
+			            labelWidth: 150,
+			            items: [{
+			            	fieldLabel: "State",
+				            xtype: 'combo',
+				            id: 'statesCombo',
+				            name: 'statesCombo',
+				            hiddenName: "states",
+				            triggerAction: 'all',
+				            disabled: true, //this must be disabled if the other state filter is enabled
+				            width: 240,
+				            mode: 'local',
+				            disableKeyFilter: true, 
+				            displayField: 'STATE_NM',
+				            valueField: 'STATE_CD',
+				            value: "All",
+				            typeAhead: false,
+				            forceSelection: true,
+				            store: GWDP.domain.State.getStateMetadata({}, function() { Ext.getCmp('statesCombo').setValue('All'); }, 'All'),
+				            listeners: {
+				            	select: function(c) {
+				            		GWDP.ui.getUpdateMap();
+				            		GWDP.ui.refreshCountiesFilter(c.getValue()); 
+				            	},
+				            	change: function(c) {
+				            		GWDP.ui.getUpdateMap();
+				            	}
+				            }
+				        },{
+				        	fieldLabel: "Counties",
+			            	xtype: 'multiselect',
+				            id: 'counties',
+				            name: 'counties',
+				            width: 240,
+				            height: 'auto',
+				            allowBlank:true,
+				            displayField: 'COUNTY_NM',
+				            valueField: 'COUNTY_CD',
+				            value: "All",
+				            store: GWDP.domain.County.getCountyMetadata({}, function() { Ext.getCmp('counties').setValue('All'); }, 'All'),
+				            ddReorder: true,
+				            listeners: {
+				            	change: function() { GWDP.ui.getUpdateMap(); }
+				            }
+			            }]
+			        }]
+				},{
 					title: 'Contributing Agency',
 					xtype: "panel",
 					layout: 'form',
@@ -305,6 +401,32 @@ GWDP.ui.initApp = function() {
 
 GWDP.ui.getFilterFormValues = function() {
 	return Ext.getCmp('gwdpFilters').getForm().getValues();
+};
+
+GWDP.ui.toggleCountiesFilter = function(searchCounties) {
+	if(searchCounties) {
+		Ext.getCmp('states').disable();
+		Ext.getCmp('states').hide();
+		Ext.getCmp('statesCombo').enable();
+		Ext.getCmp('statesCombo').setValue('All');
+		GWDP.ui.refreshCountiesFilter(Ext.getCmp('statesCombo').getValue());
+		Ext.getCmp('countiesContainer').show();
+	} else {
+		Ext.getCmp('statesCombo').disable();
+		Ext.getCmp('counties').setValue('All');
+		Ext.getCmp('countiesContainer').hide();
+		Ext.getCmp('states').enable();
+		Ext.getCmp('states').show();
+		Ext.getCmp('states').setValue('All');
+	}
+	GWDP.ui.getUpdateMap();
+};
+
+GWDP.ui.refreshCountiesFilter = function(stateCd) {
+	if(stateCd=='All') stateCd = '0';
+	GWDP.domain.County.updateCountyMetadata(Ext.getCmp('counties').store, {stateCd: stateCd}, function(s){
+		Ext.getCmp('counties').setValue('All');
+	 }, 'All');
 };
 
 Ext.onReady(GWDP.ui.initApp);

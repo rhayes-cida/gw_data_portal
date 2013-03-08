@@ -25,6 +25,7 @@ describe("GWDP namespace generation", function() {
         expect(GWDP.domain.Well).toBeDefined();
         expect(GWDP.domain.Agency).toBeDefined();
         expect(GWDP.domain.State).toBeDefined();
+        expect(GWDP.domain.County).toBeDefined();
         expect(GWDP.domain.Aquifer).toBeDefined();
     });
 });

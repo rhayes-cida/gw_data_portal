@@ -284,6 +284,7 @@
                         <include>**/target/**/assets/js/config.js</include>
                         <include>**/target/**/assets/js/domain/BaseDomain.js</include>	
                         <include>**/target/**/assets/js/domain/StateDomain.js</include>	
+                        <include>**/target/**/assets/js/domain/CountyDomain.js</include>	
                         <include>**/target/**/assets/js/domain/AgencyDomain.js</include>	
                         <include>**/target/**/assets/js/domain/AquiferDomain.js</include>
                         <include>**/target/**/assets/js/domain/WellDomain.js</include>				

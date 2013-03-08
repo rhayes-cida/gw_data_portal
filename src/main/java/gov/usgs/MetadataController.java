@@ -1,5 +1,6 @@
 package gov.usgs;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -53,9 +55,34 @@ public class MetadataController {
 		List<Map<String,Object>> result = template.queryForList(
 				"select state_cd, state_nm, count(*) count\n" + 
 				"from gw_data_portal.well_registry\n" + 
-				"group by state_cd, state_nm");
+				"group by state_cd, state_nm order by state_nm");
 		
 		logger.debug("Found {} states", result.size());
+
+		return result;
+	}
+	
+	@RequestMapping("/counties")
+	@ResponseBody
+	public List<Map<String,Object>> states(@RequestParam("stateCd") final String stateCd) {
+		List<Map<String,Object>> result;
+		
+		if(stateCd== null || "".equals(stateCd)) {
+			result = template.queryForList(
+					"select state_nm, county_cd, county_nm, count(*) count\n" + 
+					"from gw_data_portal.well_registry\n" +
+//					"where county_cd != '000' and county_nm != 'UNSPECIFIED'\n"+
+					"group by state_nm, county_cd, county_nm");
+		} else {
+			result = template.queryForList(
+				"select state_nm, county_cd, county_nm, count(*) count\n" + 
+				"from gw_data_portal.well_registry\n" +
+				"where state_cd = ?\n"+
+//				"and county_cd != '000' and county_nm != 'UNSPECIFIED'\n"+
+				"group by state_nm, county_cd, county_nm", stateCd);
+		}
+		
+		logger.debug("Found {} counties for state cd "+stateCd, result.size());
 
 		return result;
 	}

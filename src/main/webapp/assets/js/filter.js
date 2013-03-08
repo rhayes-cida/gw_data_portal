@@ -160,6 +160,63 @@ GWDP.ui.constructAgencyFilters = function(filterVals) {
 	}
 };
 
+GWDP.ui.constructStateFilters = function(filterVals) { 
+	var stateFilter = filterVals['states'];
+	if(!stateFilter) { //nothing selected, no points to show
+		return GWDP.EQUALS("STATE_CD", GWDP.NO_POINTS_VALUE);
+	}
+	
+	var states = stateFilter.split(',');
+	
+	if(states.length > 0 && states[0].toLowerCase() == 'all') { //all being selected means we do NOT filter on this
+		return null;
+	}
+	
+	if(states.length==1) {
+		return GWDP.EQUALS("STATE_CD", states[0]);
+	}
+	
+	var olStateFilters = [];
+	for(var i = 0; i < states.length; i++) {
+		olStateFilters.push(GWDP.EQUALS("STATE_CD", states[i]));
+	}
+	
+	if(olStateFilters.length > 0) {
+		return GWDP.OR(olStateFilters);
+	} else {
+		return null;
+	}
+};
+
+GWDP.ui.constructCountyFilters = function(filterVals) { 
+	var countyFilter = filterVals['counties'];
+	if(!countyFilter) { //nothing selected, no points to show
+		return GWDP.EQUALS("COUNTY_CD", GWDP.NO_POINTS_VALUE);
+	}
+	
+	var countys = countyFilter.split(',');
+	
+	
+	if(countys.length > 0 && countys[0].toLowerCase() == 'all') { //all being selected means we do NOT filter on this
+		return null;
+	}
+	
+	if(countys.length==1) {
+		return GWDP.EQUALS("COUNTY_CD", countys[0]);
+	}
+	
+	var olCountyFilters = [];
+	for(var i = 0; i < countys.length; i++) {
+		olCountyFilters.push(GWDP.EQUALS("COUNTY_CD", countys[i]));
+	}
+	
+	if(olCountyFilters.length > 0) {
+		return GWDP.OR(olCountyFilters);
+	} else {
+		return null;
+	}
+};
+
 GWDP.ui.getCurrentFilterCQL = function(filterVals) {
 	var topLevelAndArray = [];
 	
@@ -171,6 +228,12 @@ GWDP.ui.getCurrentFilterCQL = function(filterVals) {
 	
 	var agencyFilter = GWDP.ui.constructAgencyFilters(filterVals);
 	if(agencyFilter) topLevelAndArray.push(agencyFilter);
+	
+	var stateFilter = GWDP.ui.constructStateFilters(filterVals);
+	if(stateFilter) topLevelAndArray.push(stateFilter);
+	
+	var countyFilter = GWDP.ui.constructCountyFilters(filterVals);
+	if(countyFilter) topLevelAndArray.push(countyFilter);
 	
 	if(topLevelAndArray.length > 0) {
 		return GWDP.AND(topLevelAndArray);

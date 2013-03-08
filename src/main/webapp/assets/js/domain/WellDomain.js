@@ -48,7 +48,7 @@ GWDP.domain.Well.getWells = function(url, bbox, cql_filter, callback) {
 	GWDP.domain.getDomainObjects(url, GWDP.domain.Well.WFSProtocol, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
 };
 
-/**s
+/**
  * @param bbox bbox must be in format y,x,y,x
  * @param cql_filter string representation of the filters.
  * @param callback function that takes numOfRecs as single parameter

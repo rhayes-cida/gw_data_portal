@@ -28,7 +28,7 @@ GWDP.ui.map.baseLayers = [
 	    url: "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
 	    type: OpenLayers.Layer.XYZ
 	},
-  {
+	{
     	name: "World Topo Map",
         url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
         type: OpenLayers.Layer.XYZ

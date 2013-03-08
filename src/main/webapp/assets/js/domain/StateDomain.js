@@ -33,3 +33,20 @@ GWDP.domain.State.getStateMetadata = function(params, callback, defaultOption) {
 	});
 	return _store;
 };
+
+GWDP.domain.State.updateStateMetadata = function(store, params, callback, defaultOption) {
+	Ext.Ajax.request({
+		url: 'metadata/states',
+		method: 'GET',
+		params: params, 
+		success: function(response, options) {
+			store = GWDP.domain.loadJsonIntoStore(
+					response.responseText, 
+					store,
+					defaultOption
+			);
+			if(callback) callback(store);
+		}
+	});
+	return store;
+};
