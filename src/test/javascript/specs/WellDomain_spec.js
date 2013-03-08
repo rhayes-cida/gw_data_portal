@@ -299,6 +299,16 @@ describe("GWDP.domain.Well.getWells", function() {
 		
 		expect(callback.called).toBe(true);
 		var results = callback.getCall(0).args[0];
+
+		expect(results[0].data['STATE_CD']).toBe('27');
+		expect(results[0].data['STATE_NM']).toBe('MINNESOTA');
+		expect(results[0].data['DEC_LAT_VA']).toBe('43.6770684');
+		expect(results[0].data['DEC_LONG_VA']).toBe('-93.0300716');
+		
+		expect(results[1].data['STATE_CD']).toBe('27');
+		expect(results[1].data['STATE_NM']).toBe('MINNESOTA');
+		expect(results[1].data['DEC_LAT_VA']).toBe('43.7035213');
+		expect(results[1].data['DEC_LONG_VA']).toBe('-92.9667379');
 		
 		TestSupport.restoreServer();
 	});
