@@ -217,12 +217,33 @@ GWDP.ui.constructCountyFilters = function(filterVals) {
 	}
 };
 
+GWDP.ui.constructAvailableDataFilter = function(filterVals) {
+	var wlFlag = filterVals['WL_DATA_FLAG'] == 'on';
+	var qwFlag = filterVals['QW_DATA_FLAG'] == 'on';
+	var logFlag = filterVals['LOG_DATA_FLAG'] == 'on';
+	
+	if(!wlFlag && !qwFlag && !logFlag) {
+		return null;
+	}
+	
+	var availableDataFilters = [];
+	
+	if(wlFlag) availableDataFilters.push(GWDP.EQUALS("WL_DATA_FLAG", "1"));
+	if(qwFlag) availableDataFilters.push(GWDP.EQUALS("QW_DATA_FLAG", "1"));
+	if(logFlag) availableDataFilters.push(GWDP.EQUALS("LOG_DATA_FLAG", "1"));
+	
+	return GWDP.AND(availableDataFilters);
+};
+
 GWDP.ui.getCurrentFilterCQL = function(filterVals) {
 	var topLevelAndArray = [];
 	
 	var networkFilter = GWDP.ui.constructNetworkFilters(filterVals);
 	if(networkFilter) topLevelAndArray.push(networkFilter);
 
+	var availableDataFilter = GWDP.ui.constructAvailableDataFilter(filterVals);
+	if(availableDataFilter) topLevelAndArray.push(availableDataFilter);
+	
 	var aquiferFilter = GWDP.ui.constructAquiferFilters(filterVals);
 	if(aquiferFilter) topLevelAndArray.push(aquiferFilter);
 	

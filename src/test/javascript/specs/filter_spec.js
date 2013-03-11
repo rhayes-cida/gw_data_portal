@@ -9,8 +9,13 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     	var filterVars = {//MOCK test data
 			}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
-    	expect(CQL).toBe("(QW_SN_FLAG = '" + GWDP.NO_POINTS_VALUE + "') AND (NAT_AQUIFER_CD = '" + GWDP.NO_POINTS_VALUE + "') AND (AGENCY_CD = '" + GWDP.NO_POINTS_VALUE + "')"+
-    			 " AND (STATE_CD = '" + GWDP.NO_POINTS_VALUE + "') AND (COUNTY_CD = '" + GWDP.NO_POINTS_VALUE + "')");
+    	expect(CQL).toBe(
+    		"(QW_SN_FLAG = '" + GWDP.NO_POINTS_VALUE + "') " +
+    		"AND (NAT_AQUIFER_CD = '" + GWDP.NO_POINTS_VALUE + "') " +
+    		"AND (AGENCY_CD = '" + GWDP.NO_POINTS_VALUE + "') "+
+    	    "AND (STATE_CD = '" + GWDP.NO_POINTS_VALUE + "') " +
+    	    "AND (COUNTY_CD = '" + GWDP.NO_POINTS_VALUE + "')");
+    		//NOTE: Available data filters are OFF when no values are given
     });
     
     it("builds the correct CQL string, when given a default filter set, any 'All' filters turn off the filter completely.", function() {
@@ -24,7 +29,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1'))");
@@ -41,7 +49,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
     	expect(CQL).toBe("(WL_SN_FLAG = '1')");
@@ -56,7 +67,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars2);
     	expect(CQL).toBe("(QW_SN_FLAG = '1')");
@@ -71,7 +85,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars3);
     	expect(CQL).toBe("(QW_SN_FLAG = '" + GWDP.NO_POINTS_VALUE + "')");
@@ -88,7 +105,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "Agency1",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (AGENCY_CD = 'Agency1')");
@@ -103,7 +123,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "Agency1,Agency2",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars2);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND ((AGENCY_CD = 'Agency1') OR (AGENCY_CD = 'Agency2'))");
@@ -118,7 +141,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		};
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars3);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (AGENCY_CD = '" + GWDP.NO_POINTS_VALUE + "')");
@@ -135,7 +161,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "aq1",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (NAT_AQUIFER_CD = 'aq1')");
@@ -165,7 +194,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "",
     			states: 'All',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars3);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (NAT_AQUIFER_CD = '" + GWDP.NO_POINTS_VALUE + "')");
@@ -182,7 +214,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'st1',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (STATE_CD = 'st1')");
@@ -197,7 +232,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'st1,st2',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars2);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND ((STATE_CD = 'st1') OR (STATE_CD = 'st2'))");
@@ -212,7 +250,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: '',
-    			counties: 'All'
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars3);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (STATE_CD = '" + GWDP.NO_POINTS_VALUE + "')");
@@ -229,7 +270,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'ct1'
+    			counties: 'ct1',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (COUNTY_CD = 'ct1')");
@@ -244,7 +288,10 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: 'ct1,ct2'
+    			counties: 'ct1,ct2',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars2);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND ((COUNTY_CD = 'ct1') OR (COUNTY_CD = 'ct2'))");
@@ -259,10 +306,87 @@ describe("GWDP.ui.getCurrentFilterCQLAsString", function() {
     			contributingAgencies:     "All",    
     			principalAquifer:    "All",
     			states: 'All',
-    			counties: ''
+    			counties: '',
+    			WL_DATA_FLAG: 'off', //should not produce any filter when all 3 are off
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
     		}; 
     	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars3);
     	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND (COUNTY_CD = '" + GWDP.NO_POINTS_VALUE + "')");
+    });
+    
+    it("builds the correct CQL string, when given available data filters", function() {
+    	var filterVars = {//MOCK test data
+    			QW_SN_FLAG :    "on",
+    			QW_WELL_CHARS :    "All",
+    			QW_WELL_TYPE:    "All", 
+    			WL_SN_FLAG:    "on",    
+    			WL_WELL_CHARS:    "All",
+    			WL_WELL_TYPE:    "All",
+    			contributingAgencies:     "All",    
+    			principalAquifer:    "All",
+    			states: 'All',
+    			counties: 'All',
+    			WL_DATA_FLAG: 'on',
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'off'
+    		}; 
+    	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars);
+    	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND ((WL_DATA_FLAG = '1'))");
+
+    	var filterVars2 = {//MOCK test data
+    			QW_SN_FLAG :    "on",
+    			QW_WELL_CHARS :    "All",
+    			QW_WELL_TYPE:    "All", 
+    			WL_SN_FLAG:    "on",    
+    			WL_WELL_CHARS:    "All",
+    			WL_WELL_TYPE:    "All",
+    			contributingAgencies:     "All",    
+    			principalAquifer:    "All",
+    			states: 'All',
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off', 
+    			QW_DATA_FLAG: 'on',
+    			LOG_DATA_FLAG: 'off'
+    		}; 
+    	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars2);
+    	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND ((QW_DATA_FLAG = '1'))");
+    	
+    	var filterVars3 = {//MOCK test data
+    			QW_SN_FLAG :    "on",
+    			QW_WELL_CHARS :    "All",
+    			QW_WELL_TYPE:    "All", 
+    			WL_SN_FLAG:    "on",    
+    			WL_WELL_CHARS:    "All",
+    			WL_WELL_TYPE:    "All",
+    			contributingAgencies:     "All",    
+    			principalAquifer:    "All",
+    			states: 'All',
+    			counties: 'All',
+    			WL_DATA_FLAG: 'off',
+    			QW_DATA_FLAG: 'off',
+    			LOG_DATA_FLAG: 'on'
+    		}; 
+    	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars3);
+    	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND ((LOG_DATA_FLAG = '1'))");
+    	
+    	var filterVars4 = {//MOCK test data
+    			QW_SN_FLAG :    "on",
+    			QW_WELL_CHARS :    "All",
+    			QW_WELL_TYPE:    "All", 
+    			WL_SN_FLAG:    "on",    
+    			WL_WELL_CHARS:    "All",
+    			WL_WELL_TYPE:    "All",
+    			contributingAgencies:     "All",    
+    			principalAquifer:    "All",
+    			states: 'All',
+    			counties: 'All',
+    			WL_DATA_FLAG: 'on',
+    			QW_DATA_FLAG: 'on',
+    			LOG_DATA_FLAG: 'on'
+    		}; 
+    	var CQL = GWDP.ui.getCurrentFilterCQLAsString(filterVars4);
+    	expect(CQL).toBe("((QW_SN_FLAG = '1') OR (WL_SN_FLAG = '1')) AND ((WL_DATA_FLAG = '1') AND (QW_DATA_FLAG = '1') AND (LOG_DATA_FLAG = '1'))");
     });
 });
 

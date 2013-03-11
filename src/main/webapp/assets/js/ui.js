@@ -198,6 +198,29 @@ GWDP.ui.initApp = function() {
 			            }
 			        }]
 				},{
+					title: 'Available Data',
+					xtype: "panel",
+					layout: 'hbox',
+					labelWidth: 1, //required
+					padding: 5,
+					autoScroll: true,
+					items: [{
+						xtype: 'checkbox',
+						name: 'WL_DATA_FLAG',
+						boxLabel: 'Water Level',
+		            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+					},{
+						xtype: 'checkbox',
+						name: 'QW_DATA_FLAG',
+						boxLabel: 'Water Quality',
+		            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+					},{
+						xtype: 'checkbox',
+						name: 'LOG_DATA_FLAG',
+						boxLabel: 'Well Log',
+		            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+					}]
+				},{
 					title: 'State and County',
 					xtype: "panel",
 					layout: 'form',
