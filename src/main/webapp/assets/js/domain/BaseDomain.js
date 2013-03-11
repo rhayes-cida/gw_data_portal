@@ -126,7 +126,7 @@ GWDP.domain.loadJsonIntoStore = function(jsonText, store, defaultOption) {
 GWDP.domain.getDomainObjects = function(url, protocol, typeName, bbox, cql_filter, callback) {	
 	Ext.Ajax.request({
 		url: url,
-		method: 'GET',
+		method: 'POST',
 		params: GWDP.domain.constructParams(typeName, bbox, cql_filter, false),
 		success: function(response, options) {
 			if(callback) callback(protocol.parseResponse(response));
@@ -142,7 +142,7 @@ GWDP.domain.getDomainObjects = function(url, protocol, typeName, bbox, cql_filte
 GWDP.domain.getDomainObjectsCount = function(url, typeName, bbox, cql_filter, callback) {
 	Ext.Ajax.request({
 		url: url,
-		method: 'GET',
+		method: 'POST',
 		params: GWDP.domain.constructParams(typeName, bbox, cql_filter, true),
 		success: function(response, options) {
 			var numOfRecs = response.responseXML.lastChild.attributes.getNamedItem('numberOfFeatures').value;

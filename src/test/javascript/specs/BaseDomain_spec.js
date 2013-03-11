@@ -151,7 +151,7 @@ describe("GWDP.domain.getDomainObjectsCount", function() {
 		);
 		
 		//verify ajax params
-		expect(Ext.Ajax.request.calledWithMatch({ method: "GET" })).toBe(true);
+		expect(Ext.Ajax.request.calledWithMatch({ method: "POST" })).toBe(true);
 		expect(Ext.Ajax.request.calledWithMatch({ url: url })).toBe(true);
 		
 		var params = Ext.Ajax.request.getCall(0).args[0].params;
@@ -215,7 +215,7 @@ describe("GWDP.domain.getDomainObjects", function() {
 		);
 		
 		//verify ajax params
-		expect(Ext.Ajax.request.calledWithMatch({ method: "GET" })).toBe(true);
+		expect(Ext.Ajax.request.calledWithMatch({ method: "POST" })).toBe(true);
 		expect(Ext.Ajax.request.calledWithMatch({ url: url })).toBe(true);
 		
 		var params = Ext.Ajax.request.getCall(0).args[0].params;
