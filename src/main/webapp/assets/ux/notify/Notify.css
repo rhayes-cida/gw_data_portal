@@ -1,0 +1,31 @@
+/*** Notify Icons ***/
+.msgtext {
+	font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+}
+
+.msgicon {
+	width:32px;
+	height:32px;
+	float:left;
+	margin:0 10px 0px 0;
+}
+.msgicon-error {			
+	background: transparent url(../../../ext-3.4.0/resources/images/default/window/icon-error.gif) no-repeat 0 0;
+}
+.msgicon-info {
+	background: transparent url(../../../ext-3.4.0/resources/images/default/window/icon-info.gif) no-repeat 0 0;
+}
+.msgicon-question {
+	background: transparent url(../../../ext-3.4.0/resources/images/default/window/icon-question.gif) no-repeat 0 0;
+}
+.msgicon-warning {
+	background: transparent url(../../../ext-3.4.0/resources/images/default/window/icon-warning.gif) no-repeat 0 0;
+}
+
+.grd-add-page-icon {
+	background-image: url(../images/add-file.png) !important;
+}
+
+.button-excel-icon {
+	background-image: url(../images/page_excel.png) !important;
+}

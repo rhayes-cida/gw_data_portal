@@ -377,7 +377,6 @@ GWDP.ui.initApp = function() {
 		style: 'text-align: left',
 		border: false,
 		items: [{
-				title: 'Click and drag map',
 				region: 'center',
 				border: true,
 				id: 'cmp-map-area',
@@ -450,6 +449,34 @@ GWDP.ui.refreshCountiesFilter = function(stateCd) {
 	GWDP.domain.County.updateCountyMetadata(Ext.getCmp('counties').store, {stateCd: stateCd}, function(s){
 		Ext.getCmp('counties').setValue('All');
 	 }, 'All');
+};
+
+//will block based on a buffer
+GWDP.ui.blockBuffer = 0;
+GWDP.ui.blockHelpTip = function(mod, offset) {
+	if(!offset) offset = 0;
+	if(GWDP.ui.blockBuffer % mod == offset) return false; 
+	return true;
+};
+
+GWDP.ui.showAHelpTip = function() {
+	GWDP.ui.showZoomTip();
+	GWDP.ui.showClickTip();
+	GWDP.ui.blockBuffer++;
+};
+
+GWDP.ui.showZoomTip = function(){
+	if(GWDP.ui.blockHelpTip(20, 5)) return;
+    new Ext.ux.Notify({
+		msg: 'Hold shift + click to enable drag zoom'
+	}).show(Ext.getCmp('cmp-map-area').getEl());
+};
+
+GWDP.ui.showClickTip = function(){
+	if(GWDP.ui.blockHelpTip(20)) return;
+    new Ext.ux.Notify({
+		msg: 'Click on the map to identify a site(s)'
+	}).show(Ext.getCmp('cmp-map-area').getEl());
 };
 
 Ext.onReady(GWDP.ui.initApp);

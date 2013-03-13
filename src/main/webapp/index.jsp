@@ -32,6 +32,8 @@
 		<!-- Extensions -->
 	   	<script type="text/javascript" src='assets/ux/MultiSelect/MultiSelect.js'></script>
 		<link rel="stylesheet" href="assets/ux/MultiSelect/MultiSelect.css"/>
+	   	<script type="text/javascript" src='assets/ux/notify/Notify.js'></script>
+		<link rel="stylesheet" href="assets/ux/notify/Notify.css"/>
 		
 		<!-- APPLICATION CODE IMPORTS -->
 		<script type="text/javascript" src="assets/js/namespace.js"></script>

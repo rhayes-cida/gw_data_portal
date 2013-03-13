@@ -34,6 +34,25 @@ GWDP.ui.ClickControl = OpenLayers.Class(OpenLayers.Control, {
     }
 });
 
+GWDP.ui.HoverControl = OpenLayers.Class(OpenLayers.Control, {            
+    initialize: function(options) {
+        OpenLayers.Control.prototype.initialize.apply(
+            this, arguments
+        );
+        
+        this.map = options.map;
+        this.hoverHandler = options.hoverHandler;
+        
+        this.handler = new OpenLayers.Handler.Hover(
+            this, {
+                'pause': this.hoverHandler
+            }, {
+                'single': true
+            }
+        );
+    }
+});
+
 GWDP.ui.initMap = function() {
 	var initCenter = new OpenLayers.LonLat(-89.5042, 43.0973);
     
@@ -97,8 +116,11 @@ GWDP.ui.initMap = function() {
 			GWDP.ui.getUpdateMapHandlers()
 	);
 	
-	//attach click handler for identify function
-    var click = new GWDP.ui.ClickControl({
+	GWDP.ui.attachCustomControls();
+};
+
+GWDP.ui.attachCustomControls = function() {
+	var click = new GWDP.ui.ClickControl({
     	map: GWDP.ui.map.mainMap,
     	clickHandler: function(e) {
     		IDENTIFY.identifyLatLon(GWDP.ui.map.mainMap, e);
@@ -107,8 +129,17 @@ GWDP.ui.initMap = function() {
     GWDP.ui.map.mainMap.addControl(click);
     click.activate();
     
-	// console.log("!! at end of initMap");
+    var hover = new GWDP.ui.HoverControl({
+    	map: GWDP.ui.map.mainMap,
+    	hoverHandler: function(e) {
+    		GWDP.ui.showAHelpTip();
+    	}
+    });
+    GWDP.ui.map.mainMap.addControl(hover);
+    hover.activate();
 };
+
+
 
 GWDP.ui.addBaseLayers = function(){
 	// Add base layers to map. Set the projection to the mercator projection in the data layers.
