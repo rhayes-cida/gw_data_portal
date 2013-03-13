@@ -72,14 +72,14 @@ public class MetadataController {
 					"select state_nm, county_cd, county_nm, count(*) count\n" + 
 					"from gw_data_portal.well_registry\n" +
 //					"where county_cd != '000' and county_nm != 'UNSPECIFIED'\n"+
-					"group by state_nm, county_cd, county_nm");
+					"group by state_nm, county_cd, county_nm order by county_nm");
 		} else {
 			result = template.queryForList(
 				"select state_nm, county_cd, county_nm, count(*) count\n" + 
 				"from gw_data_portal.well_registry\n" +
 				"where state_cd = ?\n"+
 //				"and county_cd != '000' and county_nm != 'UNSPECIFIED'\n"+
-				"group by state_nm, county_cd, county_nm", stateCd);
+				"group by state_nm, county_cd, county_nm order by county_nm", stateCd);
 		}
 		
 		logger.debug("Found {} counties for state cd "+stateCd, result.size());
