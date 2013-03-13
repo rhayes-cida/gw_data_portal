@@ -48,15 +48,6 @@ GWDP.ui.map.baseLayers = [
     	name: "World Relief Map",
         url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
         type: OpenLayers.Layer.XYZ
-    },
-    {
-    	name: "World Hydro Reference",
-        url: "http://184.72.212.114:6080/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
-        type: OpenLayers.Layer.XYZ,
-	 	initialOn: false,
-	 	opacity: 0.5,
-	 	transparent:true,	 
-	 	isBaseLayer: false
     }
   ,
   {
@@ -76,6 +67,15 @@ GWDP.ui.map.baseLayers = [
 	 	initialOn: true,
 	 	opacity: 0.6,
 	 	transparent:true	 	
+     },
+     {
+     	name: "World Hydro Reference",
+         url: "http://184.72.212.114:6080/arcgis/rest/services/WorldHydroReferenceOverlay/MapServer/tile/"+GWDP.ui.map.XYZ_URL_POSTFIX,
+         type: OpenLayers.Layer.XYZ,
+ 	 	initialOn: false,
+ 	 	opacity: 0.5,
+ 	 	transparent:true,	 
+ 	 	isBaseLayer: false
      }
   ];
 
