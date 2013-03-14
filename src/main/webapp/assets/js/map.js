@@ -352,7 +352,7 @@ GWDP.ui.getUpdateMap = function() {
 GWDP.ui.map.zoomToBoundingBox = function() {
 	var filterCQL = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues());
 	var mapCt = Ext.getCmp('cmp-map-area').getEl();
-	mapCt.mask("Calculating extend...");
+	mapCt.mask("Calculating extent...");
 	GWDP.domain.Well.getWellBoundingBox(
 		GWDP.ui.map.baseWFSServiceUrl, 
 		"-180,15,-50,70", 
