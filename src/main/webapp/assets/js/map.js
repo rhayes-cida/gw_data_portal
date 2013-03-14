@@ -358,8 +358,12 @@ GWDP.ui.map.zoomToBoundingBox = function() {
 		"-180,15,-50,70", 
 		filterCQL, 
 		function(bbox){
-			var bounds = new OpenLayers.Bounds(bbox[0], bbox[1], bbox[2], bbox[3]);
-			GWDP.ui.map.mainMap.zoomToExtent(bounds.transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection));
+			if(!bbox) {
+				GWDP.ui.map.mainMap.zoomToMaxExtent();
+			} else {
+				var bounds = new OpenLayers.Bounds(bbox[0], bbox[1], bbox[2], bbox[3]);
+				GWDP.ui.map.mainMap.zoomToExtent(bounds.transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection));
+			}
 			mapCt.unmask();
 		}
 	);

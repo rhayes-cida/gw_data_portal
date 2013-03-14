@@ -170,8 +170,14 @@ GWDP.domain.getDomainObjectsBoundingBox = function(url, typeName, bbox, cql_filt
 			var x = DNH.createXmlDocFromString(response.responseText);
 			var lc = DNH.extractValue(x,'gml:lowerCorner');
 			var uc = DNH.extractValue(x,'gml:upperCorner');
+
 			var bboxArray = [];
-			bboxArray = lc.split(' ').concat(uc.split(' '));
+			if(!lc || !uc) {
+				bboxArray = null;
+			} else {
+				bboxArray = lc.split(' ').concat(uc.split(' '));
+			}
+			
 			if(callback) callback(bboxArray);
 		}
 	});
