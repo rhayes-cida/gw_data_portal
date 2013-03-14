@@ -57,6 +57,10 @@ GWDP.domain.Well.getWellCount = function(url, bbox, cql_filter, callback) {
 	GWDP.domain.getDomainObjectsCount(url, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
 };
 
+GWDP.domain.Well.getWellBoundingBox = function(url, bbox, cql_filter, callback) {
+	GWDP.domain.getDomainObjectsBoundingBox(url, GWDP.domain.Well.typeName, bbox, cql_filter, callback);
+};
+
 /**
  * @param bbox bbox must be in format y,x,y,x
  * @param cql_filter string representation of the filters.

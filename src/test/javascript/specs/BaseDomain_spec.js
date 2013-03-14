@@ -38,6 +38,34 @@ var GML2Response = "<wfs:FeatureCollection " +
 	"</gml:featureMember>" +
 	"</wfs:FeatureCollection>";
 
+var GML32BoundsResponse =
+	'<?xml version="1.0" encoding="UTF-8"?>' + 
+	'<wfs:FeatureCollection timeStamp="2013-03-14T14:14:07.766Z"' + 
+	'	xsi:schemaLocation="http://www.opengis.net/gml/3.2 http://www.opengis.net/wfs/2.0"' + 
+	'	xmlns:ns="gov.usgs.cida.ngwmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' + 
+	'	xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wfs="http://www.opengis.net/wfs/2.0">' + 
+	'	<wfs:boundedBy>' + 
+	'		<gml:Envelope>' + 
+	'			<gml:lowerCorner>-120 35</gml:lowerCorner>' + 
+	'			<gml:upperCorner>-115 45</gml:upperCorner>' + 
+	'		</gml:Envelope>' + 
+	'	</wfs:boundedBy>' + 
+	'	<wfs:member>' + 
+	'		<ns:layerName' + 
+	'			gml:id="layerName.fid-57189476_13d6937ff77_36c1">' + 
+	'			<gml:boundedBy>' + 
+	'				<gml:Envelope srsDimension="2"' + 
+	'					srsName="http://www.opengis.net/gml/srs/epsg.xml#4269">' + 
+	'					<gml:lowerCorner>-90 42</gml:lowerCorner>' + 
+	'					<gml:upperCorner>-86 45</gml:upperCorner>' + 
+	'				</gml:Envelope>' + 
+	'			</gml:boundedBy>' + 
+	'			<ns:MY_SITEID>USGS:350436119061901</ns:MY_SITEID>' + 
+	'		</ns:layerName>' + 
+	'	</wfs:member>' + 
+	'</wfs:FeatureCollection>';
+
+
 describe("BaseDomain.js", function() {
 	it("defines some core API functions and properties", function() {
         expect(GWDP.domain.constructParams).toBeDefined();
@@ -261,6 +289,71 @@ describe("GWDP.domain.getDomainObjects", function() {
 		expect(results[0].data['att2']).toBe('record1-att2');
 		expect(results[1].data['att1']).toBe('record2-att1');
 		expect(results[1].data['att2']).toBe('record2-att2');
+		
+		TestSupport.restoreServer();
+	});
+});
+
+describe("GWDP.domain.getDomainObjectsBoundingBox", function() {
+	it("performs an Ext.Ajax.request with the correct parameters (GML3.2 specific overrides)", function() {
+		TestSupport.stubExtAjaxRequest();
+
+		var urlBase = 'http://testing/test/url';
+		var url = urlBase + "/wfs"; //Expect this
+
+		//do the call
+		var callback = null; //callback will never happen anyway
+		GWDP.domain.getDomainObjectsBoundingBox(
+			url,
+			"ns:layerName", 
+			"1,2,3,4", 
+			"(SOME_PARAM=1)", 
+			callback
+		);
+		
+		//verify ajax params
+		expect(Ext.Ajax.request.calledWithMatch({ method: "POST" })).toBe(true);
+		expect(Ext.Ajax.request.calledWithMatch({ url: urlBase + "/ows" })).toBe(true); //OVERRIDEN switch from wfs to ows
+		
+		var params = Ext.Ajax.request.getCall(0).args[0].params;
+		expect(params).toBeDefined();
+		expect(params.CQL_FILTER).toBe("(SOME_PARAM=1) AND (BBOX(GEOM,1,2,3,4))");
+		expect(params.srsName).toBeUndefined(); //SHOULD BE REMOVED
+		expect(params.VERSION).toBe("1.0.0");
+		expect(params.request).toBe("GetFeature");
+		expect(params.typeName).toBe("ns:layerName");
+		expect(params.outputFormat).toBe("text/xml; subtype=gml/3.2"); //SPECIAL OVERRIDE FOR BOUNDS
+		
+		TestSupport.restoreExtAjaxRequest();
+	});
+	
+	it("correctly parses a GML3.2 response into an array of coords, and passes that to the callback, when given a valid GML3.2 response", function() {
+		TestSupport.initServer();
+		
+		var url = "http://testing/test/url/wfs";
+		
+		//set the response for this URL
+		TestSupport.setServerResponse(GML32BoundsResponse);
+		
+		//do the call
+		var callback = sinon.spy();
+		GWDP.domain.getDomainObjectsBoundingBox(
+			url,
+			"ns:layerName", 
+			"1,2,3,4", 
+			"(SOME_PARAM=1)", 
+			callback
+		);
+
+		TestSupport.doServerRespond();
+		
+		expect(callback.called).toBe(true);
+		var bbox = callback.getCall(0).args[0];
+		expect(bbox.length).toBe(4);
+		expect(bbox[0]).toBe('-120');
+		expect(bbox[1]).toBe('35');
+		expect(bbox[2]).toBe('-115');
+		expect(bbox[3]).toBe('45');
 		
 		TestSupport.restoreServer();
 	});

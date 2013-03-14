@@ -15,6 +15,7 @@ function dumpExtent(tag, extent, force) {
 	console.log("Extent[" + tag +"]: " + extent);
 }
 
+
 GWDP.ui.ClickControl = OpenLayers.Class(OpenLayers.Control, {            
     initialize: function(options) {
         OpenLayers.Control.prototype.initialize.apply(
@@ -70,10 +71,11 @@ GWDP.ui.initMap = function() {
         
         controls: [
             new OpenLayers.Control.Navigation(),
-            // new OpenLayers.Control.ArgParser(),
             new OpenLayers.Control.Attribution(),
             new OpenLayers.Control.LayerSwitcher(),
-            new OpenLayers.Control.PanZoom(),
+            new GWDP.ui.PanZoom({
+            	zoomButtonHandler: GWDP.ui.map.zoomToBoundingBox
+            }),
             new OpenLayers.Control.OverviewMap({
             }),
   			new OpenLayers.Control.MousePosition({
@@ -344,6 +346,22 @@ GWDP.ui.getUpdateMap = function() {
 			GWDP.ui.getCurrentExtentAsString(), 
 			filterCQL,
 			GWDP.ui.getUpdateMapHandlers()
+	);
+};
+
+GWDP.ui.map.zoomToBoundingBox = function() {
+	var filterCQL = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues());
+	var mapCt = Ext.getCmp('cmp-map-area').getEl();
+	mapCt.mask("Calculating extend...");
+	GWDP.domain.Well.getWellBoundingBox(
+		GWDP.ui.map.baseWFSServiceUrl, 
+		"-180,15,-50,70", 
+		filterCQL, 
+		function(bbox){
+			var bounds = new OpenLayers.Bounds(bbox[0], bbox[1], bbox[2], bbox[3]);
+			GWDP.ui.map.mainMap.zoomToExtent(bounds.transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection));
+			mapCt.unmask();
+		}
 	);
 };
 

@@ -151,6 +151,32 @@ GWDP.domain.getDomainObjectsCount = function(url, typeName, bbox, cql_filter, ca
 	});
 };
 
+/**
+ * @param bbox bbox must be in format x,y,x,y
+ * @param cql_filter string representation of the filters.
+ * @param callback function that takes a bbox array [lowerCorner-x, lowerCorner-y, upperCorner-x, upperCorner-y]. XY may be swapped (depends on the OWS service)
+ */
+GWDP.domain.getDomainObjectsBoundingBox = function(url, typeName, bbox, cql_filter, callback) {
+	var params = GWDP.domain.constructParams(typeName, bbox, cql_filter, false);
+	params.outputFormat = 'text/xml; subtype=gml/3.2';
+	params.request = "GetFeature";
+	delete params['srsName'];
+	url = url.replace(/wfs/g, "ows");
+	Ext.Ajax.request({
+		url: url,
+		method: 'POST',
+		params: params,
+		success: function(response, options) {
+			var x = DNH.createXmlDocFromString(response.responseText);
+			var lc = DNH.extractValue(x,'gml:lowerCorner');
+			var uc = DNH.extractValue(x,'gml:upperCorner');
+			var bboxArray = [];
+			bboxArray = lc.split(' ').concat(uc.split(' '));
+			if(callback) callback(bboxArray);
+		}
+	});
+};
+
 
 
 /**

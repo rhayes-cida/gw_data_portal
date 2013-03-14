@@ -57,6 +57,14 @@ return {
 		_server.restore();
 	},
 	
+	setServerResponse: function(xml) {
+		_server.respondWith([
+	            200,
+	            { "Content-Type": "text" },
+	            xml
+	        ]);
+	},
+	
 	setServerXmlResponse: function(xml) {
 		_server.respondWith([
 	            200,

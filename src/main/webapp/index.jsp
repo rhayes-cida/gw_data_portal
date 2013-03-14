@@ -8,7 +8,7 @@
       	
       	<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
-            <jsp:param name="debug-qualifier" value="false" />
+            <jsp:param name="debug-qualifier" value="true" />
         </jsp:include>
       	
 		<!-- Dygraph documents this as a needed IE8 hack  -->
@@ -29,16 +29,17 @@
 		</script>
 		<script type="text/javascript" src="assets/js/GoogleAnalyticsUtils.js"></script>
 		
+		<!-- APPLICATION CODE IMPORTS -->
+		<script type="text/javascript" src="assets/js/namespace.js"></script>
+		<jsp:include page="server_js_props.jsp"></jsp:include>
+		<script type="text/javascript" src="assets/js/config.js"></script>
+		
 		<!-- Extensions -->
 	   	<script type="text/javascript" src='assets/ux/MultiSelect/MultiSelect.js'></script>
 		<link rel="stylesheet" href="assets/ux/MultiSelect/MultiSelect.css"/>
 	   	<script type="text/javascript" src='assets/ux/notify/Notify.js'></script>
 		<link rel="stylesheet" href="assets/ux/notify/Notify.css"/>
-		
-		<!-- APPLICATION CODE IMPORTS -->
-		<script type="text/javascript" src="assets/js/namespace.js"></script>
-		<jsp:include page="server_js_props.jsp"></jsp:include>
-		<script type="text/javascript" src="assets/js/config.js"></script>
+	   	<script type="text/javascript" src='assets/ux/openlayers/PanZoom.js'></script>
 	
 		<!-- Data domain objects -->		
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
