@@ -598,3 +598,7 @@ td.long-text {
 .olControlOverviewMapElement {
     margin-bottom: 15px;
 }
+
+.ngwmn-help-tip {
+	padding: 10px;
+}
