@@ -8,7 +8,7 @@
       	
       	<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
-            <jsp:param name="debug-qualifier" value="true" />
+            <jsp:param name="debug-qualifier" value="false" />
         </jsp:include>
       	
 		<!-- Dygraph documents this as a needed IE8 hack  -->

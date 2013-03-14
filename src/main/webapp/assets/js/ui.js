@@ -383,16 +383,16 @@ GWDP.ui.initApp = function() {
 				contentEl: 'map-area',
 				tools: [
 						{
+							id: 'info',
+							handler: GWDP.ui.toggleHelpTips
+						},{
 							id: 'help',
-							qtip: 'Get Help',
 							handler: showHelp
 						},{
 							id: 'restore',
-							qtip: 'Restore',
 					        handler: minimize
 						},{
 							id: 'maximize',
-							qtip: 'Maximize',
 					        handler: maximize
 						}
 					],
@@ -453,7 +453,17 @@ GWDP.ui.refreshCountiesFilter = function(stateCd) {
 
 //will block based on a buffer
 GWDP.ui.blockBuffer = 0;
+GWDP.ui.helpTipsOff = false;
+GWDP.ui.toggleHelpTips = function() {
+	GWDP.ui.helpTipsOff = !GWDP.ui.helpTipsOff;
+	GWDP.ui.blockBuffer = 0;
+    new Ext.ux.Notify({
+		msg: ' Help tips are now ' + (GWDP.ui.helpTipsOff ? "off" : "on") + "."
+	}).show(Ext.getCmp('cmp-map-area').getEl());
+};
+
 GWDP.ui.blockHelpTip = function(mod, offset) {
+	if(GWDP.ui.helpTipsOff) return true;
 	if(!offset) offset = 0;
 	if(GWDP.ui.blockBuffer % mod == offset) return false; 
 	return true;
@@ -464,18 +474,18 @@ GWDP.ui.showAHelpTip = function() {
 	GWDP.ui.showClickTip();
 	GWDP.ui.blockBuffer++;
 };
-
-GWDP.ui.showZoomTip = function(){
-	if(GWDP.ui.blockHelpTip(20, 5)) return;
+GWDP.ui.tipFrequency = 10;
+GWDP.ui.showZoomTip = function(force){
+	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency, 5)) return;
     new Ext.ux.Notify({
-		msg: 'Hold shift + click to enable drag zoom'
+		msg: ' Hold shift & drag mouse to zoom into an area of interest.'
 	}).show(Ext.getCmp('cmp-map-area').getEl());
 };
 
-GWDP.ui.showClickTip = function(){
-	if(GWDP.ui.blockHelpTip(20)) return;
+GWDP.ui.showClickTip = function(force){
+	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency)) return;
     new Ext.ux.Notify({
-		msg: 'Click on the map to identify a site(s)'
+		msg: 'Click a point on the map to identify a site.'
 	}).show(Ext.getCmp('cmp-map-area').getEl());
 };
 
