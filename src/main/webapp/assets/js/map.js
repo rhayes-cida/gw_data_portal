@@ -91,7 +91,7 @@ GWDP.ui.attachCustomControls = function() {
     	map: GWDP.ui.map.mainMap,
     	keyMask: OpenLayers.Handler.MOD_CTRL,
     	boxHandler: function(bounds) {
-    		alert("do something with sites in "+bounds.toBBOX());
+    		GWDP.ui.map.addSiteInBounds(bounds);
     	}
     });
     GWDP.ui.map.mainMap.addControl(zoombox);
@@ -342,17 +342,53 @@ GWDP.ui.map.zoomToBoundingBox = function() {
 GWDP.ui.map.getBBOXAroundPoint = function(map, e) {
 	var pixelClicked = e.xy; //supports openlayers.point as well as window.event
 	
-	var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
-	var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+	var deadzone = 5;
+	var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + deadzone, pixelClicked.y + deadzone)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+	var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - deadzone, pixelClicked.y - deadzone)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
 	
 	var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
 	
 	return bbox;
-}
+};
 
 GWDP.ui.map.addSiteAt = function(map,e) {
-	//TODO
-	var point = GWDP.ui.map.getBBOXAroundPoint(map,e);
-	alert("TODO Add Site(s) found at " + point);
-}
+	var bbox = GWDP.ui.map.getBBOXAroundPoint(map,e);
+	GWDP.ui.map.addSitesInBbox(bbox);
+};
+
+GWDP.ui.map.addSiteInBounds = function(bounds) {
+	var bbox = bounds.transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection).toBBOX();
+	GWDP.ui.map.addSitesInBbox(bbox);
+};
+
+GWDP.ui.map.addSitesInBbox = function(bbox) {
+	var wellStore = GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells");
+	var cql_filters = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues());
+	Ext.getCmp('cmp-map-area').body.mask('Identifying site(s) to add.  Please wait...', 'x-mask-loading');
+	GWDP.domain.Well.getWells(GWDP.ui.map.baseWFSServiceUrl, bbox, cql_filters, function(r){
+		Ext.getCmp('cmp-map-area').body.unmask();
+		//Ext.getCmp('ext-content-panel').body.unmask();
+		if (r.length == 0) {
+			//no sites found
+			Ext.Msg.show({
+			   title:'No Sites Identified',
+			   msg: 'No sites were found near the point you clicked.',
+			   buttons: Ext.Msg.OK,
+			   icon: Ext.MessageBox.WARNING
+			});
+		} else if (r.length == 1) {
+			GWDP.domain.loadOpenlayersRecordIntoArrayStore(r, wellStore);
+			var siteRecord = wellStore.getAt(0);
+			siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
+			alert("TODO add single site: " + siteRecord.data.SITE_NAME);//TODO
+		} else {
+			for (var j=0; j<r.length; j++){
+				var siteRecord = r[j];
+				siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
+			}
+			GWDP.domain.loadOpenlayersRecordIntoArrayStore(r, wellStore);
+			alert("TODO add multiple sites: " + wellStore.data.items.length);//TODO
+		}
+	});
+};
 
