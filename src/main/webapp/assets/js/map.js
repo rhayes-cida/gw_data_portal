@@ -15,78 +15,33 @@ function dumpExtent(tag, extent, force) {
 	console.log("Extent[" + tag +"]: " + extent);
 }
 
-
-GWDP.ui.ClickControl = OpenLayers.Class(OpenLayers.Control, {            
-    initialize: function(options) {
-        OpenLayers.Control.prototype.initialize.apply(
-            this, arguments
-        );
-        
-        this.map = options.map;
-        this.clickHandler = options.clickHandler;
-        
-        this.handler = new OpenLayers.Handler.Click(
-            this, {
-                'click': this.clickHandler
-            }, {
-                'single': true
-            }
-        );
-    }
-});
-
-GWDP.ui.HoverControl = OpenLayers.Class(OpenLayers.Control, {            
-    initialize: function(options) {
-        OpenLayers.Control.prototype.initialize.apply(
-            this, arguments
-        );
-        
-        this.map = options.map;
-        this.hoverHandler = options.hoverHandler;
-        
-        this.handler = new OpenLayers.Handler.Hover(
-            this, {
-                'pause': this.hoverHandler
-            }, {
-                'single': true
-            }
-        );
-    }
-});
-
 GWDP.ui.initMap = function() {
 	var initCenter = new OpenLayers.LonLat(-89.5042, 43.0973);
     
 	var extent = GWDP.ui.initExtent;
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
-  	  projection: GWDP.ui.map.mercatorProjection,
-	  displayProjection: GWDP.ui.map.wgs84Projection,
-
-        // center: initCenter.transform(GWDP.ui.map.wgs84Projection, GWDP.ui.map.mercatorProjection),
-        units: 'm',
-        // Set the maxResolutions and maxExtent as indicated in http://docs.openlayers.org/library/spherical_mercator.html
-        // numZoomLevels: 8,
-        maxExtent: extent,
-        restrictedExtent: extent,
-        
-        controls: [
-            new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.Attribution(),
-            new OpenLayers.Control.LayerSwitcher(),
-            new GWDP.ui.PanZoom({
-            	zoomButtonHandler: GWDP.ui.map.zoomToBoundingBox
-            }),
-            new OpenLayers.Control.OverviewMap({
-            }),
-  			new OpenLayers.Control.MousePosition({
-                id: 'map-area-mouse-position',
-                numDigits: 6
-  			}),
-            new OpenLayers.Control.ScaleLine({
-                id: 'map-area-scale-line'
-            })
-        ]
-    });
+		projection: GWDP.ui.map.mercatorProjection,
+		displayProjection: GWDP.ui.map.wgs84Projection,
+		units: 'm',
+		maxExtent: extent,
+		controls: [
+		           new OpenLayers.Control.Navigation(),
+		           new OpenLayers.Control.Attribution(),
+		           new OpenLayers.Control.LayerSwitcher(),
+		           new GWDP.ui.PanZoomControl({
+		        	   zoomButtonHandler: GWDP.ui.map.zoomToBoundingBox
+		           }),
+		           new OpenLayers.Control.OverviewMap({
+		           }),
+		           new OpenLayers.Control.MousePosition({
+		        	   id: 'map-area-mouse-position',
+		        	   numDigits: 6
+		           }),
+		           new OpenLayers.Control.ScaleLine({
+		        	   id: 'map-area-scale-line'
+		           })
+		           ]
+	});
 	
 	
 	GWDP.ui.addBaseLayers();	
@@ -122,23 +77,38 @@ GWDP.ui.initMap = function() {
 };
 
 GWDP.ui.attachCustomControls = function() {
-	var click = new GWDP.ui.ClickControl({
-    	map: GWDP.ui.map.mainMap,
-    	clickHandler: function(e) {
-    		IDENTIFY.identifyLatLon(GWDP.ui.map.mainMap, e);
-    	}
-    });
-    GWDP.ui.map.mainMap.addControl(click);
-    click.activate();
-    
     var hover = new GWDP.ui.HoverControl({
     	map: GWDP.ui.map.mainMap,
-    	hoverHandler: function(e) {
+    	pauseHandler: function(e) {
     		GWDP.ui.showAHelpTip();
     	}
     });
     GWDP.ui.map.mainMap.addControl(hover);
     hover.activate();
+
+    //this handles ctrl+drag
+    var zoombox = new GWDP.ui.ZoomBoxControl({
+    	map: GWDP.ui.map.mainMap,
+    	keyMask: OpenLayers.Handler.MOD_CTRL,
+    	boxHandler: function(bounds) {
+    		alert("do something with sites in "+bounds.toBBOX());
+    	}
+    });
+    GWDP.ui.map.mainMap.addControl(zoombox);
+    zoombox.activate();
+    
+	var click = new GWDP.ui.ClickControl({
+    	map: GWDP.ui.map.mainMap,
+    	clickHandler: function(e) {
+    		if(e.ctrlKey) {
+    			GWDP.ui.map.addSiteAt(GWDP.ui.map.mainMap, e);
+    		} else {
+    			IDENTIFY.identifyLatLon(GWDP.ui.map.mainMap, e);
+    		}	
+		}
+    });
+    GWDP.ui.map.mainMap.addControl(click);
+    click.activate();
 };
 
 
@@ -368,4 +338,21 @@ GWDP.ui.map.zoomToBoundingBox = function() {
 		}
 	);
 };
+
+GWDP.ui.map.getBBOXAroundPoint = function(map, e) {
+	var pixelClicked = e.xy; //supports openlayers.point as well as window.event
+	
+	var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+	var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
+	
+	var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
+	
+	return bbox;
+}
+
+GWDP.ui.map.addSiteAt = function(map,e) {
+	//TODO
+	var point = GWDP.ui.map.getBBOXAroundPoint(map,e);
+	alert("TODO Add Site(s) found at " + point);
+}
 

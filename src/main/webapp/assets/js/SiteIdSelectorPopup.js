@@ -9,14 +9,9 @@ var IDENTIFY = function (){
 		identifyLatLon: function(map, e) {
 			Ext.getCmp('cmp-map-area').body.mask('Finding nearby point(s).  Please wait...', 'x-mask-loading');
 			
-			var pixelClicked = e.xy;
+			var cql_filters = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues());
 			
-			var clickLLMax = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x + 10, pixelClicked.y + 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
-			var clickLLMin = map.getLonLatFromPixel(new OpenLayers.Pixel(pixelClicked.x - 10, pixelClicked.y - 10)).transform(GWDP.ui.map.mercatorProjection,GWDP.ui.map.wgs84Projection);
-			
-			var cql_filters = GWDP.ui.getCurrentFilterCQLAsString(GWDP.ui.getFilterFormValues()); 
-			
-			var bbox = clickLLMin.lon + "," + clickLLMax.lat + "," + clickLLMax.lon + "," + clickLLMin.lat;
+			var bbox = GWDP.ui.map.getBBOXAroundPoint(map, e);
 			
 			GWDP.domain.Well.getWells(GWDP.ui.map.baseWFSServiceUrl, bbox, cql_filters, function(r){
 				Ext.getCmp('cmp-map-area').body.unmask();

@@ -39,7 +39,10 @@
 		<link rel="stylesheet" href="assets/ux/MultiSelect/MultiSelect.css"/>
 	   	<script type="text/javascript" src='assets/ux/notify/Notify.js'></script>
 		<link rel="stylesheet" href="assets/ux/notify/Notify.css"/>
-	   	<script type="text/javascript" src='assets/ux/openlayers/PanZoom.js'></script>
+	   	<script type="text/javascript" src='assets/js/MapControl/PanZoom.js'></script>
+	   	<script type="text/javascript" src='assets/js/MapControl/ZoomBox.js'></script>
+	   	<script type="text/javascript" src='assets/js/MapControl/Click.js'></script>
+	   	<script type="text/javascript" src='assets/js/MapControl/Hover.js'></script>
 	
 		<!-- Data domain objects -->		
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
