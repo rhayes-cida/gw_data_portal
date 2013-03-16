@@ -472,20 +472,29 @@ GWDP.ui.blockHelpTip = function(mod, offset) {
 GWDP.ui.showAHelpTip = function() {
 	GWDP.ui.showZoomTip();
 	GWDP.ui.showClickTip();
+	GWDP.ui.showSiteSelectionTip();
 	GWDP.ui.blockBuffer++;
 };
 GWDP.ui.tipFrequency = 10;
+
+GWDP.ui.showSiteSelectionTip = function(force){
+	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency, 6)) return;
+	GWDP.ui.notify(' Hold Ctrl & click or drag mouse to add sites to your Site Selection.');
+};
+
 GWDP.ui.showZoomTip = function(force){
-	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency, 5)) return;
-    new Ext.ux.Notify({
-		msg: ' Hold shift & drag mouse to zoom into an area of interest.'
-	}).show(Ext.getCmp('cmp-map-area').getEl());
+	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency, 3)) return;
+	GWDP.ui.notify(' Hold Shift & drag mouse to zoom into an area of interest.');
 };
 
 GWDP.ui.showClickTip = function(force){
 	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency)) return;
-    new Ext.ux.Notify({
-		msg: 'Click a point on the map to identify a site.'
+	GWDP.ui.notify('Click a point on the map to identify a site.');
+};
+
+GWDP.ui.notify = function(msg) {
+	new Ext.ux.Notify({
+		msg: msg
 	}).show(Ext.getCmp('cmp-map-area').getEl());
 };
 

@@ -607,3 +607,91 @@ td.long-text {
 	background-image: url(../images/info-btn.gif) !important;
 }
 .x-tool-info-over {background-position:-15px 0 !important;}
+
+/**
+ * Layer switcher
+ */
+.GWDPuiLayerSwitcher {
+    position: absolute;
+    bottom: 150px;
+    right: 0;
+    width: 20em;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    font-size: smaller;
+    color: white;
+    background-color: transparent;
+}
+
+.GWDPuiLayerSwitcher .layersDiv {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    background-color: darkblue;
+}
+
+.GWDPuiLayerSwitcher .layersDiv .baseLbl,
+.GWDPuiLayerSwitcher .layersDiv .dataLbl {
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+}
+
+.GWDPuiLayerSwitcher .layersDiv .baseLayersDiv,
+.GWDPuiLayerSwitcher .layersDiv .dataLayersDiv {
+    padding-left: 10px;
+}
+
+.GWDPuiLayerSwitcher .maximizeDiv,
+.GWDPuiLayerSwitcher .minimizeDiv {
+    width: 18px;
+    height: 18px;
+    top: 5px;
+    right: 0;
+    cursor: pointer;
+}
+
+.GWDPuiLayerSwitcher .maximizeDiv {
+	top: -165px;
+}
+
+/**
+ * Site Selector
+ */
+.GWDPuiSiteSelector {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    width: 400px;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    font-size: smaller;
+    color: white;
+    background-color: transparent;
+}
+
+.GWDPuiSiteSelector .siteSelectorDiv {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    background-color: darkblue;
+    height: 400px;
+}
+
+
+.GWDPuiSiteSelector .maximizeDiv,
+.GWDPuiSiteSelector .minimizeDiv {
+    width: 18px;
+    height: 18px;
+    top: 5px;
+    right: 0;
+    cursor: pointer;
+}

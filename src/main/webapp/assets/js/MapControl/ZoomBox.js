@@ -55,5 +55,5 @@ GWDP.ui.ZoomBoxControl = OpenLayers.Class(OpenLayers.Control.ZoomBox, {
         }
     },
     
-    CLASS_NAME: "GWDP.ui.HoverControl"
+    CLASS_NAME: "GWDP.ui.ZoomBoxControl"
 });

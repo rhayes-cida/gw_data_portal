@@ -27,7 +27,10 @@ GWDP.ui.initMap = function() {
 		controls: [
 		           new OpenLayers.Control.Navigation(),
 		           new OpenLayers.Control.Attribution(),
-		           new OpenLayers.Control.LayerSwitcher(),
+		           new GWDP.ui.LayerSwitcher(),
+		           new GWDP.ui.SiteSelector({
+		        	   store: GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells")
+		           }),
 		           new GWDP.ui.PanZoomControl({
 		        	   zoomButtonHandler: GWDP.ui.map.zoomToBoundingBox
 		           }),

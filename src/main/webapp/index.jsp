@@ -39,6 +39,8 @@
 		<link rel="stylesheet" href="assets/ux/MultiSelect/MultiSelect.css"/>
 	   	<script type="text/javascript" src='assets/ux/notify/Notify.js'></script>
 		<link rel="stylesheet" href="assets/ux/notify/Notify.css"/>
+	   	<script type="text/javascript" src='assets/js/MapControl/LayerSwitcher.js'></script>
+	   	<script type="text/javascript" src='assets/js/MapControl/SiteSelector.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/PanZoom.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/ZoomBox.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/Click.js'></script>
