@@ -1,96 +1,4 @@
-var DOWNLOAD_SITES = {
-	store : new Ext.data.JsonStore({
-		proxy: new Ext.data.HttpProxy({
-			method: 'GET',
-		    url: 'identify'		
-		}),
-	    autoDestroy: false,
-	    storeId: 'myStore',
-	    root: 'sites',
-	    fields: ['siteName','siteNo','agency','nationalAquiferName']
-	}),
-	// sites: [],
-	loading: false,
-	find: function(map,mapState) {
-
-		DOWNLOAD_SITES.loading = true;
-		DOWNLOAD_SITES.store.removeAll();
-		var win = Ext.getCmp('multisite-download-window');
-		if (win) {
-			win.setTitle('Identifying sites');
-		}
-		
-		var idBBox = map.getViewportBoundingBoxString();
-		
-		var idParams = mapState;
-		idParams.idBBox = idBBox;
-		
-		DOWNLOAD_SITES.store.load({
-			params: idParams,
-			add: false,
-			callback: function(r, o, s) {
-				// sites = r;
-				for (var j=0; j<r.length; j++){
-					var siteRecord = r[j];
-					siteRecord.data.siteName = SITE.createName(siteRecord.data.siteName, siteRecord.data.agency, siteRecord.data.siteNo);
-				}
-				DOWNLOAD_SITES.loading = false;
-				if (r.length == 0) {
-					alert_no_sites();					
-					return;
-				}
-				
-				var win = Ext.getCmp('multisite-download-window');
-				if (win) {
-					win.setTitle(DOWNLOAD_SITES.store.getCount() + ' sites were identified.');
-					win.enable();
-					// force redisplay to make sure sites are shown
-					win.doLayout(false, true);
-				} else {
-					alert('no download window to enable');
-				}
-			}
-		});
-	}
-
-};
-
-function alert_no_sites() {
-	var nosites = Ext.getCmp('multisite-nosite-window');
-	
-	if (nosites) {
-		nosites.show();
-	} else {
-		alert('No sites identified. Please use map controls to display sites');
-	}
-}
-
-//use a less common namespace than just 'log'
-function log_it(msg)
-{
-    // attempt to send a message to the console
-    try
-    {
-        console.log(msg);
-    }
-    // fail gracefully if it does not exist
-    catch(e){}
-}
-
-var settingsData = null;
-Ext.Ajax.request({
-	url: 'settings',
-	success: function(result,request) {
-		var jsonData = Ext.util.JSON.decode(result.responseText);
-		settingsData = jsonData;
-	},
-	failure: function(result,request) {
-		alert("failed to get settings from server");
-	}
-});
-
-
-var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
+GWDP.ui.MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	standardSubmit: true,
 	method: 'POST',
 	hidden: true,
@@ -135,10 +43,9 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 			dom.target = tgt;
 		}
 
-		if (settingsData) {
-			this.url = settingsData.cacheBase;
-		}
-        if(this.url && Ext.isEmpty(dom.action)){
+		this.url = GWDP.ui.cacheBaseUrl
+        
+		if(this.url && Ext.isEmpty(dom.action)){
             dom.action = this.url;
         }
         
@@ -206,7 +113,7 @@ var MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	}
 });
 
-var DownloadHelpPopup = Ext.extend(Ext.Window, {
+GWDP.ui.DownloadHelpPopup = Ext.extend(Ext.Window, {
 	id: 'download-help-window',
 	height: 400,
 	width: 780,
@@ -219,25 +126,8 @@ var DownloadHelpPopup = Ext.extend(Ext.Window, {
 		loadScripts: false
 	}
 });
-var dlHelpWindow = new DownloadHelpPopup();
 
-
-var NoSitesPopup = Ext.extend(Ext.Window, {
-	id: 'multisite-nosite-window',
-	title: 'No Sites Identified',
-	height: 200,
-	width: 650,
-	modal: true,
-	closeAction: 'hide',
-	bodyCssClass: 'help',
-	autoLoad: {
-		url: 'DownloadNosites.html',
-		loadScripts: false
-	}
-});
-var nositesPopupWindow = new NoSitesPopup();
-
-var DownloadPopup = Ext.extend(Ext.Window, {
+GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 	id: 'multisite-download-window',
 	title: 'Multi-site Download',
 	height: 200,
@@ -246,36 +136,29 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 	modal: true,
 	closable: true,
 	closeAction: 'hide',
-	store: DOWNLOAD_SITES.store,
-	disabled: DOWNLOAD_SITES.loading,
 	tools: [{
 		id: 'help',
 		qtip: 'Help on Download',
 		handler: function() {
-			dlHelpWindow.show();
+			(new GWDP.ui.DownloadHelpPopup()).show();
 		}
 	}],
 
 	//resizable: false,
 	initComponent: function() {
-				
-		this.msdlf = new MultisiteDownloadForm();
+		this.store = this.initialConfig.store;
+		
+		this.msdlf = new GWDP.ui.MultisiteDownloadForm();
 		
 		var myMsdlf = this.msdlf;
 
-		if (settingsData) {
-			Ext.apply(myMsdlf, {
-				url: settingsData.cacheBase
-			});			
-		} else {
-			//if ( ! hidden) {
-				//alert("No settings yet");				
-			//}
-		}
+		Ext.apply(myMsdlf, {
+			url: GWDP.ui.cacheBaseUrl
+		});			
 		
 		Ext.apply(this, {
 			closable: true,
-			title: 'Identifying sites',
+			title: 'Download Sites',
 			items: [
 			        {
 			        	id: 'sites-grid',
@@ -284,11 +167,11 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 			        	border: false,
 			        	autoScroll: true,
 			        	viewConfig: {forceFit: true},
-			        	sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
+			        	sm: new Ext.grid.RowSelectionModel({singleSelect: false}),
 			        	colModel: new Ext.grid.ColumnModel([
-                                { header: "Site Name", width: 250, dataIndex: 'siteName'},
-                                { header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'nationalAquiferName'},
-                                { header: "Agency", width: 100, sortable: true, dataIndex: 'agency'}	                
+                                { header: "Site Name", width: 250, dataIndex: 'SITE_NAME'},
+                                { header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
+                                { header: "Agency", width: 100, sortable: true, dataIndex: 'AGENCY_CD'}	                
                                 ])
 			        },
 			        myMsdlf
@@ -340,7 +223,7 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						var ccbb = cbl.getValue();
 						
 						//list of sites
-						var sites = DOWNLOAD_SITES.store.getRange();
+						var sites = this.store.getRange();
 						
 						var numberOfTypesSelected = 0;
 						for (var i = 0; i < ccbb.length; i++) {
@@ -351,8 +234,6 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 								GoogleAnalyticsUtils.logDownloadSiteSetByType(cb.getName(), sites.length);
 							}
 						}
-						
-
 						
 						if ( numberOfTypesSelected <= 0 ) {
 							Ext.MessageBox.alert("Which data would you like?","Please select at least one data type to download.");
@@ -389,22 +270,12 @@ var DownloadPopup = Ext.extend(Ext.Window, {
 						}
 						
 						// TODO Close? Or use tracking window from SiteIdentifyWindow?
-					}
+					},
+					scope: this
 			}]
 		});
 		
 		
-		DownloadPopup.superclass.initComponent.call(this);
+		GWDP.ui.DownloadPopup.superclass.initComponent.call(this);
 	}
 });
-
-var dlPopup = new DownloadPopup();
-dlPopup.hide();
-
-function showDownload() {
-	dlPopup.show();
-}
-
-function hideDownload() {
-	dlPopup.hide();
-}

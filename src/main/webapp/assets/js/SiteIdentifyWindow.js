@@ -276,7 +276,7 @@ var WATER_LEVEL_TAB = {
 		WATER_LEVEL_TAB.mask();
 
 		WATER_LEVEL_TAB.SITE_NO = record.get('SITE_NO');
-		WATER_LEVEL_TAB.AGENCY_CD_cd = MEDIATOR.cleanAgencyCode(record.get('AGENCY_CD'));
+		WATER_LEVEL_TAB.AGENCY_CD = MEDIATOR.cleanAgencyCode(record.get('AGENCY_CD'));
 		
 		WATER_LEVEL_TAB.initGraph();
 
@@ -349,7 +349,7 @@ var WATER_LEVEL_TAB = {
     		};
 		if (!Ext.isIE) dOptions.width = 700;
 		
-		var csvUrl = settingsData.cacheBase + "/../direct/csv/" + WATER_LEVEL_TAB.agency_cd + "/" + WATER_LEVEL_TAB.siteNo;
+		var csvUrl = GWDP.ui.cacheBaseUrl + "/../direct/csv/" + WATER_LEVEL_TAB.AGENCY_CD + "/" + WATER_LEVEL_TAB.SITE_NO;
 		var g = new Dygraph(
 			    document.getElementById("dygraph-plot"),
 			    csvUrl,

@@ -1,3 +1,47 @@
+GWDP.ui.SitePreview = Ext.extend(Ext.Window, {
+	title: 'Preview Sites',
+	height: 500,
+	width: 800,
+	layout: 'fit',
+	modal: true,
+	closable: true,
+	initComponent: function() {
+		this.store = this.initialConfig.store;
+		
+		Ext.apply(this, {
+			closable: true,
+			title: 'Sites Preview',
+			items: [
+		        {
+		        	xtype: 'grid',
+		        	store: this.store,
+		        	border: false,
+		        	autoScroll: true,
+		        	viewConfig: {forceFit: true},
+		        	sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
+		        	colModel: new Ext.grid.ColumnModel([
+                            { header: "Site Name", width: 150, sortable: true, dataIndex: 'SITE_NAME'},
+                            { header: "Site No.", width: 100, sortable: true, dataIndex: 'SITE_NO'} ,
+                            { header: "Local Aquifer Name", width: 60, sortable: true, dataIndex: 'LOCAL_AQUIFER_NAME'},
+                            { header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
+                            { header: "Agency", width: 60, sortable: true, dataIndex: 'AGENCY_CD'},
+                            { header: "Agency Name", width: 60, sortable: true, dataIndex: 'AGENCY_NM'},
+                            { header: "Lat", width: 60, sortable: true, dataIndex: 'DEC_LAT_VA'},
+                            { header: "Lon", width: 60, sortable: true, dataIndex: 'DEC_LONG_VA'},
+                            { header: "Well Depth", width: 60, sortable: true, dataIndex: 'WELL_DEPTH'},
+	        	            {header: 'WL', dataIndex: 'WL_DATA_FLAG', width: 30},
+	        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30},
+	        	            {header: 'Log', dataIndex: 'LOG_DATA_FLAG', width: 30}
+                            ])
+		        }
+			]
+		});
+		
+		
+		GWDP.ui.DownloadPopup.superclass.initComponent.call(this);
+	}
+});
+
 
 GWDP.ui.SiteSelector = 
   OpenLayers.Class(OpenLayers.Control, {
@@ -136,6 +180,8 @@ GWDP.ui.SiteSelector =
      */
     loadContents: function() {
         var _this = this;
+        
+        this.downloadWindow = new GWDP.ui.DownloadPopup({store: this.store});
 
         // layers list div        
         this.siteSelectorDiv = document.createElement("div");
@@ -182,48 +228,68 @@ GWDP.ui.SiteSelector =
         	}],
         	buttons: [
         		{
+        			text: "Remove Selected",
+        			handler: function() { 
+        				var selected = this.grid.getSelectionModel().getSelections();
+        				for(var i = 0; i < selected.length; i++) {
+        					this.store.remove(selected[i]);
+        				}
+        			},
+        			scope: this
+        		},{
         			text: "Preview",
-        			handler: function() { alert('TODO: Show detailed site info grid'); }
+        			handler: function() { 
+        				(new GWDP.ui.SitePreview({store: this.store})).show();
+        			},
+        			scope: this
         		},
         		{
         			text: "Download",
-        			handler: function() { alert('TODO: Start multisite download'); }
+        			handler: function() { 
+        				this.downloadWindow.show();
+        			},
+            		scope: this
         		}
         	],
         	listeners: {
         		afterrender: function(w) {
+        			this.grid = new Ext.grid.GridPanel({
+		        		xtype: 'grid',
+		        		store: _store,
+		        		autoScroll: true,
+		        		height: 350,
+		        		sm: new Ext.grid.RowSelectionModel({singleSelect:false}),
+		        	    colModel: new Ext.grid.ColumnModel({
+		        	        defaults: {
+		        	            sortable: true
+		        	        },
+		        	        columns: [
+		        	            {id: 'SITE_NAME', header: 'Site Name', sortable: true, dataIndex: 'SITE_NAME', width: 205},
+		        	            {header: 'Agency', sortable: true,  dataIndex: 'AGENCY_CD', width: 60},
+		        	            {header: 'WL', dataIndex: 'WL_DATA_FLAG', width: 30},
+		        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30},
+		        	            {header: 'Log', dataIndex: 'LOG_DATA_FLAG', width: 30}
+		        	        ]
+		        	    })
+    				});
+        			
         			w.add({
         				xtype: 'panel',
         				padding: 10,
         				border: false,
-        				items: [{
-				        		xtype: 'grid',
-				        		height: 350,
-				        		store: _store,
-				        	    colModel: new Ext.grid.ColumnModel({
-				        	        defaults: {
-				        	            sortable: true
-				        	        },
-				        	        columns: [
-				        	            {id: 'SITE_NAME', header: 'Site Name', sortable: true, dataIndex: 'SITE_NAME', width: 205},
-				        	            {header: 'Agency', sortable: true,  dataIndex: 'AGENCY_CD', width: 60},
-				        	            {header: 'WL', dataIndex: 'WL_DATA_FLAG', width: 30},
-				        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30},
-				        	            {header: 'Lith', dataIndex: 'LOG_DATA_FLAG', width: 30}
-				        	        ]
-				        	    })
-	        				},
+        				items: [
+        				    this.grid,
 	        				{
 	        					html: "<div id='" + siteCountId + "'>0 sites selected</div>",
 	        					border: false,
-	        					padding: 5,
-	        					handler: function() { alert('TODO: Show detailed site info grid'); }
+	        					padding: 5
 	        				}]
         				}
         			);
         	        w.getEl().dom.onclick = _blockEvent;
         	        w.getEl().dom.onmousedown = _blockEvent;
-        		}
+        		},
+        		scope: this
         	}
         });
 
