@@ -700,7 +700,7 @@ td.long-text {
 .GWDPuiSiteSelector .minimizeDiv {
     width: 18px;
     height: 18px;
-    top: -5px;
+    top: 0px;
     right: 0;
     cursor: pointer;
 }

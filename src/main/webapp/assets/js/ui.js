@@ -481,7 +481,7 @@ GWDP.ui.tipFrequency = 10;
 
 GWDP.ui.showSiteSelectionTip = function(force){
 	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency, 6)) return;
-	GWDP.ui.notify(' Hold Ctrl & click or drag mouse to add sites to your Site Selection.');
+	GWDP.ui.notify(' Ctrl + click to select a site. Hold Ctrl and drag a box to select a group of sites.');
 };
 
 GWDP.ui.showZoomTip = function(force){
