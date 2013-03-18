@@ -669,29 +669,38 @@ td.long-text {
     width: 400px;
     font-family: sans-serif;
     font-weight: bold;
-    margin-top: 3px;
-    margin-left: 3px;
-    margin-bottom: 3px;
     font-size: smaller;
-    color: white;
-    background-color: transparent;
+    background-color: darkblue;
 }
 
 .GWDPuiSiteSelector .siteSelectorDiv {
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    background-color: transparent;
-    height: 400px;
+    background-color: darkblue;
+    height: 380px;
 }
 
+.GWDPuiSiteSelector .x-panel-footer,
+.GWDPuiSiteSelector .x-panel-body {
+    background-color: #DFE8F6;
+    border-bottom: 0 solid white;
+}
+
+.GWDPuiSiteSelector .x-panel-footer {
+    background-color: #DFE8F6;    
+    border-left: solid 1px #99BBE8;   
+    border-right: solid 1px #99BBE8;    
+    border-bottom: solid 1px #99BBE8;    
+}
+
+.GWDPuiSiteSelector .x-grid-panel .x-panel-body {
+	background-color: white;
+    border-bottom: solid 1px #99BBE8; 
+}
 
 .GWDPuiSiteSelector .maximizeDiv,
 .GWDPuiSiteSelector .minimizeDiv {
     width: 18px;
     height: 18px;
-    top: 5px;
+    top: -5px;
     right: 0;
     cursor: pointer;
 }

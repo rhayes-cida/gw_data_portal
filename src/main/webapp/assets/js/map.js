@@ -15,10 +15,17 @@ function dumpExtent(tag, extent, force) {
 	console.log("Extent[" + tag +"]: " + extent);
 }
 
+GWDP.ui.map.siteSelector;
+
 GWDP.ui.initMap = function() {
 	var initCenter = new OpenLayers.LonLat(-89.5042, 43.0973);
     
 	var extent = GWDP.ui.initExtent;
+	
+	GWDP.ui.map.siteSelector = new GWDP.ui.SiteSelector({
+ 	   store: GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells")
+    });
+	
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
 		projection: GWDP.ui.map.mercatorProjection,
 		displayProjection: GWDP.ui.map.wgs84Projection,
@@ -28,9 +35,7 @@ GWDP.ui.initMap = function() {
 		           new OpenLayers.Control.Navigation(),
 		           new OpenLayers.Control.Attribution(),
 		           new GWDP.ui.LayerSwitcher(),
-		           new GWDP.ui.SiteSelector({
-		        	   store: GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells")
-		           }),
+		           GWDP.ui.map.siteSelector,
 		           new GWDP.ui.PanZoomControl({
 		        	   zoomButtonHandler: GWDP.ui.map.zoomToBoundingBox
 		           }),
@@ -370,7 +375,6 @@ GWDP.ui.map.addSitesInBbox = function(bbox) {
 	Ext.getCmp('cmp-map-area').body.mask('Identifying site(s) to add.  Please wait...', 'x-mask-loading');
 	GWDP.domain.Well.getWells(GWDP.ui.map.baseWFSServiceUrl, bbox, cql_filters, function(r){
 		Ext.getCmp('cmp-map-area').body.unmask();
-		//Ext.getCmp('ext-content-panel').body.unmask();
 		if (r.length == 0) {
 			//no sites found
 			Ext.Msg.show({
@@ -383,14 +387,21 @@ GWDP.ui.map.addSitesInBbox = function(bbox) {
 			GWDP.domain.loadOpenlayersRecordIntoArrayStore(r, wellStore);
 			var siteRecord = wellStore.getAt(0);
 			siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
-			alert("TODO add single site: " + siteRecord.data.SITE_NAME);//TODO
+			GWDP.ui.map.siteSelector.addSitesFromStore(wellStore);
 		} else {
 			for (var j=0; j<r.length; j++){
 				var siteRecord = r[j];
 				siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
 			}
 			GWDP.domain.loadOpenlayersRecordIntoArrayStore(r, wellStore);
-			alert("TODO add multiple sites: " + wellStore.data.items.length);//TODO
+	    	Ext.Msg.confirm('Add multiple sites?', 
+	    		'You have selected ' + wellStore.getCount() + ' sites to add. Do you wish to continue and add these sites to your list?',
+	    		function(ans) {
+	    			if(ans=='yes') {
+	    				GWDP.ui.map.siteSelector.addSitesFromStore(wellStore);
+	    			}
+	    		}
+	    	);
 		}
 	});
 };
