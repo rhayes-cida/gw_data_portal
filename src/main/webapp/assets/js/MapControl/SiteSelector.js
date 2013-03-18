@@ -190,8 +190,6 @@ GWDP.ui.SiteSelector =
         this.minimizeDiv.style.display = "none";
 
         this.div.appendChild(this.minimizeDiv);
-        
-        console.log(this.div);
     },
     
     CLASS_NAME: "GWDP.ui.SiteSelector"

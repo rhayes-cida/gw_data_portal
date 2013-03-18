@@ -17,7 +17,11 @@ GWDP.ui.initApp = function() {
 		split: true,
 		hideCollapseTool: true,
 		useSplitTips: true,
-		collapsibleSplitTip: 'Click here to hide the top panel.'
+		collapsibleSplitTip: 'Click here to hide the top panel.',
+		listeners: {
+			expand: GWDP.ui.updateMaximizeTool,
+			collapse: GWDP.ui.updateMaximizeTool
+		}
 	});
 	
 	var footer = new Ext.Panel({ //footer
@@ -32,7 +36,11 @@ GWDP.ui.initApp = function() {
 		useSplitTips: true,
 		collapsibleSplitTip: 'Click here to hide the bottom panel.',
 		height: 125,
-		minSize: 110
+		minSize: 110,
+		listeners: {
+			expand: GWDP.ui.updateMaximizeTool,
+			collapse: GWDP.ui.updateMaximizeTool
+		}
 	});
 		
 	var showHelp = function(event, toolEl, panel,tc) {
@@ -358,16 +366,6 @@ GWDP.ui.initApp = function() {
     	]
     });
     
-    var minimize = function() {
-    	header.expand(false);
-    	footer.expand(false);
-    };
-    
-    var maximize = function() {
-    	header.collapse(true);
-    	footer.collapse(true);
-    };
-    
 	//create the EXTJS layout
 	var content = new Ext.Panel({
 		id: 'content',
@@ -382,20 +380,21 @@ GWDP.ui.initApp = function() {
 				id: 'cmp-map-area',
 				contentEl: 'map-area',
 				tools: [
-						{
-							id: 'info',
-							handler: GWDP.ui.toggleHelpTips
-						},{
-							id: 'help',
-							handler: showHelp
-						},{
-							id: 'restore',
-					        handler: minimize
-						},{
-							id: 'maximize',
-					        handler: maximize
-						}
-					],
+		    	 		{
+		    	 			id: 'info',
+		    	 			handler: GWDP.ui.toggleHelpTips
+		    	 		},{
+		    	 			id: 'help',
+		    	 			handler: showHelp
+		    	 		},{
+		    	 			id: 'maximize',
+		    	 	        handler: GWDP.ui.toggleMaximized
+		    	 		},{
+		    	 			id: 'restore',
+		    	 			hidden: true,
+		    	 	        handler: GWDP.ui.toggleMaximized
+		    	 		}
+		    	 	],
 				listeners: {
 					resize: function(p,w,h) {
 						if(GWDP.ui.map.mainMap) {
@@ -409,6 +408,9 @@ GWDP.ui.initApp = function() {
 	
 	
 	//put together the viewport
+	GWDP.ui.header = header;
+	GWDP.ui.footer = footer;
+	GWDP.ui.maxToolTip
 	new Ext.Viewport({
 		id: 'gwdp-viewport',
 		layout: 'border',
@@ -496,6 +498,30 @@ GWDP.ui.notify = function(msg) {
 	new Ext.ux.Notify({
 		msg: msg
 	}).show(Ext.getCmp('cmp-map-area').getEl());
+};
+
+GWDP.ui.toggleMaximized = function() {
+	var max = !GWDP.ui.header.collapsed || !GWDP.ui.footer.collapsed;
+	if(max) {
+		GWDP.ui.header.collapse(false);
+		GWDP.ui.footer.collapse(false);
+	} else {
+		GWDP.ui.header.expand(false);
+		GWDP.ui.footer.expand(false);
+	}
+	GWDP.ui.updateMaximizeTool();
+};
+
+GWDP.ui.updateMaximizeTool = function() {
+	var restore = GWDP.ui.header.collapsed && GWDP.ui.footer.collapsed;
+	var mapTools = Ext.getCmp('cmp-map-area').tools;
+	if(restore) {
+		mapTools.maximize.hide();
+		mapTools.restore.show();
+	} else {
+		mapTools.maximize.show();
+		mapTools.restore.hide();
+	}
 };
 
 Ext.onReady(GWDP.ui.initApp);
