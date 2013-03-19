@@ -220,6 +220,7 @@ GWDP.ui.SiteSelector =
         	renderTo: this.siteSelectorDiv,
         	buttonAlign: 'right',
         	layout: 'fit',
+        	border: true,
         	tools: [{
         		id: 'minimize',
         		handler: function() {

@@ -69,7 +69,7 @@ GWDP.ui.initApp = function() {
 				region: 'center',
 				autoScroll: true,
 				buttonAlign: 'center',
-				border: true,
+				border: false,
 				layout: 'accordion',
 				animate: true,
 				tools: [
@@ -91,6 +91,7 @@ GWDP.ui.initApp = function() {
 				items: [{
 					title: 'NGWMN NETWORKS',
 					padding: 5,
+					border: false,
 					items: [{ //water level sub container
 							xtype: "panel",
 							layout: 'form',
@@ -198,6 +199,7 @@ GWDP.ui.initApp = function() {
 					title: 'FILTER MAP DATA',
 					layout: 'accordion',
 					padding: 0,
+					border: false,
 					bodyCssClass: 'ngwmn-subfilter',
 					items: [{
 						title: 'Principal Aquifer',
@@ -205,6 +207,7 @@ GWDP.ui.initApp = function() {
 						layout: 'form',
 						labelWidth: 1, //required
 						padding: 5,
+						border: false,
 						autoScroll: true,
 						items: [{
 				            xtype: 'multiselect',
@@ -228,6 +231,7 @@ GWDP.ui.initApp = function() {
 						layout: 'hbox',
 						labelWidth: 1, //required
 						padding: 5,
+						border: false,
 						autoScroll: true,
 						items: [{
 							xtype: 'checkbox',
@@ -251,6 +255,7 @@ GWDP.ui.initApp = function() {
 						layout: 'form',
 						padding: 5,
 						autoScroll: true,
+						border: false,
 			            labelAlign: 'top',
 			            labelWidth: 150,
 						items: [{
@@ -346,6 +351,7 @@ GWDP.ui.initApp = function() {
 						xtype: "panel",
 						layout: 'form',
 						padding: 5,
+						border: false,
 						autoScroll: true,
 						labelWidth: 1,//required
 						items: [{
