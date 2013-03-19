@@ -622,6 +622,10 @@ td.long-text {
     margin-top: 45px;
 }
 
+#banner-title a:hover {
+	text-decoration: none;  
+}
+
 .ngwmn-highlight {
 	color: #d1544a !important;
 }
