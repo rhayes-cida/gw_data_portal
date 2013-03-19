@@ -162,8 +162,9 @@
 /* Toolbars */
 
 .x-toolbar{
-	border-color:#72665c;
-    background:#f0f4f5 url(images/toolbar/bg.gif) repeat-x top left;
+	border-color:#c6bab6;
+    background-color: #c6bab6;
+    background-image: none;
 }
 .x-toolbar button {
     color:#444;
@@ -473,6 +474,11 @@ body.x-body-masked .x-window-mc, body.x-body-masked .x-window-plain .x-window-mc
 
 .x-ux-notify .x-window-body {
 	background-color: #c6bab6;
+}
+
+.x-window-bbar .x-toolbar {
+    border-top-color: #c6bab6;
+    background-color: #c6bab6;
 }
 
 /* grids */
