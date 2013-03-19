@@ -181,6 +181,10 @@ Ext.ux.Notify = Ext.extend(Ext.Window, {
 			this.html = this.msg;
 		}
 		Ext.ux.Notify.superclass.initComponent.call(this);
+		
+		this.on('afterrender', function(w){
+			w.el.dom.className += " x-ux-notify";
+		});
 	},
 	onDestroy: function(){
 		Ext.ux.NotifyMgr.positions.remove(this.pos);

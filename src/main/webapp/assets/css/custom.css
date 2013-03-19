@@ -608,6 +608,28 @@ td.long-text {
 }
 .x-tool-info-over {background-position:-15px 0 !important;}
 
+#ccsa-area {
+	background-color: white;
+}
+
+#banner-title,
+#banner-title a {
+	bottom: 0px;
+	font-size: large;
+	color: #233f8f !important;  
+	text-decoration: none;  
+	margin-right: 10px;
+    margin-top: 45px;
+}
+
+.ngwmn-highlight {
+	color: #d1544a !important;
+}
+
+.ngwmn-currentview-panel {
+	background-color: #f3755e
+}
+
 /**
  * Layer switcher
  */
@@ -680,20 +702,19 @@ td.long-text {
 
 .GWDPuiSiteSelector .x-panel-footer,
 .GWDPuiSiteSelector .x-panel-body {
-    background-color: #DFE8F6;
+    background-color: #c6bab6;
     border-bottom: 0 solid white;
 }
 
 .GWDPuiSiteSelector .x-panel-footer {
-    background-color: #DFE8F6;    
-    border-left: solid 1px #99BBE8;   
-    border-right: solid 1px #99BBE8;    
-    border-bottom: solid 1px #99BBE8;    
+    background-color: #c6bab6;    
+    border-left: solid 1px #72665c;   
+    border-right: solid 1px #72665c;    
+    border-bottom: solid 1px #72665c;    
 }
 
 .GWDPuiSiteSelector .x-grid-panel .x-panel-body {
-	background-color: white;
-    border-bottom: solid 1px #99BBE8; 
+    border: none; 
 }
 
 .GWDPuiSiteSelector .maximizeDiv,

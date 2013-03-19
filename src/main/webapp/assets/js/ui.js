@@ -11,13 +11,11 @@ GWDP.ui.initApp = function() {
 		region: 'north',
 		border: false,
 		contentEl: 'header',
-		height: 103,
-		collapsible: true,
+		height: 80,
 		collapseMode: 'mini',
-		split: true,
 		hideCollapseTool: true,
-		useSplitTips: true,
-		collapsibleSplitTip: 'Click here to hide the top panel.',
+		animCollapse: false,
+		titleCollapse: true,
 		listeners: {
 			expand: GWDP.ui.updateMaximizeTool,
 			collapse: GWDP.ui.updateMaximizeTool
@@ -29,12 +27,9 @@ GWDP.ui.initApp = function() {
 		contentEl: 'footer',
 		layout: 'fit',
 		border: false,
-		collapsible: true,
 		collapseMode: 'mini',
-		split: true,
 		hideCollapseTool: true,
-		useSplitTips: true,
-		collapsibleSplitTip: 'Click here to hide the bottom panel.',
+		animCollapse: false,
 		height: 125,
 		minSize: 110,
 		listeners: {
@@ -61,6 +56,7 @@ GWDP.ui.initApp = function() {
     	border: false,
 		collapsible: true,
 		collapseMode: 'mini',
+		animCollapse: false,
 		split: true,
 		hideCollapseTool: true,
 		useSplitTips: true,
@@ -71,19 +67,35 @@ GWDP.ui.initApp = function() {
 				xtype: 'form',
 				id: 'gwdpFilters',
 				region: 'center',
-				title: 'Filter Sites',
 				autoScroll: true,
 				buttonAlign: 'center',
 				border: true,
 				layout: 'accordion',
 				animate: true,
+				tools: [
+		    	 		{
+		    	 			id: 'info',
+		    	 			handler: GWDP.ui.toggleHelpTips
+		    	 		},{
+		    	 			id: 'help',
+		    	 			handler: showHelp
+		    	 		},{
+		    	 			id: 'maximize',
+		    	 	        handler: GWDP.ui.toggleMaximized
+		    	 		},{
+		    	 			id: 'restore',
+		    	 			hidden: true,
+		    	 	        handler: GWDP.ui.toggleMaximized
+		    	 		}
+		    	 	],
 				items: [{
-					title: 'NGWMN Networks',
+					title: 'NGWMN NETWORKS',
 					padding: 5,
 					items: [{ //water level sub container
 							xtype: "panel",
 							layout: 'form',
 							border: false,
+							autoScroll: true,
 							items: [{
 									xtype: 'checkbox',
 									fieldLabel: "<b>Water level</b>",
@@ -183,184 +195,191 @@ GWDP.ui.initApp = function() {
 						}
 					]
 				},{
-					title: 'Principal Aquifer',
-					xtype: "panel",
-					layout: 'form',
-					labelWidth: 1, //required
-					padding: 5,
-					autoScroll: true,
+					title: 'FILTER MAP DATA',
+					layout: 'accordion',
+					padding: 0,
+					bodyCssClass: 'ngwmn-subfilter',
 					items: [{
-			            xtype: 'multiselect',
-			            id: 'principalAquifer',
-			            name: 'principalAquifer',
-			            width: 240,
-			            height: 'auto',
-			            allowBlank:true,
-			            displayField: 'AQUIFER',
-			            valueField: 'AQUIFERCODE',
-			            value: "All",
-			            store: GWDP.domain.Aquifer.getAquiferMetadata({}, function() { Ext.getCmp('principalAquifer').setValue('All'); }, "All"),
-			            ddReorder: true,
-			            listeners: {
-			            	change: function() { GWDP.ui.getUpdateMap(); }
-			            }
-			        }]
-				},{
-					title: 'Available Data',
-					xtype: "panel",
-					layout: 'hbox',
-					labelWidth: 1, //required
-					padding: 5,
-					autoScroll: true,
-					items: [{
-						xtype: 'checkbox',
-						name: 'WL_DATA_FLAG',
-						boxLabel: 'Water Level',
-		            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-					},{
-						xtype: 'checkbox',
-						name: 'QW_DATA_FLAG',
-						boxLabel: 'Water Quality',
-		            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-					},{
-						xtype: 'checkbox',
-						name: 'LOG_DATA_FLAG',
-						boxLabel: 'Well Log',
-		            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-					}]
-				},{
-					title: 'State and County',
-					xtype: "panel",
-					layout: 'form',
-					padding: 5,
-					autoScroll: true,
-		            labelAlign: 'top',
-		            labelWidth: 150,
-					items: [{
-						xtype: 'radio',
-						boxLabel: "Multiple states",
-						name: 'stateOrCountyRadio',
-						checked: true
-					},{
-						xtype: 'radio',
-						boxLabel: "One state, multiple counties",
-						name: 'stateOrCountyRadio',
-						checked: false,
-						listeners: {
-							check: function(r, checked) {
-								GWDP.ui.toggleCountiesFilter(checked);
-							}
-						}
-					},{
+						title: 'Principal Aquifer',
 						xtype: "panel",
-						border: false, 
-						html: '<br/>'
-					},{
-			            xtype: 'multiselect',
-			            fieldLabel: 'States',
-			            id: 'states',
-			            name: 'states',
-			            width: 240,
-			            height: 'auto',
-			            allowBlank:true,
-			            displayField: 'STATE_NM',
-			            valueField: 'STATE_CD',
-			            disabled: false,
-			            value: "All",
-			            store: GWDP.domain.State.getStateMetadata({}, function() { Ext.getCmp('states').setValue('All'); }, 'All'),
-			            ddReorder: true,
-			            listeners: {
-			            	change: function() { GWDP.ui.getUpdateMap(); }
-			            }
-			        },{
-			            xtpe: 'container',
-			            id: 'countiesContainer',
-			            layout: 'form',
-			            border: false,
-			            hidden: true,
-			            labelAlign: 'top',
-			            labelWidth: 150,
-			            items: [{
-			            	fieldLabel: "State",
-				            xtype: 'combo',
-				            id: 'statesCombo',
-				            name: 'statesCombo',
-				            hiddenName: "states",
-				            triggerAction: 'all',
-				            disabled: true, //this must be disabled if the other state filter is enabled
-				            width: 240,
-				            mode: 'local',
-				            disableKeyFilter: true, 
-				            displayField: 'STATE_NM',
-				            valueField: 'STATE_CD',
-				            value: "All",
-				            typeAhead: false,
-				            forceSelection: true,
-				            store: GWDP.domain.State.getStateMetadata({}, function() { Ext.getCmp('statesCombo').setValue('All'); }, 'All'),
-				            listeners: {
-				            	select: function(c) {
-				            		GWDP.ui.getUpdateMap();
-				            		GWDP.ui.refreshCountiesFilter(c.getValue()); 
-				            	},
-				            	change: function(c) {
-				            		GWDP.ui.getUpdateMap();
-				            	}
-				            }
-				        },{
-				        	fieldLabel: "Counties",
-			            	xtype: 'multiselect',
-				            id: 'counties',
-				            name: 'counties',
+						layout: 'form',
+						labelWidth: 1, //required
+						padding: 5,
+						autoScroll: true,
+						items: [{
+				            xtype: 'multiselect',
+				            id: 'principalAquifer',
+				            name: 'principalAquifer',
 				            width: 240,
 				            height: 'auto',
 				            allowBlank:true,
-				            displayField: 'COUNTY_NM',
-				            valueField: 'COUNTY_CD',
+				            displayField: 'AQUIFER',
+				            valueField: 'AQUIFERCODE',
 				            value: "All",
-				            store: GWDP.domain.County.getCountyMetadata({}, function() { Ext.getCmp('counties').setValue('All'); }, 'All'),
+				            store: GWDP.domain.Aquifer.getAquiferMetadata({}, function() { Ext.getCmp('principalAquifer').setValue('All'); }, "All"),
 				            ddReorder: true,
 				            listeners: {
 				            	change: function() { GWDP.ui.getUpdateMap(); }
 				            }
-			            }]
-			        }]
-				},{
-					title: 'Contributing Agency',
-					xtype: "panel",
-					layout: 'form',
-					padding: 5,
-					autoScroll: true,
-					labelWidth: 1,//required
-					items: [{
-			            xtype: 'multiselect',
-			            id: 'contributingAgencies',
-			            name: 'contributingAgencies',
-			            width: 240,
-			            height: 'auto',
-			            allowBlank:true,
-			            displayField: 'AGENCY_NM',
-			            valueField: 'AGENCY_CD',
-			            value: "All",
-			            store: GWDP.domain.Agency.getAgencyMetadata({}, function() { Ext.getCmp('contributingAgencies').setValue('All'); }, 'All'),
-			            ddReorder: true,
-			            listeners: {
-			            	change: function() { GWDP.ui.getUpdateMap(); }
-			            }
-			        }]
+				        }]
+					},{
+						title: 'Available Data',
+						xtype: "panel",
+						layout: 'hbox',
+						labelWidth: 1, //required
+						padding: 5,
+						autoScroll: true,
+						items: [{
+							xtype: 'checkbox',
+							name: 'WL_DATA_FLAG',
+							boxLabel: 'Water Level',
+			            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+						},{
+							xtype: 'checkbox',
+							name: 'QW_DATA_FLAG',
+							boxLabel: 'Water Quality',
+			            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+						},{
+							xtype: 'checkbox',
+							name: 'LOG_DATA_FLAG',
+							boxLabel: 'Well Log',
+			            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+						}]
+					},{
+						title: 'State and County',
+						xtype: "panel",
+						layout: 'form',
+						padding: 5,
+						autoScroll: true,
+			            labelAlign: 'top',
+			            labelWidth: 150,
+						items: [{
+							xtype: 'radio',
+							boxLabel: "Multiple states",
+							name: 'stateOrCountyRadio',
+							checked: true
+						},{
+							xtype: 'radio',
+							boxLabel: "One state, multiple counties",
+							name: 'stateOrCountyRadio',
+							checked: false,
+							listeners: {
+								check: function(r, checked) {
+									GWDP.ui.toggleCountiesFilter(checked);
+								}
+							}
+						},{
+							xtype: "panel",
+							border: false, 
+							html: '<br/>'
+						},{
+				            xtype: 'multiselect',
+				            fieldLabel: 'States',
+				            id: 'states',
+				            name: 'states',
+				            width: 240,
+				            height: 'auto',
+				            allowBlank:true,
+				            displayField: 'STATE_NM',
+				            valueField: 'STATE_CD',
+				            disabled: false,
+				            value: "All",
+				            store: GWDP.domain.State.getStateMetadata({}, function() { Ext.getCmp('states').setValue('All'); }, 'All'),
+				            ddReorder: true,
+				            listeners: {
+				            	change: function() { GWDP.ui.getUpdateMap(); }
+				            }
+				        },{
+				            xtpe: 'container',
+				            id: 'countiesContainer',
+				            layout: 'form',
+				            border: false,
+				            hidden: true,
+				            labelAlign: 'top',
+				            labelWidth: 150,
+				            items: [{
+				            	fieldLabel: "State",
+					            xtype: 'combo',
+					            id: 'statesCombo',
+					            name: 'statesCombo',
+					            hiddenName: "states",
+					            triggerAction: 'all',
+					            disabled: true, //this must be disabled if the other state filter is enabled
+					            width: 240,
+					            mode: 'local',
+					            disableKeyFilter: true, 
+					            displayField: 'STATE_NM',
+					            valueField: 'STATE_CD',
+					            value: "All",
+					            typeAhead: false,
+					            forceSelection: true,
+					            store: GWDP.domain.State.getStateMetadata({}, function() { Ext.getCmp('statesCombo').setValue('All'); }, 'All'),
+					            listeners: {
+					            	select: function(c) {
+					            		GWDP.ui.getUpdateMap();
+					            		GWDP.ui.refreshCountiesFilter(c.getValue()); 
+					            	},
+					            	change: function(c) {
+					            		GWDP.ui.getUpdateMap();
+					            	}
+					            }
+					        },{
+					        	fieldLabel: "Counties",
+				            	xtype: 'multiselect',
+					            id: 'counties',
+					            name: 'counties',
+					            width: 240,
+					            height: 'auto',
+					            allowBlank:true,
+					            displayField: 'COUNTY_NM',
+					            valueField: 'COUNTY_CD',
+					            value: "All",
+					            store: GWDP.domain.County.getCountyMetadata({}, function() { Ext.getCmp('counties').setValue('All'); }, 'All'),
+					            ddReorder: true,
+					            listeners: {
+					            	change: function() { GWDP.ui.getUpdateMap(); }
+					            }
+				            }]
+				        }]
+					},{
+						title: 'Contributing Agency',
+						xtype: "panel",
+						layout: 'form',
+						padding: 5,
+						autoScroll: true,
+						labelWidth: 1,//required
+						items: [{
+				            xtype: 'multiselect',
+				            id: 'contributingAgencies',
+				            name: 'contributingAgencies',
+				            width: 240,
+				            height: 'auto',
+				            allowBlank:true,
+				            displayField: 'AGENCY_NM',
+				            valueField: 'AGENCY_CD',
+				            value: "All",
+				            store: GWDP.domain.Agency.getAgencyMetadata({}, function() { Ext.getCmp('contributingAgencies').setValue('All'); }, 'All'),
+				            ddReorder: true,
+				            listeners: {
+				            	change: function() { GWDP.ui.getUpdateMap(); }
+				            }
+				        }]
+					}]
 				}
 				]
 			},{ //panel for stats
 				xtype: 'panel',
 				region: 'south',
 				border: false,
-				height: 75,
-				padding: 5,
-				bodyStyle: "background-color: transparent",
+				height: 100,
+				padding: 10,
+				title: 'CURRENT VIEW',
+				bodyCssClass: "ngwmn-currentview-panel",
 				defaults: {
-					bodyStyle: "background-color: transparent; text-align: center; font-size: small;",
+					bodyStyle: "background-color: transparent; text-align: left; font-size: x-small; font-weight: bold;",
 					border: false
 				},
-				items: [GWDP.ui.pointsCount,GWDP.ui.waterLevelCount,GWDP.ui.waterQualityCount
+				items: [GWDP.ui.pointsCount,GWDP.ui.waterLevelCount, GWDP.ui.waterQualityCount
 				]
 			}        
     	]
@@ -379,22 +398,6 @@ GWDP.ui.initApp = function() {
 				border: true,
 				id: 'cmp-map-area',
 				contentEl: 'map-area',
-				tools: [
-		    	 		{
-		    	 			id: 'info',
-		    	 			handler: GWDP.ui.toggleHelpTips
-		    	 		},{
-		    	 			id: 'help',
-		    	 			handler: showHelp
-		    	 		},{
-		    	 			id: 'maximize',
-		    	 	        handler: GWDP.ui.toggleMaximized
-		    	 		},{
-		    	 			id: 'restore',
-		    	 			hidden: true,
-		    	 	        handler: GWDP.ui.toggleMaximized
-		    	 		}
-		    	 	],
 				listeners: {
 					resize: function(p,w,h) {
 						if(GWDP.ui.map.mainMap) {
@@ -491,7 +494,6 @@ GWDP.ui.showZoomTip = function(force){
 
 GWDP.ui.showClickTip = function(force){
 	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency)) return;
-	GWDP.ui.notify('Click a point on the map to identify a site.');
 };
 
 GWDP.ui.notify = function(msg) {
@@ -514,7 +516,7 @@ GWDP.ui.toggleMaximized = function() {
 
 GWDP.ui.updateMaximizeTool = function() {
 	var restore = GWDP.ui.header.collapsed && GWDP.ui.footer.collapsed;
-	var mapTools = Ext.getCmp('cmp-map-area').tools;
+	var mapTools = Ext.getCmp('gwdpFilters').tools;
 	if(restore) {
 		mapTools.maximize.hide();
 		mapTools.restore.show();

@@ -1,5 +1,6 @@
 <%
 	String pageTitle = request.getParameter("pageTitle") == null ? "" : request.getParameter("pageTitle"); 
+	String headerTitle = request.getParameter("headerTitle") == null ? "" : request.getParameter("headerTitle"); 
 %>
 <div id="header">
 			<div id="banner-area">
@@ -26,6 +27,9 @@
 				</div>
 				
 				<div id="ccsa-area">
+				<% if(!headerTitle.equals("")){ %>
+				<div id="banner-title"><a href="splash.jsp">National <span class='ngwmn-highlight'>Groundwater</span> Monitoring Network</a></div>
+				<% } %>
 				</div>
 			</div><!-- End content -->
 				

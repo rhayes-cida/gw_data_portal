@@ -68,8 +68,9 @@
 
 		
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
-		<link rel="stylesheet" href="assets/css/custom.css"/>
+		<link rel="stylesheet" href="assets/ngwmn_ext_skin/xtheme-ngwmn.css"/>
 		<link rel="stylesheet" href="assets/css/index.css"/>
+		<link rel="stylesheet" href="assets/css/custom.css"/>
     	
 	
 		<!-- Google Analytics -->
@@ -100,7 +101,7 @@
 	</head>
 	
 	<body>
-		<jsp:include page="header.jsp"><jsp:param value="National Groundwater Monitoring Network" name="pageTitle"/></jsp:include>
+		<jsp:include page="header.jsp"><jsp:param value="true" name="headerTitle"/></jsp:include>
 		
 		<div id="map-area" class="x-hidden" style="width: 100%; height: 100%;">
 		</div>
