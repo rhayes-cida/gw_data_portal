@@ -500,6 +500,7 @@ GWDP.ui.showZoomTip = function(force){
 
 GWDP.ui.showClickTip = function(force){
 	if(force || GWDP.ui.blockHelpTip(GWDP.ui.tipFrequency)) return;
+	GWDP.ui.notify('Click a point on the map to identify a site.');
 };
 
 GWDP.ui.notify = function(msg) {

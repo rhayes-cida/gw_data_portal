@@ -75,6 +75,7 @@ GWDP.ui.SiteSelector =
         OpenLayers.Control.prototype.initialize.apply(this, arguments);
         var _this = this;
         this.store = options.store;
+        this.emptyText = options.emptyText;
     },
 
     /**
@@ -130,6 +131,7 @@ GWDP.ui.SiteSelector =
 
         this.showControls(false);
         this.window.show();
+        this.grid.syncSize();
         
         if (e != null) {
             OpenLayers.Event.stop(e);
@@ -254,11 +256,16 @@ GWDP.ui.SiteSelector =
         	],
         	listeners: {
         		afterrender: function(w) {
+        			console.log(this.emptyText);
         			this.grid = new Ext.grid.GridPanel({
 		        		xtype: 'grid',
 		        		store: _store,
 		        		autoScroll: true,
 		        		height: 350,
+		            	viewConfig: {
+		                    emptyText: this.emptyText,
+		                    deferEmptyText: false
+		                },
 		        		sm: new Ext.grid.RowSelectionModel({singleSelect:false}),
 		        	    colModel: new Ext.grid.ColumnModel({
 		        	        defaults: {

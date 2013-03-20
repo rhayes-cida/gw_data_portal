@@ -23,7 +23,8 @@ GWDP.ui.initMap = function() {
 	var extent = GWDP.ui.initExtent;
 	
 	GWDP.ui.map.siteSelector = new GWDP.ui.SiteSelector({
- 	   store: GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells")
+ 	   store: GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells"),
+ 	   emptyText: 'Ctrl + click to select a site. Hold Ctrl and drag a box to select a group of sites.'
     });
 	
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
@@ -388,6 +389,9 @@ GWDP.ui.map.addSitesInBbox = function(bbox) {
 			var siteRecord = wellStore.getAt(0);
 			siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
 			GWDP.ui.map.siteSelector.addSitesFromStore(wellStore);
+			if(GWDP.ui.map.siteSelector.store.getCount()>0) {
+				GWDP.ui.map.siteSelector.maximizeControl();
+			}
 		} else {
 			for (var j=0; j<r.length; j++){
 				var siteRecord = r[j];
@@ -399,6 +403,9 @@ GWDP.ui.map.addSitesInBbox = function(bbox) {
 	    		function(ans) {
 	    			if(ans=='yes') {
 	    				GWDP.ui.map.siteSelector.addSitesFromStore(wellStore);
+	    				if(GWDP.ui.map.siteSelector.store.getCount()>0) {
+	    					GWDP.ui.map.siteSelector.maximizeControl();
+	    				}
 	    			}
 	    		}
 	    	);
