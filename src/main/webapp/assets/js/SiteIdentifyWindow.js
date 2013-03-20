@@ -348,6 +348,7 @@ var WATER_LEVEL_TAB = {
 		    	}
     		};
 		if (!Ext.isIE) dOptions.width = 700;
+		dOptions.padding = 25;
 		
 		var csvUrl = GWDP.ui.cacheBaseUrl + "/../direct/csv/" + WATER_LEVEL_TAB.AGENCY_CD + "/" + WATER_LEVEL_TAB.SITE_NO;
 		var g = new Dygraph(
@@ -632,6 +633,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						// height: 350,
 						// width: '100%',
 						anchor: '100% 350',
+						padding: 5,
+						bodyStyle: "background-color: white",
 						cls: labelCls,
 						html: '<div id="dygraph-plot"></div/>'
 					},{
