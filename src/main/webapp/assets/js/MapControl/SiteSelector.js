@@ -199,6 +199,7 @@ GWDP.ui.SiteSelector =
 	        }
         };
         this.siteSelectorDiv.onclick = _blockEvent;
+        this.siteSelectorDiv.ondblclick = _blockEvent;
         this.siteSelectorDiv.onmousedown = _blockEvent;
         
         this.div.appendChild(this.siteSelectorDiv);
@@ -295,6 +296,7 @@ GWDP.ui.SiteSelector =
         				}
         			);
         	        w.getEl().dom.onclick = _blockEvent;
+        	        w.getEl().dom.ondblclick = _blockEvent;
         	        w.getEl().dom.onmousedown = _blockEvent;
         		},
         		scope: this

@@ -634,6 +634,11 @@ td.long-text {
 	background-color: #f3755e
 }
 
+#dygraph-plot {
+	background-color: white;    
+	padding: 25px;
+}
+
 /**
  * Layer switcher
  */
