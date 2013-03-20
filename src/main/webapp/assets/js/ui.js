@@ -89,9 +89,10 @@ GWDP.ui.initApp = function() {
 		    	 		}
 		    	 	],
 				items: [{
-					title: 'NGWMN NETWORKS',
+					title: '<b>NGWMN NETWORKS</b>',
 					padding: 5,
 					border: false,
+					autoScroll: true,
 					items: [{ //water level sub container
 							xtype: "panel",
 							layout: 'form',
@@ -196,7 +197,7 @@ GWDP.ui.initApp = function() {
 						}
 					]
 				},{
-					title: 'FILTER MAP DATA',
+					title: '<b>FILTER MAP DATA</b>',
 					layout: 'accordion',
 					padding: 0,
 					border: false,
