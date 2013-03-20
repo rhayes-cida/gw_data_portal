@@ -23,7 +23,7 @@ GWDP.ui.SitePreview = Ext.extend(Ext.Window, {
                             { header: "Site Name", width: 150, sortable: true, dataIndex: 'SITE_NAME'},
                             { header: "Site No.", width: 100, sortable: true, dataIndex: 'SITE_NO'} ,
                             { header: "Local Aquifer Name", width: 60, sortable: true, dataIndex: 'LOCAL_AQUIFER_NAME'},
-                            { header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
+                            { header: "Principle Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
                             { header: "Agency", width: 60, sortable: true, dataIndex: 'AGENCY_CD'},
                             { header: "Agency Name", width: 60, sortable: true, dataIndex: 'AGENCY_NM'},
                             { header: "Lat", width: 60, sortable: true, dataIndex: 'DEC_LAT_VA'},
