@@ -67,9 +67,10 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 				viewConfig: {forceFit: true},
 			    sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 			    colModel: new Ext.grid.ColumnModel([
+			        { header: "Agency", width: 100, sortable: true, dataIndex: 'AGENCY_CD'},         
+					{ header: "Site No", width: 100, dataIndex: 'SITE_NO'},   
 					{ header: "Site Name", width: 250, dataIndex: 'SITE_NAME'},
-					{ header: "Ntl Aquifer Name", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
-					{ header: "Agency", width: 100, sortable: true, dataIndex: 'AGENCY_CD'}	                
+					{ header: "Principle Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'}
 	            ])
 			},
 			buttons: [{
