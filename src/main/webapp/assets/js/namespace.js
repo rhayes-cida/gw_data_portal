@@ -10,3 +10,5 @@ Ext.ns("GWDP.domain.Agency"); //data domain namespace for well objects
 Ext.ns("GWDP.domain.State"); //data domain namespace for well objects
 Ext.ns("GWDP.domain.County"); //data domain namespace for well objects
 Ext.ns("GWDP.domain.Aquifer"); //data domain namespace for well objects
+
+Ext.BLANK_IMAGE_URL = "assets/ngwmn_ext_skin/images/s.gif";
