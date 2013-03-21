@@ -170,7 +170,7 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 			        	sm: new Ext.grid.RowSelectionModel({singleSelect: false}),
 			        	colModel: new Ext.grid.ColumnModel([
                                 { header: "Site Name", width: 250, dataIndex: 'SITE_NAME'},
-                                { header: "Principle Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
+                                { header: "Principal Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
                                 { header: "Agency", width: 100, sortable: true, dataIndex: 'AGENCY_CD'}	                
                                 ])
 			        },

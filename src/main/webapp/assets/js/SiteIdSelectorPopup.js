@@ -70,7 +70,7 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 			        { header: "Agency", width: 100, sortable: true, dataIndex: 'AGENCY_CD'},         
 					{ header: "Site No", width: 100, dataIndex: 'SITE_NO'},   
 					{ header: "Site Name", width: 250, dataIndex: 'SITE_NAME'},
-					{ header: "Principle Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'}
+					{ header: "Principal Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'}
 	            ])
 			},
 			buttons: [{
