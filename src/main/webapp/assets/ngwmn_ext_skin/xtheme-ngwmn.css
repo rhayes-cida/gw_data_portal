@@ -125,6 +125,17 @@ default.
 	float: left;
 }
 
+.x-accordion-hd .x-tool-toggle {
+    background-position: 0 0px;
+}
+
+.x-panel-collapsed .x-accordion-hd .x-tool-toggle {
+    background-position: -15px 0px;
+}
+.x-tool {
+    background-image: url("images/panel/chevrons.gif");
+}
+
 .ngwmn-subfilter .x-accordion-hd {
 	background-color: #72665c;
 }
@@ -359,6 +370,20 @@ ul.x-tab-strip-bottom{
     border-right:1px solid #72665c;
     background:transparent !important;
 }
+
+.x-window-dlg .ext-mb-warning {
+    background-image: url("images/icons/icon-warning.gif");
+}
+.x-window-dlg .ext-mb-error {
+    background-image: url("images/icons/icon-error.gif");
+}
+.x-window-dlg .ext-mb-question {
+    background-image: url("images/icons/icon-question.gif");
+}
+.x-window-dlg .ext-mb-info {
+    background-image: url("images/icons/icon-info.gif");
+}
+
 
 body.x-body-masked .x-window-mc, body.x-body-masked .x-window-plain .x-window-mc {
     background-color: #c6bab6;
@@ -600,4 +625,36 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 
 .ux-form-multiselect .x-fieldset {
 	padding: 0px !important;
+}
+
+/* toggle button */
+.ux-toggle-button {
+    background-image: url("images/icons/icon-error.gif");
+	background-position: 0px 0 !important;
+	cursor: pointer;
+}
+.ux-toggle-button-checked {
+	background-position:-80px 0 !important;
+}
+
+.x-toggle-button-wrap {
+    line-height:18px;
+    height: auto;
+    width: 80px;
+    text-align: center;
+    text-wrap: unrestricted;
+}
+
+.x-toggle-button-label {
+    position: relative;
+}
+
+.ux-toggle-button-water-level {
+    background-image: url("images/icons/da_waterlevel.gif") !important;
+}
+.ux-toggle-button-water-quality {
+    background-image: url("images/icons/da_waterquality.gif") !important;
+}
+.ux-toggle-button-well-log{
+    background-image: url("images/icons/da_litho.gif") !important;
 }

@@ -235,21 +235,42 @@ GWDP.ui.initApp = function() {
 						border: false,
 						autoScroll: true,
 						items: [{
-							xtype: 'checkbox',
-							name: 'WL_DATA_FLAG',
-							boxLabel: 'Water Level',
-			            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-						},{
-							xtype: 'checkbox',
-							name: 'QW_DATA_FLAG',
-							boxLabel: 'Water Quality',
-			            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-						},{
-							xtype: 'checkbox',
-							name: 'LOG_DATA_FLAG',
-							boxLabel: 'Well Log',
-			            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-						}]
+							xtype: 'panel',
+							border: false,
+							padding: 5,
+							items: [{
+								xtype: 'togglebutton',
+								imgClass: 'water-level',
+								name: 'WL_DATA_FLAG',
+								boxLabel: 'Water Level',
+				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+							}]
+						}
+						,{
+							xtype: 'panel',
+							border: false,
+							padding: 5,
+							items: [{
+								xtype: 'togglebutton',
+								imgClass: 'water-quality',
+								name: 'QW_DATA_FLAG',
+								boxLabel: 'Water Quality',
+				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+							}]
+						}
+						,{
+							xtype: 'panel',
+							border: false,
+							padding: 5,
+							items: [{
+								xtype: 'togglebutton',
+								imgClass: 'well-log',
+								name: 'LOG_DATA_FLAG',
+								boxLabel: 'Well Log',
+				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+							}]
+						}
+						]
 					},{
 						title: 'State and County',
 						xtype: "panel",
