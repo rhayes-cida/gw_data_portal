@@ -109,7 +109,6 @@ default.
     background:#f0f0f0;
 }
 
-
 .x-accordion-hd {
 	background-color: #224190;
 	background-image: none;
@@ -122,18 +121,18 @@ default.
 }
 
 .x-accordion-hd .x-tool {
+	background-image: url("images/panel/chevrons.gif");
 	float: left;
 }
 
 .x-accordion-hd .x-tool-toggle {
+	background-image: url("images/panel/chevrons.gif");
     background-position: 0 0px;
 }
 
 .x-panel-collapsed .x-accordion-hd .x-tool-toggle {
+	background-image: url("images/panel/chevrons.gif");
     background-position: -15px 0px;
-}
-.x-tool {
-    background-image: url("images/panel/chevrons.gif");
 }
 
 .ngwmn-subfilter .x-accordion-hd {
