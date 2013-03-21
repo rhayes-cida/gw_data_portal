@@ -433,14 +433,6 @@ td.long-text {
 	border: dotted gray 1px;
 }
 
-.x-fieldset {
-	padding: 5px !important;
-}
-
-.ux-form-multiselect .x-fieldset {
-	padding: 0px !important;
-}
-
 .graph-options {
 	padding: 5px;
 	font-size: smaller;
@@ -602,11 +594,6 @@ td.long-text {
 .ngwmn-help-tip {
 	padding: 10px;
 }
-
-.x-tool-info {
-	background-image: url(../images/info-btn.gif) !important;
-}
-.x-tool-info-over {background-position:-15px 0 !important;}
 
 #ccsa-area {
 	background-color: white;

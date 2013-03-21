@@ -1,10 +1,10 @@
 /*
- * Ext JS Library 2.2
- * Copyright(c) 2006-2008, Ext JS, LLC.
- * licensing@extjs.com
- * 
- * http://extjs.com/license
- */
+This CSS file overrides much of Extjs's styling but only functions in addition
+to the standard extjs CSS and images.
+
+The images found in this packages are explicit overrides, all other images are 
+default.
+*/
 
 .x-panel {
     border-style: solid;
@@ -41,23 +41,23 @@
     color:#333;
 }
 .x-panel-tc {
-	background-image:url(images/panel/top-bottom.gif);
+	background-image: none;
 }
 .x-panel-tl {
-	background-image:url(images/panel/corners-sprite.gif);
+	background-image: none;
     border-color:#72665c;
 }
 .x-panel-tr {
-	background-image:url(images/panel/corners-sprite.gif);
+	background-image: none;
 }
 .x-panel-bc {
-	background-image:url(images/panel/top-bottom.gif);
+	background-image: none;
 }
 .x-panel-bl {
-	background-image:url(images/panel/corners-sprite.gif);
+	background-image: none;
 }
 .x-panel-br {
-	background-image:url(images/panel/corners-sprite.gif);
+	background-image: none;
 }
 .x-panel-mc {
     background:#f1f1f1;
@@ -66,16 +66,22 @@
     background:transparent;
 }
 .x-panel-ml {
-	background-image:url(images/panel/left-right.gif);
+	background-image: none;
 }
 .x-panel-mr {
-	background-image:url(images/panel/left-right.gif);
+	background-image: none;
 }
 
 /* Tools */
 .x-tool {
     background-image:url(images/panel/tool-sprites.gif);
 }
+
+.x-tool-info {
+	background-image: url(images/panel/info-btn.gif) !important;
+}
+
+.x-tool-info-over {background-position:-15px 0 !important;}
 
 /* Ghosting */
 .x-panel-ghost {
@@ -87,7 +93,6 @@
 }
 
 /* Buttons */
-
 .x-btn-left{
 	background-image:url(images/button/btn-sprite.gif);
 }
@@ -132,35 +137,7 @@
 	 background-color:#72665c;
 }
 
-
-/* qtips */
-.x-tip .x-tip-top {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-.x-tip .x-tip-top-left {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-.x-tip .x-tip-top-right {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-.x-tip .x-tip-ft {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-.x-tip .x-tip-ft-left {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-.x-tip .x-tip-ft-right {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-.x-tip .x-tip-bd-left {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-.x-tip .x-tip-bd-right {
-	background-image:url(images/qtip/tip-sprite.gif);
-}
-
 /* Toolbars */
-
 .x-toolbar{
 	border-color:#c6bab6;
     background-color: #c6bab6;
@@ -170,35 +147,35 @@
     color:#444;
 }
 .x-toolbar .x-btn-menu-arrow-wrap .x-btn-center button {
-    background-image:url(images/toolbar/btn-arrow.gif);
+    background-image: none;
 }
 .x-toolbar .x-btn-text-icon .x-btn-menu-arrow-wrap .x-btn-center button {
-    background-image:url(images/toolbar/btn-arrow.gif);
+    background-image: none;
 }
 .x-toolbar .x-btn-over .x-btn-left{
-	background-image:url(images/toolbar/tb-btn-sprite.gif);
+	background-image: none;
 }
 .x-toolbar .x-btn-over .x-btn-right{
-	background-image:url(images/toolbar/tb-btn-sprite.gif);
+	background-image: none;
 }
 .x-toolbar .x-btn-over .x-btn-center{
-	background-image:url(images/toolbar/tb-btn-sprite.gif);
+	background-image: none;
 }
 .x-toolbar .x-btn-over button {
     color:#111;
 }
 .x-toolbar .x-btn-click .x-btn-left, .x-toolbar .x-btn-pressed .x-btn-left, .x-toolbar .x-btn-menu-active .x-btn-left{
-	background-image:url(images/toolbar/tb-btn-sprite.gif);
+	background-image: none;
 }
 .x-toolbar .x-btn-click .x-btn-right, .x-toolbar .x-btn-pressed .x-btn-right, .x-toolbar .x-btn-menu-active .x-btn-right{
-	background-image:url(images/toolbar/tb-btn-sprite.gif);
+	background-image: none;
 }
 
 .x-toolbar .x-btn-click .x-btn-center, .x-toolbar .x-btn-pressed .x-btn-center, .x-toolbar .x-btn-menu-active .x-btn-center{
-	background-image:url(images/toolbar/tb-btn-sprite.gif);
+	background-image: none;
 }
 .x-toolbar .ytb-sep {
-	background-image: url(../images/default/grid/grid-split.gif);
+	background-image: none;
 }
 
 /* Tabs */
@@ -307,15 +284,6 @@ ul.x-tab-strip-bottom{
 .x-tab-panel-header-plain .x-tab-strip-spacer {
     border-color:#000000;
     background: #c6bab6;
-}
-
-.x-tab-scroller-left {
-    background-image: url(images/tabs/scroll-left.gif);
-    border-color:#555555;
-}
-.x-tab-scroller-right {
-    background-image: url(images/tabs/scroll-right.gif);
-    border-color:#555555;
 }
 
 /* Window */
@@ -602,9 +570,18 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
     background-image: url("../images/default/grid/grid3-hrow-over.gif");
 }
 
+/* fieldset */
+.x-fieldset {
+	padding: 5px !important;
+}
+
 /* multiselect */
 .ux-mselect-selected {
     background: none repeat scroll 0 0 #e9e0de;
     border: 1px dotted #9b897f !important;
     cursor: pointer;
+}
+
+.ux-form-multiselect .x-fieldset {
+	padding: 0px !important;
 }
