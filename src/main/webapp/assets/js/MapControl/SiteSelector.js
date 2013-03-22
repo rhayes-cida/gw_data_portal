@@ -213,7 +213,7 @@ GWDP.ui.SiteSelector =
         
         var _store = this.store;
         var _updateCount = function(s) {
-        	document.getElementById(siteCountId).innerHTML = s.getCount() + " sites selected";
+        	document.getElementById(siteCountId).innerHTML = s.getCount() + " sites selected.";
         };
         _store.on('datachanged', _updateCount);
         _store.on('add', _updateCount);
@@ -247,16 +247,7 @@ GWDP.ui.SiteSelector =
         				}
         			},
         			scope: this
-        		}
-//        		,{
-//        			text: "Preview",
-//        			handler: function() { 
-//        				(new GWDP.ui.SitePreview({store: this.store})).show();
-//        			},
-//        			scope: this
-//        		}
-        		,
-        		{
+        		},{
         			text: "Download",
         			handler: function() { 
         				if(this.store.getCount() <= 0) {
@@ -309,9 +300,8 @@ GWDP.ui.SiteSelector =
         				items: [
         				    this.grid,
 	        				{
-	        					html: "<div id='" + siteCountId + "'>0 sites selected</div>",
-	        					border: false,
-	        					padding: 5
+	        					html: "<div class='ngwmn-site-count-label' id='" + siteCountId + "'>0 sites selected.</div>",
+	        					border: false
 	        				}]
         				}
         			);

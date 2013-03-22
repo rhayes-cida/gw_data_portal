@@ -551,6 +551,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 	width: 800,
 	modal: true,
 	layout: 'fit',
+	border: false,
 	initComponent: function() {
 		var sn = this.siteRecord.get('SITE_NO');
 		var ac = MEDIATOR.cleanAgencyCode(this.siteRecord.get('AGENCY_CD'));
@@ -560,7 +561,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			xtype: 'tabpanel',
 			autoScroll: true,
 			activeTab: 0,
-			border: false,
+			border: true,
 			items: [{
 				title: 'Summary',
 				id: 'site-id-panel',
@@ -586,6 +587,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				isLoaded: false,
 				layout: 'fit',
 				autoScroll: true,
+				border: false,
 				listeners: {
 					activate: function(p) {
 						if (!p.isLoaded) {
@@ -615,6 +617,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				title: 'Water Levels',
 				isLoaded: false,
 				layout: 'border',
+				border: false,
 				listeners: {
 					activate: function(p) {
 						if (!p.isLoaded) {
@@ -680,6 +683,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				id: WATER_QUALITY_TAB.cmpName,
 				title: 'Water Quality',
 				autoScroll: true,
+				border: false,
 				isLoaded: false,
 				listeners: {
 					activate: function(p) {

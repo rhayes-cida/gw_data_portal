@@ -201,9 +201,8 @@ default.
 
 ul.x-tab-strip-top{
 	background:#72665C; 
-	border-color:#72665C;
-	border-bottom: #72665C !important;
-    padding-top: 2px;
+	border-color:#c6bab6;
+    padding-top: 0px;
 }
 
 ul.x-tab-strip-bottom{
@@ -219,7 +218,16 @@ ul.x-tab-strip-bottom{
 }
 
 .x-tab-strip-active span.x-tab-strip-text {
-	color:#72665C;
+	color:white;
+	background-color: #f3755e;
+}
+
+.x-tab-strip-top .x-tab-strip-active .x-tab-left {
+	background-color: #f3755e;
+}
+
+.x-tab-strip-top .x-tab-strip-active .x-tab-right {
+	background-color: #f3755e;
 }
 
 .x-tab-strip-disabled .x-tabs-text {
@@ -228,55 +236,60 @@ ul.x-tab-strip-bottom{
 
 .x-tab-strip-top .x-tab-right {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #72665C;
 }
 
 .x-tab-strip-top .x-tab-left {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #72665C;
 }
 .x-tab-strip-top .x-tab-strip-inner {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #72665C;
 }
 
 .x-tab-strip-bottom .x-tab-right {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #72665C;
 }
 
 .x-tab-strip-bottom .x-tab-left {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #72665C;
 }
 
 .x-tab-strip-bottom .x-tab-strip-active .x-tab-right {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #f3755e;
 }
 
 .x-tab-strip-bottom .x-tab-strip-active .x-tab-left {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #f3755e;
+}
+
+
+ul.x-tab-strip li {
+	border: 1px solid #C6BAB6;
+    margin-left: 0px;
 }
 
 .x-tab-strip .x-tab-strip-closable a.x-tab-strip-close {
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #72665C;
 }
 .x-tab-strip .x-tab-strip-closable a.x-tab-strip-close:hover{
 	background-image: none;
-	background-color: #c6bab6;
+	background-color: #72665C;
 }
 
  .x-tab-strip-active {
- 	border-bottom: solid 1px #c6bab6;
-	background-color: #c6bab6;
+	background-color: #f3755e;
+	border: 1px solid #C6BAB6;
  }
  
  .x-tab-strip {
- 	border-bottom: solid 1px #c6bab6;
-	background-color: #c6bab6;
+	border: 1px solid #C6BAB6;
  }
 
 .x-tab-panel-body {
