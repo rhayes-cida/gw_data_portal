@@ -745,11 +745,6 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					this.close();
 				},
 				scope: this
-			},{
-				text: 'Done',
-				handler: function() {
-					Ext.getCmp('identify-site-window').close();
-				}
 			}]
 		});
 		SiteIdentifyWindow.superclass.initComponent.call(this);

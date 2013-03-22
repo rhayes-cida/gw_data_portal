@@ -619,11 +619,18 @@ td.long-text {
 }
 
 .ngwmn-currentview-panel {
-	background-color: #f3755e
+	background-color: #f3755e;
 }
 
 #dygraph-plot {
 	background-color: white;    
+}
+
+.ngwmn-site-count-label {
+	color: #CEE56A;
+	border: none;
+	background: #72665c;
+	padding: 3px;
 }
 
 /**

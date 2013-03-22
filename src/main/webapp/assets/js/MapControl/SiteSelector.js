@@ -259,7 +259,11 @@ GWDP.ui.SiteSelector =
         		{
         			text: "Download",
         			handler: function() { 
-        				this.downloadWindow.show();
+        				if(this.store.getCount() <= 0) {
+        					Ext.Msg.alert("Select Sites", "You have not selected any sites for download.");
+        				} else {
+        					this.downloadWindow.show();
+        				}
         			},
             		scope: this
         		}

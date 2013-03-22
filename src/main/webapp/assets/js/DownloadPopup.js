@@ -131,7 +131,7 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 	id: 'multisite-download-window',
 	title: 'Multi-site Download',
 	height: 200,
-	width: 650,
+	width: 350,
 	layout: 'fit',
 	modal: true,
 	closable: true,
@@ -158,60 +158,47 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 		
 		Ext.apply(this, {
 			closable: true,
-			title: 'Download Sites',
-			items: [
+			title: 'Download Data',
+			layout: 'form',
+			items: [{
+					html: "<div class='ngwmn-site-count-label'>" + this.store.getCount() + " sites selected.</div>"
+				},
 			        {
-			        	id: 'sites-grid',
-			        	xtype: 'grid',
-			        	store: this.store,
-			        	border: false,
-			        	autoScroll: true,
-			        	viewConfig: {forceFit: true},
-			        	sm: new Ext.grid.RowSelectionModel({singleSelect: false}),
-			        	colModel: new Ext.grid.ColumnModel([
-                                { header: "Site Name", width: 250, dataIndex: 'SITE_NAME'},
-                                { header: "Principal Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'},
-                                { header: "Agency", width: 100, sortable: true, dataIndex: 'AGENCY_CD'}	                
-                                ])
-			        },
+						xtype: 'checkboxgroup',
+						// layout: 'fit',
+						fieldLabel: 'Select data types',
+						id: 'typeGroup',
+						vertical: true,
+						columns: 1,
+						items: [
+							{
+								boxLabel: 'Water Level',
+								name: 'WATERLEVEL', id: 'dtype_wl',
+								checked: true
+							},          
+							{
+								boxLabel: 'Water Quality',
+								name:'QUALITY', id: 'dtype_qw',
+								checked: true
+							},
+							{
+								boxLabel: 'Construction',
+								name: 'CONSTRUCTION', id: 'dtype_const',
+								checked: true
+							},
+							{
+								boxLabel: 'Lithology',
+								name:'LITHOLOGY', id : 'dtype_lith',
+								checked: true
+							}
+						]
+					},
 			        myMsdlf
 			        ],
-			buttonAlign: 'left', 
+			buttonAlign: 'right', 
 			buttons: [
 			{
-				xtype: 'checkboxgroup',
-				// layout: 'fit',
-				width: 400, 
-				fieldLabel: 'Download: ',
-				id: 'typeGroup',
-				items: [
-					{
-						boxLabel: 'Water Level',
-						name: 'WATERLEVEL', id: 'dtype_wl',
-						checked: true
-					},          
-					{
-						boxLabel: 'Water Quality',
-						name:'QUALITY', id: 'dtype_qw',
-						checked: true
-					},
-					{
-						boxLabel: 'Construction',
-						name: 'CONSTRUCTION', id: 'dtype_const',
-						checked: true
-					},
-					{
-						boxLabel: 'Lithology',
-						name:'LITHOLOGY', id : 'dtype_lith',
-						checked: true
-					}
-				]
-			},
-					   
-			'->',
-			
-			{
-					text: 'Download data',
+					text: 'DOWNLOAD',
 					handler: function() {
 						
 						// myMsdlf.items.clear();
