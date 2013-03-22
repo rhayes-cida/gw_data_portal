@@ -1,6 +1,6 @@
 GWDP.ui.dataOnRenderer = function(value, meta, record){
 			if (value == 1 || value == '1'){
-				return '<div style="width: 15px;" class="ngwmn-data-on"> &nbsp;</div>';
+				return '<div style="width: 15px; height: 15px;" class="ngwmn-data-on"> &nbsp;</div>';
 			}
 			var content = '<div style="width: 15px;"> &nbsp;</div>';
 		};
@@ -14,8 +14,6 @@ GWDP.ui.SitePreview = Ext.extend(Ext.Window, {
 	closable: true,
 	initComponent: function() {
 		this.store = this.initialConfig.store;
-		
-		
 		
 		Ext.apply(this, {
 			closable: true,
@@ -249,13 +247,15 @@ GWDP.ui.SiteSelector =
         				}
         			},
         			scope: this
-        		},{
-        			text: "Preview",
-        			handler: function() { 
-        				(new GWDP.ui.SitePreview({store: this.store})).show();
-        			},
-        			scope: this
-        		},
+        		}
+//        		,{
+//        			text: "Preview",
+//        			handler: function() { 
+//        				(new GWDP.ui.SitePreview({store: this.store})).show();
+//        			},
+//        			scope: this
+//        		}
+        		,
         		{
         			text: "Download",
         			handler: function() { 
@@ -288,7 +288,14 @@ GWDP.ui.SiteSelector =
 		        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer},
 		        	            {header: 'Log', dataIndex: 'LOG_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer}
 		        	        ]
-		        	    })
+		        	    }),
+			            listeners:{
+			            	rowdblclick: function(grid, rowIndex, e) {
+			            		var record = _store.getAt(rowIndex);
+								(new SiteIdentifyWindow({siteRecord: record})).show();
+			            	},
+			            	scope: this
+			            }
     				});
         			
         			w.add({

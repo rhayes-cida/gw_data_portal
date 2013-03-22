@@ -36,6 +36,35 @@ GWDP.ui.initMap = function() {
 		           new OpenLayers.Control.Navigation(),
 		           new OpenLayers.Control.Attribution(),
 		           new GWDP.ui.LayerSwitcher(),
+		           new GWDP.ui.ExtJSTools({
+		        	   id: 'mapTools',
+		        	   tools: [
+				    	 		{
+				    	 			id: 'info',
+				    	 			handler: GWDP.ui.toggleHelpTips
+				    	 		},{
+				    	 			id: 'help',
+				    	 			handler: function(event, toolEl, panel,tc) {
+				    	 				var myWin = Ext.create({
+				    	 					title: 'NGWMN Help',
+				    	 					xtype: 'window',
+				    	 					modal: true,
+				    	 					html: '<iframe src="https://my.usgs.gov/confluence/display/ngwmn/NGWMN+Data+Portal+Help" width="100%" height="100%" ></iframe>',
+				    	 					width: 970,
+				    	 					height: 600
+				    	 				});
+				    	 				myWin.show();
+				    	 		    }
+				    	 		},{
+				    	 			id: 'maximize',
+				    	 	        handler: GWDP.ui.toggleMaximized
+				    	 		},{
+				    	 			id: 'restore',
+				    	 			hidden: true,
+				    	 	        handler: GWDP.ui.toggleMaximized
+				    	 		}
+				    	 	]
+		           }),
 		           GWDP.ui.map.siteSelector,
 		           new GWDP.ui.PanZoomControl({
 		        	   zoomButtonHandler: GWDP.ui.map.zoomToBoundingBox
@@ -398,17 +427,7 @@ GWDP.ui.map.addSitesInBbox = function(bbox) {
 				siteRecord.data.SITE_NAME = SITE.createName(siteRecord.data.SITE_NAME, siteRecord.data.AGENCY_CD, siteRecord.data.SITE_NO);
 			}
 			GWDP.domain.loadOpenlayersRecordIntoArrayStore(r, wellStore);
-	    	Ext.Msg.confirm('Add multiple sites?', 
-	    		'You have selected ' + wellStore.getCount() + ' sites to add. Do you wish to continue and add these sites to your list?',
-	    		function(ans) {
-	    			if(ans=='yes') {
-	    				GWDP.ui.map.siteSelector.addSitesFromStore(wellStore);
-	    				if(GWDP.ui.map.siteSelector.store.getCount()>0) {
-	    					GWDP.ui.map.siteSelector.maximizeControl();
-	    				}
-	    			}
-	    		}
-	    	);
+			(new SiteIdSelectorPopup({store: wellStore})).show();
 		}
 	});
 };

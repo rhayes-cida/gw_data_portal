@@ -71,25 +71,24 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 					{ header: "Site No", width: 100, dataIndex: 'SITE_NO'},   
 					{ header: "Site Name", width: 250, dataIndex: 'SITE_NAME'},
 					{ header: "Principal Aquifer", width: 150, sortable: true, dataIndex: 'NAT_AQFR_DESC'}
-	            ])
+	            ]),
+	            listeners:{
+	            	rowdblclick: function(grid, rowIndex, e) {
+	            		var record = grid.store.getAt(rowIndex);
+						(new SiteIdentifyWindow({siteRecord: record})).show();
+	    				Ext.getCmp('select-site-window').close();
+	            	}
+	            }
 			},
 			buttons: [{
-				text: 'Show Summary For Site',
+				text: 'Add all to Sites',
 				handler: function() {
 					var grid = Ext.getCmp('sites-grid');
-					var siteRecord = grid.getSelectionModel().getSelected();
-					//open ID window
-					if (siteRecord) {
-						GoogleAnalyticsUtils.logSiteIdentifyByStation(siteRecord.data.AGENCY_CD + ":" + siteRecord.data.SITE_NO);
-						(new SiteIdentifyWindow({siteRecord: siteRecord})).show();
-					} else {
-						Ext.Msg.show({
-							title:'Error',
-							msg: 'Click on a site in the grid, then click the "identify" button.',
-							buttons: Ext.Msg.OK,
-							icon: Ext.MessageBox.WARNING
-						});
-					}
+					GWDP.ui.map.siteSelector.addSitesFromStore(grid.store);
+    				if(GWDP.ui.map.siteSelector.store.getCount()>0) {
+    					GWDP.ui.map.siteSelector.maximizeControl();
+    				}
+    				Ext.getCmp('select-site-window').close();
 				}
 			}]
 		});

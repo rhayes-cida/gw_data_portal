@@ -1,5 +1,5 @@
 body {
-	font-family: tahoma,arial,verdana,sans-serif !important;	
+	font-family: calibri,tahoma,arial,verdana,sans-serif !important;	
 }
 
 
@@ -602,11 +602,12 @@ td.long-text {
 #banner-title,
 #banner-title a {
 	bottom: 0px;
-	font-size: large;
+	font-size: xx-large;
 	color: #233f8f !important;  
 	text-decoration: none;  
 	margin-right: 10px;
-    margin-top: 45px;
+    margin-top: 30px;    
+    font-family: Calibri,Verdana,Arial,Helvetica,sans-serif;
 }
 
 #banner-title a:hover {
@@ -648,7 +649,7 @@ td.long-text {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-right: 10px;
-    background-color: darkblue;
+    background-color: #224190;
 }
 
 .GWDPuiLayerSwitcher .layersDiv .baseLbl,
@@ -687,11 +688,11 @@ td.long-text {
     font-family: sans-serif;
     font-weight: bold;
     font-size: smaller;
-    background-color: darkblue;
+    background-color: #224190;
 }
 
 .GWDPuiSiteSelector .siteSelectorDiv {
-    background-color: darkblue;
+    background-color: #224190;
     height: 380px;
 }
 
@@ -719,4 +720,23 @@ td.long-text {
     top: 0px;
     right: 0;
     cursor: pointer;
+}
+
+/* ExtJSTools*/
+.GWDPuiExtJSTools {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: smaller;
+    background-color: #224190;
+	-moz-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.ol-ux-tool {
+	margin: 1px;
 }

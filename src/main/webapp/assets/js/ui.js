@@ -38,17 +38,6 @@ GWDP.ui.initApp = function() {
 		}
 	});
 		
-	var showHelp = function(event, toolEl, panel,tc) {
-		var myWin = Ext.create({
-			title: 'NGWMN Help',
-			xtype: 'window',
-			modal: true,
-			html: '<iframe src="https://my.usgs.gov/confluence/display/ngwmn/NGWMN+Data+Portal+Help" width="100%" height="100%" ></iframe>',
-			width: 970,
-			height: 600
-		});
-		myWin.show();
-    };
     
     var filterPanel = new Ext.Panel({ //container panel
     	layout: 'border',
@@ -72,22 +61,6 @@ GWDP.ui.initApp = function() {
 				border: false,
 				layout: 'accordion',
 				animate: true,
-				tools: [
-		    	 		{
-		    	 			id: 'info',
-		    	 			handler: GWDP.ui.toggleHelpTips
-		    	 		},{
-		    	 			id: 'help',
-		    	 			handler: showHelp
-		    	 		},{
-		    	 			id: 'maximize',
-		    	 	        handler: GWDP.ui.toggleMaximized
-		    	 		},{
-		    	 			id: 'restore',
-		    	 			hidden: true,
-		    	 	        handler: GWDP.ui.toggleMaximized
-		    	 		}
-		    	 	],
 				items: [{
 					title: '<b>NGWMN NETWORKS</b>',
 					padding: 5,
@@ -545,7 +518,7 @@ GWDP.ui.toggleMaximized = function() {
 
 GWDP.ui.updateMaximizeTool = function() {
 	var restore = GWDP.ui.header.collapsed && GWDP.ui.footer.collapsed;
-	var mapTools = Ext.getCmp('gwdpFilters').tools;
+	var mapTools = document.getElementById('mapTools').tools;
 	if(restore) {
 		mapTools.maximize.hide();
 		mapTools.restore.show();

@@ -46,6 +46,7 @@
 	   	<script type="text/javascript" src='assets/js/MapControl/ZoomBox.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/Click.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/Hover.js'></script>
+	   	<script type="text/javascript" src='assets/js/MapControl/ExtJSTools.js'></script>
 	
 		<!-- Data domain objects -->		
 		<script type="text/javascript" src="assets/js/domain/BaseDomain.js"></script>
