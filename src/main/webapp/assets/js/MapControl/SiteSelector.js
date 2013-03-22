@@ -1,3 +1,10 @@
+GWDP.ui.dataOnRenderer = function(value, meta, record){
+			if (value == 1 || value == '1'){
+				return '<div style="width: 15px;" class="ngwmn-data-on"> &nbsp;</div>';
+			}
+			var content = '<div style="width: 15px;"> &nbsp;</div>';
+		};
+
 GWDP.ui.SitePreview = Ext.extend(Ext.Window, {
 	title: 'Preview Sites',
 	height: 500,
@@ -7,6 +14,8 @@ GWDP.ui.SitePreview = Ext.extend(Ext.Window, {
 	closable: true,
 	initComponent: function() {
 		this.store = this.initialConfig.store;
+		
+		
 		
 		Ext.apply(this, {
 			closable: true,
@@ -29,9 +38,9 @@ GWDP.ui.SitePreview = Ext.extend(Ext.Window, {
                             { header: "Lat", width: 60, sortable: true, dataIndex: 'DEC_LAT_VA'},
                             { header: "Lon", width: 60, sortable: true, dataIndex: 'DEC_LONG_VA'},
                             { header: "Well Depth", width: 60, sortable: true, dataIndex: 'WELL_DEPTH'},
-	        	            {header: 'WL', dataIndex: 'WL_DATA_FLAG', width: 30},
-	        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30},
-	        	            {header: 'Log', dataIndex: 'LOG_DATA_FLAG', width: 30}
+	        	            {header: 'WL', dataIndex: 'WL_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer},
+	        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer},
+	        	            {header: 'Log', dataIndex: 'LOG_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer}
                             ])
 		        }
 			]
@@ -275,9 +284,9 @@ GWDP.ui.SiteSelector =
 		        	        columns: [
 		        	            {id: 'SITE_NAME', header: 'Site Name', sortable: true, dataIndex: 'SITE_NAME', width: 205},
 		        	            {header: 'Agency', sortable: true,  dataIndex: 'AGENCY_CD', width: 60},
-		        	            {header: 'WL', dataIndex: 'WL_DATA_FLAG', width: 30},
-		        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30},
-		        	            {header: 'Log', dataIndex: 'LOG_DATA_FLAG', width: 30}
+		        	            {header: 'WL', dataIndex: 'WL_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer},
+		        	            {header: 'WQ', dataIndex: 'QW_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer},
+		        	            {header: 'Log', dataIndex: 'LOG_DATA_FLAG', width: 30, renderer: GWDP.ui.dataOnRenderer}
 		        	        ]
 		        	    })
     				});
