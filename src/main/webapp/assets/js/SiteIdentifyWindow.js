@@ -734,7 +734,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			title: this.siteRecord.get('SITE_NAME'),
 			items: [tabPanel],
 			buttons: [{
-				text: 'Add to Sites',
+				text: 'Select for Download',
 				handler: function() {
 					var wellStore = GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells");
 					wellStore.add(this.siteRecord);
@@ -743,12 +743,6 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						GWDP.ui.map.siteSelector.maximizeControl();
 					}
 					this.close();
-				},
-				scope: this
-			},{
-				text: 'Download Data',
-				handler: function() {
-					SITE.downloadData(this.siteRecord);
 				},
 				scope: this
 			},{

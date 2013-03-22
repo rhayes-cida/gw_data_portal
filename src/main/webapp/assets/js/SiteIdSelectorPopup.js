@@ -81,7 +81,7 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 	            }
 			},
 			buttons: [{
-				text: 'Add all to Sites',
+				text: 'Select All for Download',
 				handler: function() {
 					var grid = Ext.getCmp('sites-grid');
 					GWDP.ui.map.siteSelector.addSitesFromStore(grid.store);
