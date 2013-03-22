@@ -41,7 +41,7 @@ public class MetadataController {
 		List<Map<String,Object>> result = template.queryForList(
 				"select agency_cd, agency_nm, count(*) count\n" + 
 				"from gw_data_portal.well_registry\n" + 
-				"group by agency_cd, agency_nm");
+				"group by agency_cd, agency_nm order by agency_nm");
 		
 		logger.debug("Found {} agencies", result.size());
 
