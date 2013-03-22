@@ -160,8 +160,13 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 			closable: true,
 			title: 'Download Data',
 			layout: 'form',
+			listeners: {
+				show: function(w) {
+					document.getElementById('multisite-download-window-count').innerHTML = this.store.getCount() + " sites selected.";
+				}
+			},
 			items: [{
-					html: "<div class='ngwmn-site-count-label'>" + this.store.getCount() + " sites selected.</div>"
+					html: "<div id='multisite-download-window-count' class='ngwmn-site-count-label'>" + this.store.getCount() + " sites selected.</div>"
 				},
 			        {
 						xtype: 'checkboxgroup',
