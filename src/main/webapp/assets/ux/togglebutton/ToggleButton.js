@@ -48,7 +48,7 @@ GWDP.ui.ToggleButton = Ext.extend(Ext.form.Checkbox,  {
         	_this.onClick();
         };
         
-        //TODO put in a hidden input
+        this.input = this.wrap.createChild({tag: 'input', type: 'hidden', name: this.name});
     },
 
 	
@@ -58,8 +58,8 @@ GWDP.ui.ToggleButton = Ext.extend(Ext.form.Checkbox,  {
         if(!this.checked) {
             this.el.dom.className = this.el.dom.className.replace(/ux-toggle-button /g, "ux-toggle-button-checked ");
         }
+        this.input.dom.value = !this.checked ? 'on' : 'off';
         this.setValue(!this.checked);
-        //TODO put in a hidden input
     },
 });
 Ext.reg('togglebutton', GWDP.ui.ToggleButton);
