@@ -171,10 +171,13 @@ GWDP.domain.getDomainObjectsBoundingBox = function(url, typeName, bbox, cql_filt
 			var lc = DNH.extractValue(x,'gml:lowerCorner');
 			var uc = DNH.extractValue(x,'gml:upperCorner');
 			
-			//TODO replace DNH/responseXML (above) with OpenLayers parsers/readers,  
-			//tests are broken because of ambiguous XML impls in our test runner(see BaseDomain_spec.js and WellDomain_spec.js)
-			//var r = new OpenLayers.Format.GML.v3({featureType: "VW_GWDP_GEOSERVER", featureNS: "ngwmn", geometryName: "GEOM"});
-
+			if(lc == null && uc == null) { //try a different parsince technique
+				var rs = DNH.removeNameSpaces(response.responseText);
+				x = DNH.createXmlDocFromString(rs);	
+				lc = DNH.extractValue(x,'lowerCorner');
+				uc = DNH.extractValue(x,'upperCorner');
+			}
+			
 			var bboxArray = [];
 			if(!lc || !uc) {
 				bboxArray = null;

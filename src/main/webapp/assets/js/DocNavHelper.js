@@ -39,5 +39,11 @@ var DNH = {
 			}
 		} 
 		return theDocument;
+	},
+	
+	removeNameSpaces : function(xmlStr){
+		var result = xmlStr.replace(/<[a-zA-Z0-9]+:/g,'<');
+		result = result.replace(/<\/[a-zA-Z0-9]+:/g,'</');
+		return result;
 	}
 }

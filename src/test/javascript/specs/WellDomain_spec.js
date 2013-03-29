@@ -436,14 +436,13 @@ describe("GWDP.domain.Well.getWellBoundingBox", function() {
 		
 		TestSupport.doServerRespond();
 
-//		TODO reenable tests after ambiguous XML parsing issues are done (See GWDP.domain.getDomainObjectsBoundingBox -n BaseDomain.js)
-//		expect(callback.called).toBe(true);
-//		var bbox = callback.getCall(0).args[0];
-//		expect(bbox.length).toBe(4);
-//		expect(bbox[0]).toBe('-120');
-//		expect(bbox[1]).toBe('35');
-//		expect(bbox[2]).toBe('-115');
-//		expect(bbox[3]).toBe('45');
+		expect(callback.called).toBe(true);
+		var bbox = callback.getCall(0).args[0];
+		expect(bbox.length).toBe(4);
+		expect(bbox[0]).toBe('-120');
+		expect(bbox[1]).toBe('35');
+		expect(bbox[2]).toBe('-115');
+		expect(bbox[3]).toBe('45');
 		
 		TestSupport.restoreServer();
 	});

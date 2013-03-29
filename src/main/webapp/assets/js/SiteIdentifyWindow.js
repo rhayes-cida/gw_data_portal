@@ -207,11 +207,7 @@ var SITE = {
 };
 
 
-function removeNameSpaces(xmlStr){
-	var result = xmlStr.replace(/<[a-zA-Z0-9]+:/g,'<');
-	result = result.replace(/<\/[a-zA-Z0-9]+:/g,'</');
-	return result;
-}
+
 
 
 function makeWaterLevelDataTable() {
@@ -294,7 +290,7 @@ var WATER_LEVEL_TAB = {
 			},
 			success: function(r, o) {
 				try{
-					var rs = removeNameSpaces(r.responseText);
+					var rs = DNH.removeNameSpaces(r.responseText);
 					console.log("name spaces removed from wl data, size =" + rs.length);
 					
 					var wldoc = DNH.createXmlDocFromString(rs);
@@ -467,7 +463,7 @@ var WELL_LOG_TAB = {
 	onSuccess: function(r, o) {
 		try {
 			WELL_LOG_TAB.unmask();
-			var rs = removeNameSpaces(r.responseText);
+			var rs = DNH.removeNameSpaces(r.responseText);
 			var x = DNH.createXmlDocFromString(rs);
 			
 			if (DNH.isEmptyOrNull(x,'pos')) {
