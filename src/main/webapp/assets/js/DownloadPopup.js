@@ -261,7 +261,7 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 							// cbl.reset();
 						}
 						
-						// TODO Close? Or use tracking window from SiteIdentifyWindow?
+						this.close();
 					},
 					scope: this
 			}]
