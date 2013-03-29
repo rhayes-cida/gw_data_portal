@@ -239,7 +239,7 @@ GWDP.ui.SiteSelector =
         	}],
         	buttons: [
         		{
-        			text: "Remove Selected",
+        			text: "REMOVE SELECTED",
         			handler: function() { 
         				var selected = this.grid.getSelectionModel().getSelections();
         				for(var i = 0; i < selected.length; i++) {
@@ -248,7 +248,7 @@ GWDP.ui.SiteSelector =
         			},
         			scope: this
         		},{
-        			text: "Download",
+        			text: "DOWNLOAD",
         			handler: function() { 
         				if(this.store.getCount() <= 0) {
         					Ext.Msg.alert("Select Sites", "You have not selected any sites for download.");

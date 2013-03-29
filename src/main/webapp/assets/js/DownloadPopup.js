@@ -102,7 +102,7 @@ GWDP.ui.MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 				downloadWindow.close();
 				clearInterval(exportStatus);
 			} else if (cookieValue) {
-				log_it('funkychicken ' + cookieValue);
+//				log_it('funkychicken ' + cookieValue);
 			}
 		}, 1000);
 
