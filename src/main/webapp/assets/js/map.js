@@ -69,7 +69,7 @@ GWDP.ui.initMap = function() {
 		           new GWDP.ui.PanZoomControl({
 		        	   zoomButtonHandler: GWDP.ui.map.zoomToBoundingBox
 		           }),
-		           new OpenLayers.Control.OverviewMap({
+		           new GWDP.ui.OverviewMap({
 		           }),
 		           new OpenLayers.Control.MousePosition({
 		        	   id: 'map-area-mouse-position',

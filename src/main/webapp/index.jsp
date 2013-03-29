@@ -8,7 +8,7 @@
       	
       	<!-- openlayers from war overlay -->
   		<jsp:include page="js/openlayers/openlayers.jsp">
-            <jsp:param name="debug-qualifier" value="false" />
+            <jsp:param name="debug-qualifier" value="true" />
         </jsp:include>
       	
 		<!-- Dygraph documents this as a needed IE8 hack  -->
@@ -41,6 +41,7 @@
 		<link rel="stylesheet" href="assets/ux/notify/Notify.css"/>
 	   	<script type="text/javascript" src='assets/ux/togglebutton/ToggleButton.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/LayerSwitcher.js'></script>
+	   	<script type="text/javascript" src='assets/js/MapControl/OverviewMap.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/SiteSelector.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/PanZoom.js'></script>
 	   	<script type="text/javascript" src='assets/js/MapControl/ZoomBox.js'></script>

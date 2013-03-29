@@ -494,7 +494,7 @@ GWDP.ui.LayerSwitcher =
         }
 
         // maximize button div
-        var img = OpenLayers.Util.getImageLocation('layer-switcher-maximize.png');
+        var img = 'assets/ngwmn_ext_skin/images/map/layers.gif'; //TODO move this out to CSS
         this.maximizeDiv = OpenLayers.Util.createAlphaImageDiv(
                                     "OpenLayers_Control_MaximizeDiv", 
                                     null, 

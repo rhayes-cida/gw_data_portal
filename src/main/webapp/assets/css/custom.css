@@ -587,10 +587,6 @@ td.long-text {
     color: white;
 }
 
-.olControlOverviewMapElement {
-    margin-bottom: 15px;
-}
-
 .ngwmn-help-tip {
 	padding: 10px;
 }
@@ -656,7 +652,7 @@ td.long-text {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-right: 10px;
-    background-color: #224190;
+    background-color: #72665C;
 }
 
 .GWDPuiLayerSwitcher .layersDiv .baseLbl,
@@ -737,13 +733,45 @@ td.long-text {
     font-family: sans-serif;
     font-weight: bold;
     font-size: smaller;
-    background-color: #224190;
-	-moz-border-bottom-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-	-moz-border-bottom-right-radius: 10px;
-	border-bottom-right-radius: 10px;
+    background-color: #72665c;
+	-moz-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	-moz-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .ol-ux-tool {
 	margin: 1px;
+}
+
+/* Overview map */
+.GWDPuiOverviewMapContainer {
+    bottom: 15px;
+    position: absolute;
+    right: 0;
+}
+.GWDPuiOverviewMapElement {
+    bottom: 15px;
+    background-color: #72665c;
+    padding: 10px 18px 10px 10px;
+}
+.GWDPuiOverviewMapMinimizeButton, .GWDPuiOverviewMapMaximizeButton {
+    bottom: 80px;
+    cursor: pointer;
+    height: 18px;
+    right: 0;
+    width: 18px;
+}
+.GWDPuiOverviewMapExtentRectangle {
+    background-image: url("img/blank.gif");
+    border: 2px dotted red;
+    cursor: move;
+    overflow: hidden;
+}
+.GWDPuiOverviewMapRectReplacement {
+    background-image: url("img/overview_replacement.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: move;
+    overflow: hidden;
 }

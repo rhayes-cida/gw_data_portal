@@ -261,7 +261,7 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 							// cbl.reset();
 						}
 						
-						this.close();
+						this.hide();
 					},
 					scope: this
 			}]
