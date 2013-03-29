@@ -338,6 +338,10 @@ ul.x-tab-strip li {
 	border: solid 1px #C5B9B5;
 }
 
+.x-tab-panel .x-panel-body {
+	background: #e8e0dd;
+}
+
 /* Window */
 
 .x-window-proxy {

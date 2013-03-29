@@ -1,7 +1,7 @@
 GWDP.ui.ToggleButton = Ext.extend(Ext.form.Checkbox,  {
     boxLabel: '&#160;',
     
-    defaultAutoCreate : { tag: 'div', class: 'ux-toggle-button', style: 'width: 80px; height: 55px'},
+    defaultAutoCreate : { tag: 'div', 'class': 'ux-toggle-button', style: 'width: 80px; height: 55px'},
 	
     initComponent : function(){
         Ext.form.Checkbox.superclass.initComponent.call(this);
