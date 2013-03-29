@@ -559,13 +559,13 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			activeTab: 0,
 			border: true,
 			items: [{
-				title: 'Summary',
+				title: 'SUMMARY',
 				id: 'site-id-panel',
 				record: this.siteRecord,
 				border: false,
 				autoScroll: true,
 				layout: 'anchor',
-				bodyStyle: 'padding: 5px',
+				padding: 5,
 				listeners: {
 					afterrender: function(p) {
 						siteIdTpl.overwrite(p.body, p.record.data);
@@ -578,8 +578,8 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 		if (true) {		
 			tabPanel.add(new Ext.Panel({
 				id: WELL_LOG_TAB.cmpName,
-				title: 'Well Log',
-				bodyStyle: 'padding:5px',
+				title: 'WELL LOG',
+				padding: 5,
 				isLoaded: false,
 				layout: 'fit',
 				autoScroll: true,
@@ -610,10 +610,11 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			var waterLevelPanel = 
 			new Ext.Panel({
 				id: WATER_LEVEL_TAB.cmpName,
-				title: 'Water Levels',
+				title: 'WATER LEVELS',
 				isLoaded: false,
-				layout: 'border',
+				layout: 'anchor',
 				border: false,
+				autoScroll: true,
 				listeners: {
 					activate: function(p) {
 						if (!p.isLoaded) {
@@ -624,9 +625,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					scope: this
 				},
 				items: [{
-					region: 'center',
-					autoScroll: true,
+					border: false,
+					autoScroll: false,
 					padding: 5,
+					anchor: '97%',
 					items: [{
 						border: false,
 						// height: 350,
@@ -677,7 +679,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 
 			tabPanel.add(new Ext.Panel({
 				id: WATER_QUALITY_TAB.cmpName,
-				title: 'Water Quality',
+				title: 'WATER QUALITY',
 				autoScroll: true,
 				border: false,
 				isLoaded: false,

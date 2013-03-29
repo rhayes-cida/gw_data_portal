@@ -294,7 +294,8 @@ ul.x-tab-strip-bottom{
 
 
 ul.x-tab-strip li {
-	border: 1px solid #C6BAB6;
+	border: none;
+	border-right: 1px solid #C6BAB6;
     margin-left: 0px;
 }
 
@@ -317,7 +318,7 @@ ul.x-tab-strip li {
  }
 
 .x-tab-panel-body {
-    border-color:#000000;
+    border-color:red;
     background:#fff;
 }
 .x-tab-panel-bbar .x-toolbar {
@@ -329,8 +330,12 @@ ul.x-tab-strip li {
 }
 
 .x-tab-panel-header-plain .x-tab-strip-spacer {
-    border-color:#000000;
+    border-color: red;
     background: #c6bab6;
+}
+
+.x-tab-panel-body {
+	border: solid 1px #C5B9B5;
 }
 
 /* Window */
