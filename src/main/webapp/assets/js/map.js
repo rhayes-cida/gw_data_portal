@@ -43,7 +43,7 @@ GWDP.ui.initMap = function() {
 				    	 			id: 'info',
 				    	 			handler: GWDP.ui.toggleHelpTips
 				    	 		},{
-				    	 			id: 'help',
+				    	 			id: 'eye',
 				    	 			handler: function(event, toolEl, panel,tc) {
 				    	 				var myWin = Ext.create({
 				    	 					title: 'NGWMN Help',

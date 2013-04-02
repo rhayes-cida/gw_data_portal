@@ -648,6 +648,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						xtype: 'grid',
 						loadMask: true,
 						autoHeight: true,
+			        	enableHdMenu: false,
 						//autoScroll: true,
 						//height: 500,
 						viewConfig: {forceFit: true},
@@ -705,6 +706,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 					border: false,
 					loadMask: true,
 					autoHeight: true,
+		        	enableHdMenu: false,
 					width: 1450,
 					viewConfig: {forceFit: true},
 					 sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
@@ -738,7 +740,7 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 			title: this.siteRecord.get('SITE_NAME'),
 			items: [tabPanel],
 			buttons: [{
-				text: 'Select for Download',
+				text: 'SELECT FOR DOWNLOAD',
 				handler: function() {
 					var wellStore = GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells");
 					wellStore.add(this.siteRecord);

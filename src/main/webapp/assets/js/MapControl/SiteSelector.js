@@ -25,6 +25,7 @@ GWDP.ui.SitePreview = Ext.extend(Ext.Window, {
 		        	border: false,
 		        	autoScroll: true,
 		        	viewConfig: {forceFit: true},
+		        	enableHdMenu: false,
 		        	sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 		        	colModel: new Ext.grid.ColumnModel([
                             { header: "Site Name", width: 150, sortable: true, dataIndex: 'SITE_NAME'},
@@ -271,6 +272,7 @@ GWDP.ui.SiteSelector =
 		                    emptyText: this.emptyText,
 		                    deferEmptyText: false
 		                },
+		                enableHdMenu: false,
 		        		sm: new Ext.grid.RowSelectionModel({singleSelect:false}),
 		        	    colModel: new Ext.grid.ColumnModel({
 		        	        defaults: {

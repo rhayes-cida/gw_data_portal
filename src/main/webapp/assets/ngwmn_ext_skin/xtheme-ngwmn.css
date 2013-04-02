@@ -73,14 +73,8 @@ default.
 }
 
 /* Tools */
-.x-tool-help {
-    background-image:url(images/panel/question.gif) !important;
-    background-position: 0 0;
-}
-
-.x-tool-help-over {
-    background-image:url(images/panel/question.gif) !important;
-    background-position: 0 0;
+.x-tool {
+    background-image:url(images/panel/tool-sprites.gif);
 }
 
 .x-tool-minimize {
@@ -97,15 +91,97 @@ default.
     width: 16px;
 }
 
-.x-tool {
-    background-image:url(images/panel/tool-sprites.gif);
+
+.x-tool-help {
+    background-image:url(images/panel/question.gif) !important;
+    background-position: 0 0;
+}
+
+.x-tool-help-over {
+    background-image:url(images/panel/question.gif) !important;
+    background-position: 0 0;
 }
 
 .x-tool-info {
-	background-image: url(images/panel/info-btn.gif) !important;
+	background-image: url(images/panel/i_bubble.gif) !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
 }
 
-.x-tool-info-over {background-position:-15px 0 !important;}
+.x-tool-info-over {background-position:-15px 0 !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
+}
+
+.x-tool-eye {
+    background-image:url(images/panel/eye.gif) !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
+}
+
+.x-tool-eye-over {
+    background-image:url(images/panel/eye.gif) !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
+}
+
+.x-tool-restore {
+    background-image:url(images/panel/min.gif) !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
+}
+
+.x-tool-restore-over {
+    background-image:url(images/panel/min.gif) !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
+}
+
+.x-tool-maximize {
+    background-image:url(images/panel/max.gif) !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
+}
+
+.x-tool-maximize-over {
+    background-image:url(images/panel/max.gif) !important;
+    background-position: 0 0;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0 !important;
+}
+
+.x-tool-close {
+    background-image:url(images/panel/x_brown.gif) !important;
+    background-position: 0 0;
+}
+
+.x-tool-close-over {
+    background-image:url(images/panel/x_brown.gif) !important;
+    background-position: 0 0;
+}
 
 /* Ghosting */
 .x-panel-ghost {
@@ -646,12 +722,22 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 
 }
 
+.x-grid3-sort-icon {
+    background-repeat: no-repeat;
+    display: none;
+    height: 8px;
+    margin-left: 3px;
+    vertical-align: middle;
+    width: 12px;
+}
+
 .sort-asc .x-grid3-sort-icon {
-    background-image: url("images/grid/sort_asc.gif");
+    background-image: url("images/grid/sort.gif");
+	background-position: -12px 0 !important;
 }
 
 .sort-desc .x-grid3-sort-icon {
-    background-image: url("images/grid/sort_desc.gif");
+    background-image: url("images/grid/sort.gif");
 }
 
 .ngwmn-data-on {

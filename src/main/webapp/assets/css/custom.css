@@ -757,7 +757,7 @@ td.long-text {
     font-family: sans-serif;
     font-weight: bold;
     font-size: smaller;
-    background-color: #72665c;
+    background-color: transparent;
 	-moz-border-bottom-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 	-moz-border-bottom-right-radius: 5px;

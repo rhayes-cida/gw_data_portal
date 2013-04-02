@@ -62,6 +62,7 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 				id: 'sites-grid',
 				xtype: 'grid',
 				store: this.store,
+	        	enableHdMenu: false,
 				border: false,
 				autoScroll: true,
 				viewConfig: {forceFit: true},
@@ -81,7 +82,7 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 	            }
 			},
 			buttons: [{
-				text: 'Select All for Download',
+				text: 'SELECT ALL FOR DOWNLOAD',
 				handler: function() {
 					var grid = Ext.getCmp('sites-grid');
 					GWDP.ui.map.siteSelector.addSitesFromStore(grid.store);

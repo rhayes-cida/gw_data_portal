@@ -77,7 +77,7 @@ GWDP.ui.ExtJSTools =
             }
         };
 
-        this.div.style.cssText = "padding: 3px; height: 16px; width: " + (17 * nonHiddenCount) + "px;";
+        this.div.style.cssText = "padding: 0px; height: 18px; width: " + (20 * nonHiddenCount) + "px;";
         
         return this.div;
     },
