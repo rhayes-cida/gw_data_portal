@@ -237,7 +237,7 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 							for (var j = 0; j < sites.length; j++) {
 								var siteRecord = sites[j];
 								
-								var wellID = siteRecord.data.agency + ":" + siteRecord.data.siteNo;
+								var wellID = siteRecord.data.AGENCY_CD + ":" + siteRecord.data.SITE_NO;
 								wellID = wellID.trim();
 								// wellID = wellID.replace(/ /g, "+");
 								wellID = wellID.replace(/ /g, "_");
