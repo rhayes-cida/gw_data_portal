@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>National Groundwater Monitoring Network Data Portal (BETA)</title>
+		<title>National Groundwater Monitoring Network</title>
 		<link rel="icon" 
       		type="image/png" 
       		href="favicon.ico">

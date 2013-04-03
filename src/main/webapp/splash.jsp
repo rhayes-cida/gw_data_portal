@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>National Groundwater Monitoring Network Data Portal (BETA)</title>
+		<title>National Groundwater Monitoring Network</title>
 		<link rel="icon" 
       		type="image/png" 
       		href="favicon.ico">
@@ -80,6 +80,11 @@
 								application. The portal contains current and historical data including water 
 								levels, water quality, lithology, and well construction.
 							</p>	
+							<p>
+								The NGWMN is transitioning from a pilot phase into full-implementation. We are
+								revising the Data Portal based on Pilot testing and initial use of the portal. In the future
+								will be adding additional data providers to the Network.
+							</p>
 						</div>
 						
 						<div id='ngwmn-current-net-section'>
@@ -115,11 +120,10 @@
 					</div>
 					</div>
 					<div id="ngwmn-join-section">
-						<span class="title">JOIN THE NETWORK - include your data in the Portal!</span><br/><br/>
+						<span class="title">GET INVOLVED IN THE NETWORK EFFORT!</span><br/><br/>
 						<p>The network is made up of selected wells from existing monitoring networks across the 
-						nation. Data from your network can be added the the <span class="ngwmn-highlight">NGWMN</span>. The Portal accesses and translates 
-						you data from it's native format into a single standard on the fly, you keep control of your 
-						data. <a href="learnmore.jsp">Click here to learn more</a>.</p>
+						nation. Learn about volunteering or contributing data from your network. 
+						Click here to learn more. <a href="learnmore.jsp">Click here to learn more</a>.</p>
 					</div>
 					<div class='ngwmn-spacer'></div>
 				</td></tr></table> <!-- END SPLASH CONTENT -->
