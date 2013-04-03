@@ -69,7 +69,7 @@
 						<div id='ngwmn-description-section'>
 							<p>
 								The <span class="ngwmn-highlight">National Groundwater Monitoring Network 
-								(NGWMN)</span> is a compilation of selected groundwater monitoring wells from Federal, 
+								(NGWMN)</span> is a compilation of selected ground-water monitoring wells from Federal, 
 								State, and local groundwater monitoring networks across the nation.<br/><br/>
 								The <span class="ngwmn-highlight">NGWMN</span> is a product of the <a href="http://acwi.gov/sogw/index.html">Subcomittee on Groundwater</a> 
 								of the federal Advisory Committee on Water Information (<a href="http://acwi.gov/">ACWI</a>).
@@ -78,12 +78,9 @@
 								The <span class="ngwmn-highlight">NGWMN Data Portal</span> provides access to 
 								groundwater data from multiple, dispersed databases in a web-based mapping 
 								application. The portal contains current and historical data including water 
-								levels, water quality, lithology, and well construction.
-							</p>	
-							<p>
-								The NGWMN is transitioning from a pilot phase into full-implementation. We are
-								revising the Data Portal based on Pilot testing and initial use of the portal. In the future
-								will be adding additional data providers to the Network.
+								levels, water quality, lithology, and well construction. The NGWMN is transitioning from a pilot phase into 
+								full implementation. We are revising the Data Portal based on Pilot testing and initial use of the portal. 
+								In the future we will be adding additional data providers to the Network.
 							</p>
 						</div>
 						
@@ -123,7 +120,7 @@
 						<span class="title">GET INVOLVED IN THE NETWORK EFFORT!</span><br/><br/>
 						<p>The network is made up of selected wells from existing monitoring networks across the 
 						nation. Learn about volunteering or contributing data from your network. 
-						Click here to learn more. <a href="learnmore.jsp">Click here to learn more</a>.</p>
+						<a href="learnmore.jsp">Click here to learn more</a>.</p>
 					</div>
 					<div class='ngwmn-spacer'></div>
 				</td></tr></table> <!-- END SPLASH CONTENT -->

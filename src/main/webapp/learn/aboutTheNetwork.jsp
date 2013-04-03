@@ -17,12 +17,12 @@ This will be accomplished by aggregating suitable ground-water data from local, 
 A consensus-based framework document (<a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a>) 
 was developed to provide guidance to ensure that the data are comparable and can be included in a nationally consistent network. 
 The framework design focuses on providing information needed to assess the quantity of ground-water reserves as constrained by quality. 
-The scale of the network will focus on Principal and Major Aquifers of the United States.</p>
+The scale of the network focuses on Principal and Major Aquifers of the United States.</p>
 
 <p id="design" class="ngwmn-section-title">Network Design</p>
 
 <p>
-The network is composed of selected wells from existing Federal, multistate, State, Tribal, and local ground-water 
+The network is composed of selected wells from existing federal, multistate, state, tribal, and local ground-water 
 monitoring networks. The scale of the network will focus on Principal and Major Aquifers of the United States. Well 
 classification subnetworks and monitoring categories are defined in the framework document 
 (<a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a>) and are briefly described here:
@@ -56,10 +56,10 @@ Wells in the NGWMN will be designated as being in one of three subnetworks. Thes
 		<span>Documented Changes subnetwork:</span>
 		<p>Monitoring points that provide data from aquifers that have documented anthropogenic effects.<br/>
 		The aquifers may:<br/>
-		(1) be known to be heavily pumped, or<br/>
-		(2) have experienced substantial recharge-altering land-use changes, or<br/>
-		(3) have managed ground-water resources, or<br/>
-		(4) are known to have degraded water quality or declining  water levels.
+		(1) be known to be heavily pumped<br/>
+		(2) have experienced substantial recharge-altering land-use changes<br/>
+		(3) have managed ground-water resources<br/>
+		(4) are known to have degraded water quality or declining  water levels
 		</p>
 	</li>
 </ul>
@@ -99,7 +99,7 @@ suggested monitoring frequencies.
 		<span>Surveillance:</span>
 		<p>Surveillance monitoring would be used in conjunction with Trend monitoring to periodically report on the 
 		overall water-level and water-quality conditions, or status, of the Nation's ground-water resources. NGWMN 
-		surveillance monitoring can be thought of as a periodic "census" of ground-water level and quality. An overall 
+		Surveillance monitoring can be thought of as a periodic "census" of ground-water level and quality. An overall 
 		snapshot of ground-water conditions in an aquifer is obtained with Surveillance monitoring. The frequency of 
 		Surveillance monitoring generally is much less than Trend monitoring.
 		</p>
@@ -112,13 +112,13 @@ Network Status
 </p>
 
 <p>
-A pilot phase that started in 2009 initially populated the Network with data from 5 pilot networks. These pilots were: 
+A pilot phase that started in 2009 initially populated the network with data from 5 pilot networks. These pilots were: 
 the Mahomet-Teays aquifer in Illinois and Indiana, the Cambrian-Ordovician aquifer in southeastern Minnesota, and statewide 
 aquifers in Montana, New Jersey, and Texas.
 </p>
 
 <p>
 Following the pilot phase, additional USGS water-level monitoring wells that met the network critieria were added to the NGWMN
-for some states. Work in continuing to add more USGS from the remaining states and to add available USGS water-quality data. </p>
+for some states. Work continues in adding more USGS wells from the remaining states and adding available USGS water-quality data. </p>
 
 
