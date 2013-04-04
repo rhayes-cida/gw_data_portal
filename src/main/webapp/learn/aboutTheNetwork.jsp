@@ -12,17 +12,17 @@ Subcommittee on Ground Water (<a href="http://acwi.gov/sogw">SOGW</a>) and was e
 </p>
 <p>
 The goal of the National Ground Water Monitoring Network (NGWMN) is to provide information needed for planning, 
-management, and development of ground-water supplies to meet current and future water needs and ecosystem requirements. 
-This will be accomplished by aggregating suitable ground-water data from local, state, and federal organizations. 
+management, and development of groundwater supplies to meet current and future water needs and ecosystem requirements. 
+This will be accomplished by aggregating suitable groundwater data from local, State, and Federal organizations. 
 A consensus-based framework document (<a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a>) 
 was developed to provide guidance to ensure that the data are comparable and can be included in a nationally consistent network. 
-The framework design focuses on providing information needed to assess the quantity of ground-water reserves as constrained by quality. 
+The framework design focuses on providing information needed to assess the quantity of groundwater reserves as constrained by quality. 
 The scale of the network focuses on Principal and Major Aquifers of the United States.</p>
 
 <p id="design" class="ngwmn-section-title">Network Design</p>
 
 <p>
-The network is composed of selected wells from existing federal, multistate, state, tribal, and local ground-water 
+The network is composed of selected wells from existing Federal, multistate, State, Tribal, and local groundwater 
 monitoring networks. The scale of the network will focus on Principal and Major Aquifers of the United States. Well 
 classification subnetworks and monitoring categories are defined in the framework document 
 (<a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a>) and are briefly described here:
@@ -58,7 +58,7 @@ Wells in the NGWMN will be designated as being in one of three subnetworks. Thes
 		The aquifers may:<br/>
 		(1) be known to be heavily pumped<br/>
 		(2) have experienced substantial recharge-altering land-use changes<br/>
-		(3) have managed ground-water resources<br/>
+		(3) have managed groundwater resources<br/>
 		(4) are known to have degraded water quality or declining  water levels
 		</p>
 	</li>
@@ -98,9 +98,9 @@ suggested monitoring frequencies.
 	<li>
 		<span>Surveillance:</span>
 		<p>Surveillance monitoring would be used in conjunction with Trend monitoring to periodically report on the 
-		overall water-level and water-quality conditions, or status, of the Nation's ground-water resources. NGWMN 
-		Surveillance monitoring can be thought of as a periodic "census" of ground-water level and quality. An overall 
-		snapshot of ground-water conditions in an aquifer is obtained with Surveillance monitoring. The frequency of 
+		overall water-level and water-quality conditions, or status, of the Nation's groundwater resources. NGWMN 
+		Surveillance monitoring can be thought of as a periodic "census" of groundwater level and quality. An overall 
+		snapshot of groundwater conditions in an aquifer is obtained with Surveillance monitoring. The frequency of 
 		Surveillance monitoring generally is much less than Trend monitoring.
 		</p>
 	</li>

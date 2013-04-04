@@ -12,7 +12,7 @@ Original data are retrieved from each data provider by the portal in real-time.
 <img src="assets/images/dataportal_diagram.png" alt="Diagram of the data portal architecture."/>
 
 <p>
-The data portal has filters and map-based selection capabilities that allow the
+The Data Portal has filters and map-based selection capabilities that allow the
 user to select the sites of interest. After the sites are selected, requests are
 sent to the contributing databases serving the selected sites to obtain the data.
 This data is then returned via the portal in graphs and tables and can also be

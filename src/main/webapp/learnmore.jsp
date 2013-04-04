@@ -45,9 +45,9 @@
 					<div id="ngwmn-description-container">
 						<p>
 						The <span class="ngwmn-highlight">National Ground Water Monitoring Network (NGWMN)</span> is a compliation of selected wells
-						monitoring ground-water aquifers all around the nation. The <span class="ngwmn-highlight">NGWMN Data Portal</span> brings real-time
-						ground-water data together in one place to provide users with current and reliable information for
-						the planning, management, and development of ground-water resources.
+						monitoring groundwater aquifers all around the nation. The <span class="ngwmn-highlight">NGWMN Data Portal</span> brings real-time
+						groundwater data together in one place to provide users with current and reliable information for
+						the planning, management, and development of groundwater resources.
 						</p>
 					</div>
 					
