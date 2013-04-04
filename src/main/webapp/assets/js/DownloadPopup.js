@@ -55,7 +55,7 @@ GWDP.ui.MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 		//pop up a new window that displays progress of download
         var downloadWindow = null;
 		downloadWindow = new Ext.Window({
-			height: 200,
+			height: 150,
 			width: 300,
 			resizable: false,
 			title: 'Downloading Data...',

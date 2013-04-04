@@ -675,6 +675,11 @@ body.x-body-masked .x-window-mc, body.x-body-masked .x-window-plain .x-window-mc
     background-color: #c6bab6;
 }
 
+
+.x-window-body .ext-el-mask {
+	background-color: #C6BAB6 !important;
+}
+
 /* grids */
 .x-grid-panel .x-panel-mc .x-panel-body {
     border:1px solid #72665c;

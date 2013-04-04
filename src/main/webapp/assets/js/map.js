@@ -45,15 +45,7 @@ GWDP.ui.initMap = function() {
 				    	 		},{
 				    	 			id: 'eye',
 				    	 			handler: function(event, toolEl, panel,tc) {
-				    	 				var myWin = Ext.create({
-				    	 					title: 'NGWMN Help',
-				    	 					xtype: 'window',
-				    	 					modal: true,
-				    	 					html: '<iframe src="https://my.usgs.gov/confluence/display/ngwmn/NGWMN+Data+Portal+Help" width="100%" height="100%" ></iframe>',
-				    	 					width: 970,
-				    	 					height: 600
-				    	 				});
-				    	 				myWin.show();
+				    	 				window.location = "learnmore.jsp";
 				    	 		    }
 				    	 		},{
 				    	 			id: 'maximize',
