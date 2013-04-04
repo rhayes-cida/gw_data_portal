@@ -473,6 +473,10 @@ ul.x-tab-strip li {
     border-color:#72665c;
 }
 
+.x-window-body {
+    background-color: #C6BAB6;
+}
+
 .x-window-plain .x-window-mc {
     background: #e8e8e8;
     border-right:1px solid #72665c;

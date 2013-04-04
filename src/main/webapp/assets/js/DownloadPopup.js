@@ -69,7 +69,7 @@ GWDP.ui.MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 			}],
 			buttonAlign: 'center',
 			buttons: [{
-				text: 'Cancel',
+				text: 'CANCEL',
 				handler: function() {
 					Ext.Msg.show({
 						title:'Warning',
@@ -130,8 +130,8 @@ GWDP.ui.DownloadHelpPopup = Ext.extend(Ext.Window, {
 GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 	id: 'multisite-download-window',
 	title: 'Multi-site Download',
-	height: 200,
-	width: 350,
+	height: 300,
+	width: 400,
 	layout: 'fit',
 	modal: true,
 	closable: true,
@@ -156,19 +156,50 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 			url: GWDP.ui.cacheBaseUrl
 		});			
 		
+		
+		this.beginDate = new Ext.form.DateField({format: 'Y-m-d'});
+		this.endDate = new Ext.form.DateField({format: 'Y-m-d'});
+		this.fileType = new Ext.form.ComboBox({
+			fieldLabel: 'Select file type',
+		    mode: 'local',
+		    name: 'fileType',
+		    store: new Ext.data.ArrayStore({
+		        fields: [
+		            'type',
+		            'displayText'
+		        ],
+		        data: [['csv', 'CSV'], ['tab', 'TSV']]
+		    }),
+		    valueField: 'type',
+		    displayField: 'displayText'
+		});
+		
 		Ext.apply(this, {
 			closable: true,
 			title: 'Download Data',
 			layout: 'form',
+			labelWidth: 150,
 			listeners: {
 				show: function(w) {
 					document.getElementById('multisite-download-window-count').innerHTML = this.store.getCount() + " sites selected.";
 				}
 			},
 			items: [{
-					html: "<div id='multisite-download-window-count' class='ngwmn-site-count-label'>" + this.store.getCount() + " sites selected.</div>"
-				},
-			        {
+						html: "<div id='multisite-download-window-count' class='ngwmn-site-count-label'>" + this.store.getCount() + " sites selected.</div>"
+					},{
+						html: "<div class='download-opts-label'>DOWNLOAD OPTIONS:</div>",
+						border: false
+					},{
+						xtype: 'container',
+						fieldLabel: 'Select date range',
+						padding: 0,
+						border: false,
+						layout: 'hbox',
+						items: [this.beginDate,{
+							html: "&nbsp;to&nbsp",
+							border: false
+						},this.endDate]
+					},this.fileType,{
 						xtype: 'checkboxgroup',
 						// layout: 'fit',
 						fieldLabel: 'Select data types',
@@ -205,10 +236,18 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 			{
 					text: 'DOWNLOAD',
 					handler: function() {
+						if (!this.fileType.getValue()) {
+							Ext.MessageBox.alert("", "You must select a file type.");
+							return;
+						}
 						
 						// myMsdlf.items.clear();
 						myMsdlf.clearItems();
 						myMsdlf.addItem('type', 'REGISTRY');		// Always include the registry info
+						
+						if(this.beginDate.getRawValue()) myMsdlf.addItem("beginDate", this.beginDate.getRawValue());
+						if(this.endDate.getRawValue()) myMsdlf.addItem("endDate", this.endDate.getRawValue());
+						myMsdlf.addItem("fileType", this.fileType.getValue());
 						
 						// start with list of types
 						var cbl = Ext.getCmp('typeGroup');

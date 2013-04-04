@@ -671,6 +671,14 @@ td.long-text {
 	position: absolute;
 }
 
+.download-opts-label {
+	border: none;
+	font-weight: bold !important;
+	color: #264390;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 /**
  * Layer switcher
  */
