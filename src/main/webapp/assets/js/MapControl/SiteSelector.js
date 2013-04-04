@@ -196,7 +196,6 @@ GWDP.ui.SiteSelector =
         // layers list div        
         this.siteSelectorDiv = document.createElement("div");
         this.siteSelectorDiv.id = this.id + "_siteSelectorDiv";
-        this.siteCoundid = this.id + "_siteCountId";
         OpenLayers.Element.addClass(this.siteSelectorDiv, "siteSelectorDiv");
         
         
@@ -210,6 +209,11 @@ GWDP.ui.SiteSelector =
         this.siteSelectorDiv.ondblclick = _blockEvent;
         this.siteSelectorDiv.onmousedown = _blockEvent;
         
+        this.siteCountDiv = document.createElement("div");
+        this.siteCountDiv.id = this.id + "_siteCountId";
+        this.siteCountDiv.className = 'ngwmn-site-count-display';
+        var siteCountId = this.siteCountDiv.id;
+        
         this.div.appendChild(this.siteSelectorDiv);
         
         var _store = this.store;
@@ -219,8 +223,7 @@ GWDP.ui.SiteSelector =
         _store.on('datachanged', _updateCount);
         _store.on('add', _updateCount);
         _store.on('remove', _updateCount);
-        
-        var siteCountId = this.siteCoundid;
+
         this.window = new Ext.Panel({
         	title: "Site Selection",
         	resizable: false,
@@ -300,16 +303,14 @@ GWDP.ui.SiteSelector =
         				padding: 10,
         				border: false,
         				items: [
-        				    this.grid,
-	        				{
-	        					html: "<div class='ngwmn-site-count-label' id='" + siteCountId + "'>0 sites selected.</div>",
-	        					border: false
-	        				}]
+        				    this.grid]
         				}
         			);
         	        w.getEl().dom.onclick = _blockEvent;
         	        w.getEl().dom.ondblclick = _blockEvent;
         	        w.getEl().dom.onmousedown = _blockEvent;
+        	        
+        	        w.footer.dom.appendChild(this.siteCountDiv);
         		},
         		scope: this
         	}

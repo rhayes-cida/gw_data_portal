@@ -123,11 +123,11 @@
 						<a href="learnmore.jsp">Click here to learn more</a>.</p>
 					</div>
 					<div class='ngwmn-spacer'></div>
+					
+					<jsp:include page="footer.jsp"></jsp:include>
+					
 				</td></tr></table> <!-- END SPLASH CONTENT -->
 			</div>
 		</div>
-
-		<jsp:include page="footer.jsp"></jsp:include>
-
 	</body>
 </html>

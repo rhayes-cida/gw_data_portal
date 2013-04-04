@@ -120,7 +120,6 @@
 			<input type="hidden" name="request" value="GetObservation"/>
 		</form>
 		<jsp:include page="helpcontent.jsp"></jsp:include>
-		<jsp:include page="footer.jsp"></jsp:include>
 		
 		<form id="exportForm" style="display:none" method="GET" action="export">
 			<%-- For list of parameters, see the java class HTTPParameters.ExtParam --%>

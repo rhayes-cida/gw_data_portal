@@ -22,23 +22,6 @@ GWDP.ui.initApp = function() {
 		}
 	});
 	
-	var footer = new Ext.Panel({ //footer
-		region: 'south',
-		contentEl: 'footer',
-		layout: 'fit',
-		border: false,
-		collapseMode: 'mini',
-		hideCollapseTool: true,
-		animCollapse: false,
-		height: 125,
-		minSize: 110,
-		listeners: {
-			expand: GWDP.ui.updateMaximizeTool,
-			collapse: GWDP.ui.updateMaximizeTool
-		}
-	});
-		
-    
     var filterPanel = new Ext.Panel({ //container panel
     	layout: 'border',
     	region: 'west',
@@ -413,12 +396,11 @@ GWDP.ui.initApp = function() {
 	
 	//put together the viewport
 	GWDP.ui.header = header;
-	GWDP.ui.footer = footer;
 	GWDP.ui.maxToolTip
 	new Ext.Viewport({
 		id: 'gwdp-viewport',
 		layout: 'border',
-		items: [header, content, footer],
+		items: [header, content],
 		listeners: {
 			afterrender: GWDP.ui.initMap
 		}
@@ -505,19 +487,17 @@ GWDP.ui.notify = function(msg) {
 };
 
 GWDP.ui.toggleMaximized = function() {
-	var max = !GWDP.ui.header.collapsed || !GWDP.ui.footer.collapsed;
+	var max = !GWDP.ui.header.collapsed;
 	if(max) {
 		GWDP.ui.header.collapse(false);
-		GWDP.ui.footer.collapse(false);
 	} else {
 		GWDP.ui.header.expand(false);
-		GWDP.ui.footer.expand(false);
 	}
 	GWDP.ui.updateMaximizeTool();
 };
 
 GWDP.ui.updateMaximizeTool = function() {
-	var restore = GWDP.ui.header.collapsed && GWDP.ui.footer.collapsed;
+	var restore = GWDP.ui.header.collapsed;
 	var mapTools = document.getElementById('mapTools').tools;
 	if(restore) {
 		mapTools.maximize.hide();

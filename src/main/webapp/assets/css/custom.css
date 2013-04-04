@@ -2,6 +2,14 @@ body {
 	font-family: calibri,tahoma,arial,verdana,sans-serif !important;	
 }
 
+.ngwmn-footer {
+	text-align: center;
+}
+
+.ngwmn-footer a,
+.ngwmn-footer a:hover {
+	text-decoration: none;
+}
 
 .summary-table {
 	border-collapse: collapse;	
@@ -651,6 +659,16 @@ td.long-text {
 	border: none;
 	background: #72665c;
 	padding: 3px;
+}
+
+.ngwmn-site-count-display {
+	font-weight: bold !important;
+	color: #264390;
+	border: none;
+	padding: 3px;
+	left: 10px;
+	bottom: -55px;
+	position: absolute;
 }
 
 /**

@@ -1,3 +1,8 @@
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
 #banner-area {
 	background-image: none !important;
     background-color: white !important;
@@ -180,4 +185,9 @@ ul.ngwmn-tab-layout a.active {
 .ngwmn-partner-name {
 	position: absolute;
 	margin-left: 10px;
+}
+
+
+.ngwmn-spacer {
+	height: 10em;
 }

@@ -93,10 +93,13 @@
 						    </div>
 					    </div>
 				    </div>
+				    
+				    
+					<div class='ngwmn-spacer'></div>
+					<jsp:include page="footer.jsp"></jsp:include>
 				</td></tr></table> <!-- END LEARN CONTENT -->
 			</div>
 		</div>
 
-		<jsp:include page="footer.jsp"></jsp:include>
 	</body>
 </html>
