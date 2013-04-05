@@ -1,7 +1,5 @@
 <!-- // START FOOTER -->
 <div class="ngwmn-footer">
-	<!--<span>Some footer text</span>-->
-	<br/>
 	<a href="mailto:gwdp_help@usgs.gov">Contact Us</a> |
 	<a href="http://acwi.gov/">ACWI</a> |
 	<a href="http://acwi.gov/sogw/index.html">SOGW</a> |

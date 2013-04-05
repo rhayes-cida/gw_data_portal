@@ -4,11 +4,20 @@ body {
 
 .ngwmn-footer {
 	text-align: center;
+	font-size: small;
 }
 
 .ngwmn-footer a,
 .ngwmn-footer a:hover {
 	text-decoration: none;
+}
+
+.ngwmn-footer a:link {
+	color: #233F8F;
+}
+
+.ngwmn-footer a:visited {
+	color: #CEE56A;
 }
 
 .summary-table {
