@@ -113,6 +113,14 @@ GWDP.ui.MultisiteDownloadForm = Ext.extend(Ext.form.FormPanel,{
 	}
 });
 
+var fileTypeStore = new Ext.data.ArrayStore({
+    fields: [
+	            'type',
+	            'displayText'
+	        ],
+	data: [['csv', 'CSV'], ['tsv', 'TSV']]
+});
+
 GWDP.ui.DownloadHelpPopup = Ext.extend(Ext.Window, {
 	id: 'download-help-window',
 	height: 400,
@@ -163,13 +171,15 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 			fieldLabel: 'Select file type',
 		    mode: 'local',
 		    name: 'fileType',
-		    store: new Ext.data.ArrayStore({
-		        fields: [
-		            'type',
-		            'displayText'
-		        ],
-		        data: [['csv', 'CSV'], ['tsv', 'TSV']]
-		    }),
+		    store: fileTypeStore,
+		    // minChars: 999,
+		    // typeAhead: true,
+		    // autoSelect: true,
+		    editable: false,
+		    triggerAction: 'all',
+		    value: 'csv',
+		    selectOnFocus:true,
+		    // listEmptytext: 'File Format',
 		    valueField: 'type',
 		    displayField: 'displayText'
 		});
