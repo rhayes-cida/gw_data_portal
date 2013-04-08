@@ -168,7 +168,7 @@ GWDP.ui.DownloadPopup = Ext.extend(Ext.Window, {
 		            'type',
 		            'displayText'
 		        ],
-		        data: [['csv', 'CSV'], ['tab', 'TSV']]
+		        data: [['csv', 'CSV'], ['tsv', 'TSV']]
 		    }),
 		    valueField: 'type',
 		    displayField: 'displayText'
