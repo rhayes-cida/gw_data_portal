@@ -36,7 +36,7 @@ describe("GWDP.domain.County.getCountyMetadata", function() {
 		GWDP.domain.County.getCountyMetadata({ something: "val"}, callback, "defOpt");
 		
 		//verify ajax params
-		expect(Ext.Ajax.request.calledWithMatch({ method: "GET" })).toBe(true);
+		expect(Ext.Ajax.request.calledWithMatch({ method: "POST" })).toBe(true);
 		expect(Ext.Ajax.request.calledWithMatch({ url: countyMetaDataUrl })).toBe(true);
 		
 		var params = Ext.Ajax.request.getCall(0).args[0].params;
