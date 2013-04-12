@@ -39,9 +39,12 @@ public class MetadataController {
 	public List<Map<String,Object>> agencies() {
 		
 		List<Map<String,Object>> result = template.queryForList(
-				"select agency_cd, agency_nm, count(*) count\n" + 
-				"from gw_data_portal.well_registry\n" + 
-				"group by agency_cd, agency_nm order by agency_nm");
+				"SELECT wr.agency_cd, a.agency_nm, COUNT(wr.my_siteid) count \n" + 
+				"FROM gw_data_portal.well_registry wr, gw_data_portal.agency_lov a \n" + 
+				"WHERE wr.agency_cd = a.agency_cd \n" + 
+				"AND (a.org_type <>'NWIS' or a.agency_cd='USGS') \n" + 
+				"GROUP BY wr.agency_cd, a.agency_nm \n" +
+				"ORDER BY a.agency_nm");
 		
 		logger.debug("Found {} agencies", result.size());
 
