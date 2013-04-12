@@ -81,7 +81,7 @@
 								groundwater data from multiple, dispersed databases in a web-based mapping 
 								application. The portal contains current and historical data including water 
 								levels, water quality, lithology, and well construction. The NGWMN is transitioning from a pilot phase into 
-								port. In the future we will be adding additional data providers to the network.
+								full implementation. In the future we will be adding additional data providers to the network.
 							</p>
 						</div>
 						
