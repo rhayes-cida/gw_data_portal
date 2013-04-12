@@ -170,6 +170,11 @@ ul.ngwmn-tab-layout a.active {
 	margin-left: 2em;
 }
 
+.ngwmn-tab-content p {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
 .ngwmn-tab-content img {
 	width: 650px;
 }

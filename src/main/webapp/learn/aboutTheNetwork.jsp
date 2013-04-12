@@ -14,7 +14,7 @@ Subcommittee on Ground Water (<a href="http://acwi.gov/sogw">SOGW</a>) and was e
 The goal of the National Ground Water Monitoring Network (NGWMN) is to provide information needed for planning, 
 management, and development of groundwater supplies to meet current and future water needs and ecosystem requirements. 
 This will be accomplished by aggregating suitable groundwater data from local, State, and Federal organizations. 
-A consensus-based framework document (<a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/index.html</a>) 
+A consensus-based framework document (<a href="http://acwi.gov/sogw/pubs/tr/index.html">http://acwi.gov/sogw/pubs/tr/</a>) 
 was developed to provide guidance to ensure that the data are comparable and can be included in a nationally consistent network. 
 The framework design focuses on providing information needed to assess the quantity of groundwater reserves as constrained by quality. 
 The scale of the network focuses on Principal and Major Aquifers of the United States.</p>
