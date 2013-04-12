@@ -27,7 +27,7 @@ GWDP.domain.County.getCountyMetadata = function(params, callback, defaultOption)
 	}
 	Ext.Ajax.request({
 		url: 'metadata/counties',
-		method: 'GET',
+		method: 'POST',
 		params: params, 
 		success: function(response, options) {
 			if(response.responseText =='[]') {
@@ -59,7 +59,7 @@ GWDP.domain.County.updateCountyMetadata = function(store, params, callback, defa
 	}
 	Ext.Ajax.request({
 		url: 'metadata/counties',
-		method: 'GET',
+		method: 'POST',
 		params: params, 
 		success: function(response, options) {
 			if(response.responseText =='[]') {

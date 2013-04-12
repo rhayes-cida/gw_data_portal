@@ -20,7 +20,7 @@ GWDP.domain.State.getStateMetadata = function(params, callback, defaultOption) {
 	var _store = GWDP.domain.State.getStateStore({defaultOption: defaultOption});
 	Ext.Ajax.request({
 		url: 'metadata/states',
-		method: 'GET',
+		method: 'POST',
 		params: params, 
 		success: function(response, options) {
 			_store = GWDP.domain.loadJsonIntoStore(
@@ -37,7 +37,7 @@ GWDP.domain.State.getStateMetadata = function(params, callback, defaultOption) {
 GWDP.domain.State.updateStateMetadata = function(store, params, callback, defaultOption) {
 	Ext.Ajax.request({
 		url: 'metadata/states',
-		method: 'GET',
+		method: 'POST',
 		params: params, 
 		success: function(response, options) {
 			store = GWDP.domain.loadJsonIntoStore(
