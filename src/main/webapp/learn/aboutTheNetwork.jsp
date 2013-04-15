@@ -93,13 +93,13 @@ suggested monitoring frequencies.
 		<p>
 		Trend wells are generally monitored to determine changes over time. The frequency of monitoring depends on the 
 		hydrologic conditions of the aquifer and can range from daily data to annual measurements. A subset of the trend 
-		monitoring wells will be designated as the “backbone” wells of the NGWMN.
+		monitoring wells will be designated as the &ldquo;backbone&rdquo; wells of the NGWMN.
 		</p>
 	<li>
 		<span>Surveillance:</span>
 		<p>Surveillance monitoring would be used in conjunction with Trend monitoring to periodically report on the 
 		overall water-level and water-quality conditions, or status, of the Nation's groundwater resources. NGWMN 
-		Surveillance monitoring can be thought of as a periodic "census" of groundwater level and quality. An overall 
+		Surveillance monitoring can be thought of as a periodic &ldquo;census&rdquo; of groundwater level and quality. An overall 
 		snapshot of groundwater conditions in an aquifer is obtained with Surveillance monitoring. The frequency of 
 		Surveillance monitoring generally is much less than Trend monitoring.
 		</p>
