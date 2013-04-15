@@ -60,6 +60,6 @@ GWDP.ui.ToggleButton = Ext.extend(Ext.form.Checkbox,  {
         }
         this.input.dom.value = !this.checked ? 'on' : 'off';
         this.setValue(!this.checked);
-    },
+    }
 });
 Ext.reg('togglebutton', GWDP.ui.ToggleButton);
