@@ -17,6 +17,12 @@ function dumpExtent(tag, extent, force) {
 
 GWDP.ui.map.siteSelector;
 
+var safari_mac = false;
+
+if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Mac') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+	safari_mac = true;
+}
+
 GWDP.ui.initMap = function() {
 	var initCenter = new OpenLayers.LonLat(-89.5042, 43.0973);
     
@@ -24,7 +30,8 @@ GWDP.ui.initMap = function() {
 	
 	GWDP.ui.map.siteSelector = new GWDP.ui.SiteSelector({
  	   store: GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells"),
- 	   emptyText: 'Ctrl + click to select a site. Hold Ctrl and drag a box to select a group of sites.'
+ 	   emptyText: safari_mac ? 'Ctrl + click to select a site. Hold Ctrl and drag a box to select a group of sites.'
+ 			   				 : 'Command + click to select a site. Hold Command and drag a box to select a group of sites.'
     });
 	
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
@@ -119,18 +126,18 @@ GWDP.ui.attachCustomControls = function() {
     //this handles ctrl+drag
     var zoombox = new GWDP.ui.ZoomBoxControl({
     	map: GWDP.ui.map.mainMap,
-    	keyMask: OpenLayers.Handler.MOD_CTRL,
+    	keyMask: safari_mac ? OpenLayers.Handler.MOD_CTRL : OpenLayers.Handler.MOD_META,
     	boxHandler: function(bounds) {
     		GWDP.ui.map.addSiteInBounds(bounds);
     	}
     });
     GWDP.ui.map.mainMap.addControl(zoombox);
     zoombox.activate();
-    
+        
 	var click = new GWDP.ui.ClickControl({
     	map: GWDP.ui.map.mainMap,
     	clickHandler: function(e) {
-    		if(e.ctrlKey) {
+    		if(e.ctrlKey || e.metaKey) {
     			GWDP.ui.map.addSiteAt(GWDP.ui.map.mainMap, e);
     		} else {
     			IDENTIFY.identifyLatLon(GWDP.ui.map.mainMap, e);
@@ -310,13 +317,13 @@ GWDP.ui.setLoadingMasksForUpdateMap = function () {
 GWDP.ui.getUpdateMapHandlers = function() {
 	return {
 		totalCount : function(numOfRecs) {
-			GWDP.ui.pointsCount.update(numOfRecs + " Sites Mapped");
+			GWDP.ui.pointsCount.update(numOfRecs + " Sites Mmapped");
 		},
 		waterLevelCount : function(numOfRecs) {
-			GWDP.ui.waterLevelCount.update(numOfRecs + " water-level network wells");
+			GWDP.ui.waterLevelCount.update(numOfRecs + " Water-level network wells");
 		},
 		waterQualityCount : function(numOfRecs) {
-			GWDP.ui.waterQualityCount.update(numOfRecs + " water-quality network wells");
+			GWDP.ui.waterQualityCount.update(numOfRecs + " Water-quality network wells");
 		}
 	};
 };
