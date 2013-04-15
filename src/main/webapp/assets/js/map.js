@@ -19,8 +19,9 @@ GWDP.ui.map.siteSelector;
 
 var safari_mac = false;
 
-if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Mac') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+if (navigator.userAgent.indexOf('Safari') >= 0 && navigator.userAgent.indexOf('Mac') >= 0 && navigator.userAgent.indexOf('Chrome') < 0) {
 	safari_mac = true;
+	console.log("detected Safari on Macintosh");
 }
 
 GWDP.ui.initMap = function() {
@@ -30,8 +31,8 @@ GWDP.ui.initMap = function() {
 	
 	GWDP.ui.map.siteSelector = new GWDP.ui.SiteSelector({
  	   store: GWDP.domain.getArrayStore(GWDP.domain.Well.fields, "wells"),
- 	   emptyText: safari_mac ? 'Ctrl + click to select a site. Hold Ctrl and drag a box to select a group of sites.'
- 			   				 : 'Command + click to select a site. Hold Command and drag a box to select a group of sites.'
+ 	   emptyText: safari_mac ? 'Command + click to select a site. Hold Command and drag a box to select a group of sites.'
+ 	   						 : 'Ctrl + click to select a site. Hold Ctrl and drag a box to select a group of sites.'
     });
 	
 	GWDP.ui.map.mainMap = new OpenLayers.Map("map-area", {
@@ -126,7 +127,7 @@ GWDP.ui.attachCustomControls = function() {
     //this handles ctrl+drag
     var zoombox = new GWDP.ui.ZoomBoxControl({
     	map: GWDP.ui.map.mainMap,
-    	keyMask: safari_mac ? OpenLayers.Handler.MOD_CTRL : OpenLayers.Handler.MOD_META,
+    	keyMask: safari_mac ? OpenLayers.Handler.MOD_META : OpenLayers.Handler.MOD_CTRL,
     	boxHandler: function(bounds) {
     		GWDP.ui.map.addSiteInBounds(bounds);
     	}
