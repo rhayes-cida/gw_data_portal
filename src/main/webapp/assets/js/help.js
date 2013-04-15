@@ -97,7 +97,7 @@ GWDP.ui.help.showWelcome = function() {
 	Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 	if(Ext.state.Manager.get(GWDP.ui.SKIP_TIPS_COOKIENAME, "false")!="true") {
 		var tips = Ext.create({
-			title: 'Welcome to the NGWMN Data Portal!',
+			// title: 'Welcome to the NGWMN Data Portal!',
 			xtype: 'window',
 			modal: true,
 			contentEl: 'ngwmn-description',
