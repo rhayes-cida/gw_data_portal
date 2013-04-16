@@ -236,7 +236,7 @@ default.
 }
 
 #filter-reset-button {
-	background-image: url("images/panel/refresh.png");
+	background-image: url("images/panel/carrow.png");
 	background-repeat: no-repeat;
 	float: right;
 	display: block;
