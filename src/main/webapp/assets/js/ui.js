@@ -153,7 +153,8 @@ GWDP.ui.initApp = function() {
 						}
 					]
 				},{
-					title: '<b>FILTER MAP DATA</b>',
+					title: '<b>FILTER MAP DATA</b> <div id="filter-reset-button">&nbsp;</div>',
+					headerCfg: { cls: "x-panel-header filter-header"},
 					layout: 'accordion',
 					padding: 0,
 					border: false,
@@ -195,9 +196,10 @@ GWDP.ui.initApp = function() {
 							border: false,
 							padding: 5,
 							items: [{
-								xtype: 'togglebutton',
+								xtype: 'togglebutton', // togglebutton extends checkbox
 								imgClass: 'water-level',
 								name: 'WL_DATA_FLAG',
+								id: 'WL_DATA_FLAG',
 								boxLabel: 'Water Level',
 				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
 							}]
@@ -210,6 +212,7 @@ GWDP.ui.initApp = function() {
 								xtype: 'togglebutton',
 								imgClass: 'water-quality',
 								name: 'QW_DATA_FLAG',
+								id: 'QW_DATA_FLAG',
 								boxLabel: 'Water Quality',
 				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
 							}]
@@ -222,6 +225,7 @@ GWDP.ui.initApp = function() {
 								xtype: 'togglebutton',
 								imgClass: 'well-log',
 								name: 'LOG_DATA_FLAG',
+								id: 'LOG_DATA_FLAG',
 								boxLabel: 'Well Log',
 				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
 							}]
@@ -407,6 +411,13 @@ GWDP.ui.initApp = function() {
 	});
 	
 	GWDP.ui.help.initHelpTips();
+	
+    // attach listener to filter reset button
+    var filter_reset_button = Ext.get("filter-reset-button");
+    if (filter_reset_button) {
+    	filter_reset_button.on("click", GWDP.ui.reset_filters);
+    }
+
 };
 
 GWDP.ui.getFilterFormValues = function() {
@@ -484,6 +495,35 @@ GWDP.ui.notify = function(msg) {
 	new Ext.ux.Notify({
 		msg: msg
 	}).show(Ext.getCmp('cmp-map-area').getEl());
+};
+
+GWDP.ui.reset_filters = function(event) {
+		console.log("reset filters");
+		
+		event.stopEvent();
+		
+		GWDP.ui.toggleCountiesFilter(false);
+
+		Ext.getCmp('contributingAgencies').setValue('All');
+		Ext.getCmp('principalAquifer').setValue('All');
+		
+		// setValue is not sufficient
+		var wdf = Ext.getCmp('WL_DATA_FLAG');
+		if (wdf.checked) {
+			wdf.onClick();
+		}
+
+		var qdf = Ext.getCmp('QW_DATA_FLAG');
+		if (qdf.checked) {
+			qdf.onClick();
+		}
+		
+		var ldf = Ext.getCmp('LOG_DATA_FLAG');
+		if (ldf.checked) {
+			ldf.onClick();
+		}
+		
+		GWDP.ui.getUpdateMap();
 };
 
 GWDP.ui.toggleMaximized = function() {

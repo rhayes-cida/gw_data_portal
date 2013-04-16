@@ -235,6 +235,14 @@ default.
     background-position: 0 0px;
 }
 
+#filter-reset-button {
+	background-image: url("images/panel/refresh.png");
+	background-repeat: no-repeat;
+	float: right;
+	display: block;
+	width: 20px;
+}
+
 .ngwmn-subfilter .x-accordion-hd {
 	background-color: #72665c;
 }

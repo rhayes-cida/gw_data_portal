@@ -318,7 +318,7 @@ GWDP.ui.setLoadingMasksForUpdateMap = function () {
 GWDP.ui.getUpdateMapHandlers = function() {
 	return {
 		totalCount : function(numOfRecs) {
-			GWDP.ui.pointsCount.update(numOfRecs + " Sites Mmapped");
+			GWDP.ui.pointsCount.update(numOfRecs + " Sites mapped");
 		},
 		waterLevelCount : function(numOfRecs) {
 			GWDP.ui.waterLevelCount.update(numOfRecs + " Water-level network wells");
