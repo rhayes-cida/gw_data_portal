@@ -822,7 +822,7 @@ td.long-text {
     width: 18px;
 }
 .GWDPuiOverviewMapExtentRectangle {
-    background-image: url("img/blank.gif");
+    background-image: url("../images/blank.gif");
     border: 2px dotted red;
     cursor: move;
     overflow: hidden;
