@@ -1,7 +1,7 @@
 // Define and compile templates
 if ( ! window.console ) console = { log: function(m){} };
 
-
+var detailedLithologyId = 'well-log-lithology-detail';
 var siteIdTpl = new Ext.XTemplate(
 	'<tpl for=".">',
 		'<div id="id-container">',
@@ -33,51 +33,63 @@ var siteIdTpl = new Ext.XTemplate(
 );
 
 var wellLogTemplate = new Ext.XTemplate(
-		'<tpl for=".">',
-			'<table>',
-				'<tr><td style="height:35px">Longitude: {[parseFloat(values.position.split(" ")[0]).toFixed(4)]}</td><td rowspan="6">{values.graphicHTML}</td></tr>',
-				'<tr><td style="height:35px">Latitude: {[parseFloat(values.position.split(" ")[1]).toFixed(4)]}</td></tr>',
-				'<tr><td style="height:35px">Elevation: {[(values.elevation * 1.0).toFixed(2)]} ft.</td></tr>',
-				'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 1.0).toFixed(2)]} ft.</td></tr>',
-//					'<tr><td style="height:35px">Elevation: {[(values.elevation * 3.2808399).toFixed(2)]} ft.</td></tr>',
-//					'<tr><td style="height:35px">Well Depth: {[(values.wellDepth * 3.2808399).toFixed(2)]} ft.</td></tr>',
-				'<tr><td>&nbsp;</td></tr>',
-			'</table>',
-			'<br/>',
-			// lithology table
-			'<tpl if="logObjs.length &gt; 0">',
-//				'<caption><strong>Lithology</strong></caption>',
-				'<table class="summary-table" border="1">',				
-					'<thead><tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Lithology</th><th>Description</th></tr></thead>',
-					'<tbody>',
-						'<tpl for="logObjs">',
-							'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td>',
-							'<td>{[(values.intervalTo * 1.0).toFixed(2)]}</td>',
-							'<td>{contrConcept}</td>',
-							'<td>{description}</td></tr>',
-//							'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
-						'</tpl>',
-					'</tbody>',
-				'</table>',
-			'</tpl>',
-			'<tpl if="logObjs.length == 0">',
-				'<h1>Either lithology service is down or simply unavailable for this site.</h1>',
-			'</tpl>',
-			'<br/>',
-			// well construction table
-			'<tpl if="constrObjs.length &gt; 0">',
-				'<table class="summary-table" border="1">',
-					'<tr><th>Depth From (ft)</th><th>Depth To (ft)</th><th>Screen/Casing Material</th></tr>',
-					'<tpl for="constrObjs">',
-						'<tr><td>{[(values.intervalFrom * 1.0).toFixed(2)]}</td><td>{[(values.intervalTo * 1.0).toFixed(2)]}</td><td>{description}</td></tr>',
-//						'<tr><td>{[(values.intervalFrom * 3.2808399).toFixed(2)]}</td><td>{[(values.intervalTo * 3.2808399).toFixed(2)]}</td><td>{description}</td></tr>',
-					'</tpl>',
-				'</table>',	
-			'</tpl>',
-			'<tpl if="constrObjs.length == 0">',
-				'<h1>Either well construction service is down or simply unavailable for this site.</h1>',
-			'</tpl>',
-		'</tpl>',
+        '<tpl for=".">',
+            '<div class="well-log-wrapper">',
+               '<tpl if="values.graphicHTML">',
+               '<div class="well-log-graphic-wrapper">',
+                    '{[values.graphicHTML]}',
+               '</div>',
+               '</tpl>',
+               '<div class="well-log-info-wrapper">',
+                    '<div class="well-log-info-pane">',
+                        '<div class="well-log-header">Well Information</div>',
+                            '<table class="summary-table well-log-small-table"></tbody>',
+                                '<tr>',
+                                    '<th scope="row">Well Depth</th>',
+                                    '<td>{[GWDP.utils.isNumber(values.wellDepth) ? (values.wellDepth * 1.0).toFixed(2) + " ft." : "&nbsp;"]}</td>',
+                                    '<th scope="row">Latitude</th>',
+                                    '<td>{[parseFloat(values.position.split(/[ ,]/)[1]).toFixed(4)]}</td>',
+                                '</tr>',
+                                '<tr>',
+                                    '<th scope="row">Elevation</th>',
+                                    '<td>{[GWDP.utils.isNumber(values.elevation) ? (values.elevation * 1.0).toFixed(2) + " ft." : "&nbsp;"]}</td>',
+                                    '<th scope="row">Longitude</th>',
+                                    '<td>{[parseFloat(values.position.split(/[ ,]/)[0]).toFixed(4)]}</td>',
+                                '</tr>',
+                            '</tbody></table>',
+                        '<tpl if="values.constrObjs.length &gt; 0">',
+                            '<table class="summary-table well-log-small-table"></tbody>',
+                                '<tr>',
+                                    '<th scope="col">Depth from (ft)</th>',
+                                    '<th scope="col">Depth to (ft)</th>',
+                                    '<th scope="col">Screen/Casing Material</th>',
+                                '</tr>',
+                                '<tr>',
+                                    '<td>{[(values.constrObjs[0].intervalFrom * 1.0).toFixed(2)]}</td>',
+                                    '<td>{[(values.constrObjs[0].intervalTo * 1.0).toFixed(2)]}</td>',
+                                    '<td>{[values.constrObjs[0].description]}</td>',
+                                '</tr>',
+                            '</tbody></table>',
+                            '</tpl>',//end if
+                            '<tpl if="values.constrObjs.length === 0">',
+                                '<h1>Either well construction service is down or simply unavailable for this site.</h1>',
+                            '</tpl>',
+                        '</tpl>',
+                    '</div>',//well-log-info-pane
+                    '<div class="well-log-info-pane">',
+                        '<div class="well-log-header">',
+                            'Detailed Lithology',
+                        '</div>',
+                        '<tpl if="values.logObjs.length === 0">',
+                            '<h1>Either lithology service is down or simply unavailable for this site.</h1>',
+                        '</tpl>',
+                        '<div id="' + detailedLithologyId + '">',
+
+                        '</div>',//this div will be populated with a grid.
+                    '</div>',
+               '</div>',
+            '</div>',//wellLogWrapper
+        '</tpl>',
 		{compiled: true}
 	);
 
@@ -372,7 +384,7 @@ var WELL_LOG_TAB = {
 	cmpName: 'well-log-tab',
 	get: function() {return Ext.getCmp(this.cmpName);},
 	getBody: function() {return this.get().body;},
-	update: function(htmlStr) { this.get().update(htmlStr);},
+    update: function(htmlStr) { this.get().update(htmlStr);},
 	createGraphic: function(so /* well log service object */){
 		var graphicHTML = '';
 		if (so.logObjs && so.logObjs.length > 0) {
@@ -478,6 +490,37 @@ var WELL_LOG_TAB = {
 			so.graphicHTML = WELL_LOG_TAB.createGraphic(so);
 
 			wellLogTemplate.overwrite(WELL_LOG_TAB.getBody(), so);
+            if(so.logObjs.length){
+                //now setup the lithography details grid and render it to the tab
+                var lithStore = new Ext.data.JsonStore({
+                    autoDestroy: true,
+                    root: 'logObjs',
+                    fields: [
+                        //map from names in the service object to more sensible names
+                        {mapping: 'contrConcept', name: 'lith'},
+                        {mapping: 'description', name: 'desc'},
+                        {mapping: 'intervalFrom', name: 'depthFrom'},
+                        {mapping: 'intervalTo', name: 'depthTo'}
+                    ]
+                });
+
+                lithStore.loadData(so);
+                var lithGrid = new Ext.grid.GridPanel({
+                    store: lithStore,
+                    colModel: new Ext.grid.ColumnModel({
+                        defaults: {sortable: true},
+                        columns:[
+                            {dataIndex: 'depthFrom', header: 'Depth From (ft)'},
+                            {dataIndex: 'depthTo', header: 'Depth To (ft)'},
+                            {dataIndex: 'lith', header: 'Lithology'},
+                            {dataIndex: 'desc', header: 'Description'}
+                        ]
+                   }),
+                   renderTo: detailedLithologyId,
+                   autoHeight: true
+               });
+               lithGrid.render();
+            }//endif
 		} catch (err){
 			// TODO log this
 			WELL_LOG_TAB.update(SITE.loadingErrorMessage);

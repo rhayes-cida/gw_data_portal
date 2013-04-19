@@ -613,6 +613,65 @@ td.long-text {
 	font-size: 70%;
 }
 
+.well-log-wrapper{
+    height: 97%;
+}
+
+.well-log-header{
+    color: #264390;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 1%;
+}
+
+.well-log-graphic-wrapper{
+    background: #FFF;
+    display:inline-block;
+    height: 98%;
+    width: 23%;
+    margin: 1%;
+    overflow-y: scroll;
+}
+
+.well-log-info-wrapper{
+    margin: 1%;
+    display: inline-block;
+    vertical-align: top;
+    height: 98%;
+    width: 73%;
+}
+
+.well-log-info-pane{
+    display:block;
+    height: 48%;
+}
+
+.well-log-small-table{
+    display: inline-block;
+    border-collapse: collapse;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+
+.well-log-small-table th{
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+.well-log-small-table td{
+    background-color: #FFF;
+    border: 1px solid black;
+}
+
+td.well-log-small-table{
+    background-color: #FFF;
+}
+
+#well-log-lithology-detail{
+    height: 90%;
+    overflow-y: scroll;
+}
+
 #map-area .scale-white{
     color: white;
 }

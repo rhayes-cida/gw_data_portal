@@ -33,7 +33,8 @@
 		<script type="text/javascript" src="assets/js/namespace.js"></script>
 		<jsp:include page="server_js_props.jsp"></jsp:include>
 		<script type="text/javascript" src="assets/js/config.js"></script>
-		
+		<script type="text/javascript" src="assets/js/utils.js"></script>
+        
 		<!-- Extensions -->
 	   	<script type="text/javascript" src='assets/ux/MultiSelect/MultiSelect.js'></script>
 		<link rel="stylesheet" href="assets/ux/MultiSelect/MultiSelect.css"/>

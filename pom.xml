@@ -8,7 +8,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+		<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
 		<build.scm.version>${buildNumber}</build.scm.version>
 		<cida.maven.url>http://internal.cida.usgs.gov/maven</cida.maven.url>
 		<cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
