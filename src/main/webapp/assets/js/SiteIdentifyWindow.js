@@ -331,6 +331,7 @@ var WATER_LEVEL_TAB = {
 		    	axisLabelFontSize: 10,
 		    	axisLineWidth: 1.5,
 		    	yLabelWidth: 15,
+		    	colors: ['#233F8F','black'],
 		    	axes: {
 		    		y: {
 		    			axisLabelFormatter: function(y) {
@@ -344,6 +345,9 @@ var WATER_LEVEL_TAB = {
 		    	underlayCallback: function(canvas, area, g) {
 		    		canvas.save();
 		    		
+		    		canvas.fillStyle = '#e4e9ef';
+		    		canvas.fillRect(area.x, area.y, area.w, area.h);
+
 		    		canvas.strokeStyle = "gray";
 
 		    		canvas.beginPath();
@@ -367,6 +371,11 @@ var WATER_LEVEL_TAB = {
 			    csvUrl,
 	    		dOptions
 		);
+		
+		if (WATER_LEVEL_TAB.dygraph) {
+			// See http://blog.dygraphs.com/2012/01/preventing-dygraphs-memory-leaks.html
+			WATER_LEVEL_TAB.dygraph.destroy();
+		}
 		
 		WATER_LEVEL_TAB.dygraph = g;
 	},
