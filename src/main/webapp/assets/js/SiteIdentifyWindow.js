@@ -46,15 +46,15 @@ var wellLogTemplate = new Ext.XTemplate(
                             '<table class="summary-table well-log-small-table"></tbody>',
                                 '<tr>',
                                     '<th scope="row">Well Depth</th>',
-                                    '<td>{[GWDP.utils.isNumber(values.wellDepth) ? (values.wellDepth * 1.0).toFixed(2) + " ft." : "&nbsp;"]}</td>',
+                                    '<td>{[this.fmt.inFeetOrNbsp(values.wellDepth)]}</td>',
                                     '<th scope="row">Latitude</th>',
-                                    '<td>{[parseFloat(values.position.split(/[ ,]/)[1]).toFixed(4)]}</td>',
+                                    '<td>{[this.fmt.positionToLat(values.position)]}</td>',
                                 '</tr>',
                                 '<tr>',
                                     '<th scope="row">Elevation</th>',
-                                    '<td>{[GWDP.utils.isNumber(values.elevation) ? (values.elevation * 1.0).toFixed(2) + " ft." : "&nbsp;"]}</td>',
+                                    '<td>{[this.fmt.inFeetOrNbsp(values.elevation) ]}</td>',
                                     '<th scope="row">Longitude</th>',
-                                    '<td>{[parseFloat(values.position.split(/[ ,]/)[0]).toFixed(4)]}</td>',
+                                    '<td>{[this.fmt.positionToLong(values.position)]}</td>',
                                 '</tr>',
                             '</tbody></table>',
                         '<tpl if="values.constrObjs.length &gt; 0">',
@@ -65,8 +65,8 @@ var wellLogTemplate = new Ext.XTemplate(
                                     '<th scope="col">Screen/Casing Material</th>',
                                 '</tr>',
                                 '<tr>',
-                                    '<td>{[(values.constrObjs[0].intervalFrom * 1.0).toFixed(2)]}</td>',
-                                    '<td>{[(values.constrObjs[0].intervalTo * 1.0).toFixed(2)]}</td>',
+                                    '<td>{[this.fmt.inFeetOrNbsp(values.constrObjs[0].intervalFrom)]}</td>',
+                                    '<td>{[this.fmt.inFeetOrNbsp(values.constrObjs[0].intervalTo)]}</td>',
                                     '<td>{[values.constrObjs[0].description]}</td>',
                                 '</tr>',
                             '</tbody></table>',
@@ -84,13 +84,15 @@ var wellLogTemplate = new Ext.XTemplate(
                             '<h1>Either lithology service is down or simply unavailable for this site.</h1>',
                         '</tpl>',
                         '<div id="' + detailedLithologyId + '">',
-
                         '</div>',//this div will be populated with a grid.
                     '</div>',
                '</div>',
             '</div>',//wellLogWrapper
         '</tpl>',
-		{compiled: true}
+		{
+            compiled: true,
+            fmt: GWDP.ui.formatters
+        }
 	);
 
 var SITE = {

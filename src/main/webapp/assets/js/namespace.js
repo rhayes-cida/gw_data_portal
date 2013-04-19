@@ -3,6 +3,7 @@ Ext.ns("GWDP");
 Ext.ns('GWDP.util');
 
 Ext.ns("GWDP.ui");
+Ext.ns("GWDP.ui.formatters");
 Ext.ns("GWDP.ui.map");
 Ext.ns("GWDP.ui.help");
 

@@ -58,6 +58,7 @@
 		<script type="text/javascript" src="assets/js/domain/CountyDomain.js"></script>
 		<script type="text/javascript" src="assets/js/domain/AquiferDomain.js"></script>
 		
+        <script type="text/javascript" src="assets/js/UiFormatters.js"></script>
 		<script type="text/javascript" src="assets/js/Mediator.js"></script>
 		<script type="text/javascript" src="assets/js/help.js"></script>
 		<script type="text/javascript" src="assets/js/map.js"></script>
@@ -70,7 +71,7 @@
 		
 		<script type="text/javascript" src="assets/js/ui.js"></script>
 
-		
+
 		<link rel="stylesheet" href="assets/css/usgs_style_main.css"/>	
 		<link rel="stylesheet" href="assets/ngwmn_ext_skin/xtheme-ngwmn.css"/>
 		<link rel="stylesheet" href="assets/css/index.css"/>

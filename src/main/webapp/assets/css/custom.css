@@ -630,7 +630,7 @@ td.long-text {
     height: 98%;
     width: 23%;
     margin: 1%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .well-log-info-wrapper{
@@ -669,7 +669,7 @@ td.well-log-small-table{
 
 #well-log-lithology-detail{
     height: 90%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #map-area .scale-white{
