@@ -19,9 +19,13 @@ GWDP.ui.map.siteSelector;
 
 var safari_mac = false;
 
-if (navigator.userAgent.indexOf('Safari') >= 0 && navigator.userAgent.indexOf('Mac') >= 0 && navigator.userAgent.indexOf('Chrome') < 0) {
+if (! Ext) {
+	throw "Must load Ext before loading this file";
+}
+
+if (Ext.isMac) {
 	safari_mac = true;
-	console.log("detected Safari on Macintosh");
+	console.log("detected Macintosh");
 }
 
 GWDP.ui.initMap = function() {
