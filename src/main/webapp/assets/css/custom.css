@@ -654,6 +654,7 @@ td.long-text {
 }
 
 .well-log-small-table th{
+    background: #CAC1BE;
     border: 1px solid black;
     font-weight: bold;
 }
@@ -881,7 +882,7 @@ td.well-log-small-table{
     width: 18px;
 }
 .GWDPuiOverviewMapExtentRectangle {
-    background-image: url("../images/blank.gif");
+    background-image: url("img/blank.gif");
     border: 2px dotted red;
     cursor: move;
     overflow: hidden;

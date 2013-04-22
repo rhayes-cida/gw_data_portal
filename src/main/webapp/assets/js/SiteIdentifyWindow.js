@@ -402,8 +402,9 @@ var WELL_LOG_TAB = {
 			
 			//create graphic
 			var graphicHeight = 300;
-			var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];
-			var fontColor = ['#000','#000','#000','#000','#fff','#fff','#fff','#fff'];
+//			var intervalColor = ['#ff4','#dd4','#bb4','#994','#774','#554','#334','#114'];//original
+			var intervalColor = ['#CDE569','#C6BBB7','#9A887E','#72655C'];
+			var fontColor = ['#000','#000','#000','#000'];
 			graphicHTML = '<table class="well-log-graphic">';
 			
 			var totalDepth = (so.logObjs[so.logObjs.length-1].intervalTo - so.logObjs[0].intervalFrom);
@@ -412,7 +413,7 @@ var WELL_LOG_TAB = {
 				if (relHeight < 20) relHeight = 20;
 
 				if (i == 0) {
-					graphicHTML += '<tr><td><span style="font-size: 80%;">' + (so.logObjs[i].intervalFrom * 1.0).toFixed(2) + ' ft</span></td></tr>'; 
+					graphicHTML += '<tr><td><span style="font-size: 80%;">' + GWDP.ui.formatters.inFeetOrNbsp(so.logObjs[i].intervalFrom) + '</span></td></tr>'; 
 				}
 				
 				graphicHTML += '<tr><td style="height:' + relHeight + 'px; border: solid black 1px; width: 50px;">' + 
@@ -421,7 +422,7 @@ var WELL_LOG_TAB = {
 							'color: ' + fontColor[(i%fontColor.length)] + 
 						';">';
 
-				graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + (so.logObjs[i].intervalTo * 1.0).toFixed(2) + ' ft</span>' + 
+				graphicHTML += '<span style="position: absolute; bottom: 0px; font-size: 80%;">' + GWDP.ui.formatters.inFeetOrNbsp(so.logObjs[i].intervalTo) + '</span>' + 
 						'</div>' + 
 					'</td>' + 
 					'<td style="height:' + relHeight + 'px; padding-left: 5px;" valign="middle">' + 
@@ -518,13 +519,14 @@ var WELL_LOG_TAB = {
                 lithStore.loadData(so);
                 var lithGrid = new Ext.grid.GridPanel({
                     store: lithStore,
+                    autoExpandColumn: 'xpando',
                     colModel: new Ext.grid.ColumnModel({
-                        defaults: {sortable: true},
+                        defaults: {sortable: false},
                         columns:[
                             {dataIndex: 'depthFrom', header: 'Depth From (ft)'},
                             {dataIndex: 'depthTo', header: 'Depth To (ft)'},
                             {dataIndex: 'lith', header: 'Lithology'},
-                            {dataIndex: 'desc', header: 'Description'}
+                            {dataIndex: 'desc', id: 'xpando', header: 'Description'}
                         ]
                    }),
                    renderTo: detailedLithologyId,
