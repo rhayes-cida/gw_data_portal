@@ -77,7 +77,6 @@ var SiteIdSelectorPopup = Ext.extend(Ext.Window, {
 	            	rowdblclick: function(grid, rowIndex, e) {
 	            		var record = grid.store.getAt(rowIndex);
 						(new SiteIdentifyWindow({siteRecord: record})).show();
-	    				Ext.getCmp('select-site-window').close();
 	            	}
 	            }
 			},
