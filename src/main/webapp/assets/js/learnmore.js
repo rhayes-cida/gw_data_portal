@@ -13,17 +13,18 @@ Ext.onReady(function(){
 	GWDP.domain.Agency.getAgencyMetadata(
 		{},
 		function(store){
-			var records = store.data.items;
 			var content = '';
-			for(var i = 0; i < records.length; i++) {
-				var agencyCd = records[i].data['AGENCY_CD'];  
-				var agencyName = records[i].data['AGENCY_NM'];
+            store.each(function(record){
+				var agencyCd = record.get('AGENCY_CD');  
+				var agencyName = record.get('AGENCY_NM');
+                var url = record.get('AGENCY_LINK');
 				content += "<div class='ngwmn-partner-container'>" +
+                    "<a href='" + url + "'>" +
 					"<img class='ngwmn-partner-logo' src='assets/images/logos/" + GWDP.domain.getAgencyLogo(agencyCd) + "'>" +
 					"<span class='ngwmn-partner-name'>" + agencyName + "</span>" +
+                    "</a>" +
 				"</div>";
- 			}
-			
+            });
 			document.getElementById('ngwmn-partners').innerHTML = content;
 		});
 });

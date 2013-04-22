@@ -76,7 +76,7 @@
 						    	</div>
 						    </div>
 						    
-						    <div class="ngwmn-tab" id=""dataProviders"">
+						    <div class="ngwmn-tab" id="dataProviders">
 						    	<div class="ngwmn-tab-content">
 							    	<div class="ngwmn-tab-title">Data Providers</div>
 							    	<hr/>

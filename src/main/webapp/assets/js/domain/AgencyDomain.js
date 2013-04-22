@@ -1,9 +1,10 @@
 GWDP.domain.Agency.getAgencyStore = function(params) {
-	var str = GWDP.domain.getJsonStore(['AGENCY_CD','AGENCY_NM','COUNT'], "metadata/agencies");
+	var str = GWDP.domain.getJsonStore(['AGENCY_CD','AGENCY_NM','COUNT', 'AGENCY_LINK'], "metadata/agencies");
 	if(params.defaultOption) {
 		str.loadData([{
 			AGENCY_CD: params.defaultOption, 
 			AGENCY_NM: params.defaultOption,
+			AGENCY_LINK: params.defaultOption,
 			COUNT:params.defaultOption}]);
 	}
 	return str;
