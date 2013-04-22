@@ -336,11 +336,11 @@ var WATER_LEVEL_TAB = {
 		    	colors: ['#233F8F','black'],
 		    	axes: {
 		    		y: {
-		    			axisLabelFormatter: function(y) {
-		    				return -y;
+		    			axisLabelFormatter: function(y, granularity, opts, g) {
+		    				return Dygraph.numberAxisLabelFormatter(-y, granularity, opts, g);
 		    			},
-		    			valueFormatter: function(y) {
-		    				return -y + " ft";
+		    			valueFormatter: function(y, opts, pt, g) {
+		    				return Dygraph.numberValueFormatter(-y, opts, pt, g) + " ft";
 		    			}
 		    		}
 		    	},
