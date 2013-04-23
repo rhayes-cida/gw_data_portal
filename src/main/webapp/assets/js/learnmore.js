@@ -18,11 +18,14 @@ Ext.onReady(function(){
 				var agencyCd = record.get('AGENCY_CD');  
 				var agencyName = record.get('AGENCY_NM');
                 var url = record.get('AGENCY_LINK');
+                if(undefined == url || !url.length){
+                    url = '';
+                }
 				content += "<div class='ngwmn-partner-container'>" +
                     "<a href='" + url + "'>" +
-					"<img class='ngwmn-partner-logo' src='assets/images/logos/" + GWDP.domain.getAgencyLogo(agencyCd) + "'>" +
-					"<span class='ngwmn-partner-name'>" + agencyName + "</span>" +
+					"<img class='ngwmn-partner-logo' src='assets/images/logos/" + GWDP.domain.getAgencyLogo(agencyCd) + "'/>" +
                     "</a>" +
+					"<span class='ngwmn-partner-name'>" + agencyName + "</span>" +
 				"</div>";
             });
 			document.getElementById('ngwmn-partners').innerHTML = content;
