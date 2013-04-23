@@ -191,45 +191,52 @@ GWDP.ui.initApp = function() {
 						padding: 5,
 						border: false,
 						autoScroll: true,
-						items: [{
-							xtype: 'panel',
-							border: false,
-							padding: 5,
-							items: [{
-								xtype: 'togglebutton', // togglebutton extends checkbox
-								imgClass: 'water-level',
-								name: 'WL_DATA_FLAG',
-								id: 'WL_DATA_FLAG',
-								boxLabel: 'Water Level',
-				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-							}]
-						}
-						,{
-							xtype: 'panel',
-							border: false,
-							padding: 5,
-							items: [{
-								xtype: 'togglebutton',
-								imgClass: 'water-quality',
-								name: 'QW_DATA_FLAG',
-								id: 'QW_DATA_FLAG',
-								boxLabel: 'Water Quality',
-				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-							}]
-						}
-						,{
-							xtype: 'panel',
-							border: false,
-							padding: 5,
-							items: [{
-								xtype: 'togglebutton',
-								imgClass: 'well-log',
-								name: 'LOG_DATA_FLAG',
-								id: 'LOG_DATA_FLAG',
-								boxLabel: 'Well Log',
-				            	listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
-							}]
-						}
+						items: [
+                                {
+                                    xtype: 'panel',
+                                    border: false,
+                                    padding: 5,
+                                    items: [{
+                                        xtype: 'togglebutton', // togglebutton extends checkbox
+                                        imgClass: 'water-level',
+                                        name: 'WL_DATA_FLAG',
+                                        id: 'WL_DATA_FLAG',
+                                        boxLabel: 'Water Level',
+                                        listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+                                    }]
+                                }
+                                ,{
+                                    xtype: 'panel',
+                                    border: false,
+                                    padding: 5,
+                                    items: [{
+                                        xtype: 'togglebutton',
+                                        imgClass: 'water-quality',
+                                        name: 'QW_DATA_FLAG',
+                                        id: 'QW_DATA_FLAG',
+                                        boxLabel: 'Water Quality',
+                                        listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+                                    }]
+                                }
+                                ,{
+                                    xtype: 'panel',
+                                    border: false,
+                                    padding: 5,
+                                    items: [{
+                                        xtype: 'togglebutton',
+                                        imgClass: 'well-log',
+                                        name: 'LOG_DATA_FLAG',
+                                        id: 'LOG_DATA_FLAG',
+                                        boxLabel: 'Well Log',
+                                        listeners : { check: function() { GWDP.ui.getUpdateMap(); } }
+                                    }]
+                                },
+                                {   //this is an empty panel used as a positioning hack for the help tip icon
+                                    xtype: 'panel',
+                                    border: false,
+                                    padding: 5,
+                                    id: 'availableDataTipAnchor'
+                                }
 						]
 					},{
 						title: 'State and County',
@@ -242,6 +249,7 @@ GWDP.ui.initApp = function() {
 			            labelWidth: 150,
 						items: [{
 							xtype: 'radio',
+                            id: 'state-and-county-selector',
 							boxLabel: "Multiple states",
 							name: 'stateOrCountyRadio',
 							checked: true

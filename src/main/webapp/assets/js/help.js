@@ -81,6 +81,27 @@ GWDP.ui.help.initHelpTips = function(){
         contentEl: 'ngwmn-agency-tip'
     });
     
+    
+    var availableDataTip = new GWDP.ui.GwdpHelpTip({        
+        title: 'Available Data',
+        target: 'availableDataTipAnchor',
+        anchor: 'right',
+        width: 415,
+        autoHide: false,
+        closable: true,
+        contentEl: 'ngwmn-available-data-tip'
+    });    
+    
+    var stateAndCountyTip = new GWDP.ui.GwdpHelpTip({        
+        title: 'State & County',
+        target: 'state-and-county-selector',
+        anchor: 'right',
+        width: 415,
+        autoHide: false,
+        closable: true,
+        contentEl: 'ngwmn-state-and-county-tip'
+    }); 
+    
     Ext.getCmp('gwdpFilters').on('afterlayout', function(){
     	wlFlag.hide();
     	wlSub.hide();
@@ -90,6 +111,8 @@ GWDP.ui.help.initHelpTips = function(){
     	qwMon.hide();
     	aquifer.hide();
     	agency.hide();
+        availableDataTip.hide();
+        stateAndCountyTip.hide();
     });
 };
 

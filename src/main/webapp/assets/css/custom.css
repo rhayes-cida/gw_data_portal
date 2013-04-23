@@ -894,3 +894,7 @@ td.well-log-small-table{
     cursor: move;
     overflow: hidden;
 }
+
+#availableDataTipAnchor_tooltip, #state-and-county-selector_tooltip{
+    position: relative !important;
+}

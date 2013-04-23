@@ -98,7 +98,11 @@ default.
 }
 
 .x-tool-help-over {
-    background-image:url(images/panel/question.gif) !important;
+    background-image:url(images/panel/question-over.gif) !important;
+    background-position: 0 0;
+}
+.x-tool-help:hover {
+    background-image:url(images/panel/question-over.gif) !important;
     background-position: 0 0;
 }
 

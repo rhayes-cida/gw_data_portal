@@ -171,3 +171,11 @@
 <div id="ngwmn-agency-tip" class='x-hidden ngwmn-help-tip'>
 	<p>Each NGWMN site is associated with one or more agency. This could be the owning agency, sampling agency or data providing agency.</p>
 </div>
+
+<div id="ngwmn-available-data-tip" class='x-hidden ngwmn-help-tip'>
+	<p>Lorem ipsum</p>
+</div>
+
+<div id="ngwmn-state-and-county-tip" class='x-hidden ngwmn-help-tip'>
+	<p>Lorem ipsum</p>
+</div>
