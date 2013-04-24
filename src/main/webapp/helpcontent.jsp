@@ -36,7 +36,6 @@
 	2) the Suspected Changes subnetwork, and 3) the Documented Changes subnetwork.
 	</p>
 
-	<p>
 	<ul>
 		<li>
 			<span>Background subnetwork:</span>
@@ -54,15 +53,15 @@
 		<li>
 			<span>Documented Changes subnetwork:</span>
 			<p>Monitoring points that provide data from aquifers that have documented anthropogenic effects.<br/>
-			The aquifers may:<br/>
-			(1) be known to be heavily pumped, or<br/>
-			(2) have experienced substantial recharge-altering land-use changes, or<br/>
-			(3) have managed ground-water resources, or<br/>
-			(4) are known to have degraded water quality or declining  water levels.
-			</p>
+			The aquifers may:</p>
+            <ol>
+                <li>be known to be heavily pumped, or</li>
+                <li>have experienced substantial recharge-altering land-use changes, or</li>
+                <li>have managed ground-water resources, or</li>
+                <li>are known to have degraded water quality or declining  water levels.</li>
+            </ol>
 		</li>
 	</ul>
-	</p>
 </div>
 
 <div id="ngwmn-water-level-category-tip" class='x-hidden ngwmn-help-tip'>
@@ -72,7 +71,6 @@
 	suggested monitoring frequencies.
 	</p>
 
-	<p>
 	<ul>
 		<li>
 			<span>Trend:</span>
@@ -92,7 +90,6 @@
 			</p>
 		</li>
 	</ul>
-	</p>
 </div>
 
 <div id="ngwmn-water-quality-tip" class='x-hidden ngwmn-help-tip'>
@@ -105,7 +102,6 @@
 		2) the Suspected Changes subnetwork, and 3) the Documented Changes subnetwork.
 		</p>
 
-		<p>
 		<ul>
 			<li>
 				<span>Background subnetwork:</span>
@@ -131,17 +127,15 @@
 				</p>
 			</li>
 		</ul>
-		</p>
 </div>
 
 <div id="ngwmn-water-quality-category-tip" class='x-hidden ngwmn-help-tip'>
-	<	<p>
+	<p>
 	Wells within each water-quality subnetwork (Background, Suspected Changes, or Documented Changes) will be assigned to a monitoring category 
 	depending on the purpose of the monitoring at the well. These categories, and conditions at the wells, will be used to determine 
 	suggested monitoring frequencies.
 	</p>
 
-	<p>
 	<ul>
 		<li>
 			<span>Trend:</span>
@@ -161,7 +155,6 @@
 			</p>
 		</li>
 	</ul>
-	</p>
 </div>
 
 <div id="ngwmn-aquifer-tip" class='x-hidden ngwmn-help-tip'>

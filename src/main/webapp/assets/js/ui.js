@@ -53,7 +53,6 @@ GWDP.ui.initApp = function() {
 							xtype: "panel",
 							layout: 'form',
 							border: false,
-							autoScroll: true,
 							items: [{
 									xtype: 'checkbox',
 									fieldLabel: "<b>Water level</b>",

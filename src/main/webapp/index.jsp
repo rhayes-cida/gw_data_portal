@@ -135,7 +135,7 @@
 		
 		<form id="multisiteDownloadForm" style="display:none;" method="POST" action="data">
 			<!--  Used by DownloadPopup.jsp, which creates the input fields -->
-			<button name="download" type="submit"/>
+            <button name="download" type="submit"></button>
 		</form>
 	</body>
 </html>

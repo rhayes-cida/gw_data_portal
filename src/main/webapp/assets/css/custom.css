@@ -692,6 +692,24 @@ td.well-log-small-table{
 	padding: 10px;
 }
 
+.ngwmn-help-tip p{
+    margin-bottom: 1em;
+}
+
+.ngwmn-help-tip span{
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.ngwmn-help-tip ul{
+    padding-left: 1em;
+}
+
+.ngwmn-help-tip ol{    
+    padding-left: 2em;
+    list-style-type: decimal;
+}
+
 #ccsa-area {
 	background-color: white;
 }

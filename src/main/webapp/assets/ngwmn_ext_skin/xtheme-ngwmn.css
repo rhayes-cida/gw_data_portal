@@ -590,6 +590,9 @@ body.x-body-masked .x-window-mc, body.x-body-masked .x-window-plain .x-window-mc
     border-color:#72665c;
 }
 
+.x-form-check-wrap input{
+    vertical-align: middle;
+}
 /* Borders go last for specificity */
 .x-panel-noborder .x-panel-body-noborder {
     border-width:0;

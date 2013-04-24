@@ -156,7 +156,7 @@ GWDP.ui.GwdpHelpTip = Ext.extend(Ext.ToolTip,{
 			var div = document.createElement("div");
 			div.className = "x-tool x-tool-help ngwmn-tooltip";
 			div.style.position = "absolute";
-			div.style.top = 0;
+			div.style.top = "2px";
 			var width = Ext.getCmp(target).width || t.dom.offsetWidth;
 			div.style.marginLeft = (width + 5) + "px"; 
 			this.target = div.id = target+"_tooltip";
