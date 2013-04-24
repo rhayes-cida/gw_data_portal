@@ -376,7 +376,7 @@ var WATER_LEVEL_TAB = {
 		
 		if (WATER_LEVEL_TAB.dygraph) {
 			// See http://blog.dygraphs.com/2012/01/preventing-dygraphs-memory-leaks.html
-			WATER_LEVEL_TAB.dygraph.destroy();
+			// WATER_LEVEL_TAB.dygraph.destroy();
 		}
 		
 		WATER_LEVEL_TAB.dygraph = g;
