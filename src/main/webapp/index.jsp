@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
+		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
+		<!-- Dygraph documents that as a needed IE8 hack, and it must be FIRST in the head section.  -->
+
 		<title>National Groundwater Monitoring Network</title>
 		<link rel="icon" 
       		type="image/png" 
@@ -11,9 +15,6 @@
             <jsp:param name="debug-qualifier" value="true" />
         </jsp:include>
       	
-		<!-- Dygraph documents this as a needed IE8 hack  -->
-	    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
-		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
 	
 		<!--  extjs assets -->
 	    <script type='text/javascript' src='jquery-1.3.2-old-extend.js'></script>
