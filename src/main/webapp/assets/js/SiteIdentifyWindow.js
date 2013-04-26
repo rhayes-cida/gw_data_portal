@@ -325,9 +325,14 @@ var WATER_LEVEL_TAB = {
 	initGraph: function() {
 		var data = WATER_LEVEL_TAB.dt;
 	
+		var ylabel = "Depth of water level, feet below land surface";
+		if (Ext.isIE) {
+			// ylabel = '<span class="ie-y-label"> XXX </span>';
+		}
+		
 		var dOptions = {
 		    	xlabel: "Month/Year",
-		    	ylabel: "Depth of water level, feet below land surface",
+		    	ylabel: ylabel,
 		    	showRangeSelector: true,
 		    	rangeSelectorHeight: 30, 
 		    	axisLabelFontSize: 10,

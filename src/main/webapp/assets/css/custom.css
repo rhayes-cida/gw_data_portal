@@ -900,11 +900,30 @@ td.well-log-small-table{
     width: 18px;
 }
 .GWDPuiOverviewMapExtentRectangle {
-    background-image: url("img/blank.gif");
+    background-image: url("../images/blank.gif");
     border: 2px dotted red;
     cursor: move;
     overflow: hidden;
 }
+
+/*
+.ext-ie div.dygraph-ylabel {
+    background-image: url("../images/YLabel.png");
+    background-color: cyan;
+    width: 14px;
+    height: 212px;
+}
+
+.ie-y-label {
+	background-color: red;
+    background-image: url("../images/YLabel.png");
+    width: 14px;
+    height: 212px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+*/
+
 .GWDPuiOverviewMapRectReplacement {
     background-image: url("img/overview_replacement.gif");
     background-position: center center;

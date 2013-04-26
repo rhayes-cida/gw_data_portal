@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"> 
-		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.r60.js"></script><![endif]-->
-		<!-- Dygraph documents that as a needed IE8 hack, and it must be FIRST in the head section.  -->
-
+	    <meta http-equiv="X-UA-Compatible" content="chrome=IE8"> 
+		
 		<title>National Groundwater Monitoring Network</title>
 		<link rel="icon" 
       		type="image/png" 
@@ -107,6 +105,17 @@
 	</head>
 	
 	<body>
+<!--[if lt IE 9]>
+	<script type="text/javascript" 
+   			src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+
+  	<script>
+   		CFInstall.check({
+     		mode: "overlay"
+   		});
+  	</script>
+<![endif]-->
+
 		<jsp:include page="header.jsp"><jsp:param value="true" name="headerTitle"/></jsp:include>
 		
 		<div id="map-area" class="x-hidden" style="width: 100%; height: 100%;">
