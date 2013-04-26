@@ -2,6 +2,13 @@
 <html>
 	<head>
 	    <meta http-equiv="X-UA-Compatible" content="chrome=IE8"> 
+<!--[if lt IE 9]>
+	<script>
+	var canvas_loaded_for_old_ie = 1;
+	</script>
+	<script language="javascript" type="text/javascript" src="excanvas.r60.js"></script>
+<![endif]-->
+	    
 		
 		<title>National Groundwater Monitoring Network</title>
 		<link rel="icon" 
