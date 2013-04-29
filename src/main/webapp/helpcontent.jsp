@@ -34,9 +34,9 @@
 	<p>
 	Sites in the water-level network will be designated as being in one of three subnetworks.
 	These are 1) the Background subnetwork, 2) the Suspected Changes subnetwork, and 3) the
-	Documented Changes subnetwork.
+	Documented Changes subnetwork.</p>
 	</br>
-	You can select one or more Water-Level Monitoring Categories as a filter criteria.
+	<p>You can select one or more Water-Level Monitoring Categories as a filter criteria.
 	</p>
 
 	<ul>
@@ -62,9 +62,9 @@
 <div id="ngwmn-water-level-category-tip" class='x-hidden ngwmn-help-tip'>
 	<p>
 	Wells are assigned a monitoring category (Trend or Surveillance) depending on the purpose of
-	the monitoring at the well.
+	the monitoring at the well.</p>
 	</br>
-	You can select one or more Water-level Monitoring Categories as a filter criteria.
+	<p>You can select one or more Water-level Monitoring Categories as a filter criteria.
 	</p>
 
 	<ul>
@@ -93,9 +93,9 @@
 		<p>
 		Sites water-quality network will be designated as being in one of three subnetworks. These are
 		1) the Background subnetwork, 2) the Suspected Changes subnetwork, and 3) the Documented
-		Changes subnetwork.
+		Changes subnetwork.</p>
 		</br>
-		You can select one or more Water-Quality Subnetwork Categories as a filter criteria.
+		<p>You can select one or more Water-Quality Subnetwork Categories as a filter criteria.
 		</p>
 
 		<ul>
@@ -123,9 +123,9 @@
 <div id="ngwmn-water-quality-category-tip" class='x-hidden ngwmn-help-tip'>
 	<p>
 	Wells are assigned a monitoring category (Trend or Surveillance) depending on the purpose of
-	the monitoring at the well.
+	the monitoring at the well.</p>
 	</br>
-	You can select one or more Water-Quality Monitoring Categories as a filter criteria.
+	<p>You can select one or more Water-Quality Monitoring Categories as a filter criteria.
 	</p>
 
 	<ul>
@@ -149,18 +149,18 @@
 
 <div id="ngwmn-aquifer-tip" class='x-hidden ngwmn-help-tip'>
 	<p>All NGWMN sites are associated with a single U.S. principal aquifer. Information on Principal
-	Aquifers is available <a href="http://water.usgs.gov/ogw/aquiferbasics/alphabetical.html">here</a>.
+	Aquifers is available <a href="http://water.usgs.gov/ogw/aquiferbasics/alphabetical.html">here</a>.</p>
 	</br>
-	You can select one or more Principal Aquifers as a filter criteria. Only those Principal Aquifers
+	<p>You can select one or more Principal Aquifers as a filter criteria. Only those Principal Aquifers
 	that have sites associated with the aquifer are shown in the selection list.
 	</p>
 </div>
 
 <div id="ngwmn-agency-tip" class='x-hidden ngwmn-help-tip'>
 	<p>Each NGWMN site is associated with an agency. This could be the agency that samples the data
-	or the agency that provides the data.
+	or the agency that provides the data.</p>
 	</br>
-	You can select one or more Contributing Agencies as a filter criteria. Only agencies that have
+	<p>You can select one or more Contributing Agencies as a filter criteria. Only agencies that have
 	sites associated with them are shown in the selection list.
 	</p>
 </div>
@@ -173,9 +173,9 @@
 </div>
 
 <div id="ngwmn-state-and-county-tip" class='x-hidden ngwmn-help-tip'>
-	<p>You can select one or more states as a filter criteria.
+	<p>You can select one or more states as a filter criteria.</p>
 	</br>
-	Alternatively, you can select one state and then select one or more counties within that State
+	<p>Alternatively, you can select one state and then select one or more counties within that State
 	to be used as a filter criteria. Only those states and counties with the states that have sites
 	associated with them are shown in the selection list.
 	</p>
