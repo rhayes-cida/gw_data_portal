@@ -249,16 +249,16 @@ var WATER_LEVEL_TAB = {
 		dt.addRow([new Date("1999-12-31"), 0]);
 
 		return dt;}) (),
-		
-	dygraph:null,
-	store : new Ext.data.XmlStore({						
+	store: new Ext.data.XmlStore({						
 		id: 'water-level-store',
-		record: 'TimeValuePair',
-		successProperty: 'ObservationCollection',
+		record: 'sample',
+		// url: null,
+		// successProperty: 'samples',
 		fields: [
 		 		{ name: 'time', mapping: 'time', type: 'date', dateFormat: 'c'},
-				{ name: 'value', mapping: 'value > Quantity > value'},
-				{ name: 'unit', mapping: 'Quantity > uom@code'},
+				{ name: 'value', mapping: 'mediated-value', type: 'float'},
+				{ name: 'original-value', mapping: 'value', type: 'float'},  // TODO undo this confusion
+				{ name: 'unit', mapping: 'unit'},
 				{ name: 'comment', mapping: 'comment'}
 		],
 		sortInfo: {
@@ -275,15 +275,24 @@ var WATER_LEVEL_TAB = {
 					dt.removeRows(0,dt.getNumberOfRows()-1);
 					for (var i = 0; i < r.length; i++) {
 						dt.addRow([r[i].get('time'), - parseFloat(r[i].get('value'))]);
-					}	
+					}
+					WATER_LEVEL_TAB.unmask();
 					WATER_LEVEL_TAB.updateGraph(dt);
 				}
 			},
 			exception: function(){
 				WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);
+			},
+			beforeload: function(self, options) {
+				console.log("before data load, url=" + self.url);
+				if ( ! self.url) {
+					// return false;
+				}
+				return true;
 			}
 		}
 	}),
+	dygraph:null,
 	load: function(record) {
 		// show the graph first, then get the table.
 		WATER_LEVEL_TAB.mask();
@@ -293,33 +302,12 @@ var WATER_LEVEL_TAB = {
 		
 		WATER_LEVEL_TAB.initGraph();
 
-		//WATER_LEVEL_TAB.unmask();
-		
-		Ext.Ajax.request({
-			method: 'GET',
-			url: 'iddata?request=water_level',
-			params: {
-				siteNo: record.get('SITE_NO'),
-				agency_cd: MEDIATOR.cleanAgencyCode(record.get('AGENCY_CD'))
-			},
-			failure: function(r,o){ 
-				WATER_LEVEL_TAB.update(SITE.connectionErrorMessage);
-			},
-			success: function(r, o) {
-				try{
-					var rs = DNH.removeNameSpaces(r.responseText);
-					console.log("name spaces removed from wl data, size =" + rs.length);
-					
-					var wldoc = DNH.createXmlDocFromString(rs);
-					console.log("created wldoc, length=" + (wldoc?(wldoc.childNodes.length):-1));
-					WATER_LEVEL_TAB.store.loadData(wldoc);
-					console.log("WL data loaded");
-				} catch (err){
-					WATER_LEVEL_TAB.update(SITE.loadingErrorMessage);
-				}
-				WATER_LEVEL_TAB.unmask();
-			}
-		});
+		var data_url = GWDP.ui.cacheBaseUrl + "/../direct/flatXML/waterlevel/" + WATER_LEVEL_TAB.AGENCY_CD + "/" + WATER_LEVEL_TAB.SITE_NO;
+		WATER_LEVEL_TAB.store.proxy = new Ext.data.HttpProxy({
+				method: 'GET',
+				url: data_url
+			});
+		WATER_LEVEL_TAB.store.load();
 	},
 	update: function(htmlStr) { this.get().update(htmlStr);},
 	initGraph: function() {
@@ -375,7 +363,8 @@ var WATER_LEVEL_TAB = {
 		var csvUrl = GWDP.ui.cacheBaseUrl + "/../direct/csv/" + WATER_LEVEL_TAB.AGENCY_CD + "/" + WATER_LEVEL_TAB.SITE_NO;
 		var g = new Dygraph(
 			    document.getElementById("dygraph-plot"),
-			    csvUrl,
+			    // csvUrl,
+			    WATER_LEVEL_TAB.dt,
 	    		dOptions
 		);
 		
@@ -670,7 +659,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 				labelCls = 'ie-dygraph-label-class';
 			}
 			
-			WATER_LEVEL_TAB.store.removeAll();
+			if (WATER_LEVEL_TAB.store) {
+				WATER_LEVEL_TAB.store.removeAll();
+			}
+			
 			var waterLevelPanel = 
 			new Ext.Panel({
 				id: WATER_LEVEL_TAB.cmpName,
@@ -715,11 +707,10 @@ var SiteIdentifyWindow = Ext.extend(Ext.Window, {
 						viewConfig: {forceFit: true},
 						 sm: new Ext.grid.RowSelectionModel({singleSelect:true}),
 						 colModel: new Ext.grid.ColumnModel([
-								 { header: "Date", width: 60, dataIndex: 'time', xtype:'datecolumn', format: 'm-d-Y' },
-								 { header: "Time", width: 60, dataIndex: 'time', xtype:'datecolumn', format: 'H:iP' },
-								 { header: "Value", width: 60, dataIndex: 'value' },
-								 { header: "Unit", width: 60, dataIndex: 'unit' },
-								 { header: "Comment", width: 130, dataIndex: 'comment' }
+								 { header: "Sample Time", width: 60, dataIndex: 'time', xtype:'datecolumn', format: 'm/d/y H:i' },
+								 { header: "Original Value", width: 60, dataIndex: 'original-value' },
+								 { header: "Original Unit", width: 60, dataIndex: 'unit' },
+								 { header: "Depth of water level, feet below land surface", width: 130, dataIndex: 'value' }
 							]),
 						store: WATER_LEVEL_TAB.store/*,
 						 view: new Ext.ux.grid.BufferView({
