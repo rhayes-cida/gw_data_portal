@@ -57,7 +57,8 @@ GWDP.ui.initMap = function() {
 				    	 		},{
 				    	 			id: 'eye',
 				    	 			handler: function(event, toolEl, panel,tc) {
-				    	 				window.location = "learnmore.jsp";
+				    	 				window.open("http://cida.usgs.gov/gw_data_portal/doc/NGWMN_Data_Portal_Help_Documentation.pdf", '_blank');
+				    	 				// window.location = "http://cida.usgs.gov/gw_data_portal/doc/NGWMN_Data_Portal_Help_Documentation.pdf";
 				    	 		    }
 				    	 		},{
 				    	 			id: 'maximize',
